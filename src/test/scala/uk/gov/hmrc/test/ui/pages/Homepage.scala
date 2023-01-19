@@ -18,26 +18,27 @@ package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.conf.TestConfiguration
+import uk.gov.hmrc.test.ui.sections.Header
 
-object CheckYourVATHomePage extends BasePage {
-  val url: String     = TestConfiguration.url("example-frontend") + "/vat-return-period"
-  val vatReturnPeriod = "Enter your VAT return details - Check your VAT flat rate - GOV.UK"
+object Homepage extends BasePage {
+  val url: String             = TestConfiguration.url("api-hub")
+  val homepageTitle: String   = "Applications - The API Hub - GOV.UK"
 
-  val annuallyRadioButton  = "vatReturnPeriod"
-  val quarterlyRadioButton = "vatReturnPeriod-2"
+  val headerContainer: String = "govuk-header__container"
+  val registerAnApplication: String = ".govuk-button"
 
   def loadPage: this.type = {
     driver.navigate().to(url)
-    onPage(vatReturnPeriod)
     this
   }
 
-  def provideVATPeriod(period: String): Turnover.type = {
-    period match {
-      case "Annually" => driver.findElement(By.id(annuallyRadioButton)).click()
-      case _          => driver.findElement(By.id(quarterlyRadioButton)).click()
-    }
-    submitPage()
-    Turnover
+  def clickLogo(): Unit = {
+    val rootElement = driver.findElement(By.id(headerContainer))
+    val header      = new Header(rootElement)
+    header.clickLogo()
+  }
+
+  def isRegisterAnApplicationDisplayed(): Boolean = {
+    driver.findElement(By.cssSelector(registerAnApplication)).isDisplayed
   }
 }
