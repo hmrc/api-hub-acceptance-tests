@@ -21,8 +21,7 @@ import org.openqa.selenium.By
 
 object StrideLogin extends BasePage {
   val strideLoginPageTitle = "Stride IdP Login"
-  //locators
-  val pid = "pid"
+  val pid                  = "pid"
 
   def fillInLoginDetails(): Homepage.type = {
     driver.findElement(By.id(pid)).sendKeys(Faker.ar.buildingNumber)
@@ -30,7 +29,6 @@ object StrideLogin extends BasePage {
     Homepage
   }
 
-  def isPidFieldDisplayed(): Boolean = {
+  def isPidFieldDisplayed(): Boolean =
     driver.findElement(By.id(pid)).isDisplayed
-  }
 }

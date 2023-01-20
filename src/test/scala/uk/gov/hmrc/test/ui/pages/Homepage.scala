@@ -21,10 +21,10 @@ import uk.gov.hmrc.test.ui.conf.TestConfiguration
 import uk.gov.hmrc.test.ui.sections.Header
 
 object Homepage extends BasePage {
-  val url: String             = TestConfiguration.url("api-hub")
-  val homepageTitle: String   = "Applications - The API Hub - GOV.UK"
+  val url: String           = TestConfiguration.url("api-hub")
+  val homepageTitle: String = "Applications - The API Hub - GOV.UK"
 
-  val headerContainer: String = "govuk-header__container"
+  val headerContainer: String       = "govuk-header__container"
   val registerAnApplication: String = ".govuk-button"
 
   def loadPage(): this.type = {
@@ -38,13 +38,11 @@ object Homepage extends BasePage {
     header.clickLogo()
   }
 
-  def isRegisterAnApplicationDisplayed(): Boolean = {
+  def isRegisterAnApplicationDisplayed(): Boolean =
     registerApplication().isDisplayed
-  }
 
-  def registerApplication(): WebElement = {
+  def registerApplication(): WebElement =
     driver.findElement(By.cssSelector(registerAnApplication))
-  }
 
   def startApplicationProcess: ApplicationName.type = {
     registerApplication().click()
