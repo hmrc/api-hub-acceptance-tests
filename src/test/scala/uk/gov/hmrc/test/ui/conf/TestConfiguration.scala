@@ -38,5 +38,3 @@ object TestConfiguration {
 
   def serviceRoute(serviceName: String): String = envConfig.getString(s"services.$serviceName.productionRoute")
 }
-
-//TODO: probably make a separate project for the api tests

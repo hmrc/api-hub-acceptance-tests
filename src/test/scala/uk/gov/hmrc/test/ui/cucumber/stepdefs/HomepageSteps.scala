@@ -20,7 +20,7 @@ import uk.gov.hmrc.test.ui.pages.{ApplicationName, Homepage, StrideLogin}
 
 class HomepageSteps extends BaseStepDef {
   var expectedAppName: String = _
-  var actualAppName: String = _
+  var actualAppName: String   = _
 
   Given("an unauthenticated user navigates to the homepage") { () =>
     Homepage.loadPage()
@@ -30,7 +30,7 @@ class HomepageSteps extends BaseStepDef {
     StrideLogin.fillInLoginDetails()
   }
 
-  When("the user correctly registers an application"){ () =>
+  When("the user correctly registers an application") { () =>
     // again forced reload
     Homepage.loadPage()
     expectedAppName = ApplicationName.randAppName
