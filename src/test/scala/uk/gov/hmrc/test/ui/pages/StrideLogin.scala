@@ -16,22 +16,19 @@
 
 package uk.gov.hmrc.test.ui.pages
 
+import faker.Faker
 import org.openqa.selenium.By
 
-object CostOfGoods extends BasePage {
+object StrideLogin extends BasePage {
+  val strideLoginPageTitle = "Stride IdP Login"
+  val pid                  = "pid"
 
-  val costOfGoods      = "Enter your cost of goods - Check your VAT flat rate - GOV.UK"
-  val costOfGoodsInput = "costOfGoods"
-
-  def provideCostOfGoodsAmount(amount: String): this.type = {
-    onPage(costOfGoods)
-    driver.findElement(By.id(costOfGoodsInput)).sendKeys(amount)
-    this
+  def fillInLoginDetails(): Homepage.type = {
+    driver.findElement(By.id(pid)).sendKeys(Faker.ar.buildingNumber)
+    driver.findElement(By.id(continueButton)).click()
+    Homepage
   }
 
-  def submitVATInformation: CheckYourVATResult.type = {
-    submitPage()
-    CheckYourVATResult
-  }
-
+  def isPidFieldDisplayed(): Boolean =
+    driver.findElement(By.id(pid)).isDisplayed
 }

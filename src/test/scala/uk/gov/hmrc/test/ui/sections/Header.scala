@@ -14,24 +14,14 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.pages
+package uk.gov.hmrc.test.ui.sections
 
-import org.openqa.selenium.By
+import org.openqa.selenium.{By, WebElement}
+import uk.gov.hmrc.test.ui.pages.BasePage
 
-object CostOfGoods extends BasePage {
+class Header(val rootElement: WebElement) extends BasePage {
+  val logo = ".govuk-header__logotype-text"
 
-  val costOfGoods      = "Enter your cost of goods - Check your VAT flat rate - GOV.UK"
-  val costOfGoodsInput = "costOfGoods"
-
-  def provideCostOfGoodsAmount(amount: String): this.type = {
-    onPage(costOfGoods)
-    driver.findElement(By.id(costOfGoodsInput)).sendKeys(amount)
-    this
-  }
-
-  def submitVATInformation: CheckYourVATResult.type = {
-    submitPage()
-    CheckYourVATResult
-  }
-
+  def clickLogo(): Unit =
+    rootElement.findElement(By.cssSelector(logo)).click()
 }

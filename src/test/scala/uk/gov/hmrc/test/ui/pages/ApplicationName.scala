@@ -16,22 +16,17 @@
 
 package uk.gov.hmrc.test.ui.pages
 
+import faker.Faker
 import org.openqa.selenium.By
 
-object CostOfGoods extends BasePage {
+object ApplicationName extends BasePage {
+  val appNameLcr          = "value"
+  val continue            = ".govuk-button"
+  val randAppName: String = Faker.ar.loremWord()
 
-  val costOfGoods      = "Enter your cost of goods - Check your VAT flat rate - GOV.UK"
-  val costOfGoodsInput = "costOfGoods"
-
-  def provideCostOfGoodsAmount(amount: String): this.type = {
-    onPage(costOfGoods)
-    driver.findElement(By.id(costOfGoodsInput)).sendKeys(amount)
-    this
+  def fillInApplicationName(input: String): CheckYourAnswers.type = {
+    driver.findElement(By.id(appNameLcr)).sendKeys(input)
+    driver.findElement(By.cssSelector(continue)).click()
+    CheckYourAnswers
   }
-
-  def submitVATInformation: CheckYourVATResult.type = {
-    submitPage()
-    CheckYourVATResult
-  }
-
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,10 @@ import org.openqa.selenium.{OutputType, TakesScreenshot}
 import uk.gov.hmrc.test.ui.driver.BrowserDriver
 
 class Hooks extends ScalaDsl with EN with BrowserDriver {
+  Before {
+    driver.manage().deleteAllCookies()
+  }
+
   After { scenario: Scenario =>
     if (scenario.isFailed) {
       val screenshotName = scenario.getName.replaceAll(" ", "_")
