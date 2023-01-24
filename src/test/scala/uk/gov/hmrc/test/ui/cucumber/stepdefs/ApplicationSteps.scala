@@ -14,24 +14,10 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.pages
+package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-import org.openqa.selenium.By
-
-object CostOfGoods extends BasePage {
-
-  val costOfGoods      = "Enter your cost of goods - Check your VAT flat rate - GOV.UK"
-  val costOfGoodsInput = "costOfGoods"
-
-  def provideCostOfGoodsAmount(amount: String): this.type = {
-    onPage(costOfGoods)
-    driver.findElement(By.id(costOfGoodsInput)).sendKeys(amount)
-    this
+class ApplicationSteps(homepageSteps: HomepageSteps) extends BaseStepDef {
+  Then("the inputted application name should match the registered application name") { () =>
+    homepageSteps.expectedAppName should be(homepageSteps.actualAppName)
   }
-
-  def submitVATInformation: CheckYourVATResult.type = {
-    submitPage()
-    CheckYourVATResult
-  }
-
 }

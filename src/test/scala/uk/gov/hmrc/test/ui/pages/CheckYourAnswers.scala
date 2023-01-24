@@ -18,20 +18,9 @@ package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.By
 
-object CostOfGoods extends BasePage {
+object CheckYourAnswers extends BasePage {
+  val registeredAppName = ".govuk-summary-list__row .govuk-summary-list__value"
 
-  val costOfGoods      = "Enter your cost of goods - Check your VAT flat rate - GOV.UK"
-  val costOfGoodsInput = "costOfGoods"
-
-  def provideCostOfGoodsAmount(amount: String): this.type = {
-    onPage(costOfGoods)
-    driver.findElement(By.id(costOfGoodsInput)).sendKeys(amount)
-    this
-  }
-
-  def submitVATInformation: CheckYourVATResult.type = {
-    submitPage()
-    CheckYourVATResult
-  }
-
+  def getRegisteredApplicationName(): String =
+    driver.findElement(By.cssSelector(registeredAppName)).getText
 }
