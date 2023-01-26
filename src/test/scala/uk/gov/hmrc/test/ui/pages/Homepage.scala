@@ -29,6 +29,7 @@ object Homepage extends BasePage {
 
   def loadPage(): this.type = {
     driver.navigate().to(url)
+    waitForElementPresent(driver.findElement(By.cssSelector(registerAnApplication)))
     this
   }
 

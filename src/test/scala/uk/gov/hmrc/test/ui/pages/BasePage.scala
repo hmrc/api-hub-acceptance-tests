@@ -16,9 +16,12 @@
 
 package uk.gov.hmrc.test.ui.pages
 
-import org.openqa.selenium.By
+import org.openqa.selenium.{By, WebDriver, WebElement}
+import org.openqa.selenium.support.ui.FluentWait
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.ui.driver.BrowserDriver
+
+import java.time.Duration
 
 trait BasePage extends BrowserDriver with Matchers {
   val continueButton = "continue-button"
@@ -31,6 +34,15 @@ trait BasePage extends BrowserDriver with Matchers {
       throw PageNotFoundException(
         s"Expected '$pageTitle' page, but found '${driver.getTitle}' page."
       )
+
+  def customWaiter: FluentWait[WebDriver] =
+    new FluentWait[WebDriver](driver)
+      .withTimeout(Duration.ofSeconds(30L))
+      .pollingEvery(Duration.ofSeconds(1L))
+      .ignoring(classOf[NoSuchElementException])
+
+  def waitForElementPresent(element: WebElement): WebElement =
+    customWaiter.until(driver => element)
 }
 
 case class PageNotFoundException(s: String) extends Exception(s)
