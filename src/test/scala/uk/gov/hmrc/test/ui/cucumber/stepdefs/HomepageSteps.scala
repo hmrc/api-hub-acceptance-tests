@@ -22,7 +22,7 @@ class HomepageSteps extends BaseStepDef {
   var expectedAppName: String = _
   var actualAppName: String   = _
 
-  Given("an unauthenticated user navigates to the homepage") { () =>
+  Given("""^an (?:unauthenticated|authenticated) user navigates to the homepage$""") { () =>
     Homepage.loadPage()
   }
 
