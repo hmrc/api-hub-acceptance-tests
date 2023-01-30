@@ -1,4 +1,3 @@
-@Homepage
 Feature: Api hub home page displays necessary information
 
   Scenario: Register an application

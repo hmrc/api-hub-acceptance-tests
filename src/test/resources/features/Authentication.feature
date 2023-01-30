@@ -1,4 +1,4 @@
-@Authentication
+@Authentication @Homepage
 Feature: Stride authentication
 
   Background:
