@@ -43,6 +43,7 @@ class HomepageSteps extends BaseStepDef {
     //FIXME: Currently the api home page changes port and then doesnt redirect after the stride login,
     //FIXME: forcing the need for a page reload here
     Homepage.loadPage()
+    logger.info(driver.getCurrentUrl)
     assert(Homepage.isRegisterAnApplicationDisplayed(), true)
   }
 
