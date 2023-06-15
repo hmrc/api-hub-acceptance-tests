@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.cucumber.stepdefs
+package uk.gov.hmrc.test.ui.pages
 
-import io.cucumber.scala.{EN, ScalaDsl}
-import org.scalatest.concurrent.Eventually
-import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.ui.driver.BrowserDriver
-import uk.gov.hmrc.webdriver.SingletonDriver
+import org.openqa.selenium.By
 
-import scala.util.Try
+object ApplicationSuccessPage extends BasePage {
+  val successPanel              = ".govuk-panel--confirmation"
+  val registeredApplicationLink = ".govuk-body .govuk-link--no-visited-state"
 
-trait BaseStepDef extends ScalaDsl with EN with BrowserDriver with Eventually with Matchers {
+  def isApplicationSuccessDisplayed(): Boolean =
+    driver.findElement(By.cssSelector(successPanel)).isDisplayed
 
-  sys.addShutdownHook {
-    Try(SingletonDriver.closeInstance)
+  def viewRegisteredApplication(): ApplicationDetailsPage.type = {
+    driver.findElement(By.cssSelector(registeredApplicationLink)).click()
+    ApplicationDetailsPage
   }
 }

@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.cucumber.stepdefs
+package uk.gov.hmrc.test.ui.pages
 
-import io.cucumber.scala.{EN, ScalaDsl}
-import org.scalatest.concurrent.Eventually
-import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.ui.driver.BrowserDriver
-import uk.gov.hmrc.webdriver.SingletonDriver
+import org.openqa.selenium.{By, WebElement}
 
-import scala.util.Try
+object CheckYouAnswersPage extends BasePage {
+  private val registerApplicationButton = ".govuk-button"
 
-trait BaseStepDef extends ScalaDsl with EN with BrowserDriver with Eventually with Matchers {
+  private def getRegisterApplicationButton: WebElement =
+    driver.findElement(By.cssSelector(registerApplicationButton))
 
-  sys.addShutdownHook {
-    Try(SingletonDriver.closeInstance)
+  def registerApplication(): ApplicationSuccessPage.type = {
+    waitForElementPresent(getRegisterApplicationButton)
+    getRegisterApplicationButton.click()
+    ApplicationSuccessPage
   }
 }

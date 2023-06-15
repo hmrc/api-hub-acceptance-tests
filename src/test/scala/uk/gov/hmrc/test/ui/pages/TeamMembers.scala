@@ -14,19 +14,23 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.cucumber.stepdefs
+package uk.gov.hmrc.test.ui.pages
 
-import io.cucumber.scala.{EN, ScalaDsl}
-import org.scalatest.concurrent.Eventually
-import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.ui.driver.BrowserDriver
-import uk.gov.hmrc.webdriver.SingletonDriver
+import org.openqa.selenium.{By, WebElement}
 
-import scala.util.Try
+object TeamMembers extends BasePage {
+  private val no          = "#value-no"
+  private val continueLcr = ".govuk-grid-column-two-thirds button.govuk-button"
 
-trait BaseStepDef extends ScalaDsl with EN with BrowserDriver with Eventually with Matchers {
+  private def noRadioButton(): WebElement =
+    driver.findElement(By.cssSelector(no))
 
-  sys.addShutdownHook {
-    Try(SingletonDriver.closeInstance)
+  private def continue(): WebElement =
+    driver.findElement(By.cssSelector(continueLcr))
+
+  def addNoTeamMember(): CheckYouAnswersPage.type = {
+    noRadioButton().click()
+    continue().click()
+    CheckYouAnswersPage
   }
 }

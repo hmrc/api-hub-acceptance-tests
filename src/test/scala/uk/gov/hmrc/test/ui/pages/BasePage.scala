@@ -16,8 +16,8 @@
 
 package uk.gov.hmrc.test.ui.pages
 
-import org.openqa.selenium.{By, WebDriver, WebElement}
 import org.openqa.selenium.support.ui.FluentWait
+import org.openqa.selenium.{By, JavascriptExecutor, WebDriver, WebElement}
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.ui.driver.BrowserDriver
 
@@ -43,6 +43,13 @@ trait BasePage extends BrowserDriver with Matchers {
 
   def waitForElementPresent(element: WebElement): WebElement =
     customWaiter.until(driver => element)
+
+  def scrollIntoView(element: WebElement): Unit = {
+    val js = driver.asInstanceOf[JavascriptExecutor]
+    js.executeScript("arguments[0].scrollIntoView(true);", element)
+
+  }
+
 }
 
 case class PageNotFoundException(s: String) extends Exception(s)

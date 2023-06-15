@@ -16,23 +16,53 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-import uk.gov.hmrc.test.ui.pages.{CreateSignIn, SignInPage, YourApplicationPage}
+import faker.Faker
+import uk.gov.hmrc.test.ui.pages.ApplicationName.{fillInApplicationName, randAppName}
+import uk.gov.hmrc.test.ui.pages.ApplicationSuccessPage.isApplicationSuccessDisplayed
+import uk.gov.hmrc.test.ui.pages.CreateSignIn.{defaultLoginUser, loginWithUserEmail}
+import uk.gov.hmrc.test.ui.pages.SignInPage.clickLdapContinue
+import uk.gov.hmrc.test.ui.pages.TeamMembers.addNoTeamMember
+import uk.gov.hmrc.test.ui.pages.YourApplicationPage.{registerApplication, yourApplicationsIsDisplayed}
+import uk.gov.hmrc.test.ui.pages.{ApplicationDetailsPage, ApplicationSuccessPage, CheckYouAnswersPage, SignInPage, YourApplicationPage}
 
 class SignInSteps extends BaseStepDef {
+  var expectedApplicationName: String = _
+  val randomLocalEmail                = s"${Faker.en_GB.lastName()}@digital.hmrc.gov.uk"
 
   Given("""a user is on the sign in page""") { () =>
     SignInPage.loadPage()
   }
 
   Given("""the user decides to login via ldap""") { () =>
-    SignInPage.clickLdapContinue()
+    clickLdapContinue()
   }
 
   When("""an approver with write privileges logs in""") { () =>
-    CreateSignIn.defaultLoginUser()
+    defaultLoginUser()
+  }
+
+  When("""a new user with approver resource type with write privileges logs in""") { () =>
+    loginWithUserEmail(randomLocalEmail)
   }
 
   Then("""the user should be authenticated""") { () =>
-    assert(YourApplicationPage.yourApplicationsIsDisplayed(), true)
+    assert(yourApplicationsIsDisplayed(), true)
+  }
+
+  Then("""the new user registers an application""") { () =>
+    registerApplication()
+    expectedApplicationName = randAppName
+    fillInApplicationName(expectedApplicationName)
+    addNoTeamMember()
+    CheckYouAnswersPage.registerApplication()
+  }
+
+  Then("""the application should be registered""") { () =>
+    assert(isApplicationSuccessDisplayed(), true)
+  }
+
+  Then("""the application can be viewed""") { () =>
+    ApplicationSuccessPage.viewRegisteredApplication()
+    assert(ApplicationDetailsPage.getApplicationName == randAppName)
   }
 }

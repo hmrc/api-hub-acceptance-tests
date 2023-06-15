@@ -19,12 +19,40 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.{By, WebElement}
 
 object YourApplicationPage extends BasePage {
-  val yourApplications = ".custom-second-nav li:first-of-type .govuk-link"
+  private val yourApplications           = ".custom-second-nav li:first-of-type .govuk-link"
+  private val registerAnApplication      = ".govuk-button--primary .govuk-button"
+  private val registerAnotherApplication = ".hip-card-container-bottom .govuk-link--no-visited-state"
+  private val registeredApplications     = ".hip-card-container-top .govuk-link--no-visited-state"
 
-  def getYourApplications(): WebElement =
+  private def registerApplicationButton(): WebElement =
+    driver.findElement(By.cssSelector(registerAnApplication))
+
+  private def registerAnotherApplicationButton(): WebElement =
+    driver.findElement(By.cssSelector(registerAnotherApplication))
+  private def clickRegisterAnApplication(): Unit             =
+    registerApplicationButton().click()
+
+  private def clickRegisterAnotherApplication(): Unit =
+    registerAnotherApplicationButton().click()
+
+  def registerApplication(): ApplicationName.type = {
+    if (driver.findElements(By.cssSelector(registerAnApplication)).size() > 0) {
+      waitForElementPresent(registerApplicationButton())
+      scrollIntoView(registerApplicationButton())
+      clickRegisterAnApplication()
+    } else {
+      waitForElementPresent(registerAnotherApplicationButton())
+      scrollIntoView(registerAnotherApplicationButton())
+      clickRegisterAnotherApplication()
+    }
+    ApplicationName
+  }
+
+  private def getYourApplications: WebElement =
     driver.findElement(By.cssSelector(yourApplications))
+
   def yourApplicationsIsDisplayed(): Boolean = {
-    waitForElementPresent(getYourApplications())
-    getYourApplications().isDisplayed
+    waitForElementPresent(getYourApplications)
+    getYourApplications.isDisplayed
   }
 }

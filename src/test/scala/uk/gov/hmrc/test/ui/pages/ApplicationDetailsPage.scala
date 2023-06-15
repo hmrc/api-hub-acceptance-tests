@@ -14,19 +14,13 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.cucumber.stepdefs
+package uk.gov.hmrc.test.ui.pages
 
-import io.cucumber.scala.{EN, ScalaDsl}
-import org.scalatest.concurrent.Eventually
-import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.ui.driver.BrowserDriver
-import uk.gov.hmrc.webdriver.SingletonDriver
+import org.openqa.selenium.By
 
-import scala.util.Try
+object ApplicationDetailsPage extends BasePage {
+  val applicationName = "div:nth-child(2) > div.govuk-grid-column-three-quarters > span"
 
-trait BaseStepDef extends ScalaDsl with EN with BrowserDriver with Eventually with Matchers {
-
-  sys.addShutdownHook {
-    Try(SingletonDriver.closeInstance)
-  }
+  def getApplicationName: String =
+    driver.findElement(By.cssSelector(applicationName)).getText.trim()
 }
