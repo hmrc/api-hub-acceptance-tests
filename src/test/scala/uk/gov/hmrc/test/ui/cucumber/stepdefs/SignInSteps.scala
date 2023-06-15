@@ -14,19 +14,25 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.driver
+package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-import com.typesafe.scalalogging.LazyLogging
-import org.openqa.selenium.WebDriver
-import org.openqa.selenium.chrome.ChromeOptions
-import uk.gov.hmrc.webdriver.SingletonDriver
+import uk.gov.hmrc.test.ui.pages.{CreateSignIn, SignInPage, YourApplicationPage}
 
-trait BrowserDriver extends LazyLogging {
-  logger.info(
-    s"Instantiating Browser: ${sys.props.getOrElse("browser", "'browser' System property not set. This is required")}"
-  )
-  val options = new ChromeOptions()
-  options.addArguments("--remote-allow-origins=*")
+class SignInSteps extends BaseStepDef {
 
-  implicit lazy val driver: WebDriver = SingletonDriver.getInstance(Some(options))
+  Given("""a user is on the sign in page""") { () =>
+    SignInPage.loadPage()
+  }
+
+  Given("""the user decides to login via ldap""") { () =>
+    SignInPage.clickLdapContinue()
+  }
+
+  When("""an approver with write privileges logs in""") { () =>
+    CreateSignIn.defaultLoginUser()
+  }
+
+  Then("""the user should be authenticated""") { () =>
+    assert(YourApplicationPage.yourApplicationsIsDisplayed(), true)
+  }
 }
