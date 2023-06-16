@@ -46,7 +46,9 @@ object CreateSignIn extends BasePage {
     driver.findElement(By.cssSelector(resourceType)).sendKeys("api-hub-frontend")
     driver.findElement(By.cssSelector(resourceLocations)).sendKeys("approvals")
     driver.findElement(By.cssSelector(actions)).sendKeys("WRITE")
+    Thread.sleep(5000)
     scrollIntoView(signInButton)
     signInButton.submit()
+    driver.navigate.refresh()
   }
 }
