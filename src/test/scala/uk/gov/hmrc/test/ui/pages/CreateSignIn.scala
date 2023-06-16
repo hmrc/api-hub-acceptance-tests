@@ -49,6 +49,7 @@ object CreateSignIn extends BasePage {
     Thread.sleep(5000)
     scrollIntoView(signInButton)
     signInButton.submit()
+    Thread.sleep(5000)
     driver.navigate.refresh()
   }
 }
