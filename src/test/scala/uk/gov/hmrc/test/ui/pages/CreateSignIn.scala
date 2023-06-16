@@ -43,6 +43,7 @@ object CreateSignIn extends BasePage {
     driver.findElement(By.cssSelector(resourceType)).sendKeys("api-hub-frontend")
     driver.findElement(By.cssSelector(resourceLocations)).sendKeys("approvals")
     driver.findElement(By.cssSelector(actions)).sendKeys("WRITE")
-    driver.findElement(By.cssSelector(signIn)).click()
+    //forced failure here for screenshot by missing the click for submitting the form
+    //    driver.findElement(By.cssSelector(signIn)).click()
   }
 }

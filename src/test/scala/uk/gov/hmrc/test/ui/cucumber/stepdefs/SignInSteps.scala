@@ -38,8 +38,6 @@ class SignInSteps extends BaseStepDef {
   }
 
   When("""an approver with write privileges logs in""") { () =>
-    //forced failure here for screenshot
-    clickLdapContinue()
     defaultLoginUser()
   }
 
