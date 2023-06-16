@@ -34,9 +34,6 @@ class HomepageSteps extends BaseStepDef {
     // again forced reload
     Homepage.loadPage()
     expectedAppName = ApplicationName.randAppName
-    actualAppName = Homepage.startApplicationProcess
-      .fillInApplicationName(expectedAppName)
-      .getRegisteredApplicationName()
   }
 
   Then("the user should be directed to the api hub home page") { () =>

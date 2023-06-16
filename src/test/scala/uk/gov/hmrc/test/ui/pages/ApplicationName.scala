@@ -24,9 +24,9 @@ object ApplicationName extends BasePage {
   val continue            = ".govuk-button"
   val randAppName: String = Faker.ar.loremWord()
 
-  def fillInApplicationName(input: String): CheckYourAnswers.type = {
+  def fillInApplicationName(input: String): TeamMembers.type = {
     driver.findElement(By.id(appNameLcr)).sendKeys(input)
     driver.findElement(By.cssSelector(continue)).click()
-    CheckYourAnswers
+    TeamMembers
   }
 }

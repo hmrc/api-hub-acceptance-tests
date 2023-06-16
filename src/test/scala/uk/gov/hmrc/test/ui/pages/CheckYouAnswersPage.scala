@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.driver
+package uk.gov.hmrc.test.ui.pages
 
-import com.typesafe.scalalogging.LazyLogging
-import org.openqa.selenium.WebDriver
-import org.openqa.selenium.chrome.ChromeOptions
-import uk.gov.hmrc.webdriver.SingletonDriver
+import org.openqa.selenium.{By, WebElement}
 
-trait BrowserDriver extends LazyLogging {
-  logger.info(
-    s"Instantiating Browser: ${sys.props.getOrElse("browser", "'browser' System property not set. This is required")}"
-  )
-  val options = new ChromeOptions()
-  options.addArguments("--remote-allow-origins=*")
+object CheckYouAnswersPage extends BasePage {
+  private val registerApplicationButton = ".govuk-button"
 
-  implicit lazy val driver: WebDriver = SingletonDriver.getInstance(Some(options))
+  private def getRegisterApplicationButton: WebElement =
+    driver.findElement(By.cssSelector(registerApplicationButton))
+
+  def registerApplication(): ApplicationSuccessPage.type = {
+    waitForElementPresent(getRegisterApplicationButton)
+    getRegisterApplicationButton.click()
+    ApplicationSuccessPage
+  }
 }

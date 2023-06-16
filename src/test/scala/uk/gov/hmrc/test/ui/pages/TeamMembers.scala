@@ -14,19 +14,23 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.driver
+package uk.gov.hmrc.test.ui.pages
 
-import com.typesafe.scalalogging.LazyLogging
-import org.openqa.selenium.WebDriver
-import org.openqa.selenium.chrome.ChromeOptions
-import uk.gov.hmrc.webdriver.SingletonDriver
+import org.openqa.selenium.{By, WebElement}
 
-trait BrowserDriver extends LazyLogging {
-  logger.info(
-    s"Instantiating Browser: ${sys.props.getOrElse("browser", "'browser' System property not set. This is required")}"
-  )
-  val options = new ChromeOptions()
-  options.addArguments("--remote-allow-origins=*")
+object TeamMembers extends BasePage {
+  private val no          = "#value-no"
+  private val continueLcr = ".govuk-grid-column-two-thirds button.govuk-button"
 
-  implicit lazy val driver: WebDriver = SingletonDriver.getInstance(Some(options))
+  private def noRadioButton(): WebElement =
+    driver.findElement(By.cssSelector(no))
+
+  private def continue(): WebElement =
+    driver.findElement(By.cssSelector(continueLcr))
+
+  def addNoTeamMember(): CheckYouAnswersPage.type = {
+    noRadioButton().click()
+    continue().click()
+    CheckYouAnswersPage
+  }
 }

@@ -14,19 +14,13 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.driver
+package uk.gov.hmrc.test.ui.pages
 
-import com.typesafe.scalalogging.LazyLogging
-import org.openqa.selenium.WebDriver
-import org.openqa.selenium.chrome.ChromeOptions
-import uk.gov.hmrc.webdriver.SingletonDriver
+import org.openqa.selenium.By
 
-trait BrowserDriver extends LazyLogging {
-  logger.info(
-    s"Instantiating Browser: ${sys.props.getOrElse("browser", "'browser' System property not set. This is required")}"
-  )
-  val options = new ChromeOptions()
-  options.addArguments("--remote-allow-origins=*")
+object ApplicationDetailsPage extends BasePage {
+  val applicationName = "div:nth-child(2) > div.govuk-grid-column-three-quarters > span"
 
-  implicit lazy val driver: WebDriver = SingletonDriver.getInstance(Some(options))
+  def getApplicationName: String =
+    driver.findElement(By.cssSelector(applicationName)).getText.trim()
 }
