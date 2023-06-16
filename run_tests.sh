@@ -12,3 +12,4 @@ fi
 sbt scalafmtCheckAll scalafmtSbtCheck
 
 sbt -Dbrowser="${BROWSER_TYPE:=$DEFAULT_BROWSER}" -Denvironment="${ENV:=local}" "testOnly uk.gov.hmrc.test.ui.cucumber.runner.Runner"
+sm2 --logs API_HUB_FRONTEND

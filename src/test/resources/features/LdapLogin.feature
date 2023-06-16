@@ -1,5 +1,6 @@
+@pra
 Feature: Ldap Login
-  @pra
+
   Scenario: Login via LDAP
     Given a user is on the sign in page
     And the user decides to login via ldap

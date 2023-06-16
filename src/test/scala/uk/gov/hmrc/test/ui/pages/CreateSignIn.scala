@@ -37,8 +37,6 @@ object CreateSignIn extends BasePage {
   def loginWithUserEmail(emailAddress: String): Unit = {
     waitForElementPresent(driver.findElement(By.cssSelector(principal)))
     print("url is: " + driver.getCurrentUrl)
-    //to force a fail and get screenshot of the current state
-    Thread.sleep(40000)
     driver.findElement(By.cssSelector(principal)).sendKeys("auto-test")
     driver.findElement(By.cssSelector(email)).sendKeys(emailAddress)
     driver.findElement(By.cssSelector(redirectUrl)).sendKeys(TestConfiguration.url("api-hub"))
