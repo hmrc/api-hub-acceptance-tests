@@ -19,9 +19,10 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.{By, WebElement}
 
 object YourApplicationPage extends BasePage {
-  private val yourApplications           = ".custom-second-nav li:first-of-type .govuk-link"
+  private val yourApplicationsTitle      = ".govuk-heading-l"
   private val registerAnApplication      = ".govuk-button--primary .govuk-button"
   private val registerAnotherApplication = ".hip-card-container-bottom .govuk-link--no-visited-state"
+  private val youApplicationsTitleText   = "our Applications"
 
   private def registerApplicationButton(): WebElement =
     driver.findElement(By.cssSelector(registerAnApplication))
@@ -36,16 +37,10 @@ object YourApplicationPage extends BasePage {
 
   def registerApplication(): ApplicationName.type = {
     if (driver.findElements(By.cssSelector(registerAnApplication)).size() > 0) {
-      print("This is the size: " + driver.findElements(By.cssSelector(registerAnApplication)).size())
       waitForElementPresent(registerApplicationButton())
       scrollIntoView(registerApplicationButton())
       clickRegisterAnApplication()
     } else {
-      print(
-        "this is the number of register another app size" + driver
-          .findElements(By.cssSelector(registerAnotherApplication))
-          .size()
-      )
       waitForElementPresent(registerAnotherApplicationButton())
       scrollIntoView(registerAnotherApplicationButton())
       clickRegisterAnotherApplication()
@@ -53,11 +48,11 @@ object YourApplicationPage extends BasePage {
     ApplicationName
   }
 
-  private def getYourApplications: WebElement =
-    driver.findElement(By.cssSelector(yourApplications))
+  private def getYourApplicationsHeading: WebElement =
+    driver.findElement(By.cssSelector(yourApplicationsTitle))
 
   def yourApplicationsIsDisplayed(): Boolean = {
-    waitForElementPresent(getYourApplications)
-    getYourApplications.isDisplayed
+    waitForElementPresent(getYourApplicationsHeading)
+    getYourApplicationsHeading.getText().trim.contains(youApplicationsTitleText)
   }
 }
