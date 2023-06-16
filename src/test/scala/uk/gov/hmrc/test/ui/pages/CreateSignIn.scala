@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.test.ui.pages
 
+import faker.Faker
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.conf.TestConfiguration
 
@@ -27,8 +28,8 @@ object CreateSignIn extends BasePage {
   val resourceLocations   = "#permissions_0_resourceLocations"
   val actions             = "#permissions_0_actions"
   val signIn              = "button[name='fake-sign-in-btn']"
-  //TODO: make
-  val defaultEmailAddress = "ade.oke@digital.hmrc.gov.uk"
+  val defaultEmailAddress = s"${Faker.en_GB.lastName()}@digital.hmrc.gov.uk"
+//  val defaultEmailAddress = "ade.oke@digital.hmrc.gov.uk"
 
   def defaultLoginUser(): Unit =
     loginWithUserEmail(defaultEmailAddress)
