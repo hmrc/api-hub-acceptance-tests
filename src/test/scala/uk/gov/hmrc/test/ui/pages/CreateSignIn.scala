@@ -17,7 +17,7 @@
 package uk.gov.hmrc.test.ui.pages
 
 import faker.Faker
-import org.openqa.selenium.By
+import org.openqa.selenium.{By, WebElement}
 import uk.gov.hmrc.test.ui.conf.TestConfiguration
 
 object CreateSignIn extends BasePage {
@@ -34,6 +34,9 @@ object CreateSignIn extends BasePage {
   def defaultLoginUser(): Unit =
     loginWithUserEmail(defaultEmailAddress)
 
+  def signInButton: WebElement =
+    driver.findElement(By.cssSelector(signIn))
+
   def loginWithUserEmail(emailAddress: String): Unit = {
     waitForElementPresent(driver.findElement(By.cssSelector(principal)))
     print("url is: " + driver.getCurrentUrl)
@@ -43,7 +46,7 @@ object CreateSignIn extends BasePage {
     driver.findElement(By.cssSelector(resourceType)).sendKeys("api-hub-frontend")
     driver.findElement(By.cssSelector(resourceLocations)).sendKeys("approvals")
     driver.findElement(By.cssSelector(actions)).sendKeys("WRITE")
-    //forced failure here for screenshot by missing the click for submitting the form
-    //    driver.findElement(By.cssSelector(signIn)).click()
+    scrollIntoView(signInButton)
+    signInButton.submit()
   }
 }
