@@ -17,7 +17,7 @@
 package uk.gov.hmrc.test.ui.pages
 
 import faker.Faker
-import org.openqa.selenium.{By, WebElement}
+import org.openqa.selenium.{By, Keys, WebElement}
 import uk.gov.hmrc.test.ui.conf.TestConfiguration
 
 object CreateSignIn extends BasePage {
@@ -39,17 +39,12 @@ object CreateSignIn extends BasePage {
 
   def loginWithUserEmail(emailAddress: String): Unit = {
     waitForElementPresent(driver.findElement(By.cssSelector(principal)))
-    print("url is: " + driver.getCurrentUrl)
     driver.findElement(By.cssSelector(principal)).sendKeys("auto-test")
     driver.findElement(By.cssSelector(email)).sendKeys(emailAddress)
     driver.findElement(By.cssSelector(redirectUrl)).sendKeys(TestConfiguration.url("api-hub"))
     driver.findElement(By.cssSelector(resourceType)).sendKeys("api-hub-frontend")
     driver.findElement(By.cssSelector(resourceLocations)).sendKeys("approvals")
     driver.findElement(By.cssSelector(actions)).sendKeys("WRITE")
-    Thread.sleep(5000)
-    scrollIntoView(signInButton)
-    signInButton.submit()
-    Thread.sleep(5000)
-    driver.navigate.refresh()
+    signInButton.click()
   }
 }
