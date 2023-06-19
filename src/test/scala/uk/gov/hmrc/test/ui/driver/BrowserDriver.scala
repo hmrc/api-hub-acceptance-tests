@@ -29,4 +29,5 @@ trait BrowserDriver extends LazyLogging {
   options.addArguments("--remote-allow-origins=*")
 
   implicit lazy val driver: WebDriver = SingletonDriver.getInstance(Some(options))
+//  implicit lazy val driver: WebDriver = SingletonDriver.getInstance()
 }

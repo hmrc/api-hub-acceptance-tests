@@ -19,10 +19,10 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.{By, WebElement}
 
 object YourApplicationPage extends BasePage {
-  private val yourApplications           = ".custom-second-nav li:first-of-type .govuk-link"
+  private val yourApplicationsTitle      = ".govuk-heading-l"
   private val registerAnApplication      = ".govuk-button--primary .govuk-button"
   private val registerAnotherApplication = ".hip-card-container-bottom .govuk-link--no-visited-state"
-  private val registeredApplications     = ".hip-card-container-top .govuk-link--no-visited-state"
+  private val youApplicationsTitleText   = "our Applications"
 
   private def registerApplicationButton(): WebElement =
     driver.findElement(By.cssSelector(registerAnApplication))
@@ -48,11 +48,11 @@ object YourApplicationPage extends BasePage {
     ApplicationName
   }
 
-  private def getYourApplications: WebElement =
-    driver.findElement(By.cssSelector(yourApplications))
+  private def getYourApplicationsHeading: WebElement =
+    driver.findElement(By.cssSelector(yourApplicationsTitle))
 
   def yourApplicationsIsDisplayed(): Boolean = {
-    waitForElementPresent(getYourApplications)
-    getYourApplications.isDisplayed
+    waitForElementPresent(getYourApplicationsHeading)
+    getYourApplicationsHeading.getText().trim.contains(youApplicationsTitleText)
   }
 }

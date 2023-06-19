@@ -16,7 +16,8 @@
 
 package uk.gov.hmrc.test.ui.pages
 
-import org.openqa.selenium.By
+import faker.Faker
+import org.openqa.selenium.{By, Keys, WebElement}
 import uk.gov.hmrc.test.ui.conf.TestConfiguration
 
 object CreateSignIn extends BasePage {
@@ -27,11 +28,14 @@ object CreateSignIn extends BasePage {
   val resourceLocations   = "#permissions_0_resourceLocations"
   val actions             = "#permissions_0_actions"
   val signIn              = "button[name='fake-sign-in-btn']"
-  //TODO: make
-  val defaultEmailAddress = "ade.oke@digital.hmrc.gov.uk"
+  val defaultEmailAddress = s"${Faker.en_GB.lastName()}@digital.hmrc.gov.uk"
+//  val defaultEmailAddress = "ade.oke@digital.hmrc.gov.uk"
 
   def defaultLoginUser(): Unit =
     loginWithUserEmail(defaultEmailAddress)
+
+  def signInButton: WebElement =
+    driver.findElement(By.cssSelector(signIn))
 
   def loginWithUserEmail(emailAddress: String): Unit = {
     waitForElementPresent(driver.findElement(By.cssSelector(principal)))
@@ -41,6 +45,6 @@ object CreateSignIn extends BasePage {
     driver.findElement(By.cssSelector(resourceType)).sendKeys("api-hub-frontend")
     driver.findElement(By.cssSelector(resourceLocations)).sendKeys("approvals")
     driver.findElement(By.cssSelector(actions)).sendKeys("WRITE")
-    driver.findElement(By.cssSelector(signIn)).click()
+    signInButton.click()
   }
 }
