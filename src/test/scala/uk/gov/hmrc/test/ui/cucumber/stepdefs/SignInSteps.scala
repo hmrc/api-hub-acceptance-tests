@@ -23,7 +23,7 @@ import uk.gov.hmrc.test.ui.pages.CreateSignIn.{defaultLoginUser, loginWithUserEm
 import uk.gov.hmrc.test.ui.pages.SignInPage.clickLdapContinue
 import uk.gov.hmrc.test.ui.pages.TeamMembers.addNoTeamMember
 import uk.gov.hmrc.test.ui.pages.YourApplicationPage.{registerApplication, yourApplicationsIsDisplayed}
-import uk.gov.hmrc.test.ui.pages.{ApplicationDetailsPage, ApplicationSuccessPage, CheckYouAnswersPage, SignInPage, YourApplicationPage}
+import uk.gov.hmrc.test.ui.pages.{ApplicationDetailsPage, ApplicationSuccessPage, CheckYouAnswersPage, SignInPage}
 
 class SignInSteps extends BaseStepDef {
   var expectedApplicationName: String = _
