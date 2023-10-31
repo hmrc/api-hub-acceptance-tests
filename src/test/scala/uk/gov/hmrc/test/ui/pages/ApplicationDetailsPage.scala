@@ -19,7 +19,7 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.By
 
 object ApplicationDetailsPage extends BasePage {
-  val applicationName = ".govuk-grid-column-two-thirds .theiaStickySidebar .govuk-grid-row:first-of-type p.govuk-body"
+  val applicationName = "div.govuk-grid-column-two-thirds > div:nth-child(2) > div.govuk-grid-column-three-quarters > p"
 
   def getApplicationName: String =
     driver.findElement(By.cssSelector(applicationName)).getText.trim()
