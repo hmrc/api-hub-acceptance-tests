@@ -16,11 +16,26 @@
 
 package uk.gov.hmrc.test.ui.pages
 
-import org.openqa.selenium.By
+import org.openqa.selenium.{By, WebElement}
+
+import java.util
 
 object ApplicationDetailsPage extends BasePage {
-  val applicationName = "div.govuk-grid-column-two-thirds > div:nth-child(2) > div.govuk-grid-column-three-quarters > p"
+  val applicationName  = "div.govuk-grid-column-two-thirds > div:nth-child(2) > div.govuk-grid-column-three-quarters > p"
+  val addApisLink      = ".govuk-body a[href='/api-hub/apis']"
+  val addedApiNameRows = "th[scope='row']"
 
   def getApplicationName: String =
     driver.findElement(By.cssSelector(applicationName)).getText.trim()
+
+  def addApis(): HipApisPage.type = {
+    driver.findElement(By.cssSelector(addApisLink)).click()
+    HipApisPage
+  }
+
+  def isApiNameAddedToApplication(input: String): Boolean = {
+    val elements: util.List[WebElement] = driver.findElements(By.cssSelector(addedApiNameRows))
+    elements.stream().forEach((ele: WebElement) => println("ele text: " + ele.getText))
+    elements.stream().anyMatch((element: WebElement) => element.getText.trim().equals(input));
+  }
 }

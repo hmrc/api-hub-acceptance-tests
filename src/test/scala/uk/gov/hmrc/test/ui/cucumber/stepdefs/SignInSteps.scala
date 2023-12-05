@@ -23,7 +23,7 @@ import uk.gov.hmrc.test.ui.pages.CreateSignIn.{defaultLoginUser, loginWithUserEm
 import uk.gov.hmrc.test.ui.pages.SignInPage.clickLdapContinue
 import uk.gov.hmrc.test.ui.pages.TeamMembers.addNoTeamMember
 import uk.gov.hmrc.test.ui.pages.YourApplicationPage.{registerApplication, yourApplicationsIsDisplayed}
-import uk.gov.hmrc.test.ui.pages.{ApplicationDetailsPage, ApplicationSuccessPage, CheckYouAnswersPage, SignInPage}
+import uk.gov.hmrc.test.ui.pages._
 
 class SignInSteps extends BaseStepDef {
   var expectedApplicationName: String = _
@@ -64,5 +64,21 @@ class SignInSteps extends BaseStepDef {
   Then("""the application can be viewed""") { () =>
     ApplicationSuccessPage.viewRegisteredApplication()
     assert(ApplicationDetailsPage.getApplicationName == randAppName)
+  }
+
+  Then("""the user attempts to add an api to the application""") { () =>
+    ApplicationDetailsPage.addApis()
+    HipApisPage.selectFirstApi()
+    ApiDetailsPage.addToAnApplication()
+    SelectApplicationPage.selectApplicationRadioButton(randAppName).continue()
+    SelectEndpointsPage.selectAllEndpoints().continue()
+    ReviewPolicyPage.confirmCheckbox()
+    ReviewPolicyPage.acceptAndContinue()
+    CheckYouAnswersPage.continue()
+  }
+  Then("""the api is added to the application""") { () =>
+    assert(ApiAddedSuccessfullyPage.getApiName.startsWith(HipApisPage.getSelectedApiName))
+    ApiAddedSuccessfullyPage.viewApplication()
+    assert(ApplicationDetailsPage.isApiNameAddedToApplication(HipApisPage.getSelectedApiName))
   }
 }

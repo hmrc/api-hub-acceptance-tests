@@ -16,23 +16,17 @@
 
 package uk.gov.hmrc.test.ui.pages
 
-import org.openqa.selenium.{By, WebElement}
+import org.openqa.selenium.By
 
-object CheckYouAnswersPage extends BasePage {
-  private val genericBtn = ".govuk-button"
+object ApiAddedSuccessfullyPage extends BasePage {
+  val apiNameElement = ".govuk-panel__body"
+  val viewAppLink    = ".govuk-grid-column-two-thirds a[class='govuk-link govuk-link--no-visited-state']"
 
-  private def getRegisterApplicationButton: WebElement =
-    driver.findElement(By.cssSelector(genericBtn))
+  def getApiName: String =
+    driver.findElement(By.cssSelector(apiNameElement)).getText.trim
 
-  def registerApplication(): ApplicationSuccessPage.type = {
-    waitForElementPresent(getRegisterApplicationButton)
-    getRegisterApplicationButton.click()
-    ApplicationSuccessPage
-  }
-
-  def continue(): Unit = {
-    val ele: WebElement = driver.findElement(By.cssSelector(genericBtn))
-    waitForElementPresent(ele)
-    ele.click()
+  def viewApplication(): ApplicationDetailsPage.type = {
+    driver.findElement(By.cssSelector(viewAppLink)).click()
+    ApplicationDetailsPage
   }
 }
