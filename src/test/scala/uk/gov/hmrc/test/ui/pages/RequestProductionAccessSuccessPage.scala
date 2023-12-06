@@ -22,7 +22,6 @@ object RequestProductionAccessSuccessPage extends BasePage {
   val prodAccessBanner      = ".govuk-panel__title"
   val expectedBannerMessage = "Request for production access has been submitted"
 
-  def isProductionAccessBannerRequestMessageDisplayed: Boolean = {
+  def isProductionAccessBannerRequestMessageDisplayed: Boolean =
     driver.findElement(By.cssSelector(prodAccessBanner)).getText.trim.contains(expectedBannerMessage)
-  }
 }
