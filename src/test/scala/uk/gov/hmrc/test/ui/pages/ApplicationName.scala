@@ -22,7 +22,7 @@ import org.openqa.selenium.By
 object ApplicationName extends BasePage {
   val appNameLcr          = "value"
   val continue            = ".govuk-button"
-  val randAppName: String = Faker.ar.loremWord()
+  val randAppName: String = String.format("%s%s", Faker.ar.loremWord(), Faker.en_GB.loremWord().reverse)
 
   def fillInApplicationName(input: String): TeamMembers.type = {
     driver.findElement(By.id(appNameLcr)).sendKeys(input)

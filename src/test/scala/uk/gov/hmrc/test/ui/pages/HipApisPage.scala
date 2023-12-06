@@ -18,21 +18,27 @@ package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.{By, WebElement}
 
-object CheckYouAnswersPage extends BasePage {
-  private val genericBtn = ".govuk-button"
+import java.util
 
-  private def getRegisterApplicationButton: WebElement =
-    driver.findElement(By.cssSelector(genericBtn))
+object HipApisPage extends BasePage {
+  val allApis           = ".govuk-body a.govuk-link"
+  var chosenApi: String = _
 
-  def registerApplication(): ApplicationSuccessPage.type = {
-    waitForElementPresent(getRegisterApplicationButton)
-    getRegisterApplicationButton.click()
-    ApplicationSuccessPage
+  //for now just the first api should be added, but consider adding by name instead.
+  //this could also benefit from being private
+  def chooseApiByIndex(index: Integer): this.type = {
+    val elements: util.List[WebElement] = driver.findElements(By.cssSelector(allApis))
+    chosenApi = elements.get(index).getText.trim()
+    elements.get(index).click()
+    this
   }
 
-  def continue(): Unit = {
-    val ele: WebElement = driver.findElement(By.cssSelector(genericBtn))
-    waitForElementPresent(ele)
-    ele.click()
+  //make this better and not assume the index !
+  def selectFirstApi(): ApiDetailsPage.type = {
+    chooseApiByIndex(3)
+    ApiDetailsPage
   }
+
+  def getSelectedApiName: String =
+    chosenApi
 }

@@ -16,23 +16,12 @@
 
 package uk.gov.hmrc.test.ui.pages
 
-import org.openqa.selenium.{By, WebElement}
+import org.openqa.selenium.By
 
-object CheckYouAnswersPage extends BasePage {
-  private val genericBtn = ".govuk-button"
+object RequestProductionAccessSuccessPage extends BasePage {
+  val prodAccessBanner      = ".govuk-panel__title"
+  val expectedBannerMessage = "Request for production access has been submitted"
 
-  private def getRegisterApplicationButton: WebElement =
-    driver.findElement(By.cssSelector(genericBtn))
-
-  def registerApplication(): ApplicationSuccessPage.type = {
-    waitForElementPresent(getRegisterApplicationButton)
-    getRegisterApplicationButton.click()
-    ApplicationSuccessPage
-  }
-
-  def continue(): Unit = {
-    val ele: WebElement = driver.findElement(By.cssSelector(genericBtn))
-    waitForElementPresent(ele)
-    ele.click()
-  }
+  def isProductionAccessBannerRequestMessageDisplayed: Boolean =
+    driver.findElement(By.cssSelector(prodAccessBanner)).getText.trim.contains(expectedBannerMessage)
 }
