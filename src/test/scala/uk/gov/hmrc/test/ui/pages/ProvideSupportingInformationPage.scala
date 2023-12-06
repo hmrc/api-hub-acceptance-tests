@@ -18,15 +18,20 @@ package uk.gov.hmrc.test.ui.pages
 
 import faker.Faker
 import org.openqa.selenium.By
+import uk.gov.hmrc.test.ui.pages.ApplicationDetailsPage.driver
 
-object ApplicationName extends BasePage {
-  val appNameLcr          = "value"
-  val continue            = ".govuk-button"
-  val randAppName: String = String.format("%s%s", Faker.ar.loremWord(), Faker.en_GB.loremWord().reverse)
+object ProvideSupportingInformationPage extends BasePage {
+  val infoTextBox = "#value"
+  val continueBtn = "button.govuk-button"
 
-  def fillInApplicationName(input: String): TeamMembers.type = {
-    driver.findElement(By.id(appNameLcr)).sendKeys(input)
-    driver.findElement(By.cssSelector(continue)).click()
-    TeamMembers
+  //TODO: for now just random text, but maybe more flexible to input whatever in future.
+  def randomlyFillInTextBoxReason(): this.type = {
+    driver.findElement(By.cssSelector(infoTextBox)).sendKeys(Faker.ar.loremParagraph(1))
+    this
+  }
+
+  def continue(): RequestProductionAccessSuccessPage.type = {
+    driver.findElement(By.cssSelector(continueBtn)).click()
+    RequestProductionAccessSuccessPage
   }
 }

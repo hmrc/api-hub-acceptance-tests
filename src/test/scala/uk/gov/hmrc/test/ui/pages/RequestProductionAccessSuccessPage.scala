@@ -16,17 +16,13 @@
 
 package uk.gov.hmrc.test.ui.pages
 
-import faker.Faker
 import org.openqa.selenium.By
 
-object ApplicationName extends BasePage {
-  val appNameLcr          = "value"
-  val continue            = ".govuk-button"
-  val randAppName: String = String.format("%s%s", Faker.ar.loremWord(), Faker.en_GB.loremWord().reverse)
+object RequestProductionAccessSuccessPage extends BasePage {
+  val prodAccessBanner      = ".govuk-panel__title"
+  val expectedBannerMessage = "Request for production access has been submitted"
 
-  def fillInApplicationName(input: String): TeamMembers.type = {
-    driver.findElement(By.id(appNameLcr)).sendKeys(input)
-    driver.findElement(By.cssSelector(continue)).click()
-    TeamMembers
+  def isProductionAccessBannerRequestMessageDisplayed: Boolean = {
+    driver.findElement(By.cssSelector(prodAccessBanner)).getText.trim.contains(expectedBannerMessage)
   }
 }

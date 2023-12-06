@@ -21,9 +21,11 @@ import org.openqa.selenium.{By, WebElement}
 import java.util
 
 object ApplicationDetailsPage extends BasePage {
-  val applicationName  = "div.govuk-grid-column-two-thirds > div:nth-child(2) > div.govuk-grid-column-three-quarters > p"
-  val addApisLink      = ".govuk-body a[href='/api-hub/apis']"
-  val addedApiNameRows = "th[scope='row']"
+  val applicationName      = "div.govuk-grid-column-two-thirds > div:nth-child(2) > div.govuk-grid-column-three-quarters > p"
+  val addApisLink          = ".govuk-body a[href='/api-hub/apis']"
+  val addedApiNameRows     = "th[scope='row']"
+  val lhnmLinks            = ".side-nav__component .side-nav__link"
+  val requestProdAccessBtn = ".govuk-grid-column-one-half a.govuk-button"
 
   def getApplicationName: String =
     driver.findElement(By.cssSelector(applicationName)).getText.trim()
@@ -35,7 +37,24 @@ object ApplicationDetailsPage extends BasePage {
 
   def isApiNameAddedToApplication(input: String): Boolean = {
     val elements: util.List[WebElement] = driver.findElements(By.cssSelector(addedApiNameRows))
-    elements.stream().forEach((ele: WebElement) => println("ele text: " + ele.getText))
     elements.stream().anyMatch((element: WebElement) => element.getText.trim().equals(input));
+  }
+
+  //TODO move to section, this is also used in SelectApplicationPage class, so could go to base class too
+  def chooseLhnmOption(input: String): this.type = {
+    val elements: util.List[WebElement] = driver.findElements(By.cssSelector(lhnmLinks))
+    elements.forEach((element: WebElement) => println(element.getText.trim))
+    val result                          =
+      elements.stream().filter((element: WebElement) => element.getText.trim == input).findFirst().orElse(null)
+    try result.click()
+    catch {
+      case ex: NoSuchElementException => println("element could not be found")
+    }
+    this
+  }
+
+  def requestProductionAccess(): RequestProductionAccessPage.type = {
+    driver.findElement(By.cssSelector(requestProdAccessBtn)).click()
+    RequestProductionAccessPage
   }
 }

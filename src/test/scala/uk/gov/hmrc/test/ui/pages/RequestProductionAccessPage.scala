@@ -16,17 +16,19 @@
 
 package uk.gov.hmrc.test.ui.pages
 
-import faker.Faker
 import org.openqa.selenium.By
 
-object ApplicationName extends BasePage {
-  val appNameLcr          = "value"
-  val continue            = ".govuk-button"
-  val randAppName: String = String.format("%s%s", Faker.ar.loremWord(), Faker.en_GB.loremWord().reverse)
+object RequestProductionAccessPage extends BasePage {
+  val confirmCheckbox = "#accept_0"
+  val continueBtn     = "button.govuk-button"
 
-  def fillInApplicationName(input: String): TeamMembers.type = {
-    driver.findElement(By.id(appNameLcr)).sendKeys(input)
-    driver.findElement(By.cssSelector(continue)).click()
-    TeamMembers
+  def confirm(): this.type = {
+    driver.findElement(By.cssSelector(confirmCheckbox)).click()
+    this
+  }
+
+  def continue(): ProvideSupportingInformationPage.type = {
+    driver.findElement(By.cssSelector(continueBtn)).click()
+    ProvideSupportingInformationPage
   }
 }
