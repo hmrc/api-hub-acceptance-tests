@@ -31,7 +31,7 @@ class ProductionAccessSteps extends BaseStepDef {
     assert(ApplicationDetailsPage.getApplicationName == ApplicationName.randAppName)
 
     ApplicationDetailsPage.addApis()
-    HipApisPage.selectFirstApi()
+    HipApisPage.selectRandomApi()
     ApiDetailsPage.addToAnApplication()
     SelectApplicationPage.selectApplicationRadioButton(ApplicationName.randAppName).continue()
     SelectEndpointsPage.selectAllEndpoints().continue()

@@ -13,6 +13,7 @@ object Dependencies {
     "com.novocode"          % "junit-interface"        % "0.11"     % Test,
     "uk.gov.hmrc"          %% "webdriver-factory"      % "0.46.0"   % Test,
     "io.github.etspaceman" %% "scalacheck-faker"       % "7.0.0"    % Test,
-    "io.cucumber"           % "cucumber-picocontainer" % "7.11.0"   % Test
+    "io.cucumber"           % "cucumber-picocontainer" % "7.11.0"   % Test,
+    "io.rest-assured"       % "scala-support"          % "5.3.2"    % Test
   )
 }

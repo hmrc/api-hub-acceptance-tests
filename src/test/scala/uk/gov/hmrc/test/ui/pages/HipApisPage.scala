@@ -18,6 +18,7 @@ package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.{By, WebElement}
 
+import java.security.SecureRandom
 import java.util
 
 object HipApisPage extends BasePage {
@@ -26,16 +27,20 @@ object HipApisPage extends BasePage {
 
   //for now just the first api should be added, but consider adding by name instead.
   //this could also benefit from being private
+
+  def numberOfApis(): util.List[WebElement] =
+    driver.findElements(By.cssSelector(allApis))
+
   def chooseApiByIndex(index: Integer): this.type = {
-    val elements: util.List[WebElement] = driver.findElements(By.cssSelector(allApis))
+    val elements: util.List[WebElement] = numberOfApis()
     chosenApi = elements.get(index).getText.trim()
     elements.get(index).click()
     this
   }
 
-  //make this better and not assume the index !
-  def selectFirstApi(): ApiDetailsPage.type = {
-    chooseApiByIndex(3)
+  def selectRandomApi(): ApiDetailsPage.type = {
+    val apiIndex = new SecureRandom().nextInt(numberOfApis().size())
+    chooseApiByIndex(apiIndex)
     ApiDetailsPage
   }
 
