@@ -68,7 +68,7 @@ class SignInSteps extends BaseStepDef {
 
   Then("""the user attempts to add an api to the application""") { () =>
     ApplicationDetailsPage.addApis()
-    HipApisPage.selectFirstApi()
+    HipApisPage.selectRandomApi()
     ApiDetailsPage.addToAnApplication()
     SelectApplicationPage.selectApplicationRadioButton(randAppName).continue()
     SelectEndpointsPage.selectAllEndpoints().continue()

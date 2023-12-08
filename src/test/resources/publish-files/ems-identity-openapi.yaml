@@ -1,0 +1,384 @@
+---
+openapi: 3.0.1
+info:
+  title: "Enterprise Matching Service: Identity Service"
+  description:
+    "This service provides two endpoints, enabling a match request to be\
+        \ sent with details about a person. The response will include all associated tax\
+        \ identifiers for a successfully matched person."
+  version: 1.0.0
+  x-integration-catalogue:
+    reviewed-date: 2023-06-02T11:29:59.324995559Z
+    publisher-reference: ems-identity
+    short-description: EMS Identity Service
+    status: ALPHA
+    backends:
+      - EMS
+servers:
+  - url: https://api.hip.prod.eis.ns2p.corp.hmrc.gov.uk/ems/
+    description: Corporate - Production
+  - url: https://api.hip.test.eis.ns2n.corp.hmrc.gov.uk/ems/
+    description: Corporate - Test
+  - url: https://hip.ws.hmrc.gov.uk/ems/
+    description: MDTP - Production
+  - url: https://hip.ws.ibt.hmrc.gov.uk/ems/
+    description: MDTP - QA
+security:
+  - oAuth2:
+    - write:person
+    - write:person-details
+
+paths:
+  /v1/api/match-by-name:
+    post:
+      tags:
+        - match-by-name
+      summary:
+        "Match a person based on their given name, family name, date of birth\
+                \ and postcode."
+      description: |
+        Send a request with details about a person - given name, family name, date of birth and postcode. If a matched person is found, the response will include known identifiers from NPS and ETMP for that person's various tax accounts.
+      operationId: matchByName
+      parameters:
+        - name: CorrelationId
+          in: header
+          description: Correlation ID for request traceability
+          required: false
+          schema:
+            type: string
+      requestBody:
+        description: Match by name request object
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MatchByNameJsonRequest"
+        required: true
+      responses:
+        "200":
+          description: Matching details for supplied names and other details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MatchJsonResponse"
+              examples:
+                success:
+                  $ref: "#/components/examples/MatchJsonResponseExample"
+        "400":
+          description: Invalid arguments supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              examples:
+                error:
+                  $ref: "#/components/examples/ErrorExample"
+  /v1/api/match-by-identifier:
+    post:
+      tags:
+        - match-by-identifier
+      summary:
+        "Match a person based on their identifier and type, given name, family\
+                \ name, date of birth and postcode."
+      description: |
+        Send a request with details about a person - identifier and type, given name, family name, date of birth and postcode. If a matched person is found, the response will include known identifiers from NPS and ETMP for that person's various tax accounts.
+      operationId: matchByIdentifier
+      parameters:
+        - name: CorrelationId
+          in: header
+          description: Correlation ID for request traceability
+          required: false
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MatchByIdentifierJsonRequest"
+        required: true
+      responses:
+        "200":
+          description: Matching details for supplied identifier and other details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MatchJsonResponse"
+              examples:
+                success:
+                  $ref: "#/components/examples/MatchJsonResponseExample"
+        "400":
+          description: Invalid arguments supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+              examples:
+                error:
+                  $ref: "#/components/examples/ErrorExample"
+      security:
+        - oAuth2:
+            - read:match-person-by-identifier
+            - read:endpoint-additional-scope-no-schema
+components:
+  schemas:
+    MatchByNameJsonRequest:
+      required:
+        - familyName
+        - givenName
+      type: object
+      properties:
+        givenName:
+          description: Given name of person
+          type: string
+          example: martin
+        aliasGivenName:
+          description: Include alias of given name
+          default: false
+          type: boolean
+          example: true
+        includeGivenNameInitial:
+          description: Include initial of given name
+          default: false
+          type: boolean
+          example: true
+        familyName:
+          description: Family name of person
+          type: string
+          example: smith
+        postcode:
+          description: Postcode of person address
+          type: string
+          example: M20 1XX
+        dateOfBirth:
+          format: date
+          description: Date of birth of person in ISO 8601 format (YYYY-MM-DD)
+          type: string
+          example: 1970-12-31
+        excludeDeceased:
+          description: Exclude deceased people
+          default: false
+          type: boolean
+          example: true
+    Identifier:
+      description: List of identifiers that this person has
+      type: object
+      properties:
+        type:
+          description: The identifier type
+          type: string
+          example: NINO
+        value:
+          description: The identifier value
+          type: string
+          example: AB123456
+        source:
+          description: The source of the identifier
+          type: array
+          items:
+            description: The source of the identifier
+            type: string
+            example: '["NPS"]'
+          example:
+            - NPS
+        bpid:
+          description: The BPIDs of any associated identifiers
+          type: array
+          items:
+            description: The BPIDs of any associated identifiers
+            type: string
+            example: '["12345678"]'
+          example:
+            - "12345678"
+    MatchJsonResponse:
+      description: Match by name response
+      type: object
+      properties:
+        person:
+          description: People who match the request and have scored sufficiently
+          type: array
+          items:
+            $ref: "#/components/schemas/Person"
+    Person:
+      description: People who match the request and have scored sufficiently
+      type: object
+      properties:
+        identifiers:
+          description: List of identifiers that this person has
+          type: array
+          items:
+            $ref: "#/components/schemas/Identifier"
+        matchScore:
+          format: double
+          description: Score of this match for the match request fields
+          type: number
+          example: 250
+        maximumMatchScore:
+          format: double
+          description: Maximum attainable score for the match request fields
+          type: number
+          example: 500
+        matchScoreRatio:
+          format: double
+          description: Calculated ratio of matchScore from maximumMatchScore
+          type: number
+          example: 0.5
+        matchingAnalytics:
+          description:
+            Breakdown of what match request fields contributed to the match
+            score
+          type: array
+          items:
+            description:
+              Breakdown of what match request fields contributed to the
+              match score
+            type: string
+            example: '["givenName: 250"]'
+          example:
+            - "givenName: 250"
+    Error:
+      description: Response error
+      type: object
+      properties:
+        generalErrors:
+          type: array
+          items:
+            $ref: "#/components/schemas/GeneralError"
+        fieldErrors:
+          type: array
+          items:
+            $ref: "#/components/schemas/FieldError"
+    FieldError:
+      type: object
+      properties:
+        field:
+          description: The specific error field name
+          type: string
+          example: givenName
+        message:
+          description: The specific error message
+          type: string
+          example: Mandatory field not supplied
+    GeneralError:
+      type: object
+      properties:
+        message:
+          description: General error description
+          type: string
+          example: BAD REQUEST
+    MatchByIdentifierJsonRequest:
+      required:
+        - identifierType
+        - identifierValue
+      type: object
+      properties:
+        identifierType:
+          description: Identifier type
+          enum:
+            - NINO
+          type: string
+          example: NINO
+        identifierValue:
+          description: Identifier value
+          type: string
+          example: AB123456
+        givenName:
+          description: Given name of person
+          type: string
+          example: martin
+        familyName:
+          description: Family name of person
+          type: string
+          example: smith
+        postcode:
+          description: Postcode of person address
+          type: string
+          example: M20 1XX
+        dateOfBirth:
+          description: Date of birth of person in ISO 8601 format (YYYY-MM-DD)
+          type: string
+          example: 1970-12-31
+        excludeDeceased:
+          description: Exclude deceased people
+          default: false
+          type: boolean
+          example: true
+    HIP-originEnum:
+      enum:
+        - HIP
+        - HoD
+      type: string
+    HIP-failureResponse:
+      required:
+        - failures
+      type: object
+      properties:
+        failures:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            required:
+              - type
+              - reason
+            type: object
+            properties:
+              type:
+                type: string
+              reason:
+                type: string
+            additionalProperties: false
+    HIP-originResponse:
+      required:
+        - origin
+        - response
+      type: object
+      properties:
+        origin:
+          $ref: "#/components/schemas/HIP-originEnum"
+        response:
+          $ref: "#/components/schemas/HIP-failureResponse"
+      additionalProperties: false
+  examples:
+    MatchJsonResponseExample:
+      summary: Example with a successful match
+      value: |
+        {
+          "person": [
+            {
+              "identifiers": [
+                {
+                  "type": "NINO",
+                  "value": "AB123456",
+                  "source": [
+                    "NPS"
+                  ],
+                  "bpid": [
+                    "12345678"
+                  ]
+                }
+              ],
+              "matchScore": 250,
+              "maximumMatchScore": 500,
+              "matchScoreRatio": 0.5,
+              "matchingAnalytics": [
+                "givenName: 250"
+              ]
+            }
+          ]
+        }
+    ErrorExample:
+      summary: Example error due to missing field
+      value: |-
+        {
+          "generalErrors": [
+            {
+              "message": "BAD REQUEST"
+            }
+          ],
+          "fieldErrors": [
+            {
+              "field": "givenName",
+              "message": "Mandatory field not supplied"
+            }
+          ]
+        }
+  

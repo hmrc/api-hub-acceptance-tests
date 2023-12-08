@@ -1,0 +1,262 @@
+openapi: 3.0.3
+info:
+  version: "1.0.0"
+  title: Identity Management Service
+  description: >-
+    Identity Management Service for API Hub to manage clients and associated scopes.
+  x-integration-catalogue:
+    reviewed-date: 2023-08-11T16:25:00Z
+    platform: HIP
+    publisher-reference: identity-management-service
+    short-description: Identity Management Service for API Hub to manage clients and associated scopes.
+    status: LIVE
+paths:
+  /identity/clients:
+    post:
+      summary: Create a new client
+      parameters:
+        - $ref: '#/components/parameters/correlationId'
+      requestBody:
+        description: Client object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Client'
+      security:
+        - oAuth2:
+            - write:client-credentials
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: BAD_REQUEST,
+                message: HTTP 400 Bad Request
+  /identity/clients/{id}:
+    delete:
+      summary: Delete a client
+      parameters:
+        - $ref: '#/components/parameters/correlationId'
+        - $ref: '#/components/parameters/clientId'
+      security:
+        - oAuth2:
+            - delete:client-credentials
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /identity/clients/{id}/client-secret:
+    get:
+      summary: Get the current secret for the client
+      parameters:
+        - $ref: '#/components/parameters/correlationId'
+        - $ref: '#/components/parameters/clientId'
+      security:
+        - oAuth2:
+            - read:client-credentials
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientSecretResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Generate a new secret for the client
+      parameters:
+        - $ref: '#/components/parameters/correlationId'
+        - $ref: '#/components/parameters/clientId'
+      security:
+        - oAuth2:
+            - write:client-credentials
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientSecretResponse'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /identity/clients/{id}/client-secret/rotated:
+    delete:
+      summary: Invalidate rotated secret for a client
+      parameters:
+        - $ref: '#/components/parameters/correlationId'
+        - $ref: '#/components/parameters/clientId'
+      security:
+        - oAuth2:
+            - delete:client-credentials
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /identity/clients/{id}/client-scopes:
+    get:
+      summary: Get scopes for a client
+      parameters:
+        - $ref: '#/components/parameters/correlationId'
+        - $ref: '#/components/parameters/clientId'
+      security:
+        - oAuth2:
+            - read:client-credentials
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClientScope'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /identity/clients/{id}/client-scopes/{clientScopeId}:
+    put:
+      summary: Add client scope to client
+      parameters:
+        - $ref: '#/components/parameters/correlationId'
+        - $ref: '#/components/parameters/clientId'
+        - $ref: '#/components/parameters/clientScopeId'
+      security:
+        - oAuth2:
+            - write:client-credentials
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: NOT_FOUND
+                message: The clientId or clientScopeId does not exist
+    delete:
+      summary: Delete a client scope from a client
+      parameters:
+        - $ref: '#/components/parameters/correlationId'
+        - $ref: '#/components/parameters/clientId'
+        - $ref: '#/components/parameters/clientScopeId'
+      security:
+        - oAuth2:
+            - delete:client-credentials
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                code: NOT_FOUND
+                message: The clientId or clientScopeId does not exist
+components:
+  parameters:
+    correlationId:
+      in: header
+      name: CorrelationId
+      description: Optional. A UUID format string for the transaction. If not specified then one will be created automatically
+      required: false
+      schema:
+        type: string
+        pattern: '^[0-9a-fA-F]{8}[-][0-9a-fA-F]{4}[-][0-9a-fA-F]{4}[-][0-9a-fA-F]{4}[-][0-9a-fA-F]{12}$'
+    clientId:
+      in: path
+      name: id
+      schema:
+        type: string
+      required: true
+      description: Client ID
+    clientScopeId:
+      in: path
+      name: clientScopeId
+      schema:
+        type: string
+      required: true
+      description: Client Scope ID
+  schemas:
+    Client:
+      type: object
+      properties:
+        applicationName:
+          type: string
+        description:
+          type: string
+    ClientResponse:
+      type: object
+      properties:
+        clientId:
+          type: string
+        secret:
+          type: string
+    ClientScope:
+      type: object
+      properties:
+        clientScopeId:
+          type: string
+    ClientSecretResponse:
+      type: object
+      properties:
+        secret:
+          type: string
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+          example: NOT_FOUND
+        message:
+          type: string
+          example: That clientId does not exist
+  securitySchemes:
+    oAuth2:
+      type: oauth2
+      description: Keycloak OAuth2 Client Credentials Flow
+      flows:
+        clientCredentials:
+          tokenUrl: /tokenUrl/not-required
+          scopes:
+            read:client-credentials: Read client and scope information.
+            write:client-credentials: Create clients and add scopes to clients.
+            delete:client-credentials: Delete clients and remove scopes from clients.
+
+servers:
+  - url: http://localhost:8080/internal
+
