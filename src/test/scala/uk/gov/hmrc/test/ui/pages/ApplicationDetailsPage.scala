@@ -54,7 +54,7 @@ object ApplicationDetailsPage extends BasePage {
   }
 
   def requestProductionAccess(): RequestProductionAccessPage.type = {
-    driver.findElement(By.cssSelector(requestProdAccessBtn)).click()
+    waitForElementPresentAndClick(driver.findElement(By.cssSelector(requestProdAccessBtn)))
     RequestProductionAccessPage
   }
 }
