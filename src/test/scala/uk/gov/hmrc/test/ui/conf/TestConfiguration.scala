@@ -29,7 +29,6 @@ object TestConfiguration {
       case "local" => s"$environmentHost:${servicePort(service)}"
       case _       => s"${envConfig.getString(s"services.host")}"
     }
-    println("path is: " + s"$host${serviceRoute(service)}")
     s"$host${serviceRoute(service)}"
   }
 

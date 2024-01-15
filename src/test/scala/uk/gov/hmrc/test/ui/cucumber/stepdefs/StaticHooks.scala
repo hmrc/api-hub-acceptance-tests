@@ -30,7 +30,7 @@ object StaticHooks extends ScalaDsl with EN with BrowserDriver {
     files.forEach(file => sendFileToPublish(file.toString))
   }
 
-  def sendFileToPublish(filename: String): Unit = {
+  private def sendFileToPublish(filename: String): Unit = {
     val result = given()
       .baseUri(TestConfiguration.url("oas-files"))
       .multiPart(
@@ -46,10 +46,10 @@ object StaticHooks extends ScalaDsl with EN with BrowserDriver {
       .when()
       .put("/apis/multipart/publish")
 
-    if (result.statusCode() != 201) {
-      println("not expected status code: " + result.statusCode())
+    if (result.statusCode() == 201 || result.statusCode() == 200) {
+      println("OAS file successfully published, response code is: " + result.statusCode())
     } else {
-      println("status code is: " + result.statusCode())
+      println("There was a problem publishing the OAS file, response code is: " + result.statusCode())
     }
   }
 }
