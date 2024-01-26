@@ -18,13 +18,17 @@ package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
 import faker.Faker
 import uk.gov.hmrc.test.ui.pages._
+import uk.gov.hmrc.test.ui.utilities.User
 
 class TeamMemberSteps extends BaseStepDef {
-  var expectedApplicationName: String = _
-  var addedTeamMembersCount: Int      = 1
-  var lastAddedTeamMember: String     = s"${Faker.en_GB.firstName()}@digital.hmrc.gov.uk"
-  var invalidDomainEmail: String      = s"${Faker.en_GB.firstName()}@example.com"
-  var updatedEmail: String            = _
+  var expectedApplicationName: String       = _
+  var addedTeamMembersCount: Int            = 1
+  var lastAddedTeamMember: String           = s"${Faker.en_GB.firstName()}@digital.hmrc.gov.uk"
+  var invalidDomainEmail: String            = s"${Faker.en_GB.firstName()}@example.com"
+  var updatedEmail: String                  = _
+  val expectedApplicationDetailsHeadingText = "Application details"
+  val expectedNoTeamMembersText             = "No team members added"
+  val updatedApplicationName: String        = ApplicationName.randAppName.reverse.toLowerCase
 
   Then("""the new user starts the registration process""") { () =>
     YourApplicationPage.registerApplication()
@@ -39,7 +43,6 @@ class TeamMemberSteps extends BaseStepDef {
     var addMemberCount = 1
     while (addMemberCount < string.toInt) {
       val randomNameEmail = s"${Faker.en_GB.firstName()}@digital.hmrc.gov.uk"
-      print(randomNameEmail)
       AddTeamMemberDetailsPage.fillInEmail(randomNameEmail)
       TeamMembersOverviewPage.addTeamMember()
       addMemberCount = addMemberCount + 1
@@ -75,6 +78,10 @@ class TeamMemberSteps extends BaseStepDef {
     TeamMembers.clickContinue()
   }
 
+  When("""the user chooses to not add a new team member""") { () =>
+    TeamMembers.addNoTeamMember()
+  }
+
   Then("""the problem alert box displayed""") { () =>
     assert(TeamMembers.isAlertBoxDisplayed(), true)
   }
@@ -86,5 +93,34 @@ class TeamMemberSteps extends BaseStepDef {
 
   Then("""the email alert message is displayed""") { () =>
     assert(TeamMembers.isEmailAlertMessageDisplayed(), true)
+  }
+
+  Then("""the check your answers page displays the correct information for no team members added""") { () =>
+    assert(CheckYouAnswersPage.getApplicationNameText == ApplicationName.randAppName)
+    assert(CheckYouAnswersPage.getApplicationDetailsHeadingText == expectedApplicationDetailsHeadingText)
+    assert(CheckYouAnswersPage.isChangeApplicationNameLinkDisplayed, true)
+    assert(CheckYouAnswersPage.isTeamMembersChangeLinkDisplayed, true)
+    assert(CheckYouAnswersPage.getNoTeamMembersText == expectedNoTeamMembersText, true)
+    assert(CheckYouAnswersPage.getTeamOwnerEmailText.toLowerCase() == User.Email.toLowerCase(), true)
+  }
+
+  Then("""the user changes the application name""") { () =>
+    CheckYouAnswersPage.clickChangeApplicationName()
+    ApplicationName.clearApplicationName()
+    ApplicationName.fillInApplicationName(updatedApplicationName)
+  }
+
+  Then("""the application name should be changed""") { () =>
+    assert(CheckYouAnswersPage.getApplicationNameText.toLowerCase() == updatedApplicationName, true)
+  }
+
+  Then("""the user chooses to change the team member""") { () =>
+    CheckYouAnswersPage.clickChangeTeamMember()
+  }
+
+  Then("""the user should be redirected to the team members overview page""") { () =>
+    assert(AddTeamMembers.isContinueButtonDisplayed(), true)
+    assert(AddTeamMembers.getHeadingText() == "Do you want to add team members?", true)
+    assert(AddTeamMembers.isNoRadioButtonSelected(), true)
   }
 }

@@ -19,10 +19,50 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.{By, WebElement}
 
 object CheckYouAnswersPage extends BasePage {
-  private val genericBtn = ".govuk-button"
+  private val genericBtn                    = ".govuk-button"
+  private val applicationName               = ".govuk-summary-list:first-of-type .govuk-summary-list__value"
+  private val changeApplicationNameLink     = ".govuk-summary-list:first-of-type .govuk-link"
+  private val noTeamMemberText              =
+    ".govuk-summary-list:last-of-type .govuk-summary-list__row:last-of-type .govuk-summary-list__value"
+  private val changeTeamMemberLink          =
+    ".govuk-summary-list:last-of-type .govuk-summary-list__actions:last-of-type .govuk-link"
+  private val applicationDetailsHeadingText = ".govuk-heading-m"
+  private val teamOwnerName                 =
+    "div[class='govuk-summary-list__row govuk-summary-list__row--no-actions'] > dt.govuk-summary-list__key"
+
+  def getTeamOwnerEmailText: String =
+    driver.findElement(By.cssSelector(teamOwnerName)).getText.trim
+
+  def getApplicationNameText: String =
+    driver.findElement(By.cssSelector(applicationName)).getText.trim
+
+  private def changeApplicationNameElement: WebElement =
+    driver.findElement(By.cssSelector(changeApplicationNameLink))
+  def isChangeApplicationNameLinkDisplayed: Boolean    =
+    changeApplicationNameElement.isDisplayed
+
+  def clickChangeApplicationName(): Unit =
+    changeApplicationNameElement.click()
+  def getNoTeamMembersText: String       =
+    driver.findElement(By.cssSelector(noTeamMemberText)).getText.trim
+
+  private def teamMembersChangeLink: WebElement =
+    driver.findElement(By.cssSelector(changeTeamMemberLink))
+
+  def clickChangeTeamMember(): Unit =
+    teamMembersChangeLink.click()
+
+  def isTeamMembersChangeLinkDisplayed: Boolean =
+    teamMembersChangeLink.isDisplayed
+
+  def getApplicationDetailsHeadingText: String =
+    driver.findElement(By.cssSelector(applicationDetailsHeadingText)).getText.trim
 
   private def getRegisterApplicationButton: WebElement =
     driver.findElement(By.cssSelector(genericBtn))
+
+  def isRegisterApplicationButtonDisplayed: Boolean =
+    getRegisterApplicationButton.isDisplayed
 
   def registerApplication(): ApplicationSuccessPage.type = {
     waitForElementPresent(getRegisterApplicationButton)

@@ -24,6 +24,7 @@ import uk.gov.hmrc.test.ui.pages.SignInPage.clickLdapContinue
 import uk.gov.hmrc.test.ui.pages.TeamMembers.addNoTeamMember
 import uk.gov.hmrc.test.ui.pages.YourApplicationPage.{registerApplication, yourApplicationsIsDisplayed}
 import uk.gov.hmrc.test.ui.pages._
+import uk.gov.hmrc.test.ui.utilities.User
 
 class SignInSteps extends BaseStepDef {
   var expectedApplicationName: String = _
@@ -42,7 +43,7 @@ class SignInSteps extends BaseStepDef {
   }
 
   When("""a new user with approver resource type with write privileges logs in""") { () =>
-    loginWithUserEmail(randomLocalEmail)
+    loginWithUserEmail(User.Email)
   }
 
   Then("""the user should be authenticated""") { () =>
@@ -76,6 +77,7 @@ class SignInSteps extends BaseStepDef {
     ReviewPolicyPage.acceptAndContinue()
     CheckYouAnswersPage.continue()
   }
+
   Then("""the api is added to the application""") { () =>
     assert(ApiAddedSuccessfullyPage.getApiName.startsWith(HipApisPage.getSelectedApiName))
     ApiAddedSuccessfullyPage.viewApplication()

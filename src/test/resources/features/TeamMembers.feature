@@ -19,6 +19,7 @@ Feature: Team Members
     When the user changes the team members email address
     Then the team members email is changed
 
+  @HIPP-27
   Scenario: Remove team member
     Given a user is on the sign in page
     And the user decides to login via ldap

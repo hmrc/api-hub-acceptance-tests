@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,19 @@ package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.By
 
-object CheckYourAnswers extends BasePage {
-  val registeredAppName = ".govuk-summary-list__row .govuk-summary-list__value"
+object AddTeamMembers extends BasePage {
+  private val teamMembersHeading = ".govuk-fieldset__heading"
+  private val noRadioBtn         = "value-no"
+  private val continueBtn        = ".govuk-button"
 
-  def getRegisteredApplicationName(): String =
-    driver.findElement(By.cssSelector(registeredAppName)).getText
+  def isNoRadioButtonSelected(): Boolean = {
+    waitForElementPresent(driver.findElement(By.id(noRadioBtn)))
+    driver.findElement(By.id(noRadioBtn)).isSelected
+  }
+
+  def isContinueButtonDisplayed(): Boolean =
+    driver.findElement(By.cssSelector(continueBtn)).isDisplayed
+
+  def getHeadingText(): String =
+    driver.findElement(By.cssSelector(teamMembersHeading)).getText.trim
 }
