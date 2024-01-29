@@ -3,7 +3,6 @@ Feature: LDAP Roles
 
   Scenario: Verify top level navigation for LDAP roles
 
-  @wip
   Scenario Outline: Verify top level navigation for LDAP roles <role>
     Given a user is on the sign in page
     And the user decides to login via ldap
