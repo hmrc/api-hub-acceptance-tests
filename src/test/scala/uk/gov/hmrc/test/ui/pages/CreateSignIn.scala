@@ -37,13 +37,16 @@ object CreateSignIn extends BasePage {
   def signInButton: WebElement =
     driver.findElement(By.cssSelector(signIn))
 
-  def loginWithUserEmail(emailAddress: String): Unit = {
+  def loginWithUserEmail(emailAddress: String): Unit =
+    loginWithRoleAndEmailAddress("approvals", emailAddress)
+
+  def loginWithRoleAndEmailAddress(role: String, emailAddress: String): Unit = {
     waitForElementPresent(driver.findElement(By.cssSelector(principal)))
     driver.findElement(By.cssSelector(principal)).sendKeys("auto-test")
     driver.findElement(By.cssSelector(email)).sendKeys(emailAddress)
     driver.findElement(By.cssSelector(redirectUrl)).sendKeys(TestConfiguration.url("api-hub"))
     driver.findElement(By.cssSelector(resourceType)).sendKeys("api-hub-frontend")
-    driver.findElement(By.cssSelector(resourceLocations)).sendKeys("approvals")
+    driver.findElement(By.cssSelector(resourceLocations)).sendKeys(role)
     driver.findElement(By.cssSelector(actions)).sendKeys("WRITE")
     signInButton.click()
   }

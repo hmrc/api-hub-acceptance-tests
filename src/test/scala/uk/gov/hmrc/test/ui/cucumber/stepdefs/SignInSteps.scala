@@ -83,4 +83,17 @@ class SignInSteps extends BaseStepDef {
     ApiAddedSuccessfullyPage.viewApplication()
     assert(ApplicationDetailsPage.isApiNameAddedToApplication(HipApisPage.getSelectedApiName))
   }
+
+  Given("a user logs in with role {string}") { (role: String) =>
+    CreateSignIn.loginWithRoleAndEmailAddress(role, User.Email)
+  }
+
+  Then("your applications has the following header links {string} {string} {string}") {
+    (linkOne: String, linkTwo: String, linkThree: String) =>
+      assert(YourApplicationPage.getHeaderLinkTexts().contains(linkOne))
+      assert(YourApplicationPage.getHeaderLinkTexts().contains(linkTwo))
+      if (linkThree.nonEmpty) {
+        assert(YourApplicationPage.getHeaderLinkTexts().contains(linkThree))
+      }
+  }
 }
