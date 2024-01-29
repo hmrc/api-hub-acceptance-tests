@@ -16,19 +16,19 @@
 
 package uk.gov.hmrc.test.ui.pages
 
-import faker.Faker
-import org.openqa.selenium.{By, Keys, WebElement}
+import org.openqa.selenium.{By, WebElement}
 import uk.gov.hmrc.test.ui.conf.TestConfiguration
+import uk.gov.hmrc.test.ui.utilities.User
 
 object CreateSignIn extends BasePage {
-  val principal           = "#principal"
-  val email               = "#email"
-  val redirectUrl         = "#redirectUrl"
-  val resourceType        = "#permissions_0_resourceTypes"
-  val resourceLocations   = "#permissions_0_resourceLocations"
-  val actions             = "#permissions_0_actions"
-  val signIn              = "button[name='fake-sign-in-btn']"
-  val defaultEmailAddress = s"${Faker.en_GB.lastName()}@digital.hmrc.gov.uk"
+  val principal                   = "#principal"
+  val email                       = "#email"
+  val redirectUrl                 = "#redirectUrl"
+  val resourceType                = "#permissions_0_resourceTypes"
+  val resourceLocations           = "#permissions_0_resourceLocations"
+  val actions                     = "#permissions_0_actions"
+  val signIn                      = "button[name='fake-sign-in-btn']"
+  val defaultEmailAddress: String = User.Email
 //  val defaultEmailAddress = "ade.oke@digital.hmrc.gov.uk"
 
   def defaultLoginUser(): Unit =
@@ -37,13 +37,16 @@ object CreateSignIn extends BasePage {
   def signInButton: WebElement =
     driver.findElement(By.cssSelector(signIn))
 
-  def loginWithUserEmail(emailAddress: String): Unit = {
+  def loginWithUserEmail(emailAddress: String): Unit =
+    loginWithRoleAndEmailAddress("approvals", emailAddress)
+
+  def loginWithRoleAndEmailAddress(role: String, emailAddress: String): Unit = {
     waitForElementPresent(driver.findElement(By.cssSelector(principal)))
     driver.findElement(By.cssSelector(principal)).sendKeys("auto-test")
     driver.findElement(By.cssSelector(email)).sendKeys(emailAddress)
     driver.findElement(By.cssSelector(redirectUrl)).sendKeys(TestConfiguration.url("api-hub"))
     driver.findElement(By.cssSelector(resourceType)).sendKeys("api-hub-frontend")
-    driver.findElement(By.cssSelector(resourceLocations)).sendKeys("approvals")
+    driver.findElement(By.cssSelector(resourceLocations)).sendKeys(role)
     driver.findElement(By.cssSelector(actions)).sendKeys("WRITE")
     signInButton.click()
   }

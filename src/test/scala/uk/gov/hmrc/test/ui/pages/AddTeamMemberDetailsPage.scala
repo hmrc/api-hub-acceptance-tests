@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,22 @@ package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.By
 
-object CheckYourAnswers extends BasePage {
-  val registeredAppName = ".govuk-summary-list__row .govuk-summary-list__value"
+object AddTeamMemberDetailsPage extends BasePage {
+  private val emailTxtField = "#email"
+  private val continueBtn   = ".govuk-button"
 
-  def getRegisteredApplicationName(): String =
-    driver.findElement(By.cssSelector(registeredAppName)).getText
+  def clearEmail(): Unit =
+    driver.findElement(By.cssSelector(emailTxtField)).clear()
+
+  def setEmail(input: String): Unit =
+    driver.findElement(By.cssSelector(emailTxtField)).sendKeys(input)
+
+  def continue(): Unit =
+    driver.findElement(By.cssSelector(continueBtn)).click()
+
+  def fillInEmail(input: String): TeamMembersOverviewPage.type = {
+    setEmail(input)
+    continue()
+    TeamMembersOverviewPage
+  }
 }

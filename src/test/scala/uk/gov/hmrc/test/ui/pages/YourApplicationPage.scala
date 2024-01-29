@@ -23,6 +23,14 @@ object YourApplicationPage extends BasePage {
   private val registerAnApplication      = ".govuk-button--primary .govuk-button"
   private val registerAnotherApplication = ".hip-card-container-bottom .govuk-link--no-visited-state"
   private val youApplicationsTitleText   = "our Applications"
+  private val headerLinksTexts           = ".custom-second-nav li a.govuk-link"
+
+  def getHeaderLinkTexts(): Array[AnyRef] =
+    driver
+      .findElements(By.cssSelector(headerLinksTexts))
+      .stream()
+      .map(i => i.getText)
+      .toArray
 
   private def registerApplicationButton(): WebElement =
     driver.findElement(By.cssSelector(registerAnApplication))
