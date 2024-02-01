@@ -15,7 +15,4 @@ import org.junit.runner.RunWith
   ),
   tags = "@regression"
 )
-class RegressionRunner {
-
-}
-
+class RegressionRunner {}
