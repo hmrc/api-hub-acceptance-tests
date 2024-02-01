@@ -20,3 +20,10 @@ Feature: Ldap Login
     And a new user with approver resource type with write privileges logs in
     When the new user registers an application
     Then the application can be viewed
+
+#  @regression @HIPP_531
+#  Scenario: Email address is required for LDAP login
+#    Given a user is on the sign in page
+#    And the user decides to login via ldap
+#    When the user attempts to login without providing an email address
+#    Then the appropriate error should be displayed

@@ -1,4 +1,4 @@
-@HIPP-369 @HIPP-368 @hip-403
+@regression @HIPP-369 @HIPP-368 @hip-403
 Feature: Check your answers
 
   Scenario: Verify no team members added screen layout
