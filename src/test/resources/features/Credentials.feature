@@ -1,7 +1,6 @@
 @regression
 Feature: Development and Prod credential types
-
-  @wip
+  
   Scenario: Create client id for registered application
     Given a user is on the sign in page
     And the user decides to login via ldap

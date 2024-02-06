@@ -1,4 +1,4 @@
-@regression
+@regression @HIPP_602
 Feature: Delete Application
 
   Scenario: Delete a registered application
