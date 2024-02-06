@@ -17,6 +17,7 @@
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
 import uk.gov.hmrc.test.ui.pages.{ApplicationDeletePage, ApplicationDetailsPage, YourApplicationPage}
+import uk.gov.hmrc.test.ui.utilities.Application
 
 class DeleteApplicatioSteps extends BaseStepDef {
   Given("""the user chooses {string} from the left hand nav menu""") { (string: String) =>
@@ -30,5 +31,21 @@ class DeleteApplicatioSteps extends BaseStepDef {
   Then("""the message {string} is displayed showing no registered applications are present""") { (string: String) =>
     ApplicationDeletePage.returnToYourApplications
     assert(YourApplicationPage.getRegisteredApplicationMessage == string, true)
+  }
+
+  When("""the user attempts to delete the application without confirming""") { () =>
+    ApplicationDeletePage.clickAcceptAndContinueButton()
+  }
+  When("""the error make a selection error is displayed""") { () =>
+    assert(ApplicationDeletePage.isDeleteApplicationErrorDisplayed())
+    assert(ApplicationDeletePage.isConfirmCheckboxDisplayed())
+  }
+
+  When("""the user chooses to cancel the deletion of the application""") { () =>
+    ApplicationDeletePage.cancel()
+  }
+  Then("""the user is redirected to the {string} page""") { (string: String) =>
+    assert(ApplicationDetailsPage.getPageTitle == string)
+    assert(ApplicationDetailsPage.getApplicationName == Application.Name)
   }
 }

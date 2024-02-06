@@ -21,15 +21,27 @@ import org.openqa.selenium.By
 object ApplicationDeletePage extends BasePage {
   private val confirmCheckbox          = "#value_0"
   private val acceptAndContinue        = ".govuk-button--warning"
-  private val cancel                   = ".govuk-button--secondary"
+  private val cancelBtn                = ".govuk-button--secondary"
   private val deleteApplicationWarning = ".govuk-error-summary"
   private val valueError               = "#value-error"
   private val yourApplicationsLink     = ".govuk-grid-column-two-thirds p.govuk-body a[href='/api-hub']"
 
   def confirmDeletionOfApplication(): Unit = {
     driver.findElement(By.cssSelector(confirmCheckbox)).click()
-    driver.findElement(By.cssSelector(acceptAndContinue)).click()
+    clickAcceptAndContinueButton()
   }
+
+  def cancel(): Unit =
+    driver.findElement(By.cssSelector(cancelBtn)).click()
+
+  def clickAcceptAndContinueButton(): Unit =
+    driver.findElement(By.cssSelector(acceptAndContinue)).click()
+
+  def isConfirmCheckboxDisplayed(): Boolean =
+    driver.findElement(By.cssSelector(valueError)).isDisplayed
+
+  def isDeleteApplicationErrorDisplayed(): Boolean =
+    driver.findElement(By.cssSelector(deleteApplicationWarning)).isDisplayed
 
   def returnToYourApplications: Unit =
     driver.findElement(By.cssSelector(yourApplicationsLink)).click()

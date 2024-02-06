@@ -21,14 +21,21 @@ import org.openqa.selenium.{By, WebElement}
 import java.util
 
 object ApplicationDetailsPage extends BasePage {
-  val applicationName      = "div.govuk-grid-column-two-thirds > div:nth-child(2) > div.govuk-grid-column-three-quarters > p"
-  val addApisLink          = ".govuk-body a[href='/api-hub/apis']"
-  val addedApiNameRows     = "th[scope='row']"
-  val lhnmLinks            = ".side-nav__component .side-nav__link"
-  val requestProdAccessBtn = ".govuk-grid-column-one-half a.govuk-button"
+  private val applicationName = "div[class='govuk-grid-row govuk-!-margin-bottom-2']:first-of-type p"
+  val addApisLink             = ".govuk-body a[href='/api-hub/apis']"
+  val addedApiNameRows        = "th[scope='row']"
+  val lhnmLinks               = ".side-nav__component .side-nav__link"
+  val requestProdAccessBtn    = ".govuk-grid-column-one-half a.govuk-button"
+  val pageTitle               = "h1.govuk-heading-l"
 
-  def getApplicationName: String =
-    driver.findElement(By.cssSelector(applicationName)).getText.trim()
+  def getPageTitle(): String =
+    driver.findElement(By.cssSelector(pageTitle)).getText.trim()
+
+  def getApplicationName: String = {
+    val element = driver.findElement(By.cssSelector(applicationName))
+    waitForElementPresent(element)
+    element.getText.trim()
+  }
 
   def addApis(): HipApisPage.type = {
     driver.findElement(By.cssSelector(addApisLink)).click()

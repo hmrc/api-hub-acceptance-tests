@@ -19,11 +19,20 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.{By, WebElement}
 
 object YourApplicationPage extends BasePage {
-  private val yourApplicationsTitle      = ".govuk-heading-l"
-  private val registerAnApplication      = ".govuk-button--primary .govuk-button"
-  private val registerAnotherApplication = ".hip-card-container-bottom .govuk-link--no-visited-state"
-  private val youApplicationsTitleText   = "our Applications"
-  private val headerLinksTexts           = ".custom-second-nav li a.govuk-link"
+  private val yourApplicationsTitle        = ".govuk-heading-l"
+  private val registerAnApplication        = ".govuk-button--primary .govuk-button"
+  private val registerAnotherApplication   = ".hip-card-container-bottom .govuk-link--no-visited-state"
+  private val youApplicationsTitleText     = "our Applications"
+  private val headerLinksTexts             = ".custom-second-nav li a.govuk-link"
+  private val registeredApplications       = ".hip-card-container-top .govuk-link"
+  private val registeredApplicationMessage = ".align-left p.govuk-body"
+
+  def getRegisteredApplicationNames: Array[AnyRef] =
+    driver
+      .findElements(By.cssSelector(registeredApplications))
+      .stream()
+      .map(i => i.getText)
+      .toArray
 
   def getHeaderLinkTexts(): Array[AnyRef] =
     driver
@@ -31,6 +40,9 @@ object YourApplicationPage extends BasePage {
       .stream()
       .map(i => i.getText)
       .toArray
+
+  def getRegisteredApplicationMessage: String =
+    driver.findElement(By.cssSelector(registeredApplicationMessage)).getText.trim
 
   private def registerApplicationButton(): WebElement =
     driver.findElement(By.cssSelector(registerAnApplication))
