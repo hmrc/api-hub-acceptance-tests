@@ -21,7 +21,6 @@ Feature: Delete Application
     When the user attempts to delete the application without confirming
     Then the error make a selection error is displayed
 
-  @wip
   Scenario: Cancel deletion of application redirects to the application details page
     Given a user is on the sign in page
     And the user decides to login via ldap
