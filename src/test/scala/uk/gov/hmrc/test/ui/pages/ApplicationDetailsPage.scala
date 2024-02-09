@@ -18,18 +18,53 @@ package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.{By, WebElement}
 
+import java.net.URI
 import java.util
 
 object ApplicationDetailsPage extends BasePage {
-  private val applicationName = "div[class='govuk-grid-row govuk-!-margin-bottom-2']:first-of-type p"
-  val addApisLink             = ".govuk-body a[href='/api-hub/apis']"
-  val addedApiNameRows        = "th[scope='row']"
-  val lhnmLinks               = ".side-nav__component .side-nav__link"
-  val requestProdAccessBtn    = ".govuk-grid-column-one-half a.govuk-button"
-  val pageTitle               = "h1.govuk-heading-l"
+  private val applicationName     = "div[class='govuk-grid-row govuk-!-margin-bottom-2']:first-of-type p"
+  val addApisLink                 = ".govuk-body a[href='/api-hub/apis']"
+  val addedApiNameRows            = "th[scope='row']"
+  val lhnmLinks                   = ".side-nav__component .side-nav__link"
+  val requestProdAccessBtn        = ".govuk-grid-column-one-half a.govuk-button"
+  val pageTitle                   = "h1.govuk-heading-l"
+  val teamMembers                 = ".govuk-grid-column-two-thirds .govuk-table:last-of-type .govuk-table__body .govuk-table__row td"
+  val teamMembersHeading          = "h2[class='govuk-heading-m govuk-!-margin-top-2']"
+  private val applicationId       = "div:nth-child(4) > div.govuk-grid-column-three-quarters > p"
+  private val createdDate         = "div:nth-child(3) > div.govuk-grid-column-three-quarters > p"
+  private val applicationApisText = "div.govuk-grid-column-two-thirds > p.govuk-body"
+
+  def getApplicationApisText(): String =
+    driver.findElement(By.cssSelector(applicationApisText)).getText.trim()
+
+  def getCreatedDate(): String        =
+    driver.findElement(By.cssSelector(createdDate)).getText.trim()
+
+  def getCountOfTeamMembersFromHeading(): Int = {
+    val headingText = driver.findElement(By.cssSelector(teamMembersHeading)).getText.trim()
+    val pattern     = "\\(\\d+\\)".r
+    s"${pattern.findFirstMatchIn(headingText).head}".replace("(", "").replace(")", "").toInt
+  }
+  def getTeamMembers(): Array[AnyRef] =
+    driver
+      .findElements(By.cssSelector(teamMembers))
+      .stream()
+      .map(i => i.getText.trim)
+      .toArray
+
+  def getTeamOwner(): AnyRef =
+    getTeamMembers().head
 
   def getPageTitle(): String =
     driver.findElement(By.cssSelector(pageTitle)).getText.trim()
+
+  def getApplicationIdFromUi(): String =
+    driver.findElement(By.cssSelector(applicationId)).getText.trim()
+
+  def getApplicationIdFromUrl(): String = {
+    val urlPaths = new URI(driver.getCurrentUrl).getPath.split("/")
+    urlPaths.last
+  }
 
   def getApplicationName: String = {
     val element = driver.findElement(By.cssSelector(applicationName))

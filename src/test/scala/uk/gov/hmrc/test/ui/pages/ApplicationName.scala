@@ -16,7 +16,6 @@
 
 package uk.gov.hmrc.test.ui.pages
 
-import faker.Faker
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.utilities.Application
 

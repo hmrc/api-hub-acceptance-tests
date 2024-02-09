@@ -16,9 +16,21 @@
 
 package uk.gov.hmrc.test.ui.utilities
 
-import faker.Faker
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
-object Application {
-  val Name: String = String.format("%s%s", Faker.ar.loremWord(), Faker.en_GB.loremWord().reverse)
-  var Id: String   = _
+object DateFormatterUtil {
+  private var dateFormat: String = _
+  def getFormattedDate(): String = {
+    val calendarInstance = Calendar.getInstance()
+
+    if (calendarInstance.get(Calendar.DATE) >= 10) {
+      dateFormat = "dd MMMM yyyy"
+    } else {
+      dateFormat = "d MMMM yyyy"
+    }
+    val today         = calendarInstance.getTime
+    val dateFormatter = new SimpleDateFormat(dateFormat)
+    dateFormatter.format(today)
+  }
 }
