@@ -27,7 +27,6 @@ object SignInPage extends BasePage {
 
   def loadPage(): this.type = {
     driver.navigate().to(url)
-    logger.info("this is the current url: " + driver.getCurrentUrl)
 
     waitForElementPresent(driver.findElement(By.cssSelector(ldapContinue)))
     this

@@ -65,6 +65,7 @@ class SignInSteps extends BaseStepDef {
   Then("""the application can be viewed""") { () =>
     ApplicationSuccessPage.viewRegisteredApplication()
     assert(ApplicationDetailsPage.getApplicationName == randAppName)
+//    Application.Id =
   }
 
   Then("""the user attempts to add an api to the application""") { () =>
