@@ -68,6 +68,14 @@ class SignInSteps extends BaseStepDef {
 //    Application.Id =
   }
 
+  When("""the attempts to continue without selecting an endpoint""") { () =>
+    ApplicationDetailsPage.addApis()
+    HipApisPage.selectRandomApi()
+    ApiDetailsPage.addToAnApplication()
+    SelectApplicationPage.selectApplicationRadioButton(randAppName).continue()
+    SelectEndpointsPage.continue()
+  }
+
   Then("""the user attempts to add an api to the application""") { () =>
     ApplicationDetailsPage.addApis()
     HipApisPage.selectRandomApi()
