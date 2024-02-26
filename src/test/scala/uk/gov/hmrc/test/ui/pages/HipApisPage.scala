@@ -23,10 +23,20 @@ import java.util
 
 object HipApisPage extends BasePage {
   val allApis           = ".govuk-body a.govuk-link"
+  private val apiNames  = ".api-panel a"
   var chosenApi: String = _
 
   //for now just the first api should be added, but consider adding by name instead.
   //this could also benefit from being private
+
+  def chooseApiByText(input: String): Unit =
+    driver
+      .findElements(By.cssSelector(apiNames))
+      .stream()
+      .filter(item => item.getText.trim.toLowerCase() == input.toLowerCase())
+      .findFirst()
+      .get()
+      .click()
 
   def numberOfApis(): util.List[WebElement] =
     driver.findElements(By.cssSelector(allApis))

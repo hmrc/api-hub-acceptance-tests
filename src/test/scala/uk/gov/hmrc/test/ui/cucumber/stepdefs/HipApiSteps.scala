@@ -14,10 +14,17 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.utilities
+package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-import faker.Faker
+import uk.gov.hmrc.test.ui.domain.AddressWeighting
+import uk.gov.hmrc.test.ui.pages.ApplicationName.randAppName
+import uk.gov.hmrc.test.ui.pages.{ApiDetailsPage, ApplicationDetailsPage, HipApisPage, SelectApplicationPage}
 
-object User {
-  var Email: String = s"${Faker.en_GB.lastName()}@digital.hmrc.gov.uk"
+class HipApiSteps extends BaseStepDef {
+  Given("""the user adds a particular api to an application""") { () =>
+    ApplicationDetailsPage.addApis()
+    HipApisPage.chooseApiByText(AddressWeighting.Name)
+    ApiDetailsPage.addToAnApplication()
+    SelectApplicationPage.selectApplicationRadioButton(randAppName).continue()
+  }
 }

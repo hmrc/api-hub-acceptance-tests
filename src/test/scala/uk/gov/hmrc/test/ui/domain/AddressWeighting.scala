@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.utilities
+package uk.gov.hmrc.test.ui.domain
 
-import faker.Faker
-
-object User {
-  var Email: String = s"${Faker.en_GB.lastName()}@digital.hmrc.gov.uk"
+object AddressWeighting {
+  //Hard coded for the time being.
+  val Name: String         = "API Documentation for Address Weighting Service"
+  val Scopes: List[String] = List("read:address-weighting")
 }
