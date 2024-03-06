@@ -31,7 +31,11 @@ class SignInSteps extends BaseStepDef {
   val randomLocalEmail                = s"${Faker.en_GB.lastName()}@digital.hmrc.gov.uk"
 
   Given("""a user is on the sign in page""") { () =>
-    SignInPage.loadPage()
+    ServiceStartPage
+      .loadPage()
+      .startNow()
+
+    assert(SignInPage.isLdapContinueButtonDisplayed, true)
   }
 
   Given("""the user decides to login via ldap""") { () =>
@@ -51,10 +55,10 @@ class SignInSteps extends BaseStepDef {
   }
 
   Then("""the new user registers an application""") { () =>
-    registerApplication()
+    YourApplicationPage.registerApplication()
     expectedApplicationName = randAppName
-    fillInApplicationName(expectedApplicationName)
-    addNoTeamMember()
+    ApplicationName.fillInApplicationName(expectedApplicationName)
+    TeamMembers.addNoTeamMember()
     CheckYouAnswersPage.registerApplication()
   }
 

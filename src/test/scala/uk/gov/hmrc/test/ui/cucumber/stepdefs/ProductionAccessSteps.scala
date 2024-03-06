@@ -20,8 +20,13 @@ import uk.gov.hmrc.test.ui.pages._
 
 class ProductionAccessSteps extends BaseStepDef {
   Given("""an api is added to an application""") { () =>
-    SignInPage.loadPage().clickLdapContinue()
+    ServiceStartPage
+      .loadPage()
+      .startNow()
+
+    SignInPage.clickLdapContinue()
     CreateSignIn.defaultLoginUser()
+    ApiHubIntro.startNow()
 
     YourApplicationPage.registerApplication()
     ApplicationName.fillInApplicationName(ApplicationName.randAppName)
