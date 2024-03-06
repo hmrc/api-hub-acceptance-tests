@@ -28,9 +28,9 @@ object ReviewPolicyPage extends BasePage {
     this
   }
 
-  def acceptAndContinue(): CheckYouAnswersPage.type = {
+  def acceptAndContinue(): CheckYourAnswersPage.type = {
     driver.findElement(By.cssSelector(acceptAndContinueBtn)).click()
-    CheckYouAnswersPage
+    CheckYourAnswersPage
   }
 
   def cancel(): ApiDetailsPage.type = {

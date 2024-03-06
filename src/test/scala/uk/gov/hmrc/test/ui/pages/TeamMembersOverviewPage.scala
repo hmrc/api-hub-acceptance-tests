@@ -46,10 +46,10 @@ object TeamMembersOverviewPage extends BasePage {
   def getPageTitle(): String =
     driver.findElement(By.cssSelector(teamMembersHeading)).getText
 
-  def addTeamMember(): CheckYouAnswersPage.type = {
+  def addTeamMember(): CheckYourAnswersPage.type = {
     yesRadioButton().click()
     continue().click()
-    CheckYouAnswersPage
+    CheckYourAnswersPage
   }
 
   def getLastAddedTeamMembersEmail(): String =
@@ -58,9 +58,9 @@ object TeamMembersOverviewPage extends BasePage {
   def getNumberOfTeamMemberRows(): Integer =
     driver.findElements(By.cssSelector(teamMembersRows)).size()
 
-  def addNoTeamMember(): CheckYouAnswersPage.type = {
+  def addNoTeamMember(): CheckYourAnswersPage.type = {
     noRadioButton().click()
     continue().click()
-    CheckYouAnswersPage
+    CheckYourAnswersPage
   }
 }

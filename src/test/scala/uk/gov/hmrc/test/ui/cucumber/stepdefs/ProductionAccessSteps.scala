@@ -31,7 +31,7 @@ class ProductionAccessSteps extends BaseStepDef {
     YourApplicationPage.registerApplication()
     ApplicationName.fillInApplicationName(ApplicationName.randAppName)
     TeamMembers.addNoTeamMember()
-    CheckYouAnswersPage.registerApplication()
+    CheckYourAnswersPage.registerApplication()
     ApplicationSuccessPage.viewRegisteredApplication()
     assert(ApplicationDetailsPage.getApplicationName == ApplicationName.randAppName)
 
@@ -42,7 +42,7 @@ class ProductionAccessSteps extends BaseStepDef {
     SelectEndpointsPage.selectAllEndpoints().continue()
     ReviewPolicyPage.confirmCheckbox()
     ReviewPolicyPage.acceptAndContinue()
-    CheckYouAnswersPage.continue()
+    CheckYourAnswersPage.continue()
 
     assert(ApiAddedSuccessfullyPage.getApiName.startsWith(HipApisPage.getSelectedApiName))
     ApiAddedSuccessfullyPage.viewApplication()

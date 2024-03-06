@@ -17,12 +17,11 @@
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
 import faker.Faker
-import uk.gov.hmrc.test.ui.pages.ApplicationName.{fillInApplicationName, randAppName}
+import uk.gov.hmrc.test.ui.pages.ApplicationName.randAppName
 import uk.gov.hmrc.test.ui.pages.ApplicationSuccessPage.isApplicationSuccessDisplayed
 import uk.gov.hmrc.test.ui.pages.CreateSignIn.{defaultLoginUser, loginWithUserEmail}
 import uk.gov.hmrc.test.ui.pages.SignInPage.clickLdapContinue
-import uk.gov.hmrc.test.ui.pages.TeamMembers.addNoTeamMember
-import uk.gov.hmrc.test.ui.pages.YourApplicationPage.{registerApplication, yourApplicationsIsDisplayed}
+import uk.gov.hmrc.test.ui.pages.YourApplicationPage.yourApplicationsIsDisplayed
 import uk.gov.hmrc.test.ui.pages._
 import uk.gov.hmrc.test.ui.utilities.User
 
@@ -59,7 +58,7 @@ class SignInSteps extends BaseStepDef {
     expectedApplicationName = randAppName
     ApplicationName.fillInApplicationName(expectedApplicationName)
     TeamMembers.addNoTeamMember()
-    CheckYouAnswersPage.registerApplication()
+    CheckYourAnswersPage.registerApplication()
   }
 
   Then("""the application should be registered""") { () =>
@@ -88,7 +87,7 @@ class SignInSteps extends BaseStepDef {
     SelectEndpointsPage.selectAllEndpoints().continue()
     ReviewPolicyPage.confirmCheckbox()
     ReviewPolicyPage.acceptAndContinue()
-    CheckYouAnswersPage.continue()
+    CheckYourAnswersPage.continue()
   }
 
   Then("""the api is added to the application""") { () =>
