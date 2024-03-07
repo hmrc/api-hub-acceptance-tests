@@ -26,7 +26,6 @@ class ProductionAccessSteps extends BaseStepDef {
 
     SignInPage.clickLdapContinue()
     CreateSignIn.defaultLoginUser()
-    ApiHubIntro.startNow()
 
     YourApplicationPage.registerApplication()
     ApplicationName.fillInApplicationName(ApplicationName.randAppName)
