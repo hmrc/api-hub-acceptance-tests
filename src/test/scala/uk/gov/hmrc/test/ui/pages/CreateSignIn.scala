@@ -29,7 +29,7 @@ object CreateSignIn extends BasePage {
   val actions                     = "#permissions_0_actions"
   val signIn                      = "button[name='fake-sign-in-btn']"
   val defaultEmailAddress: String = User.Email
-//  val defaultEmailAddress = "ade.oke@digital.hmrc.gov.uk"
+  private val dashboardPath       = "/dashboard"
 
   def defaultLoginUser(): Unit =
     loginWithUserEmail(defaultEmailAddress)
@@ -44,7 +44,7 @@ object CreateSignIn extends BasePage {
     waitForElementPresent(driver.findElement(By.cssSelector(principal)))
     driver.findElement(By.cssSelector(principal)).sendKeys("auto-test")
     driver.findElement(By.cssSelector(email)).sendKeys(emailAddress)
-    driver.findElement(By.cssSelector(redirectUrl)).sendKeys(TestConfiguration.url("api-hub"))
+    driver.findElement(By.cssSelector(redirectUrl)).sendKeys(TestConfiguration.url("api-hub") + dashboardPath)
     driver.findElement(By.cssSelector(resourceType)).sendKeys("api-hub-frontend")
     driver.findElement(By.cssSelector(resourceLocations)).sendKeys(role)
     driver.findElement(By.cssSelector(actions)).sendKeys("WRITE")
