@@ -17,12 +17,11 @@
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
 import faker.Faker
-import uk.gov.hmrc.test.ui.pages.ApplicationName.{fillInApplicationName, randAppName}
+import uk.gov.hmrc.test.ui.pages.ApplicationName.randAppName
 import uk.gov.hmrc.test.ui.pages.ApplicationSuccessPage.isApplicationSuccessDisplayed
 import uk.gov.hmrc.test.ui.pages.CreateSignIn.{defaultLoginUser, loginWithUserEmail}
 import uk.gov.hmrc.test.ui.pages.SignInPage.clickLdapContinue
-import uk.gov.hmrc.test.ui.pages.TeamMembers.addNoTeamMember
-import uk.gov.hmrc.test.ui.pages.YourApplicationPage.{registerApplication, yourApplicationsIsDisplayed}
+import uk.gov.hmrc.test.ui.pages.YourApplicationPage.yourApplicationsIsDisplayed
 import uk.gov.hmrc.test.ui.pages._
 import uk.gov.hmrc.test.ui.utilities.User
 
@@ -31,7 +30,11 @@ class SignInSteps extends BaseStepDef {
   val randomLocalEmail                = s"${Faker.en_GB.lastName()}@digital.hmrc.gov.uk"
 
   Given("""a user is on the sign in page""") { () =>
-    SignInPage.loadPage()
+    ServiceStartPage
+      .loadPage()
+      .startNow()
+
+    assert(SignInPage.isLdapContinueButtonDisplayed, true)
   }
 
   Given("""the user decides to login via ldap""") { () =>
@@ -51,11 +54,11 @@ class SignInSteps extends BaseStepDef {
   }
 
   Then("""the new user registers an application""") { () =>
-    registerApplication()
+    YourApplicationPage.registerApplication()
     expectedApplicationName = randAppName
-    fillInApplicationName(expectedApplicationName)
-    addNoTeamMember()
-    CheckYouAnswersPage.registerApplication()
+    ApplicationName.fillInApplicationName(expectedApplicationName)
+    TeamMembers.addNoTeamMember()
+    CheckYourAnswersPage.registerApplication()
   }
 
   Then("""the application should be registered""") { () =>
@@ -84,7 +87,7 @@ class SignInSteps extends BaseStepDef {
     SelectEndpointsPage.selectAllEndpoints().continue()
     ReviewPolicyPage.confirmCheckbox()
     ReviewPolicyPage.acceptAndContinue()
-    CheckYouAnswersPage.continue()
+    CheckYourAnswersPage.continue()
   }
 
   Then("""the api is added to the application""") { () =>

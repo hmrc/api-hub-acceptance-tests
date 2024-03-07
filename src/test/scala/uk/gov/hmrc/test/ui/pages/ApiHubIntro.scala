@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,16 +18,9 @@ package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.By
 
-object Turnover extends BasePage {
+object ApiHubIntro extends BasePage {
+  private val startNowLcr = ".govuk-button"
 
-  val turnover      = "Enter your turnover - Check your VAT flat rate - GOV.UK"
-  val turnoverInput = "turnover"
-
-  def provideTurnoverAmount(amount: String): CostOfGoods.type = {
-    onPage(turnover)
-    driver.findElement(By.id(turnoverInput)).sendKeys(amount)
-    submitPage()
-    CostOfGoods
-  }
-
+  def startNow(): Unit =
+    driver.findElement(By.cssSelector(startNowLcr)).click()
 }

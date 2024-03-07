@@ -18,7 +18,7 @@ package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.{By, WebElement}
 
-object CheckYouAnswersPage extends BasePage {
+object CheckYourAnswersPage extends BasePage {
   private val genericBtn                    = ".govuk-button"
   private val applicationName               = ".govuk-summary-list:first-of-type .govuk-summary-list__value"
   private val changeApplicationNameLink     = ".govuk-summary-list:first-of-type .govuk-link"

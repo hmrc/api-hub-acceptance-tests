@@ -43,15 +43,15 @@ object TeamMembers extends BasePage {
   def isEmailAlertMessageDisplayed(): Boolean =
     driver.findElement(By.cssSelector(emailAlertMessage)).isDisplayed
 
-  def addNoTeamMember(): CheckYouAnswersPage.type = {
+  def addNoTeamMember(): CheckYourAnswersPage.type = {
     noRadioButton().click()
     continue().click()
-    CheckYouAnswersPage
+    CheckYourAnswersPage
   }
 
-  def addTeamMember(): CheckYouAnswersPage.type = {
+  def addTeamMember(): CheckYourAnswersPage.type = {
     yesRadioButton().click()
     continue().click()
-    CheckYouAnswersPage
+    CheckYourAnswersPage
   }
 }

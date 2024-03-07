@@ -96,26 +96,26 @@ class TeamMemberSteps extends BaseStepDef {
   }
 
   Then("""the check your answers page displays the correct information for no team members added""") { () =>
-    assert(CheckYouAnswersPage.getApplicationNameText == ApplicationName.randAppName)
-    assert(CheckYouAnswersPage.getApplicationDetailsHeadingText == expectedApplicationDetailsHeadingText)
-    assert(CheckYouAnswersPage.isChangeApplicationNameLinkDisplayed, true)
-    assert(CheckYouAnswersPage.isTeamMembersChangeLinkDisplayed, true)
-    assert(CheckYouAnswersPage.getNoTeamMembersText == expectedNoTeamMembersText, true)
-    assert(CheckYouAnswersPage.getTeamOwnerEmailText.toLowerCase() == User.Email.toLowerCase(), true)
+    assert(CheckYourAnswersPage.getApplicationNameText == ApplicationName.randAppName)
+    assert(CheckYourAnswersPage.getApplicationDetailsHeadingText == expectedApplicationDetailsHeadingText)
+    assert(CheckYourAnswersPage.isChangeApplicationNameLinkDisplayed, true)
+    assert(CheckYourAnswersPage.isTeamMembersChangeLinkDisplayed, true)
+    assert(CheckYourAnswersPage.getNoTeamMembersText == expectedNoTeamMembersText, true)
+    assert(CheckYourAnswersPage.getTeamOwnerEmailText.toLowerCase() == User.Email.toLowerCase(), true)
   }
 
   Then("""the user changes the application name""") { () =>
-    CheckYouAnswersPage.clickChangeApplicationName()
+    CheckYourAnswersPage.clickChangeApplicationName()
     ApplicationName.clearApplicationName()
     ApplicationName.fillInApplicationName(updatedApplicationName)
   }
 
   Then("""the application name should be changed""") { () =>
-    assert(CheckYouAnswersPage.getApplicationNameText.toLowerCase() == updatedApplicationName, true)
+    assert(CheckYourAnswersPage.getApplicationNameText.toLowerCase() == updatedApplicationName, true)
   }
 
   Then("""the user chooses to change the team member""") { () =>
-    CheckYouAnswersPage.clickChangeTeamMember()
+    CheckYourAnswersPage.clickChangeTeamMember()
   }
 
   Then("""the user should be redirected to the team members overview page""") { () =>

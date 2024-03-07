@@ -35,6 +35,11 @@ object SignInPage extends BasePage {
   def ldapContinueButton(): WebElement =
     driver.findElement(By.cssSelector(ldapContinue))
 
+  def isLdapContinueButtonDisplayed: Boolean = {
+    waitForElementPresent(ldapContinueButton())
+    ldapContinueButton().isDisplayed
+  }
+
   def clickLdapContinue(): Unit =
-    ldapContinueButton.click()
+    ldapContinueButton().click()
 }

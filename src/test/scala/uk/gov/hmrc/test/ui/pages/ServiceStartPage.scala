@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,21 +17,19 @@
 package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.By
+import uk.gov.hmrc.test.ui.conf.TestConfiguration
 
-object CostOfGoods extends BasePage {
+object ServiceStartPage extends BasePage {
+  val url: String         = TestConfiguration.url("api-hub")
+  private val startNowLcr = ".govuk-button"
 
-  val costOfGoods      = "Enter your cost of goods - Check your VAT flat rate - GOV.UK"
-  val costOfGoodsInput = "costOfGoods"
+  def loadPage(): this.type = {
+    driver.navigate().to(url)
 
-  def provideCostOfGoodsAmount(amount: String): this.type = {
-    onPage(costOfGoods)
-    driver.findElement(By.id(costOfGoodsInput)).sendKeys(amount)
+    waitForElementPresent(driver.findElement(By.cssSelector(startNowLcr)))
     this
   }
 
-  def submitVATInformation: CheckYourVATResult.type = {
-    submitPage()
-    CheckYourVATResult
-  }
-
+  def startNow(): Unit =
+    driver.findElement(By.cssSelector(startNowLcr)).click()
 }

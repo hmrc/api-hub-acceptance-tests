@@ -40,8 +40,10 @@ object Homepage extends BasePage {
     header.clickLogo()
   }
 
-  def isRegisterAnApplicationDisplayed(): Boolean =
+  def isRegisterAnApplicationDisplayed(): Boolean = {
+    waitForElementPresent(registerApplication())
     registerApplication().isDisplayed
+  }
 
   def registerApplication(): WebElement =
     driver.findElement(By.cssSelector(registerAnApplication))
