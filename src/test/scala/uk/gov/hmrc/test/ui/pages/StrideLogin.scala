@@ -24,7 +24,7 @@ object StrideLogin extends BasePage {
   val pid                  = "pid"
 
   def fillInLoginDetails(): Homepage.type = {
-    driver.findElement(By.id(pid)).sendKeys(Faker.ar.buildingNumber)
+    driver.findElement(By.id(pid)).sendKeys(Faker.ar.buildingNumber())
     driver.findElement(By.id(continueButton)).click()
     Homepage
   }

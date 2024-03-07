@@ -43,7 +43,7 @@ object ApplicationDeletePage extends BasePage {
   def isDeleteApplicationErrorDisplayed(): Boolean =
     driver.findElement(By.cssSelector(deleteApplicationWarning)).isDisplayed
 
-  def returnToYourApplications: Unit =
+  def returnToYourApplications(): Unit =
     driver.findElement(By.cssSelector(yourApplicationsLink)).click()
 
 }

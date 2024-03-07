@@ -18,7 +18,6 @@ package uk.gov.hmrc.test.ui.pages
 
 import faker.Faker
 import org.openqa.selenium.By
-import uk.gov.hmrc.test.ui.pages.ApplicationDetailsPage.driver
 
 object ProvideSupportingInformationPage extends BasePage {
   val infoTextBox = "#value"

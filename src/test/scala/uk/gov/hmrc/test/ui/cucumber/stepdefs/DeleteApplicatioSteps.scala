@@ -29,7 +29,7 @@ class DeleteApplicatioSteps extends BaseStepDef {
   }
 
   Then("""the message {string} is displayed showing no registered applications are present""") { (string: String) =>
-    ApplicationDeletePage.returnToYourApplications
+    ApplicationDeletePage.returnToYourApplications()
     assert(YourApplicationPage.getRegisteredApplicationMessage == string, true)
   }
 
@@ -44,8 +44,9 @@ class DeleteApplicatioSteps extends BaseStepDef {
   When("""the user chooses to cancel the deletion of the application""") { () =>
     ApplicationDeletePage.cancel()
   }
+
   Then("""the user is redirected to the {string} page""") { (string: String) =>
-    assert(ApplicationDetailsPage.getPageTitle == string)
+    assert(ApplicationDetailsPage.getPageTitle() == string)
     assert(ApplicationDetailsPage.getApplicationName == Application.Name)
   }
 }
