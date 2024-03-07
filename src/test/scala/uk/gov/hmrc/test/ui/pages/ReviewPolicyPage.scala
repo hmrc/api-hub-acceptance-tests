@@ -19,9 +19,9 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.By
 
 object ReviewPolicyPage extends BasePage {
-  val confirmApplicationCheckbox = ".govuk-checkboxes__input"
-  val acceptAndContinueBtn       = "button.govuk-button"
-  val cancelBtn                  = ".govuk-button--secondary"
+  private val confirmApplicationCheckbox = ".govuk-checkboxes__input"
+  private val acceptAndContinueBtn       = "button.govuk-button"
+  private val cancelBtn                  = ".govuk-button--secondary"
 
   def confirmCheckbox(): this.type = {
     driver.findElement(By.cssSelector(confirmApplicationCheckbox)).click()

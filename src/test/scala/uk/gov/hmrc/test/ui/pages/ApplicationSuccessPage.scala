@@ -19,8 +19,8 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.By
 
 object ApplicationSuccessPage extends BasePage {
-  val successPanel              = ".govuk-panel--confirmation"
-  val registeredApplicationLink = ".govuk-body .govuk-link--no-visited-state"
+  private val successPanel              = ".govuk-panel--confirmation"
+  private val registeredApplicationLink = ".govuk-body .govuk-link--no-visited-state"
 
   def isApplicationSuccessDisplayed(): Boolean =
     driver.findElement(By.cssSelector(successPanel)).isDisplayed

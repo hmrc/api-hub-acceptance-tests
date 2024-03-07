@@ -7,15 +7,17 @@ UI test suite for the `<digital service name>` using WebDriver and `<scalatest/c
 
 Prior to executing the tests ensure you have:
  - Docker - to run mongo and browser (Chrome, Firefox or Edge) inside a container 
- - Appropriate [drivers installed](#installing-local-driver-binaries) - to run tests against locally installed Browser
- - Installed/configured [service manager](https://github.com/hmrc/service-manager).  
+ - Installed/configured [service manager](https://github.com/hmrc/service-manager).
+ - Installed/configured [service manager config](https://github.com/hmrc/service-manager-config)
+ - Cloned the repo [selenium grid](https://github.com/hmrc/docker-selenium-grid) - for testing against a maintained browser in selenium grid locally.
 
 Run the following command to start services locally:
 
-    docker run --rm -d --name mongo -d -p 27017:27017 mongo:4.0
-    sm --start PLATFORM_EXAMPLE_UI_TESTS -r --wait 100
+    docker run --restart unless-stopped -d -p 27017-27019:27017-27019 --name mongodb mongo:4.2
+    sm2 --start API_HUB_ALL -wait 100
 
-Using the `--wait 100` argument ensures a health check is run on all the services started as part of the profile. `100` refers to the given number of seconds to wait for services to pass health checks.
+Using the `-wait 100` -wait int used with --start, waits a specified number of seconds for the services to become 
+available before exiting (use with --start)
 
 Then execute the `run_tests.sh` script:
 
@@ -23,23 +25,30 @@ Then execute the `run_tests.sh` script:
 
 The `run_tests.sh` script defaults to using `chrome` in the `local` environment.  For a complete list of supported param values, see:
  - `src/test/resources/application.conf` for **environment** 
- - [webdriver-factory](https://github.com/hmrc/webdriver-factory#2-instantiating-a-browser-with-default-options) for **browser-driver**
 
 ## Running tests against a containerised browser - on a developer machine
 
-The script `./run_browser_with_docker.sh` can be used to start a Chrome, Firefox or Edge container on a developer machine. 
-The script requires `remote-chrome`, `remote-firefox` or `remote-edge` as an argument.
-
-Read more about the script's functionality [here](run_browser_with_docker.sh).
-
-To run against a containerised Chrome browser:
+Given you have cloned and obtained the latest code from the [selenium grid repo](https://github.com/hmrc/docker-selenium-grid) you should launch the script from the root of this project
 
 ```bash
-./run_browser_with_docker.sh remote-chrome 
-./run_tests.sh remote-chrome local
+./start.sh
 ```
 
-`./run_browser_with_docker.sh` is **NOT** required when running in a CI environment. 
+Which will get the selenium-hub, chrome, firefox and edge docker images locally and start the hub on port 4444.
+With this enabled all tests can now run on these images against the local environment.
+
+Be sure to double-check the images are running through docker dashboard or from the terminal before continuing alternatively,
+you can check in the browser what is running on localhost:4444, where you should see all the browser instances running.
+
+```bash
+docker container list
+```
+
+For example, to run the tests against a containerised Chrome browser:
+
+```bash
+./run_tests.sh chrome local
+```
 
 #### Running the tests against a test environment
 
@@ -48,7 +57,10 @@ To run the tests against an environment set the corresponding `host` environment
 
 For example, to execute the `run_tests.sh` script using Chrome remote-webdriver against QA environment 
 
-    ./run_tests.sh remote-chrome qa
+    ./run_tests.sh chrome qa
+
+*Note* that while the above statement is technically correct, only the local environment is configured correctly for testing purposes
+other environments are not integrated properly for end-to-end testing, and as such cannot be run reliably against any environment other than the local one.
 
 ## Running ZAP tests
 
@@ -61,11 +73,6 @@ It is not required to proxy every journey test via ZAP. The intention of proxyin
  relevant pages of an application to ZAP. So tagging a subset of the journey tests or creating a 
  single ZAP focused journey test is sufficient.
 
-#### Configuring the browser to proxy via ZAP 
-
-Setting the system property `zap.proxy=true` configures the browser specified in `browser` property to proxy via ZAP. 
-This is achieved using [webdriver-factory](https://github.com/hmrc/webdriver-factory#proxying-trafic-via-zap).
-
 #### Executing a ZAP test
 
 The shell script `run_zap_tests.sh` is available to execute ZAP tests. The script proxies a set of journey tests, 
@@ -76,15 +83,6 @@ For example, to execute ZAP tests locally using a Chrome browser
 ```
 ./run_zap_test.sh chrome local
 ```
-
-To execute ZAP tests locally using a remote-chrome browser
-
-```
-./run_browser_with_docker.sh remote-chrome 
-./run_zap_test.sh remote-chrome local
-``` 
-
-`./run_browser_with_docker.sh` is **NOT** required when running in a CI environment.
 
 ### Running tests using BrowserStack
 If you would like to run your tests via BrowserStack from your local development environment please refer to the [webdriver-factory](https://github.com/hmrc/webdriver-factory/blob/main/README.md/#user-content-running-tests-using-browser-stack) project.

@@ -45,8 +45,6 @@ class HomepageSteps extends BaseStepDef {
   }
 
   Then("the user should be directed to the api hub home page") { () =>
-    //FIXME: Currently the api home page changes port and then doesnt redirect after the stride login,
-    //FIXME: forcing the need for a page reload here
     Homepage.loadPage()
     logger.info(driver.getCurrentUrl)
     assert(Homepage.isRegisterAnApplicationDisplayed(), true)

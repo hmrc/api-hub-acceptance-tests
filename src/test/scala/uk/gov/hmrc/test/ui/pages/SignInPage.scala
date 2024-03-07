@@ -20,8 +20,7 @@ import org.openqa.selenium.{By, WebElement}
 import uk.gov.hmrc.test.ui.conf.TestConfiguration
 
 object SignInPage extends BasePage {
-  val url: String = TestConfiguration.url("api-hub")
-  val path        = "/sign-in"
+  private val url: String = TestConfiguration.url("api-hub")
 
   val ldapContinue = ".hipp-card:first-of-type a.govuk-button"
 

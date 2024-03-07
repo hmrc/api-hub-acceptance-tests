@@ -19,8 +19,8 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.By
 
 object ApiAddedSuccessfullyPage extends BasePage {
-  val apiNameElement = ".govuk-panel__body"
-  val viewAppLink    = ".govuk-grid-column-two-thirds a[class='govuk-link govuk-link--no-visited-state']"
+  private val apiNameElement = ".govuk-panel__body"
+  private val viewAppLink    = ".govuk-grid-column-two-thirds a[class='govuk-link govuk-link--no-visited-state']"
 
   def getApiName: String =
     driver.findElement(By.cssSelector(apiNameElement)).getText.trim

@@ -20,8 +20,8 @@ import faker.Faker
 import org.openqa.selenium.By
 
 object ProvideSupportingInformationPage extends BasePage {
-  val infoTextBox = "#value"
-  val continueBtn = "button.govuk-button"
+  private val infoTextBox = "#value"
+  private val continueBtn = "button.govuk-button"
 
   //TODO: for now just random text, but maybe more flexible to input whatever in future.
   def randomlyFillInTextBoxReason(): this.type = {

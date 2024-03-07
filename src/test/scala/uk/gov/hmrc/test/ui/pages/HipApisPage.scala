@@ -22,7 +22,7 @@ import java.security.SecureRandom
 import java.util
 
 object HipApisPage extends BasePage {
-  val allApis           = ".govuk-body a.govuk-link"
+  private val allApis           = ".govuk-body a.govuk-link"
   private val apiNames  = ".api-panel a"
   var chosenApi: String = _
 

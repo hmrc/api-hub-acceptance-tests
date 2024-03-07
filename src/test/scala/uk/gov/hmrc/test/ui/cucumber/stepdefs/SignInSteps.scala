@@ -16,18 +16,12 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-import faker.Faker
 import uk.gov.hmrc.test.ui.pages.ApplicationName.randAppName
-import uk.gov.hmrc.test.ui.pages.ApplicationSuccessPage.isApplicationSuccessDisplayed
-import uk.gov.hmrc.test.ui.pages.CreateSignIn.{defaultLoginUser, loginWithUserEmail}
-import uk.gov.hmrc.test.ui.pages.SignInPage.clickLdapContinue
-import uk.gov.hmrc.test.ui.pages.YourApplicationPage.yourApplicationsIsDisplayed
 import uk.gov.hmrc.test.ui.pages._
 import uk.gov.hmrc.test.ui.utilities.User
 
 class SignInSteps extends BaseStepDef {
-  var expectedApplicationName: String = _
-  val randomLocalEmail                = s"${Faker.en_GB.lastName()}@digital.hmrc.gov.uk"
+  private var expectedApplicationName: String = _
 
   Given("""a user is on the sign in page""") { () =>
     ServiceStartPage
@@ -38,19 +32,19 @@ class SignInSteps extends BaseStepDef {
   }
 
   Given("""the user decides to login via ldap""") { () =>
-    clickLdapContinue()
+    SignInPage.clickLdapContinue()
   }
 
   When("""an approver with write privileges logs in""") { () =>
-    defaultLoginUser()
+    CreateSignIn.defaultLoginUser()
   }
 
   When("""a new user with approver resource type with write privileges logs in""") { () =>
-    loginWithUserEmail(User.Email)
+    CreateSignIn.loginWithUserEmail(User.Email)
   }
 
   Then("""the user should be authenticated""") { () =>
-    assert(yourApplicationsIsDisplayed(), true)
+    assert(YourApplicationPage.yourApplicationsIsDisplayed(), true)
   }
 
   Then("""the new user registers an application""") { () =>
@@ -62,13 +56,12 @@ class SignInSteps extends BaseStepDef {
   }
 
   Then("""the application should be registered""") { () =>
-    assert(isApplicationSuccessDisplayed(), true)
+    assert(ApplicationSuccessPage.isApplicationSuccessDisplayed(), true)
   }
 
   Then("""the application can be viewed""") { () =>
     ApplicationSuccessPage.viewRegisteredApplication()
     assert(ApplicationDetailsPage.getApplicationName == randAppName)
-//    Application.Id =
   }
 
   When("""the attempts to continue without selecting an endpoint""") { () =>
@@ -83,7 +76,9 @@ class SignInSteps extends BaseStepDef {
     ApplicationDetailsPage.addApis()
     HipApisPage.selectRandomApi()
     ApiDetailsPage.addToAnApplication()
-    SelectApplicationPage.selectApplicationRadioButton(randAppName).continue()
+    SelectApplicationPage
+      .selectApplicationRadioButton(randAppName)
+      .continue()
     SelectEndpointsPage.selectAllEndpoints().continue()
     ReviewPolicyPage.confirmCheckbox()
     ReviewPolicyPage.acceptAndContinue()

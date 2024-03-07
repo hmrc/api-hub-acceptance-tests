@@ -20,8 +20,8 @@ import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.utilities.Application
 
 object ApplicationName extends BasePage {
-  val appNameLcr          = "value"
-  val continue            = ".govuk-button"
+  private val appNameLcr  = "value"
+  private val continue    = ".govuk-button"
   val randAppName: String = Application.Name
 
   def clearApplicationName(): Unit =

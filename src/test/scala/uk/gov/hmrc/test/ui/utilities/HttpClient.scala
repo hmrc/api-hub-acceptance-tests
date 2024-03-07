@@ -14,22 +14,29 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.pages
+package uk.gov.hmrc.test.ui.utilities
 
-import org.openqa.selenium.By
+import io.restassured.RestAssured.`given`
+import io.restassured.response.Response
 import uk.gov.hmrc.test.ui.conf.TestConfiguration
 
-object ServiceStartPage extends BasePage {
-  private val url: String = TestConfiguration.url("api-hub")
-  private val startNowLcr = ".govuk-button"
+import java.io.File
 
-  def loadPage(): this.type = {
-    driver.navigate().to(url)
-
-    waitForElementPresent(driver.findElement(By.cssSelector(startNowLcr)))
-    this
+object HttpClient {
+  def publishFile(filename: String): Response = {
+    given()
+      .baseUri(TestConfiguration.url("oas-files"))
+      .multiPart(
+        "selectedFile",
+        new File(filename),
+        "multipart/form-data"
+      )
+      .header("Authorization", "dGVzdC1hdXRoLWtleQ==")
+      .accept("application/json")
+      .contentType("multipart/form-data")
+      .header("x-platform-type", "HIP")
+      .header("x-specification-type", "OAS_V3")
+      .when()
+      .put("/apis/multipart/publish")
   }
-
-  def startNow(): Unit =
-    driver.findElement(By.cssSelector(startNowLcr)).click()
 }

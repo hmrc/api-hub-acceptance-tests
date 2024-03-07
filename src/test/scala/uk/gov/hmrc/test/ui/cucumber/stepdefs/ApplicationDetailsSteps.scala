@@ -24,7 +24,7 @@ class ApplicationDetailsSteps extends BaseStepDef {
 
   When("""the application details, application apis as well as the team members sections should be correct""") { () =>
     assert(ApplicationDetailsPage.getApplicationName == Application.Name, true)
-    assert(ApplicationDetailsPage.getCreatedDate() == DateFormatterUtil.getFormattedDate(), true)
+    assert(ApplicationDetailsPage.getCreatedDate() == DateFormatterUtil.getFormattedDate, true)
     Application.Id = ApplicationDetailsPage.getApplicationIdFromUrl()
     assert(ApplicationDetailsPage.getApplicationIdFromUrl() == ApplicationDetailsPage.getApplicationIdFromUi(), true)
     //team members count and email address for the team member

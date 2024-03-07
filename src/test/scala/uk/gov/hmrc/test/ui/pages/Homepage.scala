@@ -21,11 +21,10 @@ import uk.gov.hmrc.test.ui.conf.TestConfiguration
 import uk.gov.hmrc.test.ui.sections.Header
 
 object Homepage extends BasePage {
-  val url: String           = TestConfiguration.url("api-hub")
-  val homepageTitle: String = "Applications - The API Hub - GOV.UK"
-
-  val headerContainer: String       = "govuk-header__container"
-  val registerAnApplication: String = ".govuk-button"
+  private val url: String                   = TestConfiguration.url("api-hub")
+  val homepageTitle: String                 = "Applications - The API Hub - GOV.UK"
+  private val headerContainer: String       = "govuk-header__container"
+  private val registerAnApplication: String = ".govuk-button"
 
   def loadPage(): this.type = {
     driver.navigate().to(url)

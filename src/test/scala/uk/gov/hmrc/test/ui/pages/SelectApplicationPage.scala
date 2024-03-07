@@ -21,8 +21,8 @@ import org.openqa.selenium.{By, WebElement}
 import java.util
 
 object SelectApplicationPage extends BasePage {
-  val radioButtons = ".govuk-radios .govuk-radios__item .govuk-label"
-  val continueLink = ".govuk-grid-column-two-thirds .govuk-button"
+  private val radioButtons = ".govuk-radios .govuk-radios__item .govuk-label"
+  private val continueLink = ".govuk-grid-column-two-thirds .govuk-button"
 
   def selectApplicationRadioButton(name: String): this.type = {
     val elements: util.List[WebElement] = driver.findElements(By.cssSelector(radioButtons))

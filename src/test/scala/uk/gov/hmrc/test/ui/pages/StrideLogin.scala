@@ -20,8 +20,7 @@ import faker.Faker
 import org.openqa.selenium.By
 
 object StrideLogin extends BasePage {
-  val strideLoginPageTitle = "Stride IdP Login"
-  val pid                  = "pid"
+  private val pid          = "pid"
 
   def fillInLoginDetails(): Homepage.type = {
     driver.findElement(By.id(pid)).sendKeys(Faker.ar.buildingNumber())

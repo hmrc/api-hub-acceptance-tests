@@ -17,7 +17,7 @@
 package uk.gov.hmrc.test.ui.domain
 
 object AddressWeighting {
-  //Hard coded for the time being.
+  //Hard coded for the time being. Define a better model when time.
   val Name: String         = "API Documentation for Address Weighting Service"
   val Scopes: List[String] = List("read:address-weighting")
 }

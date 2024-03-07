@@ -19,8 +19,8 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.By
 
 object RequestProductionAccessPage extends BasePage {
-  val confirmCheckbox = "#accept_0"
-  val continueBtn     = "button.govuk-button"
+  private val confirmCheckbox = "#accept_0"
+  private val continueBtn     = "button.govuk-button"
 
   def confirm(): this.type = {
     driver.findElement(By.cssSelector(confirmCheckbox)).click()
