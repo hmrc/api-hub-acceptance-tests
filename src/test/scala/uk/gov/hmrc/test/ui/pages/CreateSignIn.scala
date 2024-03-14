@@ -21,15 +21,15 @@ import uk.gov.hmrc.test.ui.conf.TestConfiguration
 import uk.gov.hmrc.test.ui.utilities.User
 
 object CreateSignIn extends BasePage {
-  private val principal                   = "#principal"
-  private val email                       = "#email"
-  private val redirectUrl                 = "#redirectUrl"
-  private val resourceType                = "#permissions_0_resourceTypes"
-  private val resourceLocations           = "#permissions_0_resourceLocations"
-  private val actions                     = "#permissions_0_actions"
-  private val signIn                      = "button[name='fake-sign-in-btn']"
+  private val principal: String           = "#principal"
+  private val email: String               = "#email"
+  private val redirectUrl: String         = "#redirectUrl"
+  private val resourceType: String        = "#permissions_0_resourceTypes"
+  private val resourceLocations: String   = "#permissions_0_resourceLocations"
+  private val actions: String             = "#permissions_0_actions"
+  private val signIn: String              = "button[name='fake-sign-in-btn']"
   private val defaultEmailAddress: String = User.Email
-  private val dashboardPath               = "/dashboard"
+  private val dashboardPath: String       = "/dashboard"
 
   def defaultLoginUser(): Unit =
     loginWithUserEmail(defaultEmailAddress)

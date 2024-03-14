@@ -3,10 +3,8 @@ import sbt._
 object Dependencies {
 
   val test = Seq(
-//    "ch.qos.logback"        % "logback-classic"        % "1.5.2"    % Test,
     "com.novocode"          % "junit-interface"        % "0.11"     % Test,
     "com.typesafe"          % "config"                 % "1.4.3"    % Test,
-//    "com.vladsch.flexmark"  % "flexmark-all"           % "0.64.8"   % Test,
     "io.cucumber"           % "cucumber-junit"         % "7.15.0"   % Test,
     "io.cucumber"           % "cucumber-picocontainer" % "7.11.0"   % Test,
     "io.cucumber"          %% "cucumber-scala"         % "8.20.0"   % Test,

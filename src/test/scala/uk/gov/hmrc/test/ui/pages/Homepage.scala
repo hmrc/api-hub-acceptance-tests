@@ -18,7 +18,7 @@ package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.{By, WebElement}
 import uk.gov.hmrc.test.ui.conf.TestConfiguration
-import uk.gov.hmrc.test.ui.sections.Header
+import uk.gov.hmrc.test.ui.components.Header
 
 object Homepage extends BasePage {
   private val url: String                   = TestConfiguration.url("api-hub")

@@ -16,13 +16,10 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-import uk.gov.hmrc.test.ui.pages.ApplicationName.randAppName
 import uk.gov.hmrc.test.ui.pages._
 import uk.gov.hmrc.test.ui.utilities.User
 
 class SignInSteps extends BaseStepDef {
-  private var expectedApplicationName: String = _
-
   Given("""a user is on the sign in page""") { () =>
     ServiceStartPage
       .loadPage()
@@ -47,42 +44,8 @@ class SignInSteps extends BaseStepDef {
     assert(YourApplicationPage.yourApplicationsIsDisplayed(), true)
   }
 
-  Then("""the new user registers an application""") { () =>
-    YourApplicationPage.registerApplication()
-    expectedApplicationName = randAppName
-    ApplicationName.fillInApplicationName(expectedApplicationName)
-    TeamMembers.addNoTeamMember()
-    CheckYourAnswersPage.registerApplication()
-  }
-
   Then("""the application should be registered""") { () =>
     assert(ApplicationSuccessPage.isApplicationSuccessDisplayed(), true)
-  }
-
-  Then("""the application can be viewed""") { () =>
-    ApplicationSuccessPage.viewRegisteredApplication()
-    assert(ApplicationDetailsPage.getApplicationName == randAppName)
-  }
-
-  When("""the attempts to continue without selecting an endpoint""") { () =>
-    ApplicationDetailsPage.addApis()
-    HipApisPage.selectRandomApi()
-    ApiDetailsPage.addToAnApplication()
-    SelectApplicationPage.selectApplicationRadioButton(randAppName).continue()
-    SelectEndpointsPage.continue()
-  }
-
-  Then("""the user attempts to add an api to the application""") { () =>
-    ApplicationDetailsPage.addApis()
-    HipApisPage.selectRandomApi()
-    ApiDetailsPage.addToAnApplication()
-    SelectApplicationPage
-      .selectApplicationRadioButton(randAppName)
-      .continue()
-    SelectEndpointsPage.selectAllEndpoints().continue()
-    ReviewPolicyPage.confirmCheckbox()
-    ReviewPolicyPage.acceptAndContinue()
-    CheckYourAnswersPage.continue()
   }
 
   Then("""the api is added to the application""") { () =>

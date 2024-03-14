@@ -19,12 +19,12 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.By
 
 object ApplicationDeletePage extends BasePage {
-  private val confirmCheckbox          = "#value_0"
-  private val acceptAndContinue        = ".govuk-button--warning"
-  private val cancelBtn                = ".govuk-button--secondary"
-  private val deleteApplicationWarning = ".govuk-error-summary"
-  private val valueError               = "#value-error"
-  private val yourApplicationsLink     = ".govuk-grid-column-two-thirds p.govuk-body a[href='/api-hub']"
+  private val confirmCheckbox: String          = "#value_0"
+  private val acceptAndContinue: String        = ".govuk-button--warning"
+  private val cancelBtn: String                = ".govuk-button--secondary"
+  private val deleteApplicationWarning: String = ".govuk-error-summary"
+  private val valueError: String               = "#value-error"
+  private val allApplicationsLink: String      = ".govuk-body:nth-of-type(1) .govuk-link"
 
   def confirmDeletionOfApplication(): Unit = {
     driver.findElement(By.cssSelector(confirmCheckbox)).click()
@@ -44,6 +44,6 @@ object ApplicationDeletePage extends BasePage {
     driver.findElement(By.cssSelector(deleteApplicationWarning)).isDisplayed
 
   def returnToYourApplications(): Unit =
-    driver.findElement(By.cssSelector(yourApplicationsLink)).click()
+    driver.findElement(By.cssSelector(allApplicationsLink)).click()
 
 }

@@ -19,8 +19,8 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.By
 
 object RequestProductionAccessSuccessPage extends BasePage {
-  private val prodAccessBanner      = ".govuk-panel__title"
-  private val expectedBannerMessage = "Request for production access has been submitted"
+  private val prodAccessBanner: String      = ".govuk-panel__title"
+  private val expectedBannerMessage: String = "Request for production access has been submitted"
 
   def isProductionAccessBannerRequestMessageDisplayed: Boolean =
     driver.findElement(By.cssSelector(prodAccessBanner)).getText.trim.contains(expectedBannerMessage)

@@ -17,12 +17,10 @@
 package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.By
-import uk.gov.hmrc.test.ui.utilities.Application
 
 object ApplicationName extends BasePage {
-  private val appNameLcr  = "value"
-  private val continue    = ".govuk-button"
-  val randAppName: String = Application.Name
+  private val appNameLcr: String = "value"
+  private val continue: String   = ".govuk-button"
 
   def clearApplicationName(): Unit =
     driver.findElement(By.id(appNameLcr)).clear()

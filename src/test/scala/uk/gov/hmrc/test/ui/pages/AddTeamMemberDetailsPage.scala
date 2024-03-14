@@ -19,8 +19,8 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.By
 
 object AddTeamMemberDetailsPage extends BasePage {
-  private val emailTxtField = "#email"
-  private val continueBtn   = ".govuk-button"
+  private val emailTxtField: String = "#email"
+  private val continueBtn: String   = ".govuk-button"
 
   def clearEmail(): Unit =
     driver.findElement(By.cssSelector(emailTxtField)).clear()

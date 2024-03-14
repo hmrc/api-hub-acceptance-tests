@@ -1,7 +1,6 @@
-**This is a template README.md.  Be sure to update this with project specific content that describes your ui test project.**
+# Api-hub-acceptance-tests
 
-# api-hub-acceptance-tests
-UI test suite for the `<digital service name>` using WebDriver and `<scalatest/cucumber>`.  
+UI test suite for the `api-hub-frontend` using WebDriver and `cucumber`.  
 
 ## Running the tests
 
@@ -26,9 +25,12 @@ Then execute the `run_tests.sh` script:
 The `run_tests.sh` script defaults to using `chrome` in the `local` environment.  For a complete list of supported param values, see:
  - `src/test/resources/application.conf` for **environment** 
 
+It should be noted that when running the tests locally they will run in a headless mode (the browser is not launched).
+
 ## Running tests against a containerised browser - on a developer machine
 
-Given you have cloned and obtained the latest code from the [selenium grid repo](https://github.com/hmrc/docker-selenium-grid) you should launch the script from the root of this project
+Given you have cloned and obtained the latest code from the [selenium grid repo](https://github.com/hmrc/docker-selenium-grid) 
+you can now execute the script for this project.
 
 ```bash
 ./start.sh
@@ -50,6 +52,29 @@ For example, to run the tests against a containerised Chrome browser:
 ./run_tests.sh chrome local
 ```
 
+As there are three browsers in the hub, the argument for what browser can be substuted for any of the browsers listed, for example
+
+```bash
+./run_tests.sh firefox local
+```
+
+Will run the tests against the firefox container and:
+
+```bash
+./run_tests.sh edge local
+```
+
+Will run the tests against edge.
+
+The selenium hub will run as a daemon process and not interfere with your existing terminal or workflow. 
+However, should you wish to stop the service for whatever reason then in the project root input the following on the terminal:
+
+```bash
+./stop.sh
+```
+
+Which will stop all 4 containers (selenium-hub, firefox, edge and chrome).
+
 #### Running the tests against a test environment
 
 To run the tests against an environment set the corresponding `host` environment property as specified under
@@ -61,6 +86,25 @@ For example, to execute the `run_tests.sh` script using Chrome remote-webdriver 
 
 *Note* that while the above statement is technically correct, only the local environment is configured correctly for testing purposes
 other environments are not integrated properly for end-to-end testing, and as such cannot be run reliably against any environment other than the local one.
+
+## Screenshots on test failures
+
+In the case that a test fails a screenshot is taken and placed in directory */target/screenshots/*. This is of course 
+customizable (adjust this setting if you see fit, the current default is located in the hooks file).
+Also note that given the headless nature of tests using the local selenium-hub this can be particularly useful when debugging
+to see what is the source of the failure.
+
+## Shell scripts in project root
+
+Each shell script corresponds to a runner, for example, in the project root theres three shell scripts:
+
+```text
+run_regression.sh
+run_tests.sh
+run_zap_tests.sh
+```
+
+The shell scripts will execute tests with the appropriate tags as specified in the corresponding shell scripts themselves.
 
 ## Running ZAP tests
 
@@ -85,6 +129,7 @@ For example, to execute ZAP tests locally using a Chrome browser
 ```
 
 ### Running tests using BrowserStack
+
 If you would like to run your tests via BrowserStack from your local development environment please refer to the [webdriver-factory](https://github.com/hmrc/webdriver-factory/blob/main/README.md/#user-content-running-tests-using-browser-stack) project.
 
 ## Installing local driver binaries

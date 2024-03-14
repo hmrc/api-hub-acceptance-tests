@@ -18,7 +18,10 @@ package uk.gov.hmrc.test.ui.utilities
 
 import faker.Faker
 
-object Application {
-  var Name: String = String.format("%s%s", Faker.ar.loremWord(), Faker.en_GB.loremWord().reverse)
-  var Id: String   = _
+class Application {
+  val _name: String = String.format("%s%s", Faker.ar.loremWord(), Faker.en_GB.loremWord().reverse)
+  var id: String    = _
+
+  def name: String =
+    _name
 }

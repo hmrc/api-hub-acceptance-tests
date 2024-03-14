@@ -19,11 +19,11 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.{By, WebElement}
 
 object TeamMembers extends BasePage {
-  private val noRadioBtn        = "#value-no"
-  private val yesRadioBtn       = "#value"
-  private val continueLcr       = ".govuk-grid-column-two-thirds button.govuk-button"
-  private val problemAlertBox   = ".govuk-error-summary"
-  private val emailAlertMessage = "#email-error"
+  private val noRadioBtn: String        = "#value-no"
+  private val yesRadioBtn: String       = "#value"
+  private val continueLcr: String       = ".govuk-grid-column-two-thirds button.govuk-button"
+  private val problemAlertBox: String   = ".govuk-error-summary"
+  private val emailAlertMessage: String = "#email-error"
 
   private def noRadioButton(): WebElement =
     driver.findElement(By.cssSelector(noRadioBtn))

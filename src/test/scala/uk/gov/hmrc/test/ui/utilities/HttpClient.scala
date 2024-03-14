@@ -23,7 +23,7 @@ import uk.gov.hmrc.test.ui.conf.TestConfiguration
 import java.io.File
 
 object HttpClient {
-  def publishFile(filename: String): Response = {
+  def publishFile(filename: String): Response =
     given()
       .baseUri(TestConfiguration.url("oas-files"))
       .multiPart(
@@ -38,5 +38,4 @@ object HttpClient {
       .header("x-specification-type", "OAS_V3")
       .when()
       .put("/apis/multipart/publish")
-  }
 }

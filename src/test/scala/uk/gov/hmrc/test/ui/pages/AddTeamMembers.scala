@@ -19,9 +19,9 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.By
 
 object AddTeamMembers extends BasePage {
-  private val teamMembersHeading = ".govuk-fieldset__heading"
-  private val noRadioBtn         = "value-no"
-  private val continueBtn        = ".govuk-button"
+  private val teamMembersHeading: String = ".govuk-fieldset__heading"
+  private val noRadioBtn: String         = "value-no"
+  private val continueBtn: String        = ".govuk-button"
 
   def isNoRadioButtonSelected(): Boolean = {
     waitForElementPresent(driver.findElement(By.id(noRadioBtn)))

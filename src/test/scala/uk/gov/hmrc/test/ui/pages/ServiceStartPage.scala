@@ -20,8 +20,8 @@ import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.conf.TestConfiguration
 
 object ServiceStartPage extends BasePage {
-  private val url: String = TestConfiguration.url("api-hub")
-  private val startNowLcr = ".govuk-button"
+  private val url: String         = TestConfiguration.url("api-hub")
+  private val startNowLcr: String = ".govuk-button"
 
   def loadPage(): this.type = {
     driver.navigate().to(url)

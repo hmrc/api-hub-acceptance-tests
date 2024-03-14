@@ -19,12 +19,12 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.By
 
 object SelectEndpointsPage extends BasePage {
-  private val allEndpointsCheckboxes = ".govuk-checkboxes__input"
-  private val continueLink           = "button.govuk-button"
-  private val errorSummary           = ".govuk-error-summary"
-  private val errorSummaryMessage    = s"$errorSummary .govuk-error-summary__list a"
-  private val errorMessage           = "#value-error"
-  private val scopes                 = ".custom-normal-case"
+  private val allEndpointsCheckboxes: String = ".govuk-checkboxes__input"
+  private val continueLink: String           = "button.govuk-button"
+  private val errorSummary: String           = ".govuk-error-summary"
+  private val errorSummaryMessage: String    = s"$errorSummary .govuk-error-summary__list a"
+  private val errorMessage: String           = "#value-error"
+  private val scopes: String                 = ".custom-normal-case"
 
   def getScopeTexts: Array[AnyRef] =
     driver

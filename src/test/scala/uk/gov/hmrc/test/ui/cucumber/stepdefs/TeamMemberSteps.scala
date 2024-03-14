@@ -29,12 +29,12 @@ class TeamMemberSteps extends BaseStepDef {
   val expectedApplicationDetailsHeadingText: String = "Application details"
   val expectedHeadingText: String                   = "Do you want to add team members?"
   val expectedNoTeamMembersText: String             = "No team members added"
-  val updatedApplicationName: String                = ApplicationName.randAppName.reverse.toLowerCase
+  val updatedApplicationName: String                = application.name.reverse.toLowerCase
   var addMemberCount: Int                           = 1
 
   Then("""the new user starts the registration process""") { () =>
     YourApplicationPage.registerApplication()
-    expectedApplicationName = ApplicationName.randAppName
+    expectedApplicationName = application.name
     ApplicationName.fillInApplicationName(expectedApplicationName)
   }
 
@@ -97,7 +97,7 @@ class TeamMemberSteps extends BaseStepDef {
   }
 
   Then("""the check your answers page displays the correct information for no team members added""") { () =>
-    assert(CheckYourAnswersPage.getApplicationNameText == ApplicationName.randAppName)
+    assert(CheckYourAnswersPage.getApplicationNameText == application.name)
     assert(CheckYourAnswersPage.getApplicationDetailsHeadingText == expectedApplicationDetailsHeadingText)
     assert(CheckYourAnswersPage.isChangeApplicationNameLinkDisplayed, true)
     assert(CheckYourAnswersPage.isTeamMembersChangeLinkDisplayed, true)

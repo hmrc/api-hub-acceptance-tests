@@ -21,17 +21,16 @@ import org.openqa.selenium.{By, WebElement}
 import java.util
 
 object SelectApplicationPage extends BasePage {
-  private val radioButtons = ".govuk-radios .govuk-radios__item .govuk-label"
-  private val continueLink = ".govuk-grid-column-two-thirds .govuk-button"
+  private val radioButtons: String = ".govuk-radios .govuk-radios__item .govuk-label"
+  private val continueLink: String = ".govuk-grid-column-two-thirds .govuk-button"
 
   def selectApplicationRadioButton(name: String): this.type = {
     val elements: util.List[WebElement] = driver.findElements(By.cssSelector(radioButtons))
-    elements.forEach((element: WebElement) => println(element.getText.trim))
     val result                          =
       elements.stream().filter((element: WebElement) => element.getText.trim == name).findFirst().orElse(null)
     try result.click()
     catch {
-      case ex: NoSuchElementException => println("element could not be found")
+      case _: NoSuchElementException => logger.info("element could not be found")
     }
     this
   }
