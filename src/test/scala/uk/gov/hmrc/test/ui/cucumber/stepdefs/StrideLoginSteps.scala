@@ -40,6 +40,6 @@ class StrideLoginSteps extends BaseStepDef {
   }
 
   Then("""user should be on the {string} url page""") { (str: String) =>
-    UnauthorisedPage.currentUrlEndsWith(str)
+    assert(UnauthorisedPage.currentUrlEndsWith(str))
   }
 }
