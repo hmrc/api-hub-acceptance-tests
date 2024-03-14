@@ -53,6 +53,6 @@ class HomepageSteps extends BaseStepDef {
   }
 
   Then("the user should be redirected to the stride login page") { () =>
-    assert(StrideLogin.isPidFieldDisplayed(), true)
+    assert(StrideLogin.isPidFieldDisplayed, true)
   }
 }

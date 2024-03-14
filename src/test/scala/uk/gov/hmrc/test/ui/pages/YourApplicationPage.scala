@@ -26,6 +26,7 @@ object YourApplicationPage extends BasePage {
   private val headerLinksTexts             = ".custom-second-nav li a.govuk-link"
   private val registeredApplications       = ".hip-card-container-top .govuk-link"
   private val registeredApplicationMessage = ".align-left p.govuk-body"
+  private val strideLogo                   = ".govuk-tag"
 
   def getRegisteredApplicationNames: Array[AnyRef] =
     driver
@@ -75,4 +76,7 @@ object YourApplicationPage extends BasePage {
     waitForElementPresent(getYourApplicationsHeading)
     getYourApplicationsHeading.getText().trim.contains(youApplicationsTitleText)
   }
+
+  def isStrideLogoDisplayed(): Boolean =
+    driver.findElement(By.cssSelector(strideLogo)).isDisplayed
 }
