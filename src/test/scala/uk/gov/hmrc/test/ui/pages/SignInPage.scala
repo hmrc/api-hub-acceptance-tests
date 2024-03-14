@@ -20,10 +20,10 @@ import org.openqa.selenium.{By, WebElement}
 import uk.gov.hmrc.test.ui.conf.TestConfiguration
 
 object SignInPage extends BasePage {
-  val url: String = TestConfiguration.url("api-hub")
-  val path        = "/sign-in"
-
-  val ldapContinue = ".hipp-card:first-of-type a.govuk-button"
+  val url: String    = TestConfiguration.url("api-hub")
+  val path           = "/sign-in"
+  val ldapContinue   = ".hipp-card:first-of-type a.govuk-button"
+  val strideContinue = ".hipp-card:nth-of-type(2) .govuk-button"
 
   def loadPage(): this.type = {
     driver.navigate().to(url)
@@ -35,6 +35,9 @@ object SignInPage extends BasePage {
   def ldapContinueButton(): WebElement =
     driver.findElement(By.cssSelector(ldapContinue))
 
+  def strideContinueButton(): WebElement =
+    driver.findElement(By.cssSelector(strideContinue))
+
   def isLdapContinueButtonDisplayed: Boolean = {
     waitForElementPresent(ldapContinueButton())
     ldapContinueButton().isDisplayed
@@ -42,4 +45,7 @@ object SignInPage extends BasePage {
 
   def clickLdapContinue(): Unit =
     ldapContinueButton().click()
+
+  def clickStrideContinue(): Unit =
+    strideContinueButton().click()
 }
