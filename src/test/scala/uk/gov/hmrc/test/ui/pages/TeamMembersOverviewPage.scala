@@ -19,14 +19,14 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.{By, WebElement}
 
 object TeamMembersOverviewPage extends BasePage {
-  private val teamMembersHeading       = ".govuk-heading-xl"
-  private val teamMembersRows          = ".govuk-summary-list__row"
-  private val yesRadioBtn              = "#value"
-  private val noRadioBtn               = "#value-no"
-  private val continueBtn              = ".govuk-button"
-  private val changeLink               = ".govuk-summary-list__actions-list-item:last-of-type > a"
-  private val removeLink               = ".govuk-summary-list__actions-list-item:first-of-type > a"
-  private val lastAddedTeamMemberEmail = ".govuk-summary-list__row:last-of-type dt.govuk-summary-list__key"
+  private val teamMembersHeading: String       = ".govuk-heading-xl"
+  private val teamMembersRows: String          = ".govuk-summary-list__row"
+  private val yesRadioBtn: String              = "#value"
+  private val noRadioBtn: String               = "#value-no"
+  private val continueBtn: String              = ".govuk-button"
+  private val changeLink: String               = ".govuk-summary-list__actions-list-item:last-of-type > a"
+  private val removeLink: String               = ".govuk-summary-list__actions-list-item:first-of-type > a"
+  private val lastAddedTeamMemberEmail: String = ".govuk-summary-list__row:last-of-type dt.govuk-summary-list__key"
 
   private def noRadioButton(): WebElement =
     driver.findElement(By.cssSelector(noRadioBtn))

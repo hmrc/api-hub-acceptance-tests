@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 HM Revenue & Customs
+ * Copyright 2023 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,19 +18,16 @@ package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.By
 
-object AddTeamMembers extends BasePage {
-  private val teamMembersHeading = ".govuk-fieldset__heading"
-  private val noRadioBtn         = "value-no"
-  private val continueBtn        = ".govuk-button"
+object ApplicationNamePage extends BasePage {
+  private val appNameLcr: String = "value"
+  private val continue: String   = ".govuk-button"
 
-  def isNoRadioButtonSelected(): Boolean = {
-    waitForElementPresent(driver.findElement(By.id(noRadioBtn)))
-    driver.findElement(By.id(noRadioBtn)).isSelected
+  def clearApplicationName(): Unit =
+    driver.findElement(By.id(appNameLcr)).clear()
+
+  def fillInApplicationName(input: String): TeamMembersPage.type = {
+    driver.findElement(By.id(appNameLcr)).sendKeys(input)
+    driver.findElement(By.cssSelector(continue)).click()
+    TeamMembersPage
   }
-
-  def isContinueButtonDisplayed(): Boolean =
-    driver.findElement(By.cssSelector(continueBtn)).isDisplayed
-
-  def getHeadingText(): String =
-    driver.findElement(By.cssSelector(teamMembersHeading)).getText.trim
 }

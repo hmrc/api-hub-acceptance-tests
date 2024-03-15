@@ -16,20 +16,39 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
+import com.typesafe.scalalogging.LazyLogging
 import io.cucumber.scala.{EN, ScalaDsl, Scenario}
+import org.apache.commons.io.FileUtils
 import org.openqa.selenium.{OutputType, TakesScreenshot}
-import uk.gov.hmrc.test.ui.driver.BrowserDriver
+import uk.gov.hmrc.selenium.webdriver.{Browser, Driver}
 
-class Hooks extends ScalaDsl with EN with BrowserDriver {
-  Before {
-    driver.manage().deleteAllCookies()
+import java.io.File
+
+class Hooks extends LazyLogging with ScalaDsl with EN with Browser {
+
+  private def takeScreenShot(testMethodName: String, result: Scenario): Unit = {
+    val wd: TakesScreenshot   = Driver.instance.asInstanceOf[TakesScreenshot]
+    val srcFile: File         = wd.getScreenshotAs(OutputType.FILE)
+    val byteFile: Array[Byte] = wd.getScreenshotAs(OutputType.BYTES)
+    val screenShot: String    = "./target/screenshots/" + testMethodName + ".png"
+    FileUtils.copyFile(srcFile, new File(screenShot))
+    result.attach(byteFile, "image/png", testMethodName + ".png")
+  }
+
+  Before { scenario: Scenario =>
+    logger.info(s"Before scenario -> ${scenario.getName}")
+    startBrowser()
+
+    Driver.instance.manage().deleteAllCookies()
   }
 
   After { scenario: Scenario =>
+    logger.info(s"After scenario -> ${scenario.getName}")
     if (scenario.isFailed) {
-      val screenshotName = scenario.getName.replaceAll(" ", "_")
-      val screenshot     = driver.asInstanceOf[TakesScreenshot].getScreenshotAs(OutputType.BYTES)
-      scenario.attach(screenshot, "image/png", screenshotName)
+      takeScreenShot(scenario.getName, scenario)
     }
+    Driver.instance.manage().deleteAllCookies()
+
+    quitBrowser()
   }
 }

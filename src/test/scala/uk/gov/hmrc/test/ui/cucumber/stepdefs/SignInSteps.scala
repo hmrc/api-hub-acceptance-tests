@@ -16,19 +16,10 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-import faker.Faker
-import uk.gov.hmrc.test.ui.pages.ApplicationName.randAppName
-import uk.gov.hmrc.test.ui.pages.ApplicationSuccessPage.isApplicationSuccessDisplayed
-import uk.gov.hmrc.test.ui.pages.CreateSignIn.{defaultLoginUser, loginWithUserEmail}
-import uk.gov.hmrc.test.ui.pages.SignInPage.clickLdapContinue
-import uk.gov.hmrc.test.ui.pages.YourApplicationPage.yourApplicationsIsDisplayed
 import uk.gov.hmrc.test.ui.pages._
 import uk.gov.hmrc.test.ui.utilities.User
 
 class SignInSteps extends BaseStepDef {
-  var expectedApplicationName: String = _
-  val randomLocalEmail                = s"${Faker.en_GB.lastName()}@digital.hmrc.gov.uk"
-
   Given("""a user is on the sign in page""") { () =>
     ServiceStartPage
       .loadPage()
@@ -38,56 +29,23 @@ class SignInSteps extends BaseStepDef {
   }
 
   Given("""the user decides to login via ldap""") { () =>
-    clickLdapContinue()
+    SignInPage.clickLdapContinue()
   }
 
   When("""an approver with write privileges logs in""") { () =>
-    defaultLoginUser()
+    CreateSignInPage.defaultLoginUser()
   }
 
   When("""a new user with approver resource type with write privileges logs in""") { () =>
-    loginWithUserEmail(User.Email)
+    CreateSignInPage.loginWithUserEmail(User.Email)
   }
 
   Then("""the user should be authenticated""") { () =>
-    assert(yourApplicationsIsDisplayed(), true)
-  }
-
-  Then("""the new user registers an application""") { () =>
-    YourApplicationPage.registerApplication()
-    expectedApplicationName = randAppName
-    ApplicationName.fillInApplicationName(expectedApplicationName)
-    TeamMembers.addNoTeamMember()
-    CheckYourAnswersPage.registerApplication()
+    assert(YourApplicationPage.yourApplicationsIsDisplayed(), true)
   }
 
   Then("""the application should be registered""") { () =>
-    assert(isApplicationSuccessDisplayed(), true)
-  }
-
-  Then("""the application can be viewed""") { () =>
-    ApplicationSuccessPage.viewRegisteredApplication()
-    assert(ApplicationDetailsPage.getApplicationName == randAppName)
-//    Application.Id =
-  }
-
-  When("""the attempts to continue without selecting an endpoint""") { () =>
-    ApplicationDetailsPage.addApis()
-    HipApisPage.selectRandomApi()
-    ApiDetailsPage.addToAnApplication()
-    SelectApplicationPage.selectApplicationRadioButton(randAppName).continue()
-    SelectEndpointsPage.continue()
-  }
-
-  Then("""the user attempts to add an api to the application""") { () =>
-    ApplicationDetailsPage.addApis()
-    HipApisPage.selectRandomApi()
-    ApiDetailsPage.addToAnApplication()
-    SelectApplicationPage.selectApplicationRadioButton(randAppName).continue()
-    SelectEndpointsPage.selectAllEndpoints().continue()
-    ReviewPolicyPage.confirmCheckbox()
-    ReviewPolicyPage.acceptAndContinue()
-    CheckYourAnswersPage.continue()
+    assert(ApplicationSuccessPage.isApplicationSuccessDisplayed(), true)
   }
 
   Then("""the api is added to the application""") { () =>
@@ -97,7 +55,7 @@ class SignInSteps extends BaseStepDef {
   }
 
   Given("a user logs in with role {string}") { (role: String) =>
-    CreateSignIn.loginWithRoleAndEmailAddress(role, User.Email)
+    CreateSignInPage.loginWithRoleAndEmailAddress(role, User.Email)
   }
 
   Then("your applications has the following header links {string} {string} {string}") {

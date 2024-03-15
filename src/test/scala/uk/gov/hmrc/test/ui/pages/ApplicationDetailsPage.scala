@@ -22,17 +22,18 @@ import java.net.URI
 import java.util
 
 object ApplicationDetailsPage extends BasePage {
-  private val applicationName     = "div[class='govuk-grid-row govuk-!-margin-bottom-2']:first-of-type p"
-  val addApisLink                 = ".govuk-body a[href='/api-hub/apis']"
-  val addedApiNameRows            = "th[scope='row']"
-  val lhnmLinks                   = ".side-nav__component .side-nav__link"
-  val requestProdAccessBtn        = ".govuk-grid-column-one-half a.govuk-button"
-  val pageTitle                   = "h1.govuk-heading-l"
-  val teamMembers                 = ".govuk-grid-column-two-thirds .govuk-table:last-of-type .govuk-table__body .govuk-table__row td"
-  val teamMembersHeading          = "h2[class='govuk-heading-m govuk-!-margin-top-2']"
-  private val applicationId       = "div:nth-child(4) > div.govuk-grid-column-three-quarters > p"
-  private val createdDate         = "div:nth-child(3) > div.govuk-grid-column-three-quarters > p"
-  private val applicationApisText = "div.govuk-grid-column-two-thirds > p.govuk-body"
+  private val applicationName: String      = "div[class='govuk-grid-row govuk-!-margin-bottom-2']:first-of-type p"
+  private val addApisLink: String          = ".govuk-body a[href='/api-hub/apis']"
+  private val addedApiNameRows: String     = "th[scope='row']"
+  private val lhnmLinks: String            = ".side-nav__component .side-nav__link"
+  private val requestProdAccessBtn: String = ".govuk-grid-column-one-half a.govuk-button"
+  private val pageTitle: String            = "h1.govuk-heading-l"
+  private val teamMembers: String          =
+    ".govuk-grid-column-two-thirds .govuk-table:last-of-type .govuk-table__body .govuk-table__row td"
+  private val teamMembersHeading: String   = "h2[class='govuk-heading-m govuk-!-margin-top-2']"
+  private val applicationId: String        = "div:nth-child(4) > div.govuk-grid-column-three-quarters > p"
+  private val createdDate: String          = "div:nth-child(3) > div.govuk-grid-column-three-quarters > p"
+  private val applicationApisText: String  = "div.govuk-grid-column-two-thirds > p.govuk-body"
 
   def getApplicationApisText(): String =
     driver.findElement(By.cssSelector(applicationApisText)).getText.trim()
@@ -85,12 +86,12 @@ object ApplicationDetailsPage extends BasePage {
   //TODO move to section, this is also used in SelectApplicationPage class, so could go to base class too
   def chooseLhnmOption(input: String): this.type = {
     val elements: util.List[WebElement] = driver.findElements(By.cssSelector(lhnmLinks))
-    elements.forEach((element: WebElement) => println(element.getText.trim))
+    elements.forEach((element: WebElement) => logger.info(element.getText.trim))
     val result                          =
       elements.stream().filter((element: WebElement) => element.getText.trim == input).findFirst().orElse(null)
     try result.click()
     catch {
-      case ex: NoSuchElementException => println("element could not be found")
+      case _: NoSuchElementException => logger.info("element could not be found")
     }
     this
   }

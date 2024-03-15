@@ -19,15 +19,15 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.{By, WebElement}
 
 object CheckYourAnswersPage extends BasePage {
-  private val genericBtn                    = ".govuk-button"
-  private val applicationName               = ".govuk-summary-list:first-of-type .govuk-summary-list__value"
-  private val changeApplicationNameLink     = ".govuk-summary-list:first-of-type .govuk-link"
-  private val noTeamMemberText              =
+  private val genericBtn: String                    = ".govuk-button"
+  private val applicationName: String               = ".govuk-summary-list:first-of-type .govuk-summary-list__value"
+  private val changeApplicationNameLink: String     = ".govuk-summary-list:first-of-type .govuk-link"
+  private val noTeamMemberText: String              =
     ".govuk-summary-list:last-of-type .govuk-summary-list__row:last-of-type .govuk-summary-list__value"
-  private val changeTeamMemberLink          =
+  private val changeTeamMemberLink: String          =
     ".govuk-summary-list:last-of-type .govuk-summary-list__actions:last-of-type .govuk-link"
-  private val applicationDetailsHeadingText = ".govuk-heading-m"
-  private val teamOwnerName                 =
+  private val applicationDetailsHeadingText: String = ".govuk-heading-m"
+  private val teamOwnerName: String                 =
     "div[class='govuk-summary-list__row govuk-summary-list__row--no-actions'] > dt.govuk-summary-list__key"
 
   def getTeamOwnerEmailText: String =

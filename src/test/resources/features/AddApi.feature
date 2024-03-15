@@ -1,4 +1,4 @@
-@smoke
+@smoke @ZAP
 Feature: Adding APIs to applications
 
   Scenario: Add an API to an application

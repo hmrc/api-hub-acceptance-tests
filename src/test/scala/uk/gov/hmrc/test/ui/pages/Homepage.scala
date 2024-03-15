@@ -18,14 +18,13 @@ package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.{By, WebElement}
 import uk.gov.hmrc.test.ui.conf.TestConfiguration
-import uk.gov.hmrc.test.ui.sections.Header
+import uk.gov.hmrc.test.ui.components.Header
 
 object Homepage extends BasePage {
-  val url: String           = TestConfiguration.url("api-hub")
-  val homepageTitle: String = "Applications - The API Hub - GOV.UK"
-
-  val headerContainer: String       = "govuk-header__container"
-  val registerAnApplication: String = ".govuk-button"
+  private val url: String                   = TestConfiguration.url("api-hub")
+  val homepageTitle: String                 = "Applications - The API Hub - GOV.UK"
+  private val headerContainer: String       = "govuk-header__container"
+  private val registerAnApplication: String = ".govuk-button"
 
   def loadPage(): this.type = {
     driver.navigate().to(url)
@@ -48,8 +47,8 @@ object Homepage extends BasePage {
   def registerApplication(): WebElement =
     driver.findElement(By.cssSelector(registerAnApplication))
 
-  def startApplicationProcess: ApplicationName.type = {
+  def startApplicationProcess: ApplicationNamePage.type = {
     registerApplication().click()
-    ApplicationName
+    ApplicationNamePage
   }
 }

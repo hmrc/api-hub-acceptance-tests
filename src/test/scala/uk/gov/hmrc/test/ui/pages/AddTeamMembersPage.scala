@@ -18,22 +18,19 @@ package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.By
 
-object AddTeamMemberDetailsPage extends BasePage {
-  private val emailTxtField: String = "#email"
-  private val continueBtn: String   = ".govuk-button"
+object AddTeamMembersPage extends BasePage {
+  private val teamMembersHeading: String = ".govuk-fieldset__heading"
+  private val noRadioBtn: String         = "value-no"
+  private val continueBtn: String        = ".govuk-button"
 
-  def clearEmail(): Unit =
-    driver.findElement(By.cssSelector(emailTxtField)).clear()
-
-  def setEmail(input: String): Unit =
-    driver.findElement(By.cssSelector(emailTxtField)).sendKeys(input)
-
-  def continue(): Unit =
-    driver.findElement(By.cssSelector(continueBtn)).click()
-
-  def fillInEmail(input: String): TeamMembersOverviewPage.type = {
-    setEmail(input)
-    continue()
-    TeamMembersOverviewPage
+  def isNoRadioButtonSelected(): Boolean = {
+    waitForElementPresent(driver.findElement(By.id(noRadioBtn)))
+    driver.findElement(By.id(noRadioBtn)).isSelected
   }
+
+  def isContinueButtonDisplayed(): Boolean =
+    driver.findElement(By.cssSelector(continueBtn)).isDisplayed
+
+  def getHeadingText(): String =
+    driver.findElement(By.cssSelector(teamMembersHeading)).getText.trim
 }

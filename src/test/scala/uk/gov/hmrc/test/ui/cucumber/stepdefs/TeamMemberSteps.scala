@@ -21,28 +21,29 @@ import uk.gov.hmrc.test.ui.pages._
 import uk.gov.hmrc.test.ui.utilities.User
 
 class TeamMemberSteps extends BaseStepDef {
-  var expectedApplicationName: String       = _
-  var addedTeamMembersCount: Int            = 1
-  var lastAddedTeamMember: String           = s"${Faker.en_GB.firstName()}@digital.hmrc.gov.uk"
-  var invalidDomainEmail: String            = s"${Faker.en_GB.firstName()}@example.com"
-  var updatedEmail: String                  = _
-  val expectedApplicationDetailsHeadingText = "Application details"
-  val expectedNoTeamMembersText             = "No team members added"
-  val updatedApplicationName: String        = ApplicationName.randAppName.reverse.toLowerCase
+  var expectedApplicationName: String               = _
+  var addedTeamMembersCount: Int                    = 1
+  var lastAddedTeamMember: String                   = s"${Faker.en_GB.firstName()}@digital.hmrc.gov.uk"
+  var invalidDomainEmail: String                    = s"${Faker.en_GB.firstName()}@example.com"
+  var updatedEmail: String                          = _
+  val expectedApplicationDetailsHeadingText: String = "Application details"
+  val expectedHeadingText: String                   = "Do you want to add team members?"
+  val expectedNoTeamMembersText: String             = "No team members added"
+  val updatedApplicationName: String                = application.name.reverse.toLowerCase
+  var addMemberCount: Int                           = 1
 
   Then("""the new user starts the registration process""") { () =>
     YourApplicationPage.registerApplication()
-    expectedApplicationName = ApplicationName.randAppName
-    ApplicationName.fillInApplicationName(expectedApplicationName)
+    expectedApplicationName = application.name
+    ApplicationNamePage.fillInApplicationName(expectedApplicationName)
   }
 
   When("""{string} additional team members are added""") { (string: String) =>
     addedTeamMembersCount += string.toInt
-    TeamMembers.addTeamMember()
+    TeamMembersPage.addTeamMember()
 
-    var addMemberCount = 1
     while (addMemberCount < string.toInt) {
-      val randomNameEmail = s"${Faker.en_GB.firstName()}@digital.hmrc.gov.uk"
+      val randomNameEmail = s"${Faker.en_GB.firstName()}.${Faker.en_GB.lastName()}@digital.hmrc.gov.uk"
       AddTeamMemberDetailsPage.fillInEmail(randomNameEmail)
       TeamMembersOverviewPage.addTeamMember()
       addMemberCount = addMemberCount + 1
@@ -56,7 +57,7 @@ class TeamMemberSteps extends BaseStepDef {
 
   Then("""the count of team members on the check your answers page is {string}""") { (string: String) =>
     assert(addedTeamMembersCount == string.toInt, true)
-    TeamMembersOverviewPage.getPageTitle().startsWith(s"$addedTeamMembersCount")
+    assert(TeamMembersOverviewPage.getPageTitle().startsWith(s"$addedTeamMembersCount"))
   }
 
   When("""the user changes the team members email address""") { () =>
@@ -75,28 +76,28 @@ class TeamMemberSteps extends BaseStepDef {
   }
 
   Then("""the user attempts to add a new team member with no radio button option chosen""") { () =>
-    TeamMembers.clickContinue()
+    TeamMembersPage.clickContinue()
   }
 
   When("""the user chooses to not add a new team member""") { () =>
-    TeamMembers.addNoTeamMember()
+    TeamMembersPage.addNoTeamMember()
   }
 
   Then("""the problem alert box displayed""") { () =>
-    assert(TeamMembers.isAlertBoxDisplayed(), true)
+    assert(TeamMembersPage.isAlertBoxDisplayed(), true)
   }
 
   Then("""the user attempts to add a new team member using an unaccepted domain""") { () =>
-    TeamMembers.addTeamMember()
+    TeamMembersPage.addTeamMember()
     AddTeamMemberDetailsPage.fillInEmail(invalidDomainEmail)
   }
 
   Then("""the email alert message is displayed""") { () =>
-    assert(TeamMembers.isEmailAlertMessageDisplayed(), true)
+    assert(TeamMembersPage.isEmailAlertMessageDisplayed(), true)
   }
 
   Then("""the check your answers page displays the correct information for no team members added""") { () =>
-    assert(CheckYourAnswersPage.getApplicationNameText == ApplicationName.randAppName)
+    assert(CheckYourAnswersPage.getApplicationNameText == application.name)
     assert(CheckYourAnswersPage.getApplicationDetailsHeadingText == expectedApplicationDetailsHeadingText)
     assert(CheckYourAnswersPage.isChangeApplicationNameLinkDisplayed, true)
     assert(CheckYourAnswersPage.isTeamMembersChangeLinkDisplayed, true)
@@ -106,8 +107,8 @@ class TeamMemberSteps extends BaseStepDef {
 
   Then("""the user changes the application name""") { () =>
     CheckYourAnswersPage.clickChangeApplicationName()
-    ApplicationName.clearApplicationName()
-    ApplicationName.fillInApplicationName(updatedApplicationName)
+    ApplicationNamePage.clearApplicationName()
+    ApplicationNamePage.fillInApplicationName(updatedApplicationName)
   }
 
   Then("""the application name should be changed""") { () =>
@@ -119,8 +120,8 @@ class TeamMemberSteps extends BaseStepDef {
   }
 
   Then("""the user should be redirected to the team members overview page""") { () =>
-    assert(AddTeamMembers.isContinueButtonDisplayed(), true)
-    assert(AddTeamMembers.getHeadingText() == "Do you want to add team members?", true)
-    assert(AddTeamMembers.isNoRadioButtonSelected(), true)
+    assert(AddTeamMembersPage.isContinueButtonDisplayed(), true)
+    assert(AddTeamMembersPage.getHeadingText() == expectedHeadingText, true)
+    assert(AddTeamMembersPage.isNoRadioButtonSelected(), true)
   }
 }

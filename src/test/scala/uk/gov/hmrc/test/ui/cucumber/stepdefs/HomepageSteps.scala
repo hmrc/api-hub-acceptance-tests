@@ -16,14 +16,17 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-import uk.gov.hmrc.test.ui.pages.{ApplicationName, Homepage, ServiceStartPage, StrideLogin}
+import uk.gov.hmrc.test.ui.pages.{Homepage, ServiceStartPage, StrideLoginPage}
 
 class HomepageSteps extends BaseStepDef {
-  var expectedAppName: String = _
-  var actualAppName: String   = _
+  var actualAppName: String = _
 
   Given("""^an unauthenticated user navigates to the homepage$""") { () =>
-    Homepage.loadPage()
+    ServiceStartPage
+      .loadPage()
+      .startNow()
+
+    assert(Homepage.isRegisterAnApplicationDisplayed(), "Homepage should be displayed")
   }
 
   Given("""^an authenticated user navigates to the homepage$""") { () =>
@@ -35,24 +38,15 @@ class HomepageSteps extends BaseStepDef {
   }
 
   When("the user fills in the required stride information") { () =>
-    StrideLogin.fillInLoginDetails()
-  }
-
-  When("the user correctly registers an application") { () =>
-    // again forced reload
-    Homepage.loadPage()
-    expectedAppName = ApplicationName.randAppName
+    StrideLoginPage.fillInLoginDetails()
   }
 
   Then("the user should be directed to the api hub home page") { () =>
-    //FIXME: Currently the api home page changes port and then doesnt redirect after the stride login,
-    //FIXME: forcing the need for a page reload here
-    Homepage.loadPage()
     logger.info(driver.getCurrentUrl)
-    assert(Homepage.isRegisterAnApplicationDisplayed(), true)
+    assert(Homepage.isRegisterAnApplicationDisplayed(), "Homepage should be displayed")
   }
 
   Then("the user should be redirected to the stride login page") { () =>
-    assert(StrideLogin.isPidFieldDisplayed, true)
+    assert(StrideLoginPage.isPidFieldDisplayed, true)
   }
 }

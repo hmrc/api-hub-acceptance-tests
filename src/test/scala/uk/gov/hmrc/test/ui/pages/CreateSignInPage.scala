@@ -20,16 +20,16 @@ import org.openqa.selenium.{By, WebElement}
 import uk.gov.hmrc.test.ui.conf.TestConfiguration
 import uk.gov.hmrc.test.ui.utilities.User
 
-object CreateSignIn extends BasePage {
-  val principal                   = "#principal"
-  val email                       = "#email"
-  val redirectUrl                 = "#redirectUrl"
-  val resourceType                = "#permissions_0_resourceTypes"
-  val resourceLocations           = "#permissions_0_resourceLocations"
-  val actions                     = "#permissions_0_actions"
-  val signIn                      = "button[name='fake-sign-in-btn']"
-  val defaultEmailAddress: String = User.Email
-  private val dashboardPath       = "/dashboard"
+object CreateSignInPage extends BasePage {
+  private val principal: String           = "#principal"
+  private val email: String               = "#email"
+  private val redirectUrl: String         = "#redirectUrl"
+  private val resourceType: String        = "#permissions_0_resourceTypes"
+  private val resourceLocations: String   = "#permissions_0_resourceLocations"
+  private val actions: String             = "#permissions_0_actions"
+  private val signIn: String              = "button[name='fake-sign-in-btn']"
+  private val defaultEmailAddress: String = User.Email
+  private val dashboardPath: String       = "/dashboard"
 
   def defaultLoginUser(): Unit =
     loginWithUserEmail(defaultEmailAddress)

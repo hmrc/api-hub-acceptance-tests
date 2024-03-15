@@ -21,7 +21,7 @@ import java.util.Calendar
 
 object DateFormatterUtil {
   private var dateFormat: String = _
-  def getFormattedDate(): String = {
+  def getFormattedDate: String = {
     val calendarInstance = Calendar.getInstance()
 
     if (calendarInstance.get(Calendar.DATE) >= 10) {

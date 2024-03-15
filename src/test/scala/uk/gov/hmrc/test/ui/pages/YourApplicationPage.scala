@@ -19,14 +19,14 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.{By, WebElement}
 
 object YourApplicationPage extends BasePage {
-  private val yourApplicationsTitle        = ".govuk-heading-l"
-  private val registerAnApplication        = ".govuk-button--primary .govuk-button"
-  private val registerAnotherApplication   = ".hip-card-container-bottom .govuk-link--no-visited-state"
-  private val youApplicationsTitleText     = "our Applications"
-  private val headerLinksTexts             = ".custom-second-nav li a.govuk-link"
-  private val registeredApplications       = ".hip-card-container-top .govuk-link"
-  private val registeredApplicationMessage = ".align-left p.govuk-body"
-  private val strideLogo                   = ".govuk-tag"
+  private val yourApplicationsTitle: String        = ".govuk-heading-l"
+  private val registerAnApplication: String        = ".govuk-button--primary .govuk-button"
+  private val registerAnotherApplication: String   = ".hip-card-container-bottom .govuk-link--no-visited-state"
+  private val youApplicationsTitleText: String     = "our Applications"
+  private val headerLinksTexts: String             = ".custom-second-nav li a.govuk-link"
+  private val registeredApplications: String       = ".hip-card-container-top .govuk-link"
+  private val registeredApplicationMessage: String = ".align-left p.govuk-body"
+  private val strideLogo: String                   = ".govuk-tag"
 
   def getRegisteredApplicationNames: Array[AnyRef] =
     driver
@@ -56,7 +56,7 @@ object YourApplicationPage extends BasePage {
   private def clickRegisterAnotherApplication(): Unit =
     registerAnotherApplicationButton().click()
 
-  def registerApplication(): ApplicationName.type = {
+  def registerApplication(): ApplicationNamePage.type = {
     if (driver.findElements(By.cssSelector(registerAnApplication)).size() > 0) {
       waitForElementPresent(registerApplicationButton())
       scrollIntoView(registerApplicationButton())
@@ -66,7 +66,7 @@ object YourApplicationPage extends BasePage {
       scrollIntoView(registerAnotherApplicationButton())
       clickRegisterAnotherApplication()
     }
-    ApplicationName
+    ApplicationNamePage
   }
 
   private def getYourApplicationsHeading: WebElement =
@@ -74,7 +74,7 @@ object YourApplicationPage extends BasePage {
 
   def yourApplicationsIsDisplayed(): Boolean = {
     waitForElementPresent(getYourApplicationsHeading)
-    getYourApplicationsHeading.getText().trim.contains(youApplicationsTitleText)
+    getYourApplicationsHeading.getText.trim.contains(youApplicationsTitleText)
   }
 
   def isStrideLogoDisplayed(): Boolean =

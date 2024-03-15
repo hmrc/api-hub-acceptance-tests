@@ -14,10 +14,14 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.cucumber.stepdefs
+package uk.gov.hmrc.test.ui.components
 
-class ApplicationSteps(homepageSteps: HomepageSteps) extends BaseStepDef {
-  Then("the inputted application name should match the registered application name") { () =>
-    homepageSteps.expectedAppName should be(homepageSteps.actualAppName)
-  }
+import org.openqa.selenium.{By, WebElement}
+import uk.gov.hmrc.test.ui.pages.BasePage
+
+class Header(val rootElement: WebElement) extends BasePage {
+  val logo = ".govuk-header__logotype-text"
+
+  def clickLogo(): Unit =
+    rootElement.findElement(By.cssSelector(logo)).click()
 }

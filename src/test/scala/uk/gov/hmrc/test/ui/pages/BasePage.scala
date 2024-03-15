@@ -24,7 +24,7 @@ import uk.gov.hmrc.test.ui.driver.BrowserDriver
 import java.time.Duration
 
 trait BasePage extends BrowserDriver with Matchers {
-  val continueButton = "continue-button"
+  protected val continueButton = "continue-button"
 
   def submitPage(): Unit =
     driver.findElement(By.id(continueButton)).click()

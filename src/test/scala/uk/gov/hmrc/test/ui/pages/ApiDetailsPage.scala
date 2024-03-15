@@ -19,7 +19,7 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.By
 
 object ApiDetailsPage extends BasePage {
-  val addToAnApplicationLink = "a.govuk-button"
+  private val addToAnApplicationLink: String = "a.govuk-button"
 
   def addToAnApplication(): Unit =
     driver.findElement(By.cssSelector(addToAnApplicationLink)).click()

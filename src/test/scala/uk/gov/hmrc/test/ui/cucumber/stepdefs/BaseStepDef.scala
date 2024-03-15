@@ -20,13 +20,10 @@ import io.cucumber.scala.{EN, ScalaDsl}
 import org.scalatest.concurrent.Eventually
 import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.ui.driver.BrowserDriver
-import uk.gov.hmrc.webdriver.SingletonDriver
+import uk.gov.hmrc.test.ui.utilities.Application
 
-import scala.util.Try
-
-trait BaseStepDef extends ScalaDsl with EN with BrowserDriver with Eventually with Matchers {
-
-  sys.addShutdownHook {
-    Try(SingletonDriver.closeInstance)
-  }
+trait World {
+  val application = new Application()
 }
+
+trait BaseStepDef extends ScalaDsl with EN with BrowserDriver with Eventually with Matchers with World {}

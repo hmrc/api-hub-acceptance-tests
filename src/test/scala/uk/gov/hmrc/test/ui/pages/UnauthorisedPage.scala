@@ -17,9 +17,6 @@
 package uk.gov.hmrc.test.ui.pages
 
 object UnauthorisedPage extends BasePage {
-//  private val pageTitle = "Unauthorised"
-//  private val message = ".govuk-heading-xl"
-
   def currentUrlEndsWith(url: String): Boolean =
     driver.getCurrentUrl.endsWith(url)
 }

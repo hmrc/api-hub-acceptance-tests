@@ -19,17 +19,16 @@ package uk.gov.hmrc.test.ui.pages
 import faker.Faker
 import org.openqa.selenium.By
 
-object StrideLogin extends BasePage {
-  private val strideLoginPageTitle = "Stride IdP Login"
-  private val pid                  = "pid"
-  private val givenName            = "usersGivenName"
-  private val surName              = "usersSurname"
-  private val emailAddress         = "emailAddress"
-  private val roles                = "roles"
-  private val submitButton         = "continue-button"
+object StrideLoginPage extends BasePage {
+  private val pid: String                  = "pid"
+  private val givenName: String            = "usersGivenName"
+  private val surName: String              = "usersSurname"
+  private val emailAddress: String         = "emailAddress"
+  private val roles: String                = "roles"
+  private val submitButton: String         = "continue-button"
 
   def fillInLoginDetails(): Homepage.type = {
-    driver.findElement(By.id(pid)).sendKeys(Faker.ar.buildingNumber)
+    driver.findElement(By.id(pid)).sendKeys(Faker.ar.buildingNumber())
     driver.findElement(By.id(continueButton)).click()
     Homepage
   }
@@ -53,5 +52,4 @@ object StrideLogin extends BasePage {
     driver.findElement(By.id(emailAddress)).sendKeys("sarita.reddy.parigi@digital.hmrc.gov.uk")
     driver.findElement(By.id(submitButton)).click()
   }
-
 }
