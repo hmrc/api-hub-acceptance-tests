@@ -17,7 +17,6 @@
 package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.{By, WebElement}
-import uk.gov.hmrc.test.ui.conf.TestConfiguration
 
 object SignInPage extends BasePage {
   val path: String                   = "/sign-in"

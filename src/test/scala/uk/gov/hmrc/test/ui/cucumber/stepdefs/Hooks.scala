@@ -51,20 +51,4 @@ class Hooks extends LazyLogging with ScalaDsl with EN with Browser {
 
     quitBrowser()
   }
-
-//  Before {
-//    startBrowser()
-//  }
-//
-//  After {
-//    quitBrowser()
-//  }
-
-//  After { scenario: Scenario =>
-//    if (scenario.isFailed) {
-//      val screenshotName = scenario.getName.replaceAll(" ", "_")
-//      val screenshot     = driver.asInstanceOf[TakesScreenshot].getScreenshotAs(OutputType.BYTES)
-//      scenario.attach(screenshot, "image/png", screenshotName)
-//    }
-//  }
 }

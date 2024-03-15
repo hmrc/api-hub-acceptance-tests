@@ -38,9 +38,4 @@ class DeleteApplicatioSteps extends BaseStepDef {
   When("""the user chooses to cancel the deletion of the application""") { () =>
     ApplicationDeletePage.cancel()
   }
-//
-//  Then("""the user is redirected to the {string} page""") { (string: String) =>
-//    assert(ApplicationDetailsPage.getPageTitle() == string)
-//    assert(ApplicationDetailsPage.getApplicationName == application.name)
-//  }
 }
