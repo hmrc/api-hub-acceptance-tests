@@ -18,7 +18,7 @@ package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.By
 
-object AddTeamMembers extends BasePage {
+object AddTeamMembersPage extends BasePage {
   private val teamMembersHeading: String = ".govuk-fieldset__heading"
   private val noRadioBtn: String         = "value-no"
   private val continueBtn: String        = ".govuk-button"

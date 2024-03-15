@@ -25,11 +25,11 @@ class ProductionAccessSteps extends BaseStepDef {
       .startNow()
 
     SignInPage.clickLdapContinue()
-    CreateSignIn.defaultLoginUser()
+    CreateSignInPage.defaultLoginUser()
 
     YourApplicationPage.registerApplication()
-    ApplicationName.fillInApplicationName(application.name)
-    TeamMembers.addNoTeamMember()
+    ApplicationNamePage.fillInApplicationName(application.name)
+    TeamMembersPage.addNoTeamMember()
     CheckYourAnswersPage.registerApplication()
     ApplicationSuccessPage.viewRegisteredApplication()
     assert(ApplicationDetailsPage.getApplicationName == application.name)

@@ -17,7 +17,7 @@
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
 import uk.gov.hmrc.test.ui.domain.AddressWeighting
-import uk.gov.hmrc.test.ui.pages.{ApiDetailsPage, ApplicationDeletePage, ApplicationDetailsPage, ApplicationName, ApplicationSuccessPage, CheckYourAnswersPage, HipApisPage, ReviewPolicyPage, SelectApplicationPage, SelectEndpointsPage, TeamMembers, YourApplicationPage}
+import uk.gov.hmrc.test.ui.pages.{ApiDetailsPage, ApplicationDeletePage, ApplicationDetailsPage, ApplicationNamePage, ApplicationSuccessPage, CheckYourAnswersPage, HipApisPage, ReviewPolicyPage, SelectApplicationPage, SelectEndpointsPage, TeamMembersPage, YourApplicationPage}
 import uk.gov.hmrc.test.ui.utilities.{DateFormatterUtil, User}
 
 class ApplicationDetailsSteps extends BaseStepDef {
@@ -25,8 +25,8 @@ class ApplicationDetailsSteps extends BaseStepDef {
 
   Then("""the new user registers an application""") { () =>
     YourApplicationPage.registerApplication()
-    ApplicationName.fillInApplicationName(application.name)
-    TeamMembers.addNoTeamMember()
+    ApplicationNamePage.fillInApplicationName(application.name)
+    TeamMembersPage.addNoTeamMember()
     CheckYourAnswersPage.registerApplication()
   }
 

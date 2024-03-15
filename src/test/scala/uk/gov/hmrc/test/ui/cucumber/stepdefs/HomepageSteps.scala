@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-import uk.gov.hmrc.test.ui.pages.{Homepage, ServiceStartPage, StrideLogin}
+import uk.gov.hmrc.test.ui.pages.{Homepage, ServiceStartPage, StrideLoginPage}
 
 class HomepageSteps extends BaseStepDef {
   var actualAppName: String = _
@@ -26,7 +26,7 @@ class HomepageSteps extends BaseStepDef {
       .loadPage()
       .startNow()
 
-    Homepage.loadPage()
+    assert(Homepage.isRegisterAnApplicationDisplayed(), "Homepage should be displayed")
   }
 
   Given("""^an authenticated user navigates to the homepage$""") { () =>
@@ -38,7 +38,7 @@ class HomepageSteps extends BaseStepDef {
   }
 
   When("the user fills in the required stride information") { () =>
-    StrideLogin.fillInLoginDetails()
+    StrideLoginPage.fillInLoginDetails()
   }
 
   Then("the user should be directed to the api hub home page") { () =>
@@ -47,6 +47,6 @@ class HomepageSteps extends BaseStepDef {
   }
 
   Then("the user should be redirected to the stride login page") { () =>
-    assert(StrideLogin.isPidFieldDisplayed(), true)
+    assert(StrideLoginPage.isPidFieldDisplayed, true)
   }
 }

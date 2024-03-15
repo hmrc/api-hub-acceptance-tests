@@ -18,16 +18,16 @@ package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.By
 
-object ApplicationName extends BasePage {
+object ApplicationNamePage extends BasePage {
   private val appNameLcr: String = "value"
   private val continue: String   = ".govuk-button"
 
   def clearApplicationName(): Unit =
     driver.findElement(By.id(appNameLcr)).clear()
 
-  def fillInApplicationName(input: String): TeamMembers.type = {
+  def fillInApplicationName(input: String): TeamMembersPage.type = {
     driver.findElement(By.id(appNameLcr)).sendKeys(input)
     driver.findElement(By.cssSelector(continue)).click()
-    TeamMembers
+    TeamMembersPage
   }
 }

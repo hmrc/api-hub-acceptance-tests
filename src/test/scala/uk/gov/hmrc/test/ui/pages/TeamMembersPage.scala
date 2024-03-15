@@ -18,7 +18,7 @@ package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.{By, WebElement}
 
-object TeamMembers extends BasePage {
+object TeamMembersPage extends BasePage {
   private val noRadioBtn: String        = "#value-no"
   private val yesRadioBtn: String       = "#value"
   private val continueLcr: String       = ".govuk-grid-column-two-thirds button.govuk-button"

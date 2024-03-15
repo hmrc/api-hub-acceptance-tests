@@ -33,11 +33,11 @@ class SignInSteps extends BaseStepDef {
   }
 
   When("""an approver with write privileges logs in""") { () =>
-    CreateSignIn.defaultLoginUser()
+    CreateSignInPage.defaultLoginUser()
   }
 
   When("""a new user with approver resource type with write privileges logs in""") { () =>
-    CreateSignIn.loginWithUserEmail(User.Email)
+    CreateSignInPage.loginWithUserEmail(User.Email)
   }
 
   Then("""the user should be authenticated""") { () =>
@@ -55,7 +55,7 @@ class SignInSteps extends BaseStepDef {
   }
 
   Given("a user logs in with role {string}") { (role: String) =>
-    CreateSignIn.loginWithRoleAndEmailAddress(role, User.Email)
+    CreateSignInPage.loginWithRoleAndEmailAddress(role, User.Email)
   }
 
   Then("your applications has the following header links {string} {string} {string}") {

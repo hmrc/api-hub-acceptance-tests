@@ -20,7 +20,7 @@ import org.openqa.selenium.{By, WebElement}
 import uk.gov.hmrc.test.ui.conf.TestConfiguration
 import uk.gov.hmrc.test.ui.utilities.User
 
-object CreateSignIn extends BasePage {
+object CreateSignInPage extends BasePage {
   private val principal: String           = "#principal"
   private val email: String               = "#email"
   private val redirectUrl: String         = "#redirectUrl"

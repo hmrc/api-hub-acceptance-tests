@@ -47,8 +47,8 @@ object Homepage extends BasePage {
   def registerApplication(): WebElement =
     driver.findElement(By.cssSelector(registerAnApplication))
 
-  def startApplicationProcess: ApplicationName.type = {
+  def startApplicationProcess: ApplicationNamePage.type = {
     registerApplication().click()
-    ApplicationName
+    ApplicationNamePage
   }
 }

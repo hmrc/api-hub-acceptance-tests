@@ -35,15 +35,15 @@ class TeamMemberSteps extends BaseStepDef {
   Then("""the new user starts the registration process""") { () =>
     YourApplicationPage.registerApplication()
     expectedApplicationName = application.name
-    ApplicationName.fillInApplicationName(expectedApplicationName)
+    ApplicationNamePage.fillInApplicationName(expectedApplicationName)
   }
 
   When("""{string} additional team members are added""") { (string: String) =>
     addedTeamMembersCount += string.toInt
-    TeamMembers.addTeamMember()
+    TeamMembersPage.addTeamMember()
 
     while (addMemberCount < string.toInt) {
-      val randomNameEmail = s"${Faker.en_GB.firstName()}@digital.hmrc.gov.uk"
+      val randomNameEmail = s"${Faker.en_GB.firstName()}.${Faker.en_GB.lastName()}@digital.hmrc.gov.uk"
       AddTeamMemberDetailsPage.fillInEmail(randomNameEmail)
       TeamMembersOverviewPage.addTeamMember()
       addMemberCount = addMemberCount + 1
@@ -76,24 +76,24 @@ class TeamMemberSteps extends BaseStepDef {
   }
 
   Then("""the user attempts to add a new team member with no radio button option chosen""") { () =>
-    TeamMembers.clickContinue()
+    TeamMembersPage.clickContinue()
   }
 
   When("""the user chooses to not add a new team member""") { () =>
-    TeamMembers.addNoTeamMember()
+    TeamMembersPage.addNoTeamMember()
   }
 
   Then("""the problem alert box displayed""") { () =>
-    assert(TeamMembers.isAlertBoxDisplayed(), true)
+    assert(TeamMembersPage.isAlertBoxDisplayed(), true)
   }
 
   Then("""the user attempts to add a new team member using an unaccepted domain""") { () =>
-    TeamMembers.addTeamMember()
+    TeamMembersPage.addTeamMember()
     AddTeamMemberDetailsPage.fillInEmail(invalidDomainEmail)
   }
 
   Then("""the email alert message is displayed""") { () =>
-    assert(TeamMembers.isEmailAlertMessageDisplayed(), true)
+    assert(TeamMembersPage.isEmailAlertMessageDisplayed(), true)
   }
 
   Then("""the check your answers page displays the correct information for no team members added""") { () =>
@@ -107,8 +107,8 @@ class TeamMemberSteps extends BaseStepDef {
 
   Then("""the user changes the application name""") { () =>
     CheckYourAnswersPage.clickChangeApplicationName()
-    ApplicationName.clearApplicationName()
-    ApplicationName.fillInApplicationName(updatedApplicationName)
+    ApplicationNamePage.clearApplicationName()
+    ApplicationNamePage.fillInApplicationName(updatedApplicationName)
   }
 
   Then("""the application name should be changed""") { () =>
@@ -120,8 +120,8 @@ class TeamMemberSteps extends BaseStepDef {
   }
 
   Then("""the user should be redirected to the team members overview page""") { () =>
-    assert(AddTeamMembers.isContinueButtonDisplayed(), true)
-    assert(AddTeamMembers.getHeadingText() == expectedHeadingText, true)
-    assert(AddTeamMembers.isNoRadioButtonSelected(), true)
+    assert(AddTeamMembersPage.isContinueButtonDisplayed(), true)
+    assert(AddTeamMembersPage.getHeadingText() == expectedHeadingText, true)
+    assert(AddTeamMembersPage.isNoRadioButtonSelected(), true)
   }
 }

@@ -26,9 +26,7 @@ object HipApisPage extends BasePage {
   private val apiNames: String = ".api-panel a"
   var chosenApi: String        = _
 
-  //for now just the first api should be added, but consider adding by name instead.
-  //this could also benefit from being private
-
+  //TODO: for now just the first api should be added, but consider adding by name instead.
   def chooseApiByText(input: String): Unit =
     driver
       .findElements(By.cssSelector(apiNames))
