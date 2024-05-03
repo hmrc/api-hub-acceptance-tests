@@ -20,8 +20,8 @@ import org.openqa.selenium.{By, WebElement}
 
 object YourApplicationPage extends BasePage {
   private val yourApplicationsTitle: String        = ".govuk-heading-l"
-  private val registerAnApplication: String        = ".govuk-button--primary .govuk-button"
-  private val registerAnotherApplication: String   = ".hip-card-container-bottom .govuk-link--no-visited-state"
+  private val registerAnApplicationId: String      = "registerAnApplication"
+  private val registerAnotherApplicationId: String = "registerAnotherApplication"
   private val youApplicationsTitleText: String     = "our Applications"
   private val headerLinksTexts: String             = ".custom-second-nav li a.govuk-link"
   private val registeredApplications: String       = ".hip-card-container-top .govuk-link"
@@ -46,10 +46,11 @@ object YourApplicationPage extends BasePage {
     driver.findElement(By.cssSelector(registeredApplicationMessage)).getText.trim
 
   private def registerApplicationButton(): WebElement =
-    driver.findElement(By.cssSelector(registerAnApplication))
+    driver.findElement(By.id(registerAnApplicationId))
 
   private def registerAnotherApplicationButton(): WebElement =
-    driver.findElement(By.cssSelector(registerAnotherApplication))
+    driver.findElement(By.id(registerAnotherApplicationId))
+
   private def clickRegisterAnApplication(): Unit             =
     registerApplicationButton().click()
 
@@ -57,7 +58,7 @@ object YourApplicationPage extends BasePage {
     registerAnotherApplicationButton().click()
 
   def registerApplication(): ApplicationNamePage.type = {
-    if (driver.findElements(By.cssSelector(registerAnApplication)).size() > 0) {
+    if (driver.findElements(By.id(registerAnApplicationId)).size() > 0) {
       waitForElementPresent(registerApplicationButton())
       scrollIntoView(registerApplicationButton())
       clickRegisterAnApplication()
