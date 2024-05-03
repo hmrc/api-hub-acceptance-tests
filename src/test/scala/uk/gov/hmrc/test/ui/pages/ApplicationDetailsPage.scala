@@ -26,7 +26,7 @@ object ApplicationDetailsPage extends BasePage {
   private val addApisLink: String          = ".govuk-body a[href='/api-hub/apis']"
   private val addedApiNameRows: String     = "th[scope='row']"
   private val lhnmLinks: String            = ".side-nav__component .side-nav__link"
-  private val requestProdAccessBtn: String = ".govuk-grid-column-one-half a.govuk-button"
+  private val requestProdAccessId: String  = "requestProductionAccess"
   private val pageTitle: String            = "h1.govuk-heading-l"
   private val teamMembers: String          =
     ".govuk-grid-column-two-thirds .govuk-table:last-of-type .govuk-table__body .govuk-table__row td"
@@ -97,7 +97,7 @@ object ApplicationDetailsPage extends BasePage {
   }
 
   def requestProductionAccess(): RequestProductionAccessPage.type = {
-    waitForElementPresentAndClick(driver.findElement(By.cssSelector(requestProdAccessBtn)))
+    waitForElementPresentAndClick(driver.findElement(By.id(requestProdAccessId)))
     RequestProductionAccessPage
   }
 }
