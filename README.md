@@ -5,39 +5,13 @@ UI test suite for the `api-hub-frontend` using WebDriver and `cucumber`.
 ## Running the tests
 
 Prior to executing the tests ensure you have:
- - Docker - to run mongo and browser (Chrome, Firefox or Edge) inside a container 
+ - Docker - to run MongoDb inside a container 
  - Installed/configured [service manager](https://github.com/hmrc/service-manager).
  - Installed/configured [service manager config](https://github.com/hmrc/service-manager-config)
- - Cloned the repo [selenium grid](https://github.com/hmrc/docker-selenium-grid) - for testing against a maintained browser in selenium grid locally.
 
-## Running tests against a containerised browser - on a developer machine
+## Running tests on a developer machine
 
-Given you have cloned and obtained the latest code from the [selenium grid repo](https://github.com/hmrc/docker-selenium-grid) 
-you can now execute the script for this project.
-
-```bash
-./start.sh
-```
-
-Which will get the selenium-hub, chrome, firefox and edge docker images locally and start the hub on port 4444.
-With this enabled all tests can now run on these images against the local environment.
-
-Be sure to double-check the images are running through docker dashboard or from the terminal before continuing alternatively,
-you can check in the browser what is running on localhost:4444, where you should see all the browser instances running.
-
-```bash
-docker container list
-```
-
-Run the following command to start services locally:
-
-    docker run --restart unless-stopped -d -p 27017-27019:27017-27019 --name mongodb mongo:4.2
-    sm2 --start API_HUB_ALL -wait 100
-
-Using the `-wait 100` -wait int used with --start, waits a specified number of seconds for the services to become
-available before exiting (use with --start)
-
-Then execute the `run_tests.sh` script:
+Execute the `run_tests.sh` script:
 
     ./run_tests.sh <browser-driver> <environment> 
 
@@ -45,8 +19,6 @@ The `run_tests.sh` script defaults to using `chrome` in the `local` environment.
 - `src/test/resources/application.conf` for **environment**
 
 It should be noted that when running the tests locally they will run in a headless mode (the browser is not launched).
-
-You are now able to run the tests against the containers you have running locally.
 
 For example, to run the tests against a containerised Chrome browser:
 
@@ -68,19 +40,13 @@ Running the tests against the firefox container:
 
 Will run the tests against edge.
 
+Web drivers are installed on demand by Selenium Manager. There is no need to install anything locally before running the tests.
+
+https://www.selenium.dev/blog/2022/introducing-selenium-manager/
+
 *Note* A couple of points to gotchas here:
 
-1) Anyone using a recent Mac (M1/M2/M3) the 'edge' browser won't start because selenium-grid will use the docker-compose.arm.yaml file which doesn't include this browser.
-2) It has alo been reported that Firefox also doesn't work for recent Mac's (M1/M2/M3), but does for Intel based Macs. Please check Slack forums for more information.
-
-The selenium hub will run as a daemon process and not interfere with your existing terminal or workflow. 
-However, should you wish to stop the service for whatever reason then in the project root input the following on the terminal:
-
-```bash
-./stop.sh
-```
-
-Which will stop all 4 containers (selenium-hub, firefox, edge and chrome).
+* It has been reported that Firefox doesn't work for recent Mac's (M1/M2/M3), but does for Intel based Macs. Please check Slack forums for more information.
 
 #### Running the tests against a test environment
 
