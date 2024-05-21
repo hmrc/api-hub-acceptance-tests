@@ -28,16 +28,16 @@ object HipApisPage extends BasePage {
 
   //TODO: for now just the first api should be added, but consider adding by name instead.
   def chooseApiByText(input: String): Unit =
-    driver
-      .findElements(By.cssSelector(apiNames))
+    waitForElementsPresent(By.cssSelector(apiNames))
       .stream()
       .filter(item => item.getText.trim.toLowerCase() == input.toLowerCase())
       .findFirst()
       .get()
       .click()
 
-  def numberOfApis(): util.List[WebElement] =
-    driver.findElements(By.cssSelector(allApis))
+  def numberOfApis(): util.List[WebElement] = {
+    waitForElementsPresent(By.cssSelector(allApis))
+  }
 
   def chooseApiByIndex(index: Integer): this.type = {
     val elements: util.List[WebElement] = numberOfApis()
