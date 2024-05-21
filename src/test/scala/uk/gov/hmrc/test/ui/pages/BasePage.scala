@@ -42,14 +42,24 @@ trait BasePage extends BrowserDriver with Matchers {
       .ignoring(classOf[NoSuchElementException])
 
   def waitForElementPresent(element: WebElement): WebElement =
-    customWaiter.until(driver => element)
+    customWaiter.until(_ => element)
+
+  def waitForElementPresent(by: By): WebElement =
+    waitForElementPresent(driver.findElement(by))
 
   def waitForElementPresentAndClick(element: WebElement): Unit =
     waitForElementPresent(element).click()
 
+  def waitForElementPresentAndClick(by: By): Unit =
+    waitForElementPresentAndClick(driver.findElement(by))
+
   def scrollIntoView(element: WebElement): Unit = {
     val js = driver.asInstanceOf[JavascriptExecutor]
     js.executeScript("arguments[0].scrollIntoView(true);", element)
+  }
+
+  def scrollIntoView(by: By): Unit = {
+    scrollIntoView(waitForElementPresent(by))
   }
 
 }

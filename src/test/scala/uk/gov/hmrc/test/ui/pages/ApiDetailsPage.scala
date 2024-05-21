@@ -21,6 +21,8 @@ import org.openqa.selenium.By
 object ApiDetailsPage extends BasePage {
   private val addToAnApplicationLink: String = "a.govuk-button"
 
-  def addToAnApplication(): Unit =
-    driver.findElement(By.cssSelector(addToAnApplicationLink)).click()
+  def addToAnApplication(): Unit = {
+    waitForElementPresentAndClick(By.cssSelector(addToAnApplicationLink))
+  }
+
 }
