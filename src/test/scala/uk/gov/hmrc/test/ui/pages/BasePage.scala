@@ -56,8 +56,11 @@ trait BasePage extends BrowserDriver with Matchers {
   def waitForElementPresentAndClick(by: By): Unit =
     waitForElementPresent(by).click()
 
-  def waitForElementsPresent(by: By): util.List[WebElement] =
-    customWaiter.until(driver => driver.findElements(by))
+  // Don't use this if the list could be empty
+  def waitForElementsPresent(by: By): util.List[WebElement] = {
+    waitForElementPresent(by)
+    driver.findElements(by)
+  }
 
   def scrollIntoView(element: WebElement): Unit = {
     val js = driver.asInstanceOf[JavascriptExecutor]

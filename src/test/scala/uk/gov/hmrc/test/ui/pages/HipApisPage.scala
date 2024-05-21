@@ -54,4 +54,5 @@ object HipApisPage extends BasePage {
 
   def getSelectedApiName: String =
     chosenApi
+
 }
