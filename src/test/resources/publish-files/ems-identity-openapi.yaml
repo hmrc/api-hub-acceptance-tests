@@ -381,4 +381,13 @@ components:
             }
           ]
         }
-  
+  securitySchemes:
+    oAuth2:
+      type: oauth2
+      description: Keycloak OAuth2 Client Credentials Flow
+      flows:
+        clientCredentials:
+          tokenUrl: /realms/hip/protocol/openid-connect/token
+          scopes:
+            write:person: Write person
+            write:person-details: Write person details
