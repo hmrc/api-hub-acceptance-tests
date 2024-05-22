@@ -97,7 +97,8 @@ object ApplicationDetailsPage extends BasePage {
   }
 
   def requestProductionAccess(): RequestProductionAccessPage.type = {
-    waitForElementPresentAndClick(driver.findElement(By.id(requestProdAccessId)))
+    waitForElementPresentAndClick(By.id(requestProdAccessId))
     RequestProductionAccessPage
   }
+
 }

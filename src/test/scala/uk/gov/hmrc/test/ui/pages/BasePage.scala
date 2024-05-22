@@ -22,6 +22,7 @@ import org.scalatest.matchers.should.Matchers
 import uk.gov.hmrc.test.ui.driver.BrowserDriver
 
 import java.time.Duration
+import java.util
 
 trait BasePage extends BrowserDriver with Matchers {
   protected val continueButton = "continue-button"
@@ -41,15 +42,33 @@ trait BasePage extends BrowserDriver with Matchers {
       .pollingEvery(Duration.ofSeconds(1L))
       .ignoring(classOf[NoSuchElementException])
 
+  // Don't use these methods with the element: WebElement parameter
   def waitForElementPresent(element: WebElement): WebElement =
-    customWaiter.until(driver => element)
+    customWaiter.until(_ => element)
 
   def waitForElementPresentAndClick(element: WebElement): Unit =
     waitForElementPresent(element).click()
 
+  // Do use these methods with the by: By parameter
+  def waitForElementPresent(by: By): WebElement =
+    customWaiter.until(driver => driver.findElement(by))
+
+  def waitForElementPresentAndClick(by: By): Unit =
+    waitForElementPresent(by).click()
+
+  // Don't use this if the list could be empty
+  def waitForElementsPresent(by: By): util.List[WebElement] = {
+    waitForElementPresent(by)
+    driver.findElements(by)
+  }
+
   def scrollIntoView(element: WebElement): Unit = {
     val js = driver.asInstanceOf[JavascriptExecutor]
     js.executeScript("arguments[0].scrollIntoView(true);", element)
+  }
+
+  def scrollIntoView(by: By): Unit = {
+    scrollIntoView(waitForElementPresent(by))
   }
 
 }

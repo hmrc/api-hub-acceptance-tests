@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.test.ui.pages
 
-import org.openqa.selenium.{By, WebElement}
+import org.openqa.selenium.By
 
 object YourApplicationPage extends BasePage {
   private val yourApplicationsTitle: String        = ".govuk-heading-l"
@@ -43,41 +43,34 @@ object YourApplicationPage extends BasePage {
       .toArray
 
   def getRegisteredApplicationMessage: String =
-    driver.findElement(By.cssSelector(registeredApplicationMessage)).getText.trim
+    waitForElementPresent(By.cssSelector(registeredApplicationMessage)).getText.trim
 
-  private def registerApplicationButton(): WebElement =
-    driver.findElement(By.id(registerAnApplicationId))
-
-  private def registerAnotherApplicationButton(): WebElement =
-    driver.findElement(By.id(registerAnotherApplicationId))
-
-  private def clickRegisterAnApplication(): Unit             =
-    registerApplicationButton().click()
+  private def clickRegisterAnApplication(): Unit = {
+    waitForElementPresentAndClick(By.id(registerAnApplicationId))
+  }
 
   private def clickRegisterAnotherApplication(): Unit =
-    registerAnotherApplicationButton().click()
+    waitForElementPresentAndClick(By.id(registerAnotherApplicationId))
 
   def registerApplication(): ApplicationNamePage.type = {
     if (driver.findElements(By.id(registerAnApplicationId)).size() > 0) {
-      waitForElementPresent(registerApplicationButton())
-      scrollIntoView(registerApplicationButton())
+      waitForElementPresent(By.id(registerAnApplicationId))
+      scrollIntoView(By.id(registerAnApplicationId))
       clickRegisterAnApplication()
     } else {
-      waitForElementPresent(registerAnotherApplicationButton())
-      scrollIntoView(registerAnotherApplicationButton())
+      waitForElementPresent(By.id(registerAnotherApplicationId))
+      scrollIntoView(By.id(registerAnotherApplicationId))
       clickRegisterAnotherApplication()
     }
     ApplicationNamePage
   }
 
-  private def getYourApplicationsHeading: WebElement =
-    driver.findElement(By.cssSelector(yourApplicationsTitle))
-
   def yourApplicationsIsDisplayed(): Boolean = {
-    waitForElementPresent(getYourApplicationsHeading)
-    getYourApplicationsHeading.getText.trim.contains(youApplicationsTitleText)
+    waitForElementPresent(By.cssSelector(yourApplicationsTitle)).getText.trim.contains(youApplicationsTitleText)
   }
 
-  def isStrideLogoDisplayed(): Boolean =
-    driver.findElement(By.cssSelector(strideLogo)).isDisplayed
+  def isStrideLogoDisplayed(): Boolean = {
+    waitForElementPresent(By.cssSelector(strideLogo)).isDisplayed
+  }
+
 }
