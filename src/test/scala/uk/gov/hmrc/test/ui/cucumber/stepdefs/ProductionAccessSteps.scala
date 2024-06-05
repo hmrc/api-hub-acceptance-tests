@@ -16,53 +16,69 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-import uk.gov.hmrc.test.ui.pages._
+import uk.gov.hmrc.test.ui.pages2.Navigation
+import uk.gov.hmrc.test.ui.pages2.application._
 
 class ProductionAccessSteps extends BaseStepDef {
+  private var applicationId: String = ""
+
   Given("""an api is added to an application""") { () =>
-    ServiceStartPage
-      .loadPage()
+    val applicationDetailsPage = Navigation
+      .openStartPage()
       .startNow()
+      .signInViaLdap()
+      .signInWithDefaults()
+      .registerAnApplication()
+      .setApplicationName(application.name)
+      .doNotAddTeamMembers()
+      .registerApplication()
+      .viewRegisteredApplication()
 
-    SignInPage.clickLdapContinue()
-    CreateSignInPage.defaultLoginUser()
+    applicationId = applicationDetailsPage.getApplicationId
 
-    YourApplicationPage.registerApplication()
-    ApplicationNamePage.fillInApplicationName(application.name)
-    TeamMembersPage.addNoTeamMember()
-    CheckYourAnswersPage.registerApplication()
-    ApplicationSuccessPage.viewRegisteredApplication()
-    assert(ApplicationDetailsPage.getApplicationName == application.name)
+    val apiDetailsPage = applicationDetailsPage
+      .addApis()
+      .selectRandomApi()
 
-    ApplicationDetailsPage.addApis()
-    HipApisPage.selectRandomApi()
-    ApiDetailsPage.addToAnApplication()
-    SelectApplicationPage.selectApplicationRadioButton(application.name).continue()
-    SelectEndpointsPage.selectAllEndpoints().continue()
-    ReviewPolicyPage.confirmCheckbox()
-    ReviewPolicyPage.acceptAndContinue()
-    CheckYourAnswersPage.continue()
+    val apiId = apiDetailsPage.getApiId
+    val apiTitle = apiDetailsPage.getApiTitle
 
-    assert(ApiAddedSuccessfullyPage.getApiName.startsWith(HipApisPage.getSelectedApiName))
-    ApiAddedSuccessfullyPage.viewApplication()
-    assert(ApplicationDetailsPage.isApiNameAddedToApplication(HipApisPage.getSelectedApiName))
+    val addAnApiSuccessPage = apiDetailsPage
+      .addToAnApplication()
+      .selectApplication(applicationId)
+      .selectAllEndpoints()
+      .confirmUsagePolicy()
+      .continue()
+
+    assert(addAnApiSuccessPage.getSuccessSummary.startsWith(apiTitle))
+
+    val applicationDetailsPageWithApiAdded = addAnApiSuccessPage
+      .viewApplication()
+
+    assert(applicationDetailsPageWithApiAdded.hasApiAdded(apiId))
   }
 
   //from the left hand menu the user chooses 'Application APIs'"
   When("from the left hand menu the user chooses {string}") { (lhnmOption: String) =>
-    ApplicationDetailsPage.chooseLhnmOption(lhnmOption)
+    lhnmOption match {
+      case "Application APIs" => ApplicationDetailsPage(applicationId).applicationApis()
+      case _ => new IllegalArgumentException(s"Unknown application navigation link: $lhnmOption")
+    }
   }
 
   When("the user requests prod access") { () =>
-    ApplicationDetailsPage.requestProductionAccess()
-    RequestProductionAccessPage.confirm().continue()
+    ApplicationApisPage(applicationId)
+      .requestProductionAccess()
+      .confirmUsagePolicies()
   }
 
   And("the user supports the request with a reason") { () =>
-    ProvideSupportingInformationPage.randomlyFillInTextBoxReason().continue()
+    ProvideSupportingInformationPage()
+      .setSupportingInformation("Lorem ipsum")
   }
 
   Then("the pending request is logged") { () =>
-    assert(RequestProductionAccessSuccessPage.isProductionAccessBannerRequestMessageDisplayed, true)
+    assert(RequestProductionAccessSuccessPage().isSuccessMessageDisplayed, true)
   }
+
 }

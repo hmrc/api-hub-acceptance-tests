@@ -20,8 +20,8 @@ import org.openqa.selenium.By
 
 object YourApplicationPage extends BasePage {
   private val yourApplicationsTitle: String        = ".govuk-heading-l"
-  private val registerAnApplicationId: String      = "registerAnApplication"
-  private val registerAnotherApplicationId: String = "registerAnotherApplication"
+  private val registerAnApplicationId: String      = "registerAnApplicationButton"
+  private val registerAnotherApplicationId: String = "registerAnApplicationButton"
   private val youApplicationsTitleText: String     = "our Applications"
   private val headerLinksTexts: String             = ".custom-second-nav li a.govuk-link"
   private val registeredApplications: String       = ".hip-card-container-top .govuk-link"

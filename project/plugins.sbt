@@ -3,7 +3,8 @@ resolvers += Resolver.url("HMRC-open-artefacts-ivy", url("https://open.artefacts
   Resolver.ivyStylePatterns
 )
 
-addSbtPlugin("uk.gov.hmrc"   % "sbt-auto-build"  % "3.21.0")
+addSbtPlugin("uk.gov.hmrc"   % "sbt-auto-build"  % "3.22.0")
 addSbtPlugin("org.scalameta" % "sbt-scalafmt"    % "2.5.2")
 addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.6.4")
 addSbtPlugin("uk.gov.hmrc" % "sbt-test-report" % "0.26.0")
+addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.6.4")

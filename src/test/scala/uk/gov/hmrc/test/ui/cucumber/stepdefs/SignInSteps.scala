@@ -16,28 +16,30 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-import uk.gov.hmrc.test.ui.pages._
+import uk.gov.hmrc.test.ui.pages.{CreateSignInPage => _, ServiceStartPage => _, SignInPage => _, _}
+import uk.gov.hmrc.test.ui.pages2.{LdapSignInPage, Navigation, SignInPage}
 import uk.gov.hmrc.test.ui.utilities.User
 
 class SignInSteps extends BaseStepDef {
   Given("""a user is on the sign in page""") { () =>
-    ServiceStartPage
-      .loadPage()
+    Navigation
+      .openStartPage()
       .startNow()
-
-    assert(SignInPage.isLdapContinueButtonDisplayed, true)
   }
 
   Given("""the user decides to login via ldap""") { () =>
-    SignInPage.clickLdapContinue()
+    SignInPage()
+      .signInViaLdap()
   }
 
   When("""an approver with write privileges logs in""") { () =>
-    CreateSignInPage.defaultLoginUser()
+    LdapSignInPage()
+      .signInWithDefaults()
   }
 
   When("""a new user with approver resource type with write privileges logs in""") { () =>
-    CreateSignInPage.loginWithUserEmail(User.Email)
+    LdapSignInPage()
+      .signInWithEmailAddress(User.Email)
   }
 
   Then("""the user should be authenticated""") { () =>
@@ -55,7 +57,8 @@ class SignInSteps extends BaseStepDef {
   }
 
   Given("a user logs in with role {string}") { (role: String) =>
-    CreateSignInPage.loginWithRoleAndEmailAddress(role, User.Email)
+    LdapSignInPage()
+      .signInWithEmailAddressAndRole(User.Email, role)
   }
 
   Then("your applications has the following header links {string} {string} {string}") {

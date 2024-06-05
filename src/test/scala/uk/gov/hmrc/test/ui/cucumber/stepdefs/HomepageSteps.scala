@@ -16,37 +16,33 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-import uk.gov.hmrc.test.ui.pages.{Homepage, ServiceStartPage, StrideLoginPage}
+import uk.gov.hmrc.test.ui.pages2.{DashboardPage, Navigation, StrideSignInPage}
 
 class HomepageSteps extends BaseStepDef {
-  var actualAppName: String = _
 
   Given("""^an unauthenticated user navigates to the homepage$""") { () =>
-    ServiceStartPage
-      .loadPage()
+    Navigation
+      .openStartPage()
       .startNow()
-
-    assert(Homepage.isRegisterAnApplicationDisplayed(), "Homepage should be displayed")
   }
 
   Given("""^an authenticated user navigates to the homepage$""") { () =>
-    ServiceStartPage
-      .loadPage()
+    Navigation
+      .openStartPage()
       .startNow()
-
-    assert(Homepage.isRegisterAnApplicationDisplayed())
   }
 
   When("the user fills in the required stride information") { () =>
-    StrideLoginPage.fillInLoginDetails()
+    StrideSignInPage()
+      .signIn()
   }
 
   Then("the user should be directed to the api hub home page") { () =>
-    logger.info(driver.getCurrentUrl)
-    assert(Homepage.isRegisterAnApplicationDisplayed(), "Homepage should be displayed")
+    DashboardPage()
   }
 
   Then("the user should be redirected to the stride login page") { () =>
-    assert(StrideLoginPage.isPidFieldDisplayed, true)
+    StrideSignInPage()
   }
+
 }
