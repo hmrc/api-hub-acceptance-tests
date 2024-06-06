@@ -18,11 +18,11 @@ package uk.gov.hmrc.test.ui.pages2.api
 
 import org.openqa.selenium.WebElement
 import uk.gov.hmrc.test.ui.pages2.api.HipApisPage._
-import uk.gov.hmrc.test.ui.pages2.{ApiHubBasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages2.{BasePage, PageReadyTest, UrlPageReadyTest}
 
 import scala.util.Random
 
-class HipApisPage extends ApiHubBasePage(pageReadyTest) {
+class HipApisPage extends BasePage[HipApisPage](pageReadyTest) {
 
   private val random = new Random(System.currentTimeMillis())
 

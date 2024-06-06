@@ -18,8 +18,14 @@ package uk.gov.hmrc.test.ui.pages2
 
 import uk.gov.hmrc.selenium.component.PageObject
 
-abstract class BasePage(pageReadyTest: PageReadyTest) extends PageObject with Robot {
+abstract class BasePage[T](pageReadyTest: PageReadyTest) extends PageObject with Robot {
+  self: T =>
 
   pageReadyTest.waitUntilReady()
+
+  def foreach[U](f: T => U): this.type = {
+    f.apply(this)
+    self
+  }
 
 }

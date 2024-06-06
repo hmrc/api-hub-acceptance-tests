@@ -18,7 +18,7 @@ package uk.gov.hmrc.test.ui.pages2
 
 import uk.gov.hmrc.test.ui.pages2.UnauthorisedPage._
 
-class UnauthorisedPage extends ApiHubBasePage(pageReadyTest) {
+class UnauthorisedPage extends BasePage[UnauthorisedPage](pageReadyTest) {
 
 }
 

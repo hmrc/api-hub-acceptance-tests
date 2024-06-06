@@ -19,9 +19,9 @@ package uk.gov.hmrc.test.ui.pages2.addanapi
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages2.addanapi.ReviewUsagePolicyPage._
 import uk.gov.hmrc.test.ui.pages2.addanapi.ReviewUsagePolicyPage.elements._
-import uk.gov.hmrc.test.ui.pages2.{ApiHubBasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages2.{BasePage, PageReadyTest, UrlPageReadyTest}
 
-class ReviewUsagePolicyPage extends ApiHubBasePage(pageReadyTest) {
+class ReviewUsagePolicyPage extends BasePage[ReviewUsagePolicyPage](pageReadyTest) {
 
   def confirmUsagePolicy(): CheckYourAnswersPage = {
     click(confirmUsagePolicyCheckbox)

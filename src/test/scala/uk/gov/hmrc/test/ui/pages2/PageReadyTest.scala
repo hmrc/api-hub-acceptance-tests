@@ -36,3 +36,11 @@ case class TitlePageReadyTest(title: String) extends PageReadyTest with Robot {
   }
 
 }
+
+object TitlePageReadyTest {
+
+  def forApiHubTitle(title: String): TitlePageReadyTest = {
+    TitlePageReadyTest(s"$title - The API Hub - GOV.UK")
+  }
+
+}

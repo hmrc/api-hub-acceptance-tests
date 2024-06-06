@@ -19,9 +19,9 @@ package uk.gov.hmrc.test.ui.pages2.application
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages2.application.RequestProductionAccessPage._
 import uk.gov.hmrc.test.ui.pages2.application.RequestProductionAccessPage.elements._
-import uk.gov.hmrc.test.ui.pages2.{ApiHubBasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages2.{BasePage, PageReadyTest, UrlPageReadyTest}
 
-class RequestProductionAccessPage extends ApiHubBasePage(pageReadyTest) {
+class RequestProductionAccessPage extends BasePage[RequestProductionAccessPage](pageReadyTest) {
 
   def confirmUsagePolicies(): ProvideSupportingInformationPage = {
     click(confirmationCheckbox)

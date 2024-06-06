@@ -19,9 +19,9 @@ package uk.gov.hmrc.test.ui.pages2.registerapplication
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages2.registerapplication.ApplicationNamePage._
 import uk.gov.hmrc.test.ui.pages2.registerapplication.ApplicationNamePage.elements._
-import uk.gov.hmrc.test.ui.pages2.{ApiHubBasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages2.{BasePage, PageReadyTest, UrlPageReadyTest}
 
-class ApplicationNamePage extends ApiHubBasePage(pageReadyTest) {
+class ApplicationNamePage extends BasePage[ApplicationNamePage](pageReadyTest) {
 
   def setApplicationName(applicationName: String): AddTeamMembersPage = {
     sendKeys(applicationNameInput, applicationName)

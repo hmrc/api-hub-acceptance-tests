@@ -17,12 +17,12 @@
 package uk.gov.hmrc.test.ui.pages2.registerapplication
 
 import org.openqa.selenium.By
-import uk.gov.hmrc.test.ui.pages2.{ApiHubBasePage, PageReadyTest, TitlePageReadyTest}
+import uk.gov.hmrc.test.ui.pages2.{BasePage, PageReadyTest, TitlePageReadyTest}
 import uk.gov.hmrc.test.ui.pages2.application.ApplicationDetailsPage
 import uk.gov.hmrc.test.ui.pages2.registerapplication.RegisterApplicationSuccessPage._
 import uk.gov.hmrc.test.ui.pages2.registerapplication.RegisterApplicationSuccessPage.elements._
 
-class RegisterApplicationSuccessPage extends ApiHubBasePage(pageReadyTest) {
+class RegisterApplicationSuccessPage extends BasePage[RegisterApplicationSuccessPage](pageReadyTest) {
 
   def viewRegisteredApplication(): ApplicationDetailsPage = {
     val applicationId = getApplicationId
@@ -40,7 +40,7 @@ object RegisterApplicationSuccessPage {
 
   // The URL contains the Application Id which we can't possibly know prior to the page being displayed
   // Therefore we'll use a title-based page ready test
-  val pageReadyTest: PageReadyTest = TitlePageReadyTest("Register Application Success")
+  val pageReadyTest: PageReadyTest = TitlePageReadyTest.forApiHubTitle("Register Application Success")
 
   object elements {
     val applicationLink: By = By.id("applicationLink")

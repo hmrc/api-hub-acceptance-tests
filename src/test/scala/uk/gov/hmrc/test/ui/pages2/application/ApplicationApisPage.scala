@@ -19,9 +19,9 @@ package uk.gov.hmrc.test.ui.pages2.application
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages2.application.ApplicationApisPage._
 import uk.gov.hmrc.test.ui.pages2.application.ApplicationApisPage.elements._
-import uk.gov.hmrc.test.ui.pages2.{ApiHubBasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages2.{BasePage, PageReadyTest, UrlPageReadyTest}
 
-class ApplicationApisPage(id: String) extends ApiHubBasePage(pageReadyTest(id)) {
+class ApplicationApisPage(id: String) extends BasePage[ApplicationApisPage](pageReadyTest(id)) {
 
   def requestProductionAccess(): RequestProductionAccessPage = {
     click(requestProductionAccessButton)

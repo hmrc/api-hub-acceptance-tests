@@ -20,9 +20,9 @@ import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages2.addanapi.SelectApplicationPage
 import uk.gov.hmrc.test.ui.pages2.api.ApiDetailsPage._
 import uk.gov.hmrc.test.ui.pages2.api.ApiDetailsPage.elements._
-import uk.gov.hmrc.test.ui.pages2.{ApiHubBasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages2.{BasePage, PageReadyTest, UrlPageReadyTest}
 
-class ApiDetailsPage(id: String) extends ApiHubBasePage(pageReadyTest(id)) {
+class ApiDetailsPage(id: String) extends BasePage[ApiDetailsPage](pageReadyTest(id)) {
 
   def addToAnApplication(): SelectApplicationPage = {
     click(addToAnApplicationButton)

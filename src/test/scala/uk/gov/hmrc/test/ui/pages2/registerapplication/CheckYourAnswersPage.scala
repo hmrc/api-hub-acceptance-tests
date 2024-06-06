@@ -19,9 +19,9 @@ package uk.gov.hmrc.test.ui.pages2.registerapplication
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages2.registerapplication.CheckYourAnswersPage._
 import uk.gov.hmrc.test.ui.pages2.registerapplication.CheckYourAnswersPage.elements._
-import uk.gov.hmrc.test.ui.pages2.{ApiHubBasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages2.{BasePage, PageReadyTest, UrlPageReadyTest}
 
-class CheckYourAnswersPage extends ApiHubBasePage(pageReadyTest) {
+class CheckYourAnswersPage extends BasePage[CheckYourAnswersPage](pageReadyTest) {
 
   def registerApplication(): RegisterApplicationSuccessPage = {
     click(registerApplicationButton)

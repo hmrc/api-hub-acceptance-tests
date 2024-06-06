@@ -22,7 +22,7 @@ import uk.gov.hmrc.test.ui.pages2.LdapSignInPage._
 import uk.gov.hmrc.test.ui.pages2.LdapSignInPage.elements._
 import uk.gov.hmrc.test.ui.utilities.User
 
-class LdapSignInPage extends BasePage(pageReadyTest) {
+class LdapSignInPage extends BasePage[LdapSignInPage](pageReadyTest) {
 
   // TODO: move to dashboard?
   private val dashboardPath: String       = "/dashboard"

@@ -19,9 +19,9 @@ package uk.gov.hmrc.test.ui.pages2.application
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages2.application.ProvideSupportingInformationPage._
 import uk.gov.hmrc.test.ui.pages2.application.ProvideSupportingInformationPage.elements._
-import uk.gov.hmrc.test.ui.pages2.{ApiHubBasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages2.{BasePage, PageReadyTest, UrlPageReadyTest}
 
-class ProvideSupportingInformationPage extends ApiHubBasePage(pageReadyTest) {
+class ProvideSupportingInformationPage extends BasePage[ProvideSupportingInformationPage](pageReadyTest) {
 
   def setSupportingInformation(information: String): Unit = {
     sendKeys(supportingInformation, information)

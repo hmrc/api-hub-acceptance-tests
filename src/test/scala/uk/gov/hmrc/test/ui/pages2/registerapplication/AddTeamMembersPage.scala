@@ -19,9 +19,9 @@ package uk.gov.hmrc.test.ui.pages2.registerapplication
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages2.registerapplication.AddTeamMembersPage._
 import uk.gov.hmrc.test.ui.pages2.registerapplication.AddTeamMembersPage.elements._
-import uk.gov.hmrc.test.ui.pages2.{ApiHubBasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages2.{BasePage, PageReadyTest, UrlPageReadyTest}
 
-class AddTeamMembersPage extends ApiHubBasePage(pageReadyTest) {
+class AddTeamMembersPage extends BasePage[AddTeamMembersPage](pageReadyTest) {
 
   def addTeamMembers(): Unit = {
     click(yesRadio)

@@ -19,9 +19,9 @@ package uk.gov.hmrc.test.ui.pages2.addanapi
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages2.addanapi.SelectEndpointsPage._
 import uk.gov.hmrc.test.ui.pages2.addanapi.SelectEndpointsPage.elements._
-import uk.gov.hmrc.test.ui.pages2.{ApiHubBasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages2.{BasePage, PageReadyTest, UrlPageReadyTest}
 
-class SelectEndpointsPage extends ApiHubBasePage(pageReadyTest) {
+class SelectEndpointsPage extends BasePage[SelectEndpointsPage](pageReadyTest) {
 
   def selectAllEndpoints(): ReviewUsagePolicyPage = {
     findElements(By.cssSelector(".govuk-checkboxes__input"))

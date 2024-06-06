@@ -23,31 +23,36 @@ class ProductionAccessSteps extends BaseStepDef {
   private var applicationId: String = ""
 
   Given("""an api is added to an application""") { () =>
-    val applicationDetailsPage = Journeys
+    var apiId = ""
+    var apiTitle = ""
+
+    Journeys
       .signInAndRegisterAnApplication()
-
-    applicationId = applicationDetailsPage.getApplicationId
-
-    val apiDetailsPage = applicationDetailsPage
+      .foreach(
+        applicationDetailsPage =>
+          applicationId = applicationDetailsPage.getApplicationId)
       .addApis()
       .selectRandomApi()
-
-    val apiId = apiDetailsPage.getApiId
-    val apiTitle = apiDetailsPage.getApiTitle
-
-    val addAnApiSuccessPage = apiDetailsPage
+      .foreach(
+        apiDetailsPage => {
+          apiId = apiDetailsPage.getApiId
+          apiTitle = apiDetailsPage.getApiTitle
+        }
+      )
       .addToAnApplication()
       .selectApplication(applicationId)
       .selectAllEndpoints()
       .confirmUsagePolicy()
       .continue()
-
-    addAnApiSuccessPage.getSuccessSummary should startWith(apiTitle)
-
-    val applicationDetailsPageWithApiAdded = addAnApiSuccessPage
+      .foreach(
+        addAnApiSuccessPage=>
+          addAnApiSuccessPage.getSuccessSummary should startWith(apiTitle)
+      )
       .viewApplication()
-
-    applicationDetailsPageWithApiAdded.hasApiAdded(apiId) shouldBe true
+      .foreach(
+        applicationDetailsPage =>
+          applicationDetailsPage.hasApiAdded(apiId) shouldBe true
+      )
   }
 
   //from the left hand menu the user chooses 'Application APIs'"

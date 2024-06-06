@@ -19,9 +19,9 @@ package uk.gov.hmrc.test.ui.pages2.application
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages2.application.RequestProductionAccessSuccessPage._
 import uk.gov.hmrc.test.ui.pages2.application.RequestProductionAccessSuccessPage.elements._
-import uk.gov.hmrc.test.ui.pages2.{ApiHubBasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages2.{BasePage, PageReadyTest, UrlPageReadyTest}
 
-class RequestProductionAccessSuccessPage extends ApiHubBasePage(pageReadyTest) {
+class RequestProductionAccessSuccessPage extends BasePage[RequestProductionAccessSuccessPage](pageReadyTest) {
 
   def isSuccessMessageDisplayed: Boolean = {
     getText(successHeading).contains("Request for production access has been submitted")

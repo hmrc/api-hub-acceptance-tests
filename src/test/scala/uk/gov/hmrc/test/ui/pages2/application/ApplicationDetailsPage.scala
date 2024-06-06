@@ -17,12 +17,12 @@
 package uk.gov.hmrc.test.ui.pages2.application
 
 import org.openqa.selenium.By
-import uk.gov.hmrc.test.ui.pages2.{ApiHubBasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages2.{BasePage, PageReadyTest, UrlPageReadyTest}
 import uk.gov.hmrc.test.ui.pages2.api.HipApisPage
 import uk.gov.hmrc.test.ui.pages2.application.ApplicationDetailsPage._
 import uk.gov.hmrc.test.ui.pages2.application.ApplicationDetailsPage.elements._
 
-class ApplicationDetailsPage(id: String) extends ApiHubBasePage(pageReadyTest(id)) {
+class ApplicationDetailsPage(id: String) extends BasePage[ApplicationDetailsPage](pageReadyTest(id)) {
 
   def getApplicationId: String = {
     getText(applicationId)

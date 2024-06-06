@@ -20,7 +20,7 @@ import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages2.SignInPage._
 import uk.gov.hmrc.test.ui.pages2.SignInPage.elements._
 
-class SignInPage extends ApiHubBasePage(pageReadyTest) {
+class SignInPage extends BasePage[SignInPage](pageReadyTest) {
 
   def signInViaLdap(): LdapSignInPage = {
     click(signInViaLdapButton)

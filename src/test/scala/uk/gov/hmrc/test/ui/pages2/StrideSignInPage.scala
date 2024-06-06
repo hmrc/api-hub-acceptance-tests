@@ -20,7 +20,7 @@ import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages2.StrideSignInPage._
 import uk.gov.hmrc.test.ui.pages2.StrideSignInPage.elements._
 
-class StrideSignInPage extends BasePage(pageReadyTest) {
+class StrideSignInPage extends BasePage[StrideSignInPage](pageReadyTest) {
 
   // TODO: standardise sign-in methods
   def signIn(): DashboardPage = {

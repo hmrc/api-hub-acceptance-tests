@@ -19,9 +19,9 @@ package uk.gov.hmrc.test.ui.pages2.addanapi
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages2.addanapi.SelectApplicationPage._
 import uk.gov.hmrc.test.ui.pages2.addanapi.SelectApplicationPage.elements._
-import uk.gov.hmrc.test.ui.pages2.{ApiHubBasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages2.{BasePage, PageReadyTest, UrlPageReadyTest}
 
-class SelectApplicationPage extends ApiHubBasePage(pageReadyTest) {
+class SelectApplicationPage extends BasePage[SelectApplicationPage](pageReadyTest) {
 
   def selectApplication(id: String): SelectEndpointsPage = {
     // Note that if there are more than 5 applications then the view changes to

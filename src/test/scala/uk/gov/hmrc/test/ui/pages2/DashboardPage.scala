@@ -22,7 +22,7 @@ import uk.gov.hmrc.test.ui.pages2.DashboardPage.elements._
 import uk.gov.hmrc.test.ui.pages2.application.ApplicationDetailsPage
 import uk.gov.hmrc.test.ui.pages2.registerapplication.ApplicationNamePage
 
-class DashboardPage extends ApiHubBasePage(pageReadyTest) {
+class DashboardPage extends BasePage[DashboardPage](pageReadyTest) {
 
   def registerAnApplication(): ApplicationNamePage = {
     click(registerAnApplicationButton)
