@@ -32,6 +32,28 @@ class ApplicationDetailsPage(id: String) extends BasePage[ApplicationDetailsPage
     getText(applicationName)
   }
 
+  def getCreated: String = {
+    getText(applicationCreated)
+  }
+
+  def getNoApisMessage: String = {
+    getText(noApisMessage)
+  }
+
+  def getTeamMembers: Seq[String] = {
+    findElements(By.cssSelector("[data-team-member-email]"))
+      .map(_.getAttribute("data-team-member-email"))
+  }
+
+  def getCountOfTeamMembersFromHeading: Int = {
+    val pattern     = "^.*\\((\\d+)\\)$".r
+
+    getText(teamMembersHeading) match {
+      case pattern(count) => count.toInt
+      case _ => -1
+    }
+  }
+
   def hasApiAdded(id: String): Boolean = {
     findElements(By.cssSelector(s"[data-api-id='$id']")).nonEmpty
   }
@@ -56,7 +78,10 @@ object ApplicationDetailsPage {
   object elements {
     val applicationId: By = By.id("applicationId")
     val applicationName: By = By.id("applicationName")
+    val applicationCreated: By = By.id("applicationCreated")
+    val noApisMessage: By = By.id("noApisMessage")
     val hipApisLink: By = By.id("hipApisLink")
+    val teamMembersHeading: By = By.id("teamMembersHeading")
   }
 
   def apply(id: String): ApplicationDetailsPage = {

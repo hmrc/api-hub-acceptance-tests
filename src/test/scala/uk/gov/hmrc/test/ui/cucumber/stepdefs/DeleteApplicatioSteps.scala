@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-import uk.gov.hmrc.test.ui.pages.{ApplicationDeletePage, ApplicationDetailsPage}
+import uk.gov.hmrc.test.ui.pages.{ApplicationDeletePage, ApplicationDetailsPage, YourApplicationPage}
 
 class DeleteApplicatioSteps extends BaseStepDef {
   Given("""the user chooses {string} from the left hand nav menu""") { (string: String) =>
@@ -38,4 +38,10 @@ class DeleteApplicatioSteps extends BaseStepDef {
   When("""the user chooses to cancel the deletion of the application""") { () =>
     ApplicationDeletePage.cancel()
   }
+
+  Then("""the previously registered application should no no longer be listed in all applications""") { () =>
+    ApplicationDeletePage.returnToYourApplications()
+    assert(!YourApplicationPage.getRegisteredApplicationNames.contains(application.name))
+  }
+
 }

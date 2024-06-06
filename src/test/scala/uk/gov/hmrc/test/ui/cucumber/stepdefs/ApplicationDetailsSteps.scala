@@ -17,72 +17,104 @@
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
 import uk.gov.hmrc.test.ui.domain.AddressWeighting
-import uk.gov.hmrc.test.ui.pages.{ApiDetailsPage, ApplicationDeletePage, ApplicationDetailsPage, ApplicationNamePage, ApplicationSuccessPage, CheckYourAnswersPage, HipApisPage, ReviewPolicyPage, SelectApplicationPage, SelectEndpointsPage, TeamMembersPage, YourApplicationPage}
+import uk.gov.hmrc.test.ui.pages2.Journeys
+import uk.gov.hmrc.test.ui.pages2.addanapi.AddAnApiSuccessPage
+import uk.gov.hmrc.test.ui.pages2.application.ApplicationDetailsPage
 import uk.gov.hmrc.test.ui.utilities.{DateFormatterUtil, User}
 
 class ApplicationDetailsSteps extends BaseStepDef {
   private val expectedApplicationApisText: String = "You have no APIs added"
+  private var applicationId = ""
+  private var apiId = ""
+  private var apiTitle = ""
 
   Then("""the new user registers an application""") { () =>
-    YourApplicationPage.registerApplication()
-    ApplicationNamePage.fillInApplicationName(application.name)
-    TeamMembersPage.addNoTeamMember()
-    CheckYourAnswersPage.registerApplication()
+    Journeys
+      .signedInUserRegistersAnApplication(application)
+      .foreach(
+        applicationDetailsPage =>
+          applicationId = applicationDetailsPage.getApplicationId
+      )
   }
 
   Then("""the application can be viewed""") { () =>
-    ApplicationSuccessPage.viewRegisteredApplication()
-    assert(ApplicationDetailsPage.getApplicationName == application.name)
+    ApplicationDetailsPage(applicationId)
+      .foreach(
+        applicationDetailsPage =>
+          applicationDetailsPage.getApplicationName shouldBe application.name
+      )
   }
 
   When("""the attempts to continue without selecting an endpoint""") { () =>
-    ApplicationDetailsPage.addApis()
-    HipApisPage.selectRandomApi()
-    ApiDetailsPage.addToAnApplication()
-    SelectApplicationPage.selectApplicationRadioButton(application.name).continue()
-    SelectEndpointsPage.continue()
+    ApplicationDetailsPage(applicationId)
+      .addApis()
+      .selectRandomApi()
+      .addToAnApplication()
+      .selectApplication(applicationId)
+      .selectNoEndpoints()
   }
 
   Then("""the user attempts to add an api to the application""") { () =>
-    ApplicationDetailsPage.addApis()
-    HipApisPage.selectRandomApi()
-    ApiDetailsPage.addToAnApplication()
-    SelectApplicationPage
-      .selectApplicationRadioButton(application.name)
+    ApplicationDetailsPage(applicationId)
+      .addApis()
+      .selectRandomApi()
+      .foreach(
+        apiDetailsPage => {
+          apiId = apiDetailsPage.getApiId
+          apiTitle = apiDetailsPage.getApiTitle
+        }
+      )
+      .addToAnApplication()
+      .selectApplication(applicationId)
+      .selectAllEndpoints()
+      .confirmUsagePolicy()
       .continue()
-    SelectEndpointsPage.selectAllEndpoints().continue()
-    ReviewPolicyPage.confirmCheckbox()
-    ReviewPolicyPage.acceptAndContinue()
-    CheckYourAnswersPage.continue()
   }
 
   When("""the application details, application apis as well as the team members sections should be correct""") { () =>
-    assert(ApplicationDetailsPage.getApplicationName == application.name, "Application name should be matching")
-    assert(ApplicationDetailsPage.getCreatedDate() == DateFormatterUtil.getFormattedDate, true)
-    application.id = ApplicationDetailsPage.getApplicationIdFromUrl()
-    assert(ApplicationDetailsPage.getApplicationIdFromUrl() == ApplicationDetailsPage.getApplicationIdFromUi(), true)
-    //team members count and email address for the team member
-    assert(
-      ApplicationDetailsPage.getApplicationApisText().toLowerCase.contains(expectedApplicationApisText.toLowerCase)
-    )
-    assert(ApplicationDetailsPage.getTeamOwner() == User.Email)
-    assert(ApplicationDetailsPage.getCountOfTeamMembersFromHeading() == ApplicationDetailsPage.getTeamMembers().length)
+    ApplicationDetailsPage(applicationId)
+      .foreach(
+        applicationDetailsPage => {
+          applicationDetailsPage.getApplicationName shouldBe application.name
+          applicationDetailsPage.getCreated shouldBe DateFormatterUtil.getFormattedDate
+          applicationDetailsPage.getNoApisMessage.toLowerCase should contain(expectedApplicationApisText.toLowerCase)
+          applicationDetailsPage.getTeamMembers shouldBe Seq(User.Email)
+          applicationDetailsPage.getCountOfTeamMembersFromHeading shouldBe applicationDetailsPage.getTeamMembers.size
+        }
+      )
   }
 
   Then("""the user is redirected to the {string} page""") { (string: String) =>
-    assert(ApplicationDetailsPage.getPageTitle() == string)
-    assert(ApplicationDetailsPage.getApplicationName == application.name)
+    string match {
+      case "Application details" =>
+        ApplicationDetailsPage(applicationId)
+          .foreach(
+            applicationDetailsPage =>
+              applicationDetailsPage.getApplicationName shouldBe application.name
+          )
+      case _ => throw new IllegalArgumentException(s"Don't know how to process value $string")
+    }
   }
 
   Given("""the user adds a particular api to an application""") { () =>
-    ApplicationDetailsPage.addApis()
-    HipApisPage.chooseApiByText(AddressWeighting.Name)
-    ApiDetailsPage.addToAnApplication()
-    SelectApplicationPage.selectApplicationRadioButton(application.name).continue()
+    ApplicationDetailsPage(applicationId)
+      .addApis()
+      .selectApiByTitle(AddressWeighting.Name)
+      .addToAnApplication()
+      .selectApplication(applicationId)
   }
 
-  Then("""the previously registered application should no no longer be listed in all applications""") { () =>
-    ApplicationDeletePage.returnToYourApplications()
-    assert(!YourApplicationPage.getRegisteredApplicationNames.contains(application.name))
+  Then("""the api is added to the application""") { () =>
+    AddAnApiSuccessPage()
+      .foreach(
+        addAnApiSuccessPage=>
+          addAnApiSuccessPage.getSuccessSummary should startWith(apiTitle)
+      )
+      .viewApplication()
+      .foreach(
+        applicationDetailsPage =>
+          applicationDetailsPage.hasApiAdded(apiId) shouldBe true
+      )
   }
+
 }

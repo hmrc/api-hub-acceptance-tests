@@ -16,10 +16,10 @@
 
 package uk.gov.hmrc.test.ui.pages2
 
-import uk.gov.hmrc.test.ui.cucumber.stepdefs.World
 import uk.gov.hmrc.test.ui.pages2.application.ApplicationDetailsPage
+import uk.gov.hmrc.test.ui.utilities.Application
 
-object Journeys extends Robot with World {
+object Journeys extends Robot {
 
   def openStartPage(): ServiceStartPage = {
     navigateTo("")
@@ -46,7 +46,7 @@ object Journeys extends Robot with World {
       .signIn()
   }
 
-  def registerAnApplication(dashboardPage: DashboardPage): ApplicationDetailsPage = {
+  def registerAnApplication(dashboardPage: DashboardPage, application: Application): ApplicationDetailsPage = {
     dashboardPage
       .registerAnApplication()
       .setApplicationName(application.name)
@@ -55,8 +55,14 @@ object Journeys extends Robot with World {
       .viewRegisteredApplication()
   }
 
-  def signInAndRegisterAnApplication(): ApplicationDetailsPage = {
-    signIn().registerAnApplicationJourney()
+  def signInAndRegisterAnApplication(application: Application): ApplicationDetailsPage = {
+    signIn().registerAnApplicationJourney(application)
+  }
+
+  def signedInUserRegistersAnApplication(application: Application): ApplicationDetailsPage = {
+    openStartPage()
+      .dashboard()
+      .registerAnApplicationJourney(application)
   }
 
 }

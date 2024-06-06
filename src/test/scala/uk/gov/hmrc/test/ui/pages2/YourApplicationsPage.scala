@@ -16,16 +16,18 @@
 
 package uk.gov.hmrc.test.ui.pages2
 
-import uk.gov.hmrc.selenium.component.PageObject
+import uk.gov.hmrc.test.ui.pages2.YourApplicationsPage._
 
-abstract class BasePage[T](pageReadyTest: PageReadyTest) extends PageObject with Robot {
-  self: T =>
+class YourApplicationsPage extends BasePage[YourApplicationsPage](pageReadyTest) {
 
-  pageReadyTest.waitUntilReady()
+}
 
-  def foreach[U](f: T => U): this.type = {
-    f.apply(self)
-    self
+object YourApplicationsPage {
+
+  val pageReadyTest: PageReadyTest = UrlPageReadyTest("index")
+
+  def apply(): YourApplicationsPage = {
+    new YourApplicationsPage()
   }
 
 }

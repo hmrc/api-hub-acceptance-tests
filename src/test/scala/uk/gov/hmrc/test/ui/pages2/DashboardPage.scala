@@ -21,6 +21,7 @@ import uk.gov.hmrc.test.ui.pages2.DashboardPage._
 import uk.gov.hmrc.test.ui.pages2.DashboardPage.elements._
 import uk.gov.hmrc.test.ui.pages2.application.ApplicationDetailsPage
 import uk.gov.hmrc.test.ui.pages2.registerapplication.ApplicationNamePage
+import uk.gov.hmrc.test.ui.utilities.Application
 
 class DashboardPage extends BasePage[DashboardPage](pageReadyTest) {
 
@@ -29,8 +30,8 @@ class DashboardPage extends BasePage[DashboardPage](pageReadyTest) {
     ApplicationNamePage()
   }
 
-  def registerAnApplicationJourney(): ApplicationDetailsPage = {
-    Journeys.registerAnApplication(this)
+  def registerAnApplicationJourney(application: Application): ApplicationDetailsPage = {
+    Journeys.registerAnApplication(this, application)
   }
 
 }

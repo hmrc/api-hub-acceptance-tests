@@ -37,6 +37,14 @@ case class TitlePageReadyTest(title: String) extends PageReadyTest with Robot {
 
 }
 
+case class CombinedPageReadyTest(tests: PageReadyTest*) extends PageReadyTest {
+
+  override def waitUntilReady(): Unit = {
+    tests.foreach(_.waitUntilReady())
+  }
+
+}
+
 object TitlePageReadyTest {
 
   def forApiHubTitle(title: String): TitlePageReadyTest = {

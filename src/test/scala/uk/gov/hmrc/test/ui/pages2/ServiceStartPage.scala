@@ -20,7 +20,7 @@ import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages2.ServiceStartPage._
 import uk.gov.hmrc.test.ui.pages2.ServiceStartPage.elements._
 
-class ServiceStartPage extends BasePage[ServiceStartPage](pageReadyTest) {
+class ServiceStartPage extends BasePage[ServiceStartPage](pageReadyTest) with ApiHubMenu {
 
   def startNow(): SignInPage = {
     click(startNowButton)

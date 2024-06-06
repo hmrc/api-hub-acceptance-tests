@@ -27,7 +27,7 @@ class ProductionAccessSteps extends BaseStepDef {
     var apiTitle = ""
 
     Journeys
-      .signInAndRegisterAnApplication()
+      .signInAndRegisterAnApplication(application)
       .foreach(
         applicationDetailsPage =>
           applicationId = applicationDetailsPage.getApplicationId)

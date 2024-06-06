@@ -34,6 +34,17 @@ class HipApisPage extends BasePage[HipApisPage](pageReadyTest) {
     ApiDetailsPage(apiId)
   }
 
+  def selectApiByTitle(title: String): ApiDetailsPage = {
+    getApiDetailLinks.find(_.getText.equals(title)) match {
+      case Some(link) =>
+        val apiId = link.getAttribute(apiIdAttribute)
+        link.click()
+        ApiDetailsPage(apiId)
+      case _ =>
+        throw new IllegalArgumentException(s"Cannot find an API with title $title")
+    }
+  }
+
   private def getApiDetailLinks: Seq[WebElement] = {
     findElementsWithAttribute(apiIdAttribute)
   }

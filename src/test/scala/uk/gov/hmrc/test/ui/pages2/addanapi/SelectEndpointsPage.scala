@@ -31,6 +31,11 @@ class SelectEndpointsPage extends BasePage[SelectEndpointsPage](pageReadyTest) {
     ReviewUsagePolicyPage()
   }
 
+  def selectNoEndpoints(): Unit = {
+    click(continueButton)
+    SelectEndpointsPage()
+  }
+
 }
 
 object SelectEndpointsPage {

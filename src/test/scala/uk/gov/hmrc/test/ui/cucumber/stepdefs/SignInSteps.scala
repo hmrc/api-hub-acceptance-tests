@@ -50,12 +50,6 @@ class SignInSteps extends BaseStepDef {
     assert(ApplicationSuccessPage.isApplicationSuccessDisplayed(), true)
   }
 
-  Then("""the api is added to the application""") { () =>
-    assert(ApiAddedSuccessfullyPage.getApiName.startsWith(HipApisPage.getSelectedApiName))
-    ApiAddedSuccessfullyPage.viewApplication()
-    assert(ApplicationDetailsPage.isApiNameAddedToApplication(HipApisPage.getSelectedApiName))
-  }
-
   Given("a user logs in with role {string}") { (role: String) =>
     LdapSignInPage()
       .signInWithEmailAddressAndRole(User.Email, role)

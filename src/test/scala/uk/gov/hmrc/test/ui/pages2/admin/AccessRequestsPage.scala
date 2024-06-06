@@ -14,18 +14,21 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.pages2
+package uk.gov.hmrc.test.ui.pages2.admin
 
-import uk.gov.hmrc.selenium.component.PageObject
+import uk.gov.hmrc.test.ui.pages2.admin.AccessRequestsPage._
+import uk.gov.hmrc.test.ui.pages2.{BasePage, PageReadyTest, UrlPageReadyTest}
 
-abstract class BasePage[T](pageReadyTest: PageReadyTest) extends PageObject with Robot {
-  self: T =>
+class AccessRequestsPage extends BasePage[AccessRequestsPage](pageReadyTest) {
 
-  pageReadyTest.waitUntilReady()
+}
 
-  def foreach[U](f: T => U): this.type = {
-    f.apply(self)
-    self
+object AccessRequestsPage {
+
+  val pageReadyTest: PageReadyTest = UrlPageReadyTest("admin/access-requests")
+
+  def apply(): AccessRequestsPage = {
+    new AccessRequestsPage()
   }
 
 }
