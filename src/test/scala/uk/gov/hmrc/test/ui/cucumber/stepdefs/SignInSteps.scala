@@ -17,12 +17,12 @@
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
 import uk.gov.hmrc.test.ui.pages.{CreateSignInPage => _, ServiceStartPage => _, SignInPage => _, _}
-import uk.gov.hmrc.test.ui.pages2.{LdapSignInPage, Navigation, SignInPage}
+import uk.gov.hmrc.test.ui.pages2.{LdapSignInPage, Journeys, SignInPage}
 import uk.gov.hmrc.test.ui.utilities.User
 
 class SignInSteps extends BaseStepDef {
   Given("""a user is on the sign in page""") { () =>
-    Navigation
+    Journeys
       .openStartPage()
       .startNow()
   }

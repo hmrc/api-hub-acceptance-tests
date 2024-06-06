@@ -16,23 +16,15 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-import uk.gov.hmrc.test.ui.pages2.Navigation
+import uk.gov.hmrc.test.ui.pages2.Journeys
 import uk.gov.hmrc.test.ui.pages2.application._
 
 class ProductionAccessSteps extends BaseStepDef {
   private var applicationId: String = ""
 
   Given("""an api is added to an application""") { () =>
-    val applicationDetailsPage = Navigation
-      .openStartPage()
-      .startNow()
-      .signInViaLdap()
-      .signInWithDefaults()
-      .registerAnApplication()
-      .setApplicationName(application.name)
-      .doNotAddTeamMembers()
-      .registerApplication()
-      .viewRegisteredApplication()
+    val applicationDetailsPage = Journeys
+      .signInAndRegisterAnApplication()
 
     applicationId = applicationDetailsPage.getApplicationId
 
@@ -50,12 +42,12 @@ class ProductionAccessSteps extends BaseStepDef {
       .confirmUsagePolicy()
       .continue()
 
-    assert(addAnApiSuccessPage.getSuccessSummary.startsWith(apiTitle))
+    addAnApiSuccessPage.getSuccessSummary should startWith(apiTitle)
 
     val applicationDetailsPageWithApiAdded = addAnApiSuccessPage
       .viewApplication()
 
-    assert(applicationDetailsPageWithApiAdded.hasApiAdded(apiId))
+    applicationDetailsPageWithApiAdded.hasApiAdded(apiId) shouldBe true
   }
 
   //from the left hand menu the user chooses 'Application APIs'"
@@ -78,7 +70,7 @@ class ProductionAccessSteps extends BaseStepDef {
   }
 
   Then("the pending request is logged") { () =>
-    assert(RequestProductionAccessSuccessPage().isSuccessMessageDisplayed, true)
+    RequestProductionAccessSuccessPage().isSuccessMessageDisplayed shouldBe true
   }
 
 }

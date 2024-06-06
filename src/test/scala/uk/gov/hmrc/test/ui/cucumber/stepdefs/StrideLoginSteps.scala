@@ -17,11 +17,11 @@
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
 import uk.gov.hmrc.test.ui.pages.YourApplicationPage
-import uk.gov.hmrc.test.ui.pages2.{Navigation, SignInPage, StrideSignInPage, UnauthorisedPage}
+import uk.gov.hmrc.test.ui.pages2.{Journeys, SignInPage, StrideSignInPage, UnauthorisedPage}
 
 class StrideLoginSteps extends BaseStepDef {
   Given("""a user navigates to the sign in page""") { () =>
-    Navigation
+    Journeys
       .openStartPage()
       .startNow()
   }

@@ -19,6 +19,7 @@ package uk.gov.hmrc.test.ui.pages2
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages2.DashboardPage._
 import uk.gov.hmrc.test.ui.pages2.DashboardPage.elements._
+import uk.gov.hmrc.test.ui.pages2.application.ApplicationDetailsPage
 import uk.gov.hmrc.test.ui.pages2.registerapplication.ApplicationNamePage
 
 class DashboardPage extends ApiHubBasePage(pageReadyTest) {
@@ -26,6 +27,10 @@ class DashboardPage extends ApiHubBasePage(pageReadyTest) {
   def registerAnApplication(): ApplicationNamePage = {
     click(registerAnApplicationButton)
     ApplicationNamePage()
+  }
+
+  def registerAnApplicationJourney(): ApplicationDetailsPage = {
+    Journeys.registerAnApplication(this)
   }
 
 }

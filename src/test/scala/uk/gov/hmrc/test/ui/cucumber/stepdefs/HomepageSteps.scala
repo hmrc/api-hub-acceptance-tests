@@ -16,18 +16,18 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-import uk.gov.hmrc.test.ui.pages2.{DashboardPage, Navigation, StrideSignInPage}
+import uk.gov.hmrc.test.ui.pages2.{DashboardPage, Journeys, StrideSignInPage}
 
 class HomepageSteps extends BaseStepDef {
 
   Given("""^an unauthenticated user navigates to the homepage$""") { () =>
-    Navigation
+    Journeys
       .openStartPage()
       .startNow()
   }
 
   Given("""^an authenticated user navigates to the homepage$""") { () =>
-    Navigation
+    Journeys
       .openStartPage()
       .startNow()
   }
