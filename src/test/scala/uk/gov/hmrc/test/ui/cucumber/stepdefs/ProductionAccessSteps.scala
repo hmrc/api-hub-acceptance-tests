@@ -16,21 +16,20 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
+import com.google.inject.Inject
+import io.cucumber.guice.ScenarioScoped
 import uk.gov.hmrc.test.ui.pages2.Journeys
 import uk.gov.hmrc.test.ui.pages2.application._
 
-class ProductionAccessSteps extends BaseStepDef {
-  private var applicationId: String = ""
+@ScenarioScoped
+class ProductionAccessSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
 
   Given("""an api is added to an application""") { () =>
     var apiId = ""
     var apiTitle = ""
 
     Journeys
-      .signInAndRegisterAnApplication(application)
-      .foreach(
-        applicationDetailsPage =>
-          applicationId = applicationDetailsPage.getApplicationId)
+      .signInAndRegisterAnApplication(sharedState.application)
       .addApis()
       .selectRandomApi()
       .foreach(
@@ -40,7 +39,7 @@ class ProductionAccessSteps extends BaseStepDef {
         }
       )
       .addToAnApplication()
-      .selectApplication(applicationId)
+      .selectApplication(sharedState.application.id)
       .selectAllEndpoints()
       .confirmUsagePolicy()
       .continue()
@@ -58,13 +57,13 @@ class ProductionAccessSteps extends BaseStepDef {
   //from the left hand menu the user chooses 'Application APIs'"
   When("from the left hand menu the user chooses {string}") { (lhnmOption: String) =>
     lhnmOption match {
-      case "Application APIs" => ApplicationDetailsPage(applicationId).applicationApis()
+      case "Application APIs" => ApplicationDetailsPage(sharedState.application.id).applicationApis()
       case _ => new IllegalArgumentException(s"Unknown application navigation link: $lhnmOption")
     }
   }
 
   When("the user requests prod access") { () =>
-    ApplicationApisPage(applicationId)
+    ApplicationApisPage(sharedState.application.id)
       .requestProductionAccess()
       .confirmUsagePolicies()
   }

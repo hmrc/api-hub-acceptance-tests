@@ -14,14 +14,21 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.pages2
+package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-case class WrongPageException(message: String) extends Exception(message)
+import com.google.inject.Inject
+import io.cucumber.guice.ScenarioScoped
+import uk.gov.hmrc.test.ui.pages2.Journeys
 
-object WrongPageException extends Robot {
+@ScenarioScoped
+class JourneySteps @Inject()(sharedState: SharedState) extends BaseStepDef {
 
-  def expecting(expectedPage: String): WrongPageException = {
-    WrongPageException(s"Expected to be on page $expectedPage but currently on page $getCurrentUrl")
+  Given("a user has signed-in and registers an application") { () =>
+    Journeys.signInAndRegisterAnApplication(sharedState.application)
+  }
+
+  Given("a user has signed-in") { () =>
+    Journeys.signIn()
   }
 
 }

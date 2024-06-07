@@ -2,12 +2,8 @@
 Feature: Delete Application
 
   Background:
-    Given a user is on the sign in page
-    And the user decides to login via ldap
-    And an approver with write privileges logs in
-    And the new user registers an application
-    And the application can be viewed
-    And the user chooses "Delete application" from the left hand nav menu
+    Given a user has signed-in and registers an application
+    And the user chooses "Delete application" from the application left hand nav menu
 
   Scenario: Delete a registered application
     And deletes the application

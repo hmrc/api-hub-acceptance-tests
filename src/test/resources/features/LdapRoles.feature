@@ -10,7 +10,7 @@ Feature: LDAP Roles
     Then your applications has the following header links "<link_one>" "<link_two>" "<link_three>"
 
     Examples:
-      | role             | link_one         | link_two      | link_three |
-      | approvals        | All Applications | API Hub Admin | HIP APIs   |
-      | support          | All Applications | API Hub Admin | HIP APIs   |
-      | privileged-usage | All Applications | HIP APIs      |            |
+      | role             | link_one  | link_two      | link_three |
+      | approvals        | Dashboard | API Hub Admin | HIP APIs   |
+      | support          | Dashboard | API Hub Admin | HIP APIs   |
+      | privileged-usage | Dashboard | HIP APIs      |            |

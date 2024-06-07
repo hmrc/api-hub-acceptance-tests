@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.pages2
+package uk.gov.hmrc.test.ui.cucumber.runner
 
-case class WrongPageException(message: String) extends Exception(message)
+import io.cucumber.junit.{Cucumber, CucumberOptions}
+import org.junit.runner.RunWith
 
-object WrongPageException extends Robot {
-
-  def expecting(expectedPage: String): WrongPageException = {
-    WrongPageException(s"Expected to be on page $expectedPage but currently on page $getCurrentUrl")
-  }
-
-}
+@RunWith(classOf[Cucumber])
+@CucumberOptions(
+  features = Array("src/test/resources/features"),
+  glue = Array("uk.gov.hmrc.test.ui.cucumber.stepdefs", "uk.gov.hmrc.test.ui.utilities"),
+  plugin = Array("pretty", "html:target/cucumber", "json:target/cucumber.json", "junit:target/test-reports/Runner.xml")
+)
+class AllTestsRunner {}

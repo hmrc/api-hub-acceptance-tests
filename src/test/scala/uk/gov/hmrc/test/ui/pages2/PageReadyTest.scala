@@ -16,6 +16,8 @@
 
 package uk.gov.hmrc.test.ui.pages2
 
+import org.openqa.selenium.By
+
 sealed trait PageReadyTest {
 
   def waitUntilReady(): Unit
@@ -33,6 +35,14 @@ case class TitlePageReadyTest(title: String) extends PageReadyTest with Robot {
 
   override def waitUntilReady(): Unit = {
     waitForTitle(title)
+  }
+
+}
+
+case class ElementPageReadyTest(by: By) extends PageReadyTest with Robot {
+
+  override def waitUntilReady(): Unit = {
+    waitForElement(by)
   }
 
 }

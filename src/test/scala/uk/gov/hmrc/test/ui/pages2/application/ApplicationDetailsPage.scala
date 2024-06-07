@@ -66,8 +66,20 @@ class ApplicationDetailsPage(id: String) extends BasePage[ApplicationDetailsPage
 
   def applicationApis(): ApplicationApisPage = {
     val applicationId = getApplicationId
-    findElementWithAttributeValue("data-nav-item-page", "ApisPage").click()
+    click(applicationApisLink)
     ApplicationApisPage(applicationId)
+  }
+
+  def environmentsAndCredentials(): EnvironmentAndCredentialsPage = {
+    val applicationId = getApplicationId
+    click(environmentsAndCredentialsLink)
+    EnvironmentAndCredentialsPage(applicationId)
+  }
+
+  def deleteApplication(): ApplicationDeleteConfirmationPage = {
+    val applicationId = getApplicationId
+    click(deleteApplicationLink)
+    ApplicationDeleteConfirmationPage(applicationId)
   }
 
 }
@@ -83,6 +95,9 @@ object ApplicationDetailsPage extends Robot {
     val noApisMessage: By = By.id("noApisMessage")
     val hipApisLink: By = By.id("hipApisLink")
     val teamMembersHeading: By = By.id("teamMembersHeading")
+    val applicationApisLink: By = By.cssSelector("[data-nav-item-page='ApisPage']")
+    val environmentsAndCredentialsLink: By = By.cssSelector("[data-nav-item-page='EnvironmentsAndCredentialsPage']")
+    val deleteApplicationLink: By = By.cssSelector("[data-nav-item-page='DeleteApplicationPage']")
   }
 
   def apply(id: String): ApplicationDetailsPage = {

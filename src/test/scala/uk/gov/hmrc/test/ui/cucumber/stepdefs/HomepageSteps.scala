@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-import uk.gov.hmrc.test.ui.pages2.{DashboardPage, Journeys, StrideSignInPage}
+import uk.gov.hmrc.test.ui.pages2.{DashboardPage, Journeys, SignInPage, StrideSignInPage}
 
 class HomepageSteps extends BaseStepDef {
 
@@ -39,6 +39,11 @@ class HomepageSteps extends BaseStepDef {
 
   Then("the user should be directed to the api hub home page") { () =>
     DashboardPage()
+  }
+
+  When("the user selects to sign-in with Stride") { () =>
+    SignInPage()
+      .signInViaStride()
   }
 
   Then("the user should be redirected to the stride login page") { () =>

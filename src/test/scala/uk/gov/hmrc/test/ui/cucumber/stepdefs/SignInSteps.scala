@@ -16,11 +16,16 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-import uk.gov.hmrc.test.ui.pages.{CreateSignInPage => _, ServiceStartPage => _, SignInPage => _, _}
-import uk.gov.hmrc.test.ui.pages2.{LdapSignInPage, Journeys, SignInPage}
+import com.google.inject.Inject
+import io.cucumber.guice.ScenarioScoped
+import uk.gov.hmrc.test.ui.pages2.DashboardPage
+import uk.gov.hmrc.test.ui.pages2.application.ApplicationDetailsPage
+import uk.gov.hmrc.test.ui.pages2.{Journeys, LdapSignInPage, SignInPage}
 import uk.gov.hmrc.test.ui.utilities.User
 
-class SignInSteps extends BaseStepDef {
+@ScenarioScoped
+class SignInSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
+
   Given("""a user is on the sign in page""") { () =>
     Journeys
       .openStartPage()
@@ -43,11 +48,11 @@ class SignInSteps extends BaseStepDef {
   }
 
   Then("""the user should be authenticated""") { () =>
-    assert(YourApplicationPage.yourApplicationsIsDisplayed(), true)
+    DashboardPage()
   }
 
   Then("""the application should be registered""") { () =>
-    assert(ApplicationSuccessPage.isApplicationSuccessDisplayed(), true)
+    ApplicationDetailsPage(sharedState.application.id)
   }
 
   Given("a user logs in with role {string}") { (role: String) =>
@@ -57,10 +62,17 @@ class SignInSteps extends BaseStepDef {
 
   Then("your applications has the following header links {string} {string} {string}") {
     (linkOne: String, linkTwo: String, linkThree: String) =>
-      assert(YourApplicationPage.getHeaderLinkTexts().contains(linkOne))
-      assert(YourApplicationPage.getHeaderLinkTexts().contains(linkTwo))
-      if (linkThree.nonEmpty) {
-        assert(YourApplicationPage.getHeaderLinkTexts().contains(linkThree))
-      }
+      DashboardPage()
+        .foreach(
+          dashboardPage => {
+            dashboardPage.getHeaderLinkTexts should contain(linkOne)
+            dashboardPage.getHeaderLinkTexts should contain(linkTwo)
+
+            if (linkThree.nonEmpty) {
+              dashboardPage.getHeaderLinkTexts should contain(linkThree)
+            }
+          }
+        )
   }
+
 }

@@ -46,6 +46,11 @@ trait ApiHubMenu {
     GetSupportPage()
   }
 
+  def getHeaderLinkTexts: Seq[String] = {
+    findElements(headerLinkName)
+      .map(_.getText)
+  }
+
 }
 
 object ApiHubMenu {
@@ -55,6 +60,7 @@ object ApiHubMenu {
     val apiHubAdminLink: By = By.id("apiHubAdminLink")
     val hipApisLink: By = By.id("hipApisLink")
     val getSupportLink: By = By.id("getSupportLink")
+    val headerLinkName: By = By.cssSelector("[data-header-link-name]")
   }
 
 }

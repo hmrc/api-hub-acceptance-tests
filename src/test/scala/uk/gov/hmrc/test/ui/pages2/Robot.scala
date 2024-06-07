@@ -39,6 +39,10 @@ trait Robot extends LazyLogging {
     fluentWait(ExpectedConditions.urlMatches(pattern))
   }
 
+  def waitForElement(by: By): Unit = {
+    fluentWait(ExpectedConditions.visibilityOfElementLocated(by))
+  }
+
   def navigateTo(relativeUrl: String): Unit = {
     val url = buildFullUrl(relativeUrl)
 
@@ -91,6 +95,10 @@ trait Robot extends LazyLogging {
 
   def findElementsWithAttribute(name: String): Seq[WebElement] = {
     findElements(By.cssSelector(s"[$name]"))
+  }
+
+  def exists(by: By): Boolean = {
+    findElements(by).nonEmpty
   }
 
   private def fluentWait(expectedCondition: ExpectedCondition[_]): Unit = {

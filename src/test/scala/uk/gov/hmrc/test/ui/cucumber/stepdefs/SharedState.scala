@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.pages2
+package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-case class WrongPageException(message: String) extends Exception(message)
+import com.google.inject.Singleton
+import uk.gov.hmrc.test.ui.utilities.Application
 
-object WrongPageException extends Robot {
+@Singleton
+class SharedState {
 
-  def expecting(expectedPage: String): WrongPageException = {
-    WrongPageException(s"Expected to be on page $expectedPage but currently on page $getCurrentUrl")
-  }
+  val application = new Application()
 
 }

@@ -16,46 +16,45 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
+import com.google.inject.Inject
+import io.cucumber.guice.ScenarioScoped
 import uk.gov.hmrc.test.ui.domain.AddressWeighting
-import uk.gov.hmrc.test.ui.pages2.Journeys
 import uk.gov.hmrc.test.ui.pages2.addanapi.AddAnApiSuccessPage
-import uk.gov.hmrc.test.ui.pages2.application.ApplicationDetailsPage
+import uk.gov.hmrc.test.ui.pages2.application.{ApplicationDetailsPage, EnvironmentAndCredentialsPage}
+import uk.gov.hmrc.test.ui.pages2.{Journeys, Robot}
 import uk.gov.hmrc.test.ui.utilities.{DateFormatterUtil, User}
 
-class ApplicationDetailsSteps extends BaseStepDef {
+@ScenarioScoped
+class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseStepDef with Robot {
+
   private val expectedApplicationApisText: String = "You have no APIs added"
-  private var applicationId = ""
   private var apiId = ""
   private var apiTitle = ""
 
   Then("""the new user registers an application""") { () =>
     Journeys
-      .signedInUserRegistersAnApplication(application)
-      .foreach(
-        applicationDetailsPage =>
-          applicationId = applicationDetailsPage.getApplicationId
-      )
+      .signedInUserRegistersAnApplication(sharedState.application)
   }
 
   Then("""the application can be viewed""") { () =>
-    ApplicationDetailsPage(applicationId)
+    ApplicationDetailsPage(sharedState.application.id)
       .foreach(
         applicationDetailsPage =>
-          applicationDetailsPage.getApplicationName shouldBe application.name
+          applicationDetailsPage.getApplicationName shouldBe sharedState.application.name
       )
   }
 
   When("""the attempts to continue without selecting an endpoint""") { () =>
-    ApplicationDetailsPage(applicationId)
+    ApplicationDetailsPage(sharedState.application.id)
       .addApis()
       .selectRandomApi()
       .addToAnApplication()
-      .selectApplication(applicationId)
+      .selectApplication(sharedState.application.id)
       .selectNoEndpoints()
   }
 
   Then("""the user attempts to add an api to the application""") { () =>
-    ApplicationDetailsPage(applicationId)
+    ApplicationDetailsPage(sharedState.application.id)
       .addApis()
       .selectRandomApi()
       .foreach(
@@ -65,19 +64,19 @@ class ApplicationDetailsSteps extends BaseStepDef {
         }
       )
       .addToAnApplication()
-      .selectApplication(applicationId)
+      .selectApplication(sharedState.application.id)
       .selectAllEndpoints()
       .confirmUsagePolicy()
       .continue()
   }
 
   When("""the application details, application apis as well as the team members sections should be correct""") { () =>
-    ApplicationDetailsPage(applicationId)
+    ApplicationDetailsPage(sharedState.application.id)
       .foreach(
         applicationDetailsPage => {
-          applicationDetailsPage.getApplicationName shouldBe application.name
+          applicationDetailsPage.getApplicationName shouldBe sharedState.application.name
           applicationDetailsPage.getCreated shouldBe DateFormatterUtil.getFormattedDate
-          applicationDetailsPage.getNoApisMessage.toLowerCase should contain(expectedApplicationApisText.toLowerCase)
+          applicationDetailsPage.getNoApisMessage.toLowerCase should include(expectedApplicationApisText.toLowerCase)
           applicationDetailsPage.getTeamMembers shouldBe Seq(User.Email)
           applicationDetailsPage.getCountOfTeamMembersFromHeading shouldBe applicationDetailsPage.getTeamMembers.size
         }
@@ -87,21 +86,21 @@ class ApplicationDetailsSteps extends BaseStepDef {
   Then("""the user is redirected to the {string} page""") { (string: String) =>
     string match {
       case "Application details" =>
-        ApplicationDetailsPage(applicationId)
+        ApplicationDetailsPage(sharedState.application.id)
           .foreach(
             applicationDetailsPage =>
-              applicationDetailsPage.getApplicationName shouldBe application.name
+              applicationDetailsPage.getApplicationName shouldBe sharedState.application.name
           )
       case _ => throw new IllegalArgumentException(s"Don't know how to process value $string")
     }
   }
 
   Given("""the user adds a particular api to an application""") { () =>
-    ApplicationDetailsPage(applicationId)
+    ApplicationDetailsPage(sharedState.application.id)
       .addApis()
       .selectApiByTitle(AddressWeighting.Name)
       .addToAnApplication()
-      .selectApplication(applicationId)
+      .selectApplication(sharedState.application.id)
   }
 
   Then("""the api is added to the application""") { () =>
@@ -115,6 +114,27 @@ class ApplicationDetailsSteps extends BaseStepDef {
         applicationDetailsPage =>
           applicationDetailsPage.hasApiAdded(apiId) shouldBe true
       )
+  }
+
+  When("the user navigates to an invalid application id {string}") { (string: String) =>
+    navigateTo(s"application/details/$string")
+  }
+
+  Then("the client id should be added to the development environments credentials") { () =>
+    EnvironmentAndCredentialsPage(sharedState.application.id)
+      .foreach(
+        page =>
+          page.getSecondaryCredentialCount shouldBe 1
+      )
+  }
+
+  Given("""the user chooses {string} from the application left hand nav menu""") { (string: String) =>
+    string match {
+      case "Application APIs" => ApplicationDetailsPage(sharedState.application.id).applicationApis()
+      case "Environments and credentials" => ApplicationDetailsPage(sharedState.application.id).environmentsAndCredentials()
+      case "Delete application" => ApplicationDetailsPage(sharedState.application.id).deleteApplication()
+      case _ => throw new IllegalArgumentException(s"Unknown option: $string")
+    }
   }
 
 }

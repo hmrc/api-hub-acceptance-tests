@@ -53,6 +53,10 @@ object Journeys extends Robot {
       .doNotAddTeamMembers()
       .registerApplication()
       .viewRegisteredApplication()
+      .foreach(
+        applicationDetailsPage =>
+          application.id = applicationDetailsPage.getApplicationId
+      )
   }
 
   def signInAndRegisterAnApplication(application: Application): ApplicationDetailsPage = {
