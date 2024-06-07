@@ -16,12 +16,15 @@
 
 package uk.gov.hmrc.test.ui.pages2
 
-import uk.gov.hmrc.selenium.component.PageObject
+import com.typesafe.scalalogging.LazyLogging
 
-abstract class BasePage[T](pageReadyTest: PageReadyTest) extends PageObject with Robot {
+abstract class BasePage[T](pageReadyTest: PageReadyTest) extends Robot with LazyLogging {
   self: T =>
 
   pageReadyTest.waitUntilReady()
+
+  logger.info(s"Current page title: $getTitle")
+  logger.info(s"Current page URL: $getCurrentUrl")
 
   def foreach[U](f: T => U): this.type = {
     f.apply(self)

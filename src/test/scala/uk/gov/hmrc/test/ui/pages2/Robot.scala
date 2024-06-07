@@ -29,14 +29,14 @@ trait Robot extends LazyLogging {
 
   def waitForTitle(title: String): Unit = {
     fluentWait(ExpectedConditions.titleIs(title))
-    logger.info(s"Current page title: ${Driver.instance.getTitle}")
-    logger.info(s"Current page URL: ${Driver.instance.getCurrentUrl}")
   }
 
   def waitForUrl(relativeUrl: String): Unit = {
     fluentWait(ExpectedConditions.urlToBe(buildFullUrl(relativeUrl)))
-    logger.info(s"Current page title: ${Driver.instance.getTitle}")
-    logger.info(s"Current page URL: ${Driver.instance.getCurrentUrl}")
+  }
+
+  def waitForUrlMatching(pattern: String): Unit = {
+    fluentWait(ExpectedConditions.urlMatches(pattern))
   }
 
   def navigateTo(relativeUrl: String): Unit = {
@@ -45,6 +45,31 @@ trait Robot extends LazyLogging {
     logger.info(s"Navigating to $url")
 
     Driver.instance.navigate().to(url)
+  }
+
+  def clear(by: By): Unit = {
+    findElement(by).clear()
+  }
+
+  def click(by: By): Unit = {
+    findElement(by).click()
+  }
+
+  def sendKeys(by: By, value: String): Unit = {
+    clear(by)
+    findElement(by).sendKeys(value)
+  }
+
+  def getTitle: String = {
+    Driver.instance.getTitle
+  }
+
+  def getCurrentUrl: String = {
+    Driver.instance.getCurrentUrl
+  }
+
+  def getText(by: By): String = {
+    findElement(by).getText
   }
 
   // TODO: option? getAttribute can be null
