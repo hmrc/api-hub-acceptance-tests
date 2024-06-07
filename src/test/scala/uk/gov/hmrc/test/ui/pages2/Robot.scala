@@ -31,6 +31,15 @@ trait Robot extends LazyLogging {
     fluentWait(ExpectedConditions.titleIs(title))
   }
 
+  def waitForTitleOneOf(titles: Seq[String]): Unit = {
+    fluentWait(ExpectedConditions.or(
+      titles.map(
+        title =>
+          ExpectedConditions.titleIs(title)
+      ): _*
+    ))
+  }
+
   def waitForUrl(relativeUrl: String): Unit = {
     fluentWait(ExpectedConditions.urlToBe(buildFullUrl(relativeUrl)))
   }

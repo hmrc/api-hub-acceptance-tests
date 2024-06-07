@@ -21,6 +21,7 @@ import org.openqa.selenium.By
 sealed trait PageReadyTest {
 
   def waitUntilReady(): Unit
+
 }
 
 case class UrlPageReadyTest(url: String) extends PageReadyTest with Robot {
@@ -39,6 +40,37 @@ case class TitlePageReadyTest(title: String) extends PageReadyTest with Robot {
 
 }
 
+object TitlePageReadyTest {
+
+  def forApiHubTitle(title: String): TitlePageReadyTest = {
+    TitlePageReadyTest(buildApiHubTitle(title))
+  }
+
+  def buildApiHubTitle(title: String): String = {
+    s"$title - The API Hub - GOV.UK"
+  }
+
+}
+
+case class QuestionPageTitlePageReadyTest(title: String) extends PageReadyTest with Robot {
+
+  override def waitUntilReady(): Unit = {
+    waitForTitleOneOf(Seq(
+      title,
+      s"Error: $title"
+    ))
+  }
+
+}
+
+object QuestionPageTitlePageReadyTest {
+
+  def forApiHubTitle(title: String): QuestionPageTitlePageReadyTest = {
+    QuestionPageTitlePageReadyTest(TitlePageReadyTest.buildApiHubTitle(title))
+  }
+
+}
+
 case class ElementPageReadyTest(by: By) extends PageReadyTest with Robot {
 
   override def waitUntilReady(): Unit = {
@@ -47,18 +79,10 @@ case class ElementPageReadyTest(by: By) extends PageReadyTest with Robot {
 
 }
 
-case class CombinedPageReadyTest(tests: PageReadyTest*) extends PageReadyTest {
+case class AndPageReadyTest(tests: PageReadyTest*) extends PageReadyTest {
 
   override def waitUntilReady(): Unit = {
     tests.foreach(_.waitUntilReady())
-  }
-
-}
-
-object TitlePageReadyTest {
-
-  def forApiHubTitle(title: String): TitlePageReadyTest = {
-    TitlePageReadyTest(s"$title - The API Hub - GOV.UK")
   }
 
 }

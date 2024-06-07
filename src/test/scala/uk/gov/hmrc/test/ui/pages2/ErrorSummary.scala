@@ -17,37 +17,21 @@
 package uk.gov.hmrc.test.ui.pages2
 
 import org.openqa.selenium.By
-import uk.gov.hmrc.test.ui.pages2.ErrorPage._
-import uk.gov.hmrc.test.ui.pages2.ErrorPage.elements._
+import uk.gov.hmrc.test.ui.pages2.ErrorSummary.elements._
 
-class ErrorPage extends BasePage[ErrorPage](pageReadyTest) {
+trait ErrorSummary {
+  self: Robot =>
 
-  def getErrorHeading: String = {
-    getText(errorHeading)
-  }
-
-  def getErrorMessage: String = {
-    getText(errorMessage)
+  def hasErrors: Boolean = {
+    findElements(errorSummary).nonEmpty
   }
 
 }
 
-object ErrorPage {
-
-  // The URL and title of this page are variable
-  // Test on the presence of the heading and message
-  val pageReadyTest: PageReadyTest = AndPageReadyTest(
-    ElementPageReadyTest(errorHeading),
-    ElementPageReadyTest(errorMessage)
-  )
+object ErrorSummary {
 
   object elements {
-    val errorHeading: By = By.id("errorHeading")
-    val errorMessage: By = By.id("errorMessage")
-  }
-
-  def apply(): ErrorPage = {
-    new ErrorPage()
+    val errorSummary: By = By.cssSelector("[data-module='govuk-error-summary']")
   }
 
 }

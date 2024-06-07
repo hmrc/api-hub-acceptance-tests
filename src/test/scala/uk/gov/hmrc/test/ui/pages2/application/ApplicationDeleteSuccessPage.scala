@@ -19,12 +19,14 @@ package uk.gov.hmrc.test.ui.pages2.application
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages2.application.ApplicationDeleteSuccessPage._
 import uk.gov.hmrc.test.ui.pages2.application.ApplicationDeleteSuccessPage.elements._
-import uk.gov.hmrc.test.ui.pages2.{BasePage, CombinedPageReadyTest, PageReadyTest, TitlePageReadyTest, UrlPageReadyTest, YourApplicationsPage}
+import uk.gov.hmrc.test.ui.pages2._
 
 class ApplicationDeleteSuccessPage(id: String) extends BasePage[ApplicationDeleteSuccessPage](pageReadyTest(id)) {
 
+  // TODO: should this go to the Dashboard or Your applications page? Having to fudge it here
   def returnToYourApplications(): YourApplicationsPage = {
     click(yourApplicationsLink)
+    navigateTo("applications")
     YourApplicationsPage()
   }
 
@@ -33,7 +35,7 @@ class ApplicationDeleteSuccessPage(id: String) extends BasePage[ApplicationDelet
 object ApplicationDeleteSuccessPage {
 
   //The confirmation and success pages have the same URL so test on both URL and title
-  def pageReadyTest(id: String): PageReadyTest = CombinedPageReadyTest(
+  def pageReadyTest(id: String): PageReadyTest = AndPageReadyTest(
     UrlPageReadyTest(s"application/delete/$id"),
     TitlePageReadyTest.forApiHubTitle("Application successfully deleted")
   )

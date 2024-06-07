@@ -16,20 +16,45 @@
 
 package uk.gov.hmrc.test.ui.pages2.application
 
+import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages2.application.ApplicationDeleteConfirmationPage._
-import uk.gov.hmrc.test.ui.pages2.{BasePage, CombinedPageReadyTest, PageReadyTest, TitlePageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages2.application.ApplicationDeleteConfirmationPage.elements._
+import uk.gov.hmrc.test.ui.pages2._
 
-class ApplicationDeleteConfirmationPage(id: String) extends BasePage[ApplicationDeleteConfirmationPage](pageReadyTest(id)) {
+class ApplicationDeleteConfirmationPage(id: String) extends BasePage[ApplicationDeleteConfirmationPage](pageReadyTest(id)) with ErrorSummary {
+
+  def acceptAndContinue(): ApplicationDeleteSuccessPage = {
+    click(confirmCheckbox)
+    click(acceptAndContinueButton)
+    ApplicationDeleteSuccessPage(id)
+  }
+
+  def acceptAndContinueWithoutConfirm(): ApplicationDeleteConfirmationPage = {
+    click(acceptAndContinueButton)
+    ApplicationDeleteConfirmationPage(id)
+  }
+
+  def cancel(): ApplicationDetailsPage = {
+    click(cancelButton)
+    ApplicationDetailsPage(id)
+  }
 
 }
 
 object ApplicationDeleteConfirmationPage {
 
-  //The confirmation and success pages have the same URL so test on both URL and title
-  def pageReadyTest(id: String): PageReadyTest = CombinedPageReadyTest(
+  // The confirmation and success pages have the same URL so test on both URL and title
+  // As this is a question page we might have the error variant of title
+  def pageReadyTest(id: String): PageReadyTest = AndPageReadyTest(
     UrlPageReadyTest(s"application/delete/$id"),
-    TitlePageReadyTest.forApiHubTitle("Delete application")
+    QuestionPageTitlePageReadyTest.forApiHubTitle("Delete application")
   )
+
+  object elements {
+    val confirmCheckbox: By = By.id("value_0")
+    val acceptAndContinueButton: By = By.id("acceptAndContinueButton")
+    val cancelButton: By = By.id("cancelButton")
+  }
 
   def apply(id: String): ApplicationDeleteConfirmationPage = {
     new ApplicationDeleteConfirmationPage(id)

@@ -16,15 +16,22 @@
 
 package uk.gov.hmrc.test.ui.pages2
 
+import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages2.YourApplicationsPage._
 
 class YourApplicationsPage extends BasePage[YourApplicationsPage](pageReadyTest) {
+
+  def hasApplication(id: String): Boolean = {
+    findElements(By.cssSelector(s"[$applicationIdAttribute='$id']")).nonEmpty
+  }
 
 }
 
 object YourApplicationsPage {
 
-  val pageReadyTest: PageReadyTest = UrlPageReadyTest("index")
+  val pageReadyTest: PageReadyTest = UrlPageReadyTest("applications")
+
+  val applicationIdAttribute = "data-application-id"
 
   def apply(): YourApplicationsPage = {
     new YourApplicationsPage()

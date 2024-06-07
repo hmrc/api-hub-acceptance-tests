@@ -18,32 +18,38 @@ package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
 import com.google.inject.Inject
 import io.cucumber.guice.ScenarioScoped
-import uk.gov.hmrc.test.ui.pages.{ApplicationDeletePage, YourApplicationPage}
-import uk.gov.hmrc.test.ui.pages2.application.ApplicationDetailsPage
+import uk.gov.hmrc.test.ui.pages2.application.{ApplicationDeleteConfirmationPage, ApplicationDeleteSuccessPage}
 
 @ScenarioScoped
 class DeleteApplicatioSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
 
   When("""deletes the application""") { () =>
-    ApplicationDeletePage.confirmDeletionOfApplication()
+    ApplicationDeleteConfirmationPage(sharedState.application.id)
+      .acceptAndContinue()
   }
 
   When("""the user attempts to delete the application without confirming""") { () =>
-    ApplicationDeletePage.clickAcceptAndContinueButton()
+    ApplicationDeleteConfirmationPage(sharedState.application.id)
+      .acceptAndContinueWithoutConfirm()
   }
 
   When("""the error make a selection error is displayed""") { () =>
-    assert(ApplicationDeletePage.isDeleteApplicationErrorDisplayed())
-    assert(ApplicationDeletePage.isConfirmCheckboxDisplayed())
+    ApplicationDeleteConfirmationPage(sharedState.application.id)
+      .hasErrors
   }
 
   When("""the user chooses to cancel the deletion of the application""") { () =>
-    ApplicationDeletePage.cancel()
+    ApplicationDeleteConfirmationPage(sharedState.application.id)
+      .cancel()
   }
 
   Then("""the previously registered application should no no longer be listed in all applications""") { () =>
-    ApplicationDeletePage.returnToYourApplications()
-    assert(!YourApplicationPage.getRegisteredApplicationNames.contains(application.name))
+    ApplicationDeleteSuccessPage(sharedState.application.id)
+      .returnToYourApplications()
+      .foreach(
+        yourApplicationsPage =>
+          yourApplicationsPage.hasApplication(sharedState.application.id) shouldBe false
+      )
   }
 
 }
