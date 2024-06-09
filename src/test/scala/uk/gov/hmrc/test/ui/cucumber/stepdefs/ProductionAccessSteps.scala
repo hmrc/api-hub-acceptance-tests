@@ -29,7 +29,7 @@ class ProductionAccessSteps @Inject()(sharedState: SharedState) extends BaseStep
     var apiTitle = ""
 
     Journeys
-      .signInAndRegisterAnApplication(sharedState.application)
+      .signInAndRegisterAnApplication(sharedState)
       .addApis()
       .selectRandomApi()
       .foreach(

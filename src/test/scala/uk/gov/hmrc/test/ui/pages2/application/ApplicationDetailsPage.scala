@@ -17,9 +17,9 @@
 package uk.gov.hmrc.test.ui.pages2.application
 
 import org.openqa.selenium.By
-import uk.gov.hmrc.test.ui.pages2.{BasePage, PageReadyTest, Robot, UrlPageReadyTest, WrongPageException}
 import uk.gov.hmrc.test.ui.pages2.api.HipApisPage
 import uk.gov.hmrc.test.ui.pages2.application.ApplicationDetailsPage.pageReadyTest
+import uk.gov.hmrc.test.ui.pages2.{BasePage, PageReadyTest, Robot, UrlPageReadyTest}
 
 class ApplicationDetailsPage(id: String) extends BasePage[ApplicationDetailsPage](pageReadyTest(id)) {
 
@@ -102,19 +102,6 @@ object ApplicationDetailsPage extends Robot {
 
   def apply(id: String): ApplicationDetailsPage = {
     new ApplicationDetailsPage(id)
-  }
-
-  def fromCurrentPage(): ApplicationDetailsPage = {
-    val pattern = "^.*\\/application\\/details\\/(.+)$"
-
-    waitForUrlMatching(pattern)
-
-    val regex = pattern.r
-
-    getCurrentUrl match {
-      case regex(applicationId) => apply(applicationId)
-      case _ => throw WrongPageException.expecting("Application Details")
-    }
   }
 
 }

@@ -17,72 +17,71 @@
 package uk.gov.hmrc.test.ui.pages2
 
 import org.openqa.selenium.By
+import org.openqa.selenium.support.ui.{ExpectedCondition, ExpectedConditions}
 
 sealed trait PageReadyTest {
 
-  def waitUntilReady(): Unit
+  def expectedCondition: ExpectedCondition[_]
 
 }
 
 case class UrlPageReadyTest(url: String) extends PageReadyTest with Robot {
 
-  override def waitUntilReady(): Unit = {
-    waitForUrl(url)
+  override def expectedCondition: ExpectedCondition[_] = {
+    ExpectedConditions.urlToBe(buildFullUrl(url))
   }
 
 }
 
 case class TitlePageReadyTest(title: String) extends PageReadyTest with Robot {
 
-  override def waitUntilReady(): Unit = {
-    waitForTitle(title)
+  override def expectedCondition: ExpectedCondition[_] = {
+    ExpectedConditions.titleIs(title)
   }
 
 }
 
-object TitlePageReadyTest {
+case class ApiHubTitlePageReadyTest(title: String) extends PageReadyTest {
 
-  def forApiHubTitle(title: String): TitlePageReadyTest = {
-    TitlePageReadyTest(buildApiHubTitle(title))
-  }
-
-  def buildApiHubTitle(title: String): String = {
-    s"$title - The API Hub - GOV.UK"
+  override def expectedCondition: ExpectedCondition[_] = {
+    TitlePageReadyTest(s"$title - The API Hub - GOV.UK").expectedCondition
   }
 
 }
 
 case class QuestionPageTitlePageReadyTest(title: String) extends PageReadyTest with Robot {
 
-  override def waitUntilReady(): Unit = {
-    waitForTitleOneOf(Seq(
-      title,
-      s"Error: $title"
-    ))
-  }
-
-}
-
-object QuestionPageTitlePageReadyTest {
-
-  def forApiHubTitle(title: String): QuestionPageTitlePageReadyTest = {
-    QuestionPageTitlePageReadyTest(TitlePageReadyTest.buildApiHubTitle(title))
+  override def expectedCondition: ExpectedCondition[_] = {
+    AnyOfPageReadyTest(
+      Seq(
+        ApiHubTitlePageReadyTest(title),
+        ApiHubTitlePageReadyTest(s"Error: $title")
+      )
+    ).expectedCondition
   }
 
 }
 
 case class ElementPageReadyTest(by: By) extends PageReadyTest with Robot {
 
-  override def waitUntilReady(): Unit = {
-    waitForElement(by)
+  override def expectedCondition: ExpectedCondition[_] = {
+    ExpectedConditions.visibilityOfElementLocated(by)
   }
 
 }
 
-case class AndPageReadyTest(tests: PageReadyTest*) extends PageReadyTest {
+case class AllOfPageReadyTest(tests: Seq[PageReadyTest]) extends PageReadyTest {
 
-  override def waitUntilReady(): Unit = {
-    tests.foreach(_.waitUntilReady())
+  override def expectedCondition: ExpectedCondition[_] = {
+    ExpectedConditions.and(tests.map(test => test.expectedCondition): _*)
+  }
+
+}
+
+case class AnyOfPageReadyTest(tests: Seq[PageReadyTest]) extends PageReadyTest {
+
+  override def expectedCondition: ExpectedCondition[_] = {
+    ExpectedConditions.or(tests.map(_.expectedCondition): _*)
   }
 
 }

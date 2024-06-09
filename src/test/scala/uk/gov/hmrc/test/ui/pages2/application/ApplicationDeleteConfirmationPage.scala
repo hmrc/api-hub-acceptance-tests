@@ -45,9 +45,11 @@ object ApplicationDeleteConfirmationPage {
 
   // The confirmation and success pages have the same URL so test on both URL and title
   // As this is a question page we might have the error variant of title
-  def pageReadyTest(id: String): PageReadyTest = AndPageReadyTest(
-    UrlPageReadyTest(s"application/delete/$id"),
-    QuestionPageTitlePageReadyTest.forApiHubTitle("Delete application")
+  def pageReadyTest(id: String): PageReadyTest = AllOfPageReadyTest(
+    Seq(
+      UrlPageReadyTest(s"application/delete/$id"),
+      QuestionPageTitlePageReadyTest("Delete application")
+    )
   )
 
   object elements {

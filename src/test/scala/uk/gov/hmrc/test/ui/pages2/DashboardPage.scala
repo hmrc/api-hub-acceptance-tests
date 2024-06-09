@@ -19,19 +19,13 @@ package uk.gov.hmrc.test.ui.pages2
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages2.DashboardPage._
 import uk.gov.hmrc.test.ui.pages2.DashboardPage.elements._
-import uk.gov.hmrc.test.ui.pages2.application.ApplicationDetailsPage
 import uk.gov.hmrc.test.ui.pages2.registerapplication.ApplicationNamePage
-import uk.gov.hmrc.test.ui.utilities.Application
 
 class DashboardPage extends BasePage[DashboardPage](pageReadyTest) with ApiHubMenu {
 
   def registerAnApplication(): ApplicationNamePage = {
     click(registerAnApplicationButton)
     ApplicationNamePage()
-  }
-
-  def registerAnApplicationJourney(application: Application): ApplicationDetailsPage = {
-    Journeys.registerAnApplication(this, application)
   }
 
 }

@@ -17,8 +17,8 @@
 package uk.gov.hmrc.test.ui.pages2
 
 import com.typesafe.scalalogging.LazyLogging
+import org.openqa.selenium.support.ui.{ExpectedCondition, FluentWait}
 import org.openqa.selenium.{By, WebDriver, WebElement}
-import org.openqa.selenium.support.ui.{ExpectedCondition, ExpectedConditions, FluentWait}
 import uk.gov.hmrc.selenium.webdriver.Driver
 import uk.gov.hmrc.test.ui.conf.TestConfiguration
 
@@ -27,29 +27,15 @@ import scala.jdk.CollectionConverters._
 
 trait Robot extends LazyLogging {
 
-  def waitForTitle(title: String): Unit = {
-    fluentWait(ExpectedConditions.titleIs(title))
+  def waitForPageReady(pageReadyTest: PageReadyTest): Unit = {
+    fluentWait(pageReadyTest.expectedCondition)
   }
 
-  def waitForTitleOneOf(titles: Seq[String]): Unit = {
-    fluentWait(ExpectedConditions.or(
-      titles.map(
-        title =>
-          ExpectedConditions.titleIs(title)
-      ): _*
-    ))
-  }
-
-  def waitForUrl(relativeUrl: String): Unit = {
-    fluentWait(ExpectedConditions.urlToBe(buildFullUrl(relativeUrl)))
-  }
-
-  def waitForUrlMatching(pattern: String): Unit = {
-    fluentWait(ExpectedConditions.urlMatches(pattern))
-  }
-
-  def waitForElement(by: By): Unit = {
-    fluentWait(ExpectedConditions.visibilityOfElementLocated(by))
+  private def fluentWait(expectedCondition: ExpectedCondition[_]): Unit = {
+    new FluentWait[WebDriver](Driver.instance)
+      .withTimeout(Duration.ofSeconds(3))
+      .pollingEvery(Duration.ofMillis(250))
+      .until(expectedCondition)
   }
 
   def navigateTo(relativeUrl: String): Unit = {
@@ -110,14 +96,7 @@ trait Robot extends LazyLogging {
     findElements(by).nonEmpty
   }
 
-  private def fluentWait(expectedCondition: ExpectedCondition[_]): Unit = {
-    new FluentWait[WebDriver](Driver.instance)
-      .withTimeout(Duration.ofSeconds(3))
-      .pollingEvery(Duration.ofMillis(250))
-      .until(expectedCondition)
-  }
-
-  private def buildFullUrl(relativeUrl: String): String = {
+  def buildFullUrl(relativeUrl: String): String = {
     val baseUrl = s"${TestConfiguration.url("api-hub")}"
 
     if (relativeUrl.nonEmpty) {

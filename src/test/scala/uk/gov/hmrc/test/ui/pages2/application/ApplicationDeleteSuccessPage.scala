@@ -24,10 +24,9 @@ import uk.gov.hmrc.test.ui.pages2._
 class ApplicationDeleteSuccessPage(id: String) extends BasePage[ApplicationDeleteSuccessPage](pageReadyTest(id)) {
 
   // TODO: should this go to the Dashboard or Your applications page? Having to fudge it here
-  def returnToYourApplications(): YourApplicationsPage = {
+  def returnToYourApplications(): DashboardPage = {
     click(yourApplicationsLink)
-    navigateTo("applications")
-    YourApplicationsPage()
+    DashboardPage()
   }
 
 }
@@ -35,9 +34,11 @@ class ApplicationDeleteSuccessPage(id: String) extends BasePage[ApplicationDelet
 object ApplicationDeleteSuccessPage {
 
   //The confirmation and success pages have the same URL so test on both URL and title
-  def pageReadyTest(id: String): PageReadyTest = AndPageReadyTest(
-    UrlPageReadyTest(s"application/delete/$id"),
-    TitlePageReadyTest.forApiHubTitle("Application successfully deleted")
+  def pageReadyTest(id: String): PageReadyTest = AllOfPageReadyTest(
+    Seq(
+      UrlPageReadyTest(s"application/delete/$id"),
+      ApiHubTitlePageReadyTest("Application successfully deleted")
+    )
   )
 
   object elements {

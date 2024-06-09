@@ -18,6 +18,7 @@ package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
 import com.google.inject.Inject
 import io.cucumber.guice.ScenarioScoped
+import uk.gov.hmrc.test.ui.pages2.Journeys
 import uk.gov.hmrc.test.ui.pages2.application.{ApplicationDeleteConfirmationPage, ApplicationDeleteSuccessPage}
 
 @ScenarioScoped
@@ -46,6 +47,10 @@ class DeleteApplicatioSteps @Inject()(sharedState: SharedState) extends BaseStep
   Then("""the previously registered application should no no longer be listed in all applications""") { () =>
     ApplicationDeleteSuccessPage(sharedState.application.id)
       .returnToYourApplications()
+
+      // TODO: this is wrong will be fixed by HIP-xxxx
+    Journeys
+      .openYourApplicationsPage()
       .foreach(
         yourApplicationsPage =>
           yourApplicationsPage.hasApplication(sharedState.application.id) shouldBe false

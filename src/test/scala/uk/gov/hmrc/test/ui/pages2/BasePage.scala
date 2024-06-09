@@ -21,7 +21,8 @@ import com.typesafe.scalalogging.LazyLogging
 abstract class BasePage[T](pageReadyTest: PageReadyTest) extends Robot with LazyLogging {
   self: T =>
 
-  pageReadyTest.waitUntilReady()
+//  pageReadyTest.waitUntilReady()
+  waitForPageReady(pageReadyTest)
 
   logger.info(s"Current page title: $getTitle")
   logger.info(s"Current page URL: $getCurrentUrl")

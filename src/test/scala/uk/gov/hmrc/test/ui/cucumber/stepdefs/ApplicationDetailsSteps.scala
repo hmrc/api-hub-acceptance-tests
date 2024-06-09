@@ -33,7 +33,7 @@ class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseSt
 
   Then("""the new user registers an application""") { () =>
     Journeys
-      .signedInUserRegistersAnApplication(sharedState.application)
+      .registerAnApplication(sharedState)
   }
 
   Then("""the application can be viewed""") { () =>

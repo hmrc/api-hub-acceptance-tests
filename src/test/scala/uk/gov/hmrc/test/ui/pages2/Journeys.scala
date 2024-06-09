@@ -16,14 +16,21 @@
 
 package uk.gov.hmrc.test.ui.pages2
 
+import uk.gov.hmrc.test.ui.cucumber.stepdefs.SharedState
 import uk.gov.hmrc.test.ui.pages2.application.ApplicationDetailsPage
-import uk.gov.hmrc.test.ui.utilities.Application
 
 object Journeys extends Robot {
 
   def openStartPage(): ServiceStartPage = {
     navigateTo("")
     ServiceStartPage()
+  }
+
+  // This page is difficult to access directly
+  // The dashboard link is only available when the user has more than 5 applications
+  def openYourApplicationsPage(): YourApplicationsPage = {
+    navigateTo("applications")
+    YourApplicationsPage()
   }
 
   def signIn(): DashboardPage = {
@@ -46,27 +53,24 @@ object Journeys extends Robot {
       .signIn()
   }
 
-  def registerAnApplication(dashboardPage: DashboardPage, application: Application): ApplicationDetailsPage = {
-    dashboardPage
+  def registerAnApplication(sharedState: SharedState): ApplicationDetailsPage = {
+    Journeys
+      .openStartPage()
+      .dashboard()
       .registerAnApplication()
-      .setApplicationName(application.name)
+      .setApplicationName(sharedState.application.name)
       .doNotAddTeamMembers()
       .registerApplication()
       .viewRegisteredApplication()
       .foreach(
         applicationDetailsPage =>
-          application.id = applicationDetailsPage.getApplicationId
+          sharedState.application.id = applicationDetailsPage.getApplicationId
       )
   }
 
-  def signInAndRegisterAnApplication(application: Application): ApplicationDetailsPage = {
-    signIn().registerAnApplicationJourney(application)
-  }
-
-  def signedInUserRegistersAnApplication(application: Application): ApplicationDetailsPage = {
-    openStartPage()
-      .dashboard()
-      .registerAnApplicationJourney(application)
+  def signInAndRegisterAnApplication(sharedState: SharedState): ApplicationDetailsPage = {
+    signIn()
+    registerAnApplication(sharedState)
   }
 
 }

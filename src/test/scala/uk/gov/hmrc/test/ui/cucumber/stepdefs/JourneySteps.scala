@@ -24,7 +24,7 @@ import uk.gov.hmrc.test.ui.pages2.Journeys
 class JourneySteps @Inject()(sharedState: SharedState) extends BaseStepDef {
 
   Given("a user has signed-in and registers an application") { () =>
-    Journeys.signInAndRegisterAnApplication(sharedState.application)
+    Journeys.signInAndRegisterAnApplication(sharedState)
   }
 
   Given("a user has signed-in") { () =>
