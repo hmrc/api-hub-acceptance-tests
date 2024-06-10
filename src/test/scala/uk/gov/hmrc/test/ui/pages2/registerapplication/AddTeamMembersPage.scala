@@ -19,13 +19,15 @@ package uk.gov.hmrc.test.ui.pages2.registerapplication
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages2.registerapplication.AddTeamMembersPage._
 import uk.gov.hmrc.test.ui.pages2.registerapplication.AddTeamMembersPage.elements._
-import uk.gov.hmrc.test.ui.pages2.{BasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages2.{BasePage, ErrorSummary, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode}
 
-class AddTeamMembersPage extends BasePage[AddTeamMembersPage](pageReadyTest) {
+class AddTeamMembersPage(mode: Mode) extends BasePage[AddTeamMembersPage](pageReadyTest(mode)) with ErrorSummary {
 
-  def addTeamMembers(): Unit = {
+  def addTeamMembers(): AddTeamMemberDetailsPage = {
     click(yesRadio)
     click(continueButton)
+    AddTeamMemberDetailsPage(NormalMode)
   }
 
   def doNotAddTeamMembers(): CheckYourAnswersPage = {
@@ -34,11 +36,18 @@ class AddTeamMembersPage extends BasePage[AddTeamMembersPage](pageReadyTest) {
     CheckYourAnswersPage()
   }
 
+  def continueWithoutSelection(): AddTeamMembersPage = {
+    click(continueButton)
+    AddTeamMembersPage(mode)
+  }
+
 }
 
 object AddTeamMembersPage {
 
-  val pageReadyTest: PageReadyTest = UrlPageReadyTest("application/register/add-team-members")
+  def pageReadyTest(mode: Mode): PageReadyTest = {
+    UrlPageReadyTest.withMode("application/register/add-team-members", mode)
+  }
 
   object elements  {
     val yesRadio: By = By.id("value")
@@ -46,8 +55,8 @@ object AddTeamMembersPage {
     val continueButton: By = By.id("continueButton")
   }
 
-  def apply(): AddTeamMembersPage = {
-    new AddTeamMembersPage()
+  def apply(mode: Mode): AddTeamMembersPage = {
+    new AddTeamMembersPage(mode)
   }
 
 }

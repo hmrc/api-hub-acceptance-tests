@@ -68,7 +68,7 @@ trait Robot extends LazyLogging {
   }
 
   def getText(by: By): String = {
-    findElement(by).getText
+    findElement(by).getText.trim
   }
 
   // TODO: option? getAttribute can be null
@@ -81,7 +81,7 @@ trait Robot extends LazyLogging {
   }
 
   def findElementWithAttributeValue(name: String, value: String): WebElement = {
-    Driver.instance.findElement(By.cssSelector(s"[$name='$value']"))
+    Driver.instance.findElement(By.cssSelector(s"[$name=\"$value\"]"))
   }
 
   def findElements(by: By): Seq[WebElement] = {

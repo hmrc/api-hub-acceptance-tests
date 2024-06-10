@@ -20,28 +20,37 @@ import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages2.registerapplication.ApplicationNamePage._
 import uk.gov.hmrc.test.ui.pages2.registerapplication.ApplicationNamePage.elements._
 import uk.gov.hmrc.test.ui.pages2.{BasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.utilities.Mode
 
-class ApplicationNamePage extends BasePage[ApplicationNamePage](pageReadyTest) {
+class ApplicationNamePage(mode: Mode) extends BasePage[ApplicationNamePage](pageReadyTest(mode)) {
 
-  def setApplicationName(applicationName: String): AddTeamMembersPage = {
+  def setApplicationNameNormalMode(applicationName: String): AddTeamMembersPage = {
     sendKeys(applicationNameInput, applicationName)
     click(continueButton)
-    AddTeamMembersPage()
+    AddTeamMembersPage(mode)
+  }
+
+  def setApplicationNameCheckMode(applicationName: String): CheckYourAnswersPage = {
+    sendKeys(applicationNameInput, applicationName)
+    click(continueButton)
+    CheckYourAnswersPage()
   }
 
 }
 
 object ApplicationNamePage {
 
-  val pageReadyTest: PageReadyTest = UrlPageReadyTest("application/register/application-name")
+  def pageReadyTest(mode: Mode): PageReadyTest = {
+    UrlPageReadyTest.withMode("application/register/application-name", mode)
+  }
 
   object elements {
     val applicationNameInput: By = By.id("value")
     val continueButton: By = By.id("continueButton")
   }
 
-  def apply(): ApplicationNamePage = {
-    new ApplicationNamePage()
+  def apply(mode: Mode): ApplicationNamePage = {
+    new ApplicationNamePage(mode)
   }
 
 }

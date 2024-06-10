@@ -16,8 +16,7 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-import uk.gov.hmrc.test.ui.pages.YourApplicationPage
-import uk.gov.hmrc.test.ui.pages2.{Journeys, SignInPage, StrideSignInPage, UnauthorisedPage}
+import uk.gov.hmrc.test.ui.pages2.{DashboardPage, Journeys, SignInPage, StrideSignInPage, UnauthorisedPage}
 
 class StrideLoginSteps extends BaseStepDef {
   Given("""a user navigates to the sign in page""") { () =>
@@ -34,21 +33,22 @@ class StrideLoginSteps extends BaseStepDef {
   When("""the user submits valid sign in credentials""") { () =>
     StrideSignInPage()
       .signIn()
-//    StrideLoginPage.fillInAllCredentials()
   }
 
   Then("""the user should be successfully signed in via stride""") { () =>
-    assert(YourApplicationPage.isStrideLogoDisplayed(), true)
+    DashboardPage()
+      .foreach(
+        dashboardPage =>
+          dashboardPage.isLoggedInWithStride shouldBe true
+      )
   }
 
-  When("""user fills in all fields except role""") { () =>
+  When("""the user fills in all fields except role""") { () =>
     StrideSignInPage()
       .signInWithoutRole()
-//    StrideLoginPage.fillInAllExceptRole()
   }
 
-  // TODO: pointless parameter
-  Then("""user should be on the {string} url page""") { (_: String) =>
+  Then("""the user should be on the unauthorised url page""") { () =>
     UnauthorisedPage()
   }
 

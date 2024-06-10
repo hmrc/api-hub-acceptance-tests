@@ -18,7 +18,6 @@ package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
 import com.google.inject.Inject
 import io.cucumber.guice.ScenarioScoped
-import uk.gov.hmrc.test.ui.domain.AddressWeighting
 import uk.gov.hmrc.test.ui.pages2.addanapi.AddAnApiSuccessPage
 import uk.gov.hmrc.test.ui.pages2.application.{ApplicationDetailsPage, EnvironmentAndCredentialsPage}
 import uk.gov.hmrc.test.ui.pages2.{Journeys, Robot}
@@ -42,15 +41,6 @@ class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseSt
         applicationDetailsPage =>
           applicationDetailsPage.getApplicationName shouldBe sharedState.application.name
       )
-  }
-
-  When("""the attempts to continue without selecting an endpoint""") { () =>
-    ApplicationDetailsPage(sharedState.application.id)
-      .addApis()
-      .selectRandomApi()
-      .addToAnApplication()
-      .selectApplication(sharedState.application.id)
-      .selectNoEndpoints()
   }
 
   Then("""the user attempts to add an api to the application""") { () =>
@@ -93,14 +83,6 @@ class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseSt
           )
       case _ => throw new IllegalArgumentException(s"Don't know how to process value $string")
     }
-  }
-
-  Given("""the user adds a particular api to an application""") { () =>
-    ApplicationDetailsPage(sharedState.application.id)
-      .addApis()
-      .selectApiByTitle(AddressWeighting.Name)
-      .addToAnApplication()
-      .selectApplication(sharedState.application.id)
   }
 
   Then("""the api is added to the application""") { () =>

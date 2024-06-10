@@ -36,7 +36,7 @@ class DeleteApplicatioSteps @Inject()(sharedState: SharedState) extends BaseStep
 
   When("""the error make a selection error is displayed""") { () =>
     ApplicationDeleteConfirmationPage(sharedState.application.id)
-      .hasErrors
+      .hasErrorSummary
   }
 
   When("""the user chooses to cancel the deletion of the application""") { () =>

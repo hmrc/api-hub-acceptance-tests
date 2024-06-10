@@ -14,29 +14,9 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.pages2
+package uk.gov.hmrc.test.ui.utilities
 
-import com.typesafe.scalalogging.LazyLogging
+sealed trait Mode
 
-abstract class BasePage[T](pageReadyTest: PageReadyTest) extends Robot with LazyLogging {
-  self: T =>
-
-  waitForPageReady(pageReadyTest)
-
-  logger.info(s"Current page title: $getTitle")
-  logger.info(s"Current page URL: $getCurrentUrl")
-
-  def foreach[U](f: T => U): this.type = {
-    f.apply(self)
-    self
-  }
-
-  def getPageTitle: String = {
-    getTitle
-  }
-
-  def getPageUrl: String = {
-    getCurrentUrl
-  }
-
-}
+case object CheckMode extends Mode
+case object NormalMode extends Mode

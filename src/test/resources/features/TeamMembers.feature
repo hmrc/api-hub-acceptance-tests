@@ -2,9 +2,7 @@
 Feature: Team Members
 
   Background:
-    Given a user is on the sign in page
-    And the user decides to login via ldap
-    And an approver with write privileges logs in
+    Given a user has signed-in
 
   Scenario: Add multiple team members
     And the new user starts the registration process
@@ -28,10 +26,10 @@ Feature: Team Members
   Scenario: Display warning when both checkboxes are unchecked for add team member options
     And the new user starts the registration process
     When the user attempts to add a new team member with no radio button option chosen
-    Then the problem alert box displayed
+    Then the add team members page displays an error summary
 
   Scenario: Display warning when team member email is not from the expected domain (digital.hmrc.gov.uk or hmrc.gov.uk)
     And the new user starts the registration process
     When the user attempts to add a new team member using an unaccepted domain
-    Then the problem alert box displayed
+    Then the add team member details page displays an error summary
     And the email alert message is displayed

@@ -25,6 +25,26 @@ trait ApiHubMenu {
 
   import ApiHubMenu.elements._
 
+  def getUserType: Option[String] = {
+    findElementsWithAttribute(userTypeAttribute)
+      .headOption
+      .map(_.getAttribute(userTypeAttribute).trim)
+  }
+
+  def getUserEmail: Option[String] = {
+    findElementsWithAttribute(userTypeAttribute)
+      .headOption
+      .map(_.getAttribute(userTypeAttribute).trim)
+  }
+
+  def isLoggedInWithLdap: Boolean = {
+    getUserType.map(_.toUpperCase).contains("LDAP")
+  }
+
+  def isLoggedInWithStride: Boolean = {
+    getUserType.map(_.toUpperCase).contains("STRIDE")
+  }
+
   def dashboard(): DashboardPage = {
     click(dashboardLink)
     DashboardPage()
@@ -47,7 +67,7 @@ trait ApiHubMenu {
   }
 
   def getHeaderLinkTexts: Seq[String] = {
-    findElements(headerLinkName)
+    findElementsWithAttribute(headerLinkAttribute)
       .map(_.getText)
   }
 
@@ -56,11 +76,13 @@ trait ApiHubMenu {
 object ApiHubMenu {
 
   object elements {
+    val userTypeAttribute = "data-user-type"
+    val userEmailAttribute = "data-user-email"
+    val headerLinkAttribute = "data-header-link-name"
     val dashboardLink: By = By.id("dashboardLink")
     val apiHubAdminLink: By = By.id("apiHubAdminLink")
     val hipApisLink: By = By.id("hipApisLink")
     val getSupportLink: By = By.id("getSupportLink")
-    val headerLinkName: By = By.cssSelector("[data-header-link-name]")
   }
 
 }

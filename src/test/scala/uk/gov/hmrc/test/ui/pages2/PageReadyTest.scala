@@ -18,6 +18,9 @@ package uk.gov.hmrc.test.ui.pages2
 
 import org.openqa.selenium.By
 import org.openqa.selenium.support.ui.{ExpectedCondition, ExpectedConditions}
+import uk.gov.hmrc.test.ui.utilities.{CheckMode, Mode, NormalMode}
+
+import scala.util.matching.Regex
 
 sealed trait PageReadyTest {
 
@@ -29,6 +32,42 @@ case class UrlPageReadyTest(url: String) extends PageReadyTest with Robot {
 
   override def expectedCondition: ExpectedCondition[_] = {
     ExpectedConditions.urlToBe(buildFullUrl(url))
+  }
+
+}
+
+object UrlPageReadyTest {
+
+  private val pathRegex: Regex = """^(.*\/)(.*)$""".r
+
+  def withMode(url: String, mode: Mode): UrlPageReadyTest = {
+    UrlPageReadyTest(urlForMode(url, mode))
+  }
+
+  def urlForMode(url: String, mode: Mode): String = {
+    mode match {
+      case NormalMode => url
+      case CheckMode => url match {
+        case pathRegex(left, right) => s"${left}change-$right"
+        case _ => url
+      }
+    }
+  }
+
+}
+
+case class UrlContainingPageReadyTest(url: String) extends PageReadyTest {
+
+  override def expectedCondition: ExpectedCondition[_] = {
+    ExpectedConditions.urlContains(url)
+  }
+
+}
+
+object UrlContainingPageReadyTest {
+
+  def withMode(url: String, mode: Mode): UrlContainingPageReadyTest = {
+    UrlContainingPageReadyTest(UrlPageReadyTest.urlForMode(url, mode))
   }
 
 }

@@ -2,14 +2,10 @@
 Feature: Select Endpoints Page
 
   Background:
-    Given a user is on the sign in page
-    And the user decides to login via ldap
-    And an approver with write privileges logs in
-    And the new user registers an application
-    And the application can be viewed
+    Given a user has signed-in and registers an application
 
   Scenario: Display error if checkbox is not checked before continuing
-    When the attempts to continue without selecting an endpoint
+    When the user attempts to continue without selecting an endpoint
     Then an error 'Please select at least one end point' should be displayed
 
   Scenario: Display correct scopes for endpoint

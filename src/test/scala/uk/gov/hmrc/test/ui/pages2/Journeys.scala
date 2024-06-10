@@ -58,7 +58,7 @@ object Journeys extends Robot {
       .openStartPage()
       .dashboard()
       .registerAnApplication()
-      .setApplicationName(sharedState.application.name)
+      .setApplicationNameNormalMode(sharedState.application.name)
       .doNotAddTeamMembers()
       .registerApplication()
       .viewRegisteredApplication()

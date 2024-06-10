@@ -16,18 +16,49 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
+import com.google.inject.Inject
+import io.cucumber.guice.ScenarioScoped
 import uk.gov.hmrc.test.ui.domain.AddressWeighting
-import uk.gov.hmrc.test.ui.pages.SelectEndpointsPage
+import uk.gov.hmrc.test.ui.pages2.addanapi.SelectEndpointsPage
+import uk.gov.hmrc.test.ui.pages2.application.ApplicationDetailsPage
 
-class SelectEndpointsSteps extends BaseStepDef {
-  Given("""an error {string} should be displayed""") { (string: String) =>
-    assert(SelectEndpointsPage.isErrorSummaryBoxDisplayed)
-    assert(SelectEndpointsPage.getErrorSummaryMessage.toLowerCase() == string.toLowerCase(), true)
-    assert(SelectEndpointsPage.getErrorMessage.toLowerCase().contains(string.toLowerCase()))
+@ScenarioScoped
+class SelectEndpointsSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
+
+  When("""the user adds a particular api to an application""") { () =>
+    ApplicationDetailsPage(sharedState.application.id)
+      .addApis()
+      .selectApiByTitle(AddressWeighting.Name)
+      .addToAnApplication()
+      .selectApplication(sharedState.application.id)
+  }
+
+  When("""the user attempts to continue without selecting an endpoint""") { () =>
+    ApplicationDetailsPage(sharedState.application.id)
+      .addApis()
+      .selectRandomApi()
+      .addToAnApplication()
+      .selectApplication(sharedState.application.id)
+      .selectNoEndpoints()
   }
 
   Then("""the correct scopes for that api should be displayed""") { () =>
-    assert(SelectEndpointsPage.getScopeTexts.length == AddressWeighting.Scopes.length)
-    AddressWeighting.Scopes.foreach(item => assert(SelectEndpointsPage.getScopeTexts.contains(item)))
+    SelectEndpointsPage()
+      .foreach(
+        selectEndpointsPage =>
+          selectEndpointsPage.getScopes should contain theSameElementsAs AddressWeighting.Scopes
+      )
   }
+
+  Then("""an error {string} should be displayed""") { (string: String) =>
+    SelectEndpointsPage()
+      .foreach(
+        selectEndpointsPage => {
+          selectEndpointsPage.hasErrorSummary shouldBe true
+          selectEndpointsPage.getErrorSummaryList should contain(string)
+          selectEndpointsPage.getErrorMessages should contain(string)
+        }
+      )
+  }
+
 }

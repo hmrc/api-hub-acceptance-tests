@@ -19,9 +19,9 @@ package uk.gov.hmrc.test.ui.pages2.addanapi
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages2.addanapi.SelectEndpointsPage._
 import uk.gov.hmrc.test.ui.pages2.addanapi.SelectEndpointsPage.elements._
-import uk.gov.hmrc.test.ui.pages2.{BasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages2.{BasePage, ErrorSummary, PageReadyTest, UrlPageReadyTest}
 
-class SelectEndpointsPage extends BasePage[SelectEndpointsPage](pageReadyTest) {
+class SelectEndpointsPage extends BasePage[SelectEndpointsPage](pageReadyTest) with ErrorSummary {
 
   def selectAllEndpoints(): ReviewUsagePolicyPage = {
     findElements(By.cssSelector(".govuk-checkboxes__input"))
@@ -36,13 +36,21 @@ class SelectEndpointsPage extends BasePage[SelectEndpointsPage](pageReadyTest) {
     SelectEndpointsPage()
   }
 
+  def getScopes: Seq[String] = {
+    findElements(scopes)
+      .map(_.getAttribute(scopeAttribute).trim)
+  }
+
 }
 
 object SelectEndpointsPage {
 
   val pageReadyTest: PageReadyTest = UrlPageReadyTest("apis/add-an-api/select-endpoints")
 
+  val scopeAttribute = "data-scope"
+
   object elements {
+    val scopes: By = By.cssSelector(s"[$scopeAttribute]")
     val continueButton: By = By.id("continueButton")
   }
 
