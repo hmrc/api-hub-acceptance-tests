@@ -14,26 +14,14 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.cucumber.stepdefs
+package uk.gov.hmrc.test.ui.pages
 
-import uk.gov.hmrc.test.ui.pages.ErrorPage
+case class WrongPageException(message: String) extends Exception(message)
 
-class ErrorPageSteps extends BaseStepDef {
+object WrongPageException extends Robot {
 
-  Then("the application not found header message should be displayed") { () =>
-    ErrorPage()
-      .foreach(
-        errorPage =>
-          errorPage.getErrorHeading shouldBe "Application not found"
-      )
-  }
-
-  Then("the error message should be {string}") { (string: String) =>
-    ErrorPage()
-      .foreach(
-        errorPage =>
-          errorPage.getErrorMessage should include(string)
-      )
+  def expecting(expectedPage: String): WrongPageException = {
+    WrongPageException(s"Expected to be on page $expectedPage but currently on page $getCurrentUrl")
   }
 
 }

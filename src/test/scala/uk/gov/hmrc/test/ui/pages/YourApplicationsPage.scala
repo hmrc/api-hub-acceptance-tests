@@ -14,26 +14,27 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.cucumber.stepdefs
+package uk.gov.hmrc.test.ui.pages
 
-import uk.gov.hmrc.test.ui.pages.ErrorPage
+import org.openqa.selenium.By
+import uk.gov.hmrc.test.ui.pages.YourApplicationsPage._
 
-class ErrorPageSteps extends BaseStepDef {
+class YourApplicationsPage extends BasePage[YourApplicationsPage](pageReadyTest) {
 
-  Then("the application not found header message should be displayed") { () =>
-    ErrorPage()
-      .foreach(
-        errorPage =>
-          errorPage.getErrorHeading shouldBe "Application not found"
-      )
+  def hasApplication(id: String): Boolean = {
+    findElements(By.cssSelector(s"[$applicationIdAttribute='$id']")).nonEmpty
   }
 
-  Then("the error message should be {string}") { (string: String) =>
-    ErrorPage()
-      .foreach(
-        errorPage =>
-          errorPage.getErrorMessage should include(string)
-      )
+}
+
+object YourApplicationsPage {
+
+  val pageReadyTest: PageReadyTest = UrlPageReadyTest("applications")
+
+  val applicationIdAttribute = "data-application-id"
+
+  def apply(): YourApplicationsPage = {
+    new YourApplicationsPage()
   }
 
 }

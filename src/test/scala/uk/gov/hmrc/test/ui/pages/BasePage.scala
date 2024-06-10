@@ -14,26 +14,29 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.cucumber.stepdefs
+package uk.gov.hmrc.test.ui.pages
 
-import uk.gov.hmrc.test.ui.pages.ErrorPage
+import com.typesafe.scalalogging.LazyLogging
 
-class ErrorPageSteps extends BaseStepDef {
+abstract class BasePage[T](pageReadyTest: PageReadyTest) extends Robot with LazyLogging {
+  self: T =>
 
-  Then("the application not found header message should be displayed") { () =>
-    ErrorPage()
-      .foreach(
-        errorPage =>
-          errorPage.getErrorHeading shouldBe "Application not found"
-      )
+  waitForPageReady(pageReadyTest)
+
+  logger.info(s"Current page title: $getTitle")
+  logger.info(s"Current page URL: $getCurrentUrl")
+
+  def foreach[U](f: T => U): this.type = {
+    f.apply(self)
+    self
   }
 
-  Then("the error message should be {string}") { (string: String) =>
-    ErrorPage()
-      .foreach(
-        errorPage =>
-          errorPage.getErrorMessage should include(string)
-      )
+  def getPageTitle: String = {
+    getTitle
+  }
+
+  def getPageUrl: String = {
+    getCurrentUrl
   }
 
 }

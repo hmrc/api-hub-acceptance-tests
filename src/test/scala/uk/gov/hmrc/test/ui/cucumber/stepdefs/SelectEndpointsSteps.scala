@@ -19,8 +19,8 @@ package uk.gov.hmrc.test.ui.cucumber.stepdefs
 import com.google.inject.Inject
 import io.cucumber.guice.ScenarioScoped
 import uk.gov.hmrc.test.ui.domain.AddressWeighting
-import uk.gov.hmrc.test.ui.pages2.addanapi.SelectEndpointsPage
-import uk.gov.hmrc.test.ui.pages2.application.ApplicationDetailsPage
+import uk.gov.hmrc.test.ui.pages.addanapi.SelectEndpointsPage
+import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage
 
 @ScenarioScoped
 class SelectEndpointsSteps @Inject()(sharedState: SharedState) extends BaseStepDef {

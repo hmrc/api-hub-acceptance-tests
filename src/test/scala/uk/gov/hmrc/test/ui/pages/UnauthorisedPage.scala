@@ -14,26 +14,20 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.cucumber.stepdefs
+package uk.gov.hmrc.test.ui.pages
 
-import uk.gov.hmrc.test.ui.pages.ErrorPage
+import uk.gov.hmrc.test.ui.pages.UnauthorisedPage._
 
-class ErrorPageSteps extends BaseStepDef {
+class UnauthorisedPage extends BasePage[UnauthorisedPage](pageReadyTest) {
 
-  Then("the application not found header message should be displayed") { () =>
-    ErrorPage()
-      .foreach(
-        errorPage =>
-          errorPage.getErrorHeading shouldBe "Application not found"
-      )
-  }
+}
 
-  Then("the error message should be {string}") { (string: String) =>
-    ErrorPage()
-      .foreach(
-        errorPage =>
-          errorPage.getErrorMessage should include(string)
-      )
+object UnauthorisedPage {
+
+  val pageReadyTest: PageReadyTest = UrlPageReadyTest("unauthorised")
+
+  def apply(): UnauthorisedPage = {
+    new UnauthorisedPage()
   }
 
 }

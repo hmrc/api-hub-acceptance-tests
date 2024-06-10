@@ -18,9 +18,9 @@ package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
 import com.google.inject.Inject
 import io.cucumber.guice.ScenarioScoped
-import uk.gov.hmrc.test.ui.pages2.DashboardPage
-import uk.gov.hmrc.test.ui.pages2.application.ApplicationDetailsPage
-import uk.gov.hmrc.test.ui.pages2.{Journeys, LdapSignInPage, SignInPage}
+import uk.gov.hmrc.test.ui.pages.DashboardPage
+import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage
+import uk.gov.hmrc.test.ui.pages.{Journeys, LdapSignInPage, SignInPage}
 import uk.gov.hmrc.test.ui.utilities.User
 
 @ScenarioScoped
