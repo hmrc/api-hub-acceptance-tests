@@ -16,38 +16,39 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
+import com.google.inject.Inject
 import faker.Faker
+import io.cucumber.guice.ScenarioScoped
 import uk.gov.hmrc.test.ui.utilities.{CheckMode, NormalMode}
 import uk.gov.hmrc.test.ui.pages2.DashboardPage
 import uk.gov.hmrc.test.ui.pages2.registerapplication.{AddTeamMemberDetailsPage, AddTeamMembersPage, CheckYourAnswersPage, ConfirmAddTeamMemberPage}
 import uk.gov.hmrc.test.ui.utilities.User
 
-class TeamMemberSteps extends BaseStepDef {
-  var invalidDomainEmail: String                    = s"${Faker.en_GB.firstName()}@example.com"
-  var updatedEmail: String                          = _
+@ScenarioScoped
+class TeamMemberSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
+
+  val invalidDomainEmail: String                    = s"${Faker.en_GB.firstName()}@example.com"
+  val updatedEmail: String                          = s"${Faker.en_GB.firstName()}@digital.hmrc.gov.uk".toLowerCase()
   val expectedNoTeamMembersText: String             = "No team members added"
-  val updatedApplicationName: String                = application.name.reverse.toLowerCase
+  val updatedApplicationName: String                = sharedState.application.name.reverse.toLowerCase
 
   Then("""the new user starts the registration process""") { () =>
     DashboardPage()
       .registerAnApplication()
-      .setApplicationNameNormalMode(application.name)
+      .setApplicationNameNormalMode(sharedState.application.name)
   }
 
-  When("""{string} additional team members are added""") { (string: String) =>
-    // TODO: Ugly, use an int parameter?
-    val count = string.toInt
-
-    if (count > 0) {
+  When("""{int} additional team members are added""") { (int: Int) =>
+    if (int > 0) {
       AddTeamMembersPage(NormalMode).addTeamMembers()
 
-      (1 to count).foreach(
+      (1 to int).foreach(
         i => {
           val email = s"${Faker.en_GB.firstName()}.${Faker.en_GB.lastName()}@digital.hmrc.gov.uk"
 
           AddTeamMemberDetailsPage(NormalMode).setEmail(email)
 
-          if (i < count) {
+          if (i < int) {
             ConfirmAddTeamMemberPage(NormalMode).addTeamMembers()
           }
         }
@@ -55,31 +56,28 @@ class TeamMemberSteps extends BaseStepDef {
     }
   }
 
-  Then("""{string} team members exist""") { (string: String) =>
+  Then("""{int} team members exist""") { (int: Int) =>
     ConfirmAddTeamMemberPage(NormalMode)
       .foreach(
         confirmAddTeamMemberPage => {
-          confirmAddTeamMemberPage.getTeamMembers.size shouldBe string.toInt
-          confirmAddTeamMemberPage.getTeamMembersHeading should startWith(string)
+          confirmAddTeamMemberPage.getTeamMembers.size shouldBe int
+          confirmAddTeamMemberPage.getTeamMembersHeading should startWith(int.toString)
         }
       )
   }
 
-  Then("""the count of team members on the check your answers page is {string}""") { (string: String) =>
-    val count = string.toInt
-
+  Then("""the count of team members on the check your answers page is {int}""") { (int: Int) =>
     ConfirmAddTeamMemberPage(NormalMode)
       .doNotAddTeamMembers()
       .foreach(
         checkYourAnswersPage => {
-          checkYourAnswersPage.getStatedNumberOfTeamMembers shouldBe count.toString
+          checkYourAnswersPage.getStatedNumberOfTeamMembers shouldBe int.toString
         }
 
       )
   }
 
   When("""the user changes the team members email address""") { () =>
-    updatedEmail = s"${Faker.en_GB.firstName()}@digital.hmrc.gov.uk".toLowerCase()
     ConfirmAddTeamMemberPage(NormalMode)
       .changeLast()
       .setEmail(updatedEmail)
@@ -142,7 +140,7 @@ class TeamMemberSteps extends BaseStepDef {
     CheckYourAnswersPage()
       .foreach(
         checkYourAnswersPage => {
-          checkYourAnswersPage.getApplicationName shouldBe application.name
+          checkYourAnswersPage.getApplicationName shouldBe sharedState.application.name
           checkYourAnswersPage.getStatedNumberOfTeamMembers shouldBe expectedNoTeamMembersText
           checkYourAnswersPage.getTeamMembers should contain theSameElementsAs Seq(User.Email)
         }
