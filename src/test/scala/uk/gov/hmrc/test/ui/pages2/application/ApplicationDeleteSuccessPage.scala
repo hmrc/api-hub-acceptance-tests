@@ -23,7 +23,7 @@ import uk.gov.hmrc.test.ui.pages2._
 
 class ApplicationDeleteSuccessPage(id: String) extends BasePage[ApplicationDeleteSuccessPage](pageReadyTest(id)) {
 
-  // TODO: should this go to the Dashboard or Your applications page? Having to fudge it here
+  // Should this go to the Dashboard or Your applications page? See HIPP-1298
   def returnToYourApplications(): DashboardPage = {
     click(yourApplicationsLink)
     DashboardPage()

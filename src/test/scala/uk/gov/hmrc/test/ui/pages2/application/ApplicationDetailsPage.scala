@@ -18,12 +18,11 @@ package uk.gov.hmrc.test.ui.pages2.application
 
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages2.api.HipApisPage
-import uk.gov.hmrc.test.ui.pages2.application.ApplicationDetailsPage.pageReadyTest
-import uk.gov.hmrc.test.ui.pages2.{BasePage, PageReadyTest, Robot, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages2.application.ApplicationDetailsPage._
+import uk.gov.hmrc.test.ui.pages2.application.ApplicationDetailsPage.elements._
+import uk.gov.hmrc.test.ui.pages2.{BasePage, PageReadyTest, UrlPageReadyTest}
 
 class ApplicationDetailsPage(id: String) extends BasePage[ApplicationDetailsPage](pageReadyTest(id)) {
-
-  import ApplicationDetailsPage.elements._
 
   def getApplicationId: String = {
     getText(applicationId)
@@ -84,7 +83,7 @@ class ApplicationDetailsPage(id: String) extends BasePage[ApplicationDetailsPage
 
 }
 
-object ApplicationDetailsPage extends Robot {
+object ApplicationDetailsPage {
 
   def pageReadyTest(id: String): PageReadyTest = UrlPageReadyTest(s"application/details/$id")
 

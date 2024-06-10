@@ -33,7 +33,7 @@ case class UrlPageReadyTest(url: String) extends PageReadyTest with Robot {
 
 }
 
-case class TitlePageReadyTest(title: String) extends PageReadyTest with Robot {
+case class TitlePageReadyTest(title: String) extends PageReadyTest {
 
   override def expectedCondition: ExpectedCondition[_] = {
     ExpectedConditions.titleIs(title)
@@ -49,7 +49,7 @@ case class ApiHubTitlePageReadyTest(title: String) extends PageReadyTest {
 
 }
 
-case class QuestionPageTitlePageReadyTest(title: String) extends PageReadyTest with Robot {
+case class QuestionPageTitlePageReadyTest(title: String) extends PageReadyTest {
 
   override def expectedCondition: ExpectedCondition[_] = {
     AnyOfPageReadyTest(
@@ -62,7 +62,7 @@ case class QuestionPageTitlePageReadyTest(title: String) extends PageReadyTest w
 
 }
 
-case class ElementPageReadyTest(by: By) extends PageReadyTest with Robot {
+case class ElementPageReadyTest(by: By) extends PageReadyTest {
 
   override def expectedCondition: ExpectedCondition[_] = {
     ExpectedConditions.visibilityOfElementLocated(by)

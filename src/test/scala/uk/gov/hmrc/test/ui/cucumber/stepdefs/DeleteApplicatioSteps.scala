@@ -48,7 +48,7 @@ class DeleteApplicatioSteps @Inject()(sharedState: SharedState) extends BaseStep
     ApplicationDeleteSuccessPage(sharedState.application.id)
       .returnToYourApplications()
 
-      // TODO: this is wrong will be fixed by HIP-xxxx
+    // Should the success page return Dashboard or Your applications? See HIPP-1298
     Journeys
       .openYourApplicationsPage()
       .foreach(
