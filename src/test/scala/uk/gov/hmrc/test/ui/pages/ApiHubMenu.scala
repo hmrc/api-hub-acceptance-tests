@@ -37,11 +37,15 @@ trait ApiHubMenu {
       .map(_.getAttribute(userTypeAttribute).trim)
   }
 
-  def isLoggedInWithLdap: Boolean = {
+  def isSignedIn: Boolean = {
+    getUserEmail.isDefined
+  }
+
+  def isSignedInWithLdap: Boolean = {
     getUserType.map(_.toUpperCase).contains("LDAP")
   }
 
-  def isLoggedInWithStride: Boolean = {
+  def isSignedInWithStride: Boolean = {
     getUserType.map(_.toUpperCase).contains("STRIDE")
   }
 

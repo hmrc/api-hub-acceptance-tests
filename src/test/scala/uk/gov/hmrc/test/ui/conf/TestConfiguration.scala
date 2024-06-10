@@ -26,8 +26,8 @@ object TestConfiguration {
 
   def url(service: String): String = {
     val host = env match {
-      case "local" => s"$environmentHost:${servicePort(service)}"
-      case _       => s"${envConfig.getString(s"services.host")}"
+      case "local" | "localdev" => s"$environmentHost:${servicePort(service)}"
+      case _ => s"${envConfig.getString(s"services.host")}"
     }
     s"$host${serviceRoute(service)}"
   }

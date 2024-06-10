@@ -39,7 +39,7 @@ class StrideLoginSteps extends BaseStepDef {
     DashboardPage()
       .foreach(
         dashboardPage =>
-          dashboardPage.isLoggedInWithStride shouldBe true
+          dashboardPage.isSignedInWithStride shouldBe true
       )
   }
 
