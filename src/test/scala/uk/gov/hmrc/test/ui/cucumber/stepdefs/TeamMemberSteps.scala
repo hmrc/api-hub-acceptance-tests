@@ -19,10 +19,9 @@ package uk.gov.hmrc.test.ui.cucumber.stepdefs
 import com.google.inject.Inject
 import faker.Faker
 import io.cucumber.guice.ScenarioScoped
-import uk.gov.hmrc.test.ui.utilities.{CheckMode, NormalMode}
+import uk.gov.hmrc.test.ui.utilities.{CheckMode, NormalMode, SharedState, User}
 import uk.gov.hmrc.test.ui.pages.DashboardPage
 import uk.gov.hmrc.test.ui.pages.registerapplication.{AddTeamMemberDetailsPage, AddTeamMembersPage, CheckYourAnswersPage, ConfirmAddTeamMemberPage}
-import uk.gov.hmrc.test.ui.utilities.User
 
 @ScenarioScoped
 class TeamMemberSteps @Inject()(sharedState: SharedState) extends BaseStepDef {

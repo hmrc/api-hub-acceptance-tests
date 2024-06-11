@@ -25,13 +25,17 @@ import uk.gov.hmrc.test.ui.pages.{ApiHubTitlePageReadyTest, BasePage, PageReadyT
 class RegisterApplicationSuccessPage extends BasePage[RegisterApplicationSuccessPage](pageReadyTest) {
 
   def viewRegisteredApplication(): ApplicationDetailsPage = {
-    val applicationId = getApplicationId
+    val applicationId = getApplicationId match {
+      case Some(id) => id
+      case _ => throw new IllegalStateException("Application Id is missing from this page.")
+    }
+
     click(applicationLink)
     ApplicationDetailsPage(applicationId)
   }
 
-  private def getApplicationId: String = {
-    getAttribute(applicationLink, "data-application-id")
+  private def getApplicationId: Option[String] = {
+    getAttribute(applicationLink, applicationIdAttribute)
   }
 
 }
@@ -43,6 +47,7 @@ object RegisterApplicationSuccessPage {
   val pageReadyTest: PageReadyTest = ApiHubTitlePageReadyTest("Register Application Success")
 
   object elements {
+    val applicationIdAttribute = "data-application-id"
     val applicationLink: By = By.id("applicationLink")
   }
 

@@ -48,8 +48,7 @@ class ConfirmAddTeamMemberPage(mode: Mode) extends BasePage[ConfirmAddTeamMember
   }
 
   def changeTeamMember(email: String): AddTeamMemberDetailsPage = {
-    findElementWithAttributeValue(changeEmailAttribute, email)
-      .click()
+    findElement(changeTeamMemberLink(email)).click()
     AddTeamMemberDetailsPage(CheckMode)
   }
 
@@ -58,8 +57,7 @@ class ConfirmAddTeamMemberPage(mode: Mode) extends BasePage[ConfirmAddTeamMember
   }
 
   def removeTeamMember(email: String): ConfirmAddTeamMemberPage = {
-    findElementWithAttributeValue(removeEmailAttribute, email)
-      .click()
+    findElement(removeTeamMemberLink(email)).click()
     ConfirmAddTeamMemberPage(mode)
   }
 
@@ -76,8 +74,8 @@ object ConfirmAddTeamMemberPage {
   }
 
   object elements  {
-    val changeEmailAttribute = "data-change-email"
-    val removeEmailAttribute = "data-remove-email"
+    def changeTeamMemberLink(email: String): By = By.cssSelector(s"[data-change-email=\"$email\"]")
+    def removeTeamMemberLink(email: String): By = By.cssSelector(s"[data-remove-email=\"$email\"]")
     val teamMembersHeading: By = By.id("teamMembersHeading")
     val summaryRowEmail: By = By.cssSelector(".govuk-summary-list__key")
     val yesRadio: By = By.id("value")

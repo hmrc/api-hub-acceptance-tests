@@ -24,7 +24,7 @@ import uk.gov.hmrc.test.ui.pages.{BasePage, ErrorSummary, PageReadyTest, UrlPage
 class SelectEndpointsPage extends BasePage[SelectEndpointsPage](pageReadyTest) with ErrorSummary {
 
   def selectAllEndpoints(): ReviewUsagePolicyPage = {
-    findElements(By.cssSelector(".govuk-checkboxes__input"))
+    findElements(selectEndpointCheckbox)
       .filter(!_.isSelected)
       .foreach(_.click())
     click(continueButton)
@@ -47,9 +47,9 @@ object SelectEndpointsPage {
 
   val pageReadyTest: PageReadyTest = UrlPageReadyTest("apis/add-an-api/select-endpoints")
 
-  val scopeAttribute = "data-scope"
-
   object elements {
+    val scopeAttribute = "data-scope"
+    val selectEndpointCheckbox: By = By.cssSelector(".govuk-checkboxes__input")
     val scopes: By = By.cssSelector(s"[$scopeAttribute]")
     val continueButton: By = By.id("continueButton")
   }

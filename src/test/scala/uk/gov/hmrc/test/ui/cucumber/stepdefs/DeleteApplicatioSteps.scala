@@ -20,6 +20,7 @@ import com.google.inject.Inject
 import io.cucumber.guice.ScenarioScoped
 import uk.gov.hmrc.test.ui.pages.Journeys
 import uk.gov.hmrc.test.ui.pages.application.{ApplicationDeleteConfirmationPage, ApplicationDeleteSuccessPage}
+import uk.gov.hmrc.test.ui.utilities.SharedState
 
 @ScenarioScoped
 class DeleteApplicatioSteps @Inject()(sharedState: SharedState) extends BaseStepDef {

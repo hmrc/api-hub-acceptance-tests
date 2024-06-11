@@ -16,9 +16,17 @@
 
 package uk.gov.hmrc.test.ui.pages
 
-import uk.gov.hmrc.test.ui.cucumber.stepdefs.SharedState
 import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage
+import uk.gov.hmrc.test.ui.utilities.SharedState
 
+/**
+ * Journeys are effectively shortcuts that can be used by step definition
+ * classes to perform multiple-action sequences across page objects.
+ *
+ * By defining shortcuts we can reduce the need to refactor features and step
+ * definitions when the website changes. We simply need to change the
+ * implementation of the shortcut.
+ */
 object Journeys extends Robot {
 
   def openStartPage(): ServiceStartPage = {
@@ -26,8 +34,8 @@ object Journeys extends Robot {
     ServiceStartPage()
   }
 
-  // This page is difficult to access directly
-  // The dashboard link is only available when the user has more than 5 applications
+  // This page is difficult to access directly as the dashboard link is only
+  // available when the user has more than 5 applications
   def openYourApplicationsPage(): YourApplicationsPage = {
     navigateTo("applications")
     YourApplicationsPage()

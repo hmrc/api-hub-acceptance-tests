@@ -21,7 +21,7 @@ import io.cucumber.guice.ScenarioScoped
 import uk.gov.hmrc.test.ui.pages.DashboardPage
 import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage
 import uk.gov.hmrc.test.ui.pages.{Journeys, LdapSignInPage, SignInPage}
-import uk.gov.hmrc.test.ui.utilities.User
+import uk.gov.hmrc.test.ui.utilities.{SharedState, User}
 
 @ScenarioScoped
 class SignInSteps @Inject()(sharedState: SharedState) extends BaseStepDef {

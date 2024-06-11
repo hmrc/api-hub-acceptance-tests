@@ -16,8 +16,9 @@
 
 package uk.gov.hmrc.test.ui.pages.api
 
-import org.openqa.selenium.WebElement
+import org.openqa.selenium.{By, WebElement}
 import uk.gov.hmrc.test.ui.pages.api.HipApisPage._
+import uk.gov.hmrc.test.ui.pages.api.HipApisPage.elements._
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, UrlPageReadyTest}
 
 import scala.util.Random
@@ -46,7 +47,7 @@ class HipApisPage extends BasePage[HipApisPage](pageReadyTest) {
   }
 
   private def getApiDetailLinks: Seq[WebElement] = {
-    findElementsWithAttribute(apiIdAttribute)
+    findElements(apiLink)
   }
 
 }
@@ -55,7 +56,10 @@ object HipApisPage {
 
   val pageReadyTest: PageReadyTest = UrlPageReadyTest("apis")
 
-  val apiIdAttribute = "data-api-id"
+  object elements {
+    val apiIdAttribute = "data-api-id"
+    val apiLink: By = By.cssSelector(s"[$apiIdAttribute]")
+  }
 
   def apply(): HipApisPage = {
     new HipApisPage()

@@ -21,7 +21,7 @@ import io.cucumber.guice.ScenarioScoped
 import uk.gov.hmrc.test.ui.pages.addanapi.AddAnApiSuccessPage
 import uk.gov.hmrc.test.ui.pages.application.{ApplicationDetailsPage, EnvironmentAndCredentialsPage}
 import uk.gov.hmrc.test.ui.pages.{Journeys, Robot}
-import uk.gov.hmrc.test.ui.utilities.{DateFormatterUtil, User}
+import uk.gov.hmrc.test.ui.utilities.{DateFormatterUtil, SharedState, User}
 
 @ScenarioScoped
 class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseStepDef with Robot {

@@ -18,11 +18,12 @@ package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.YourApplicationsPage._
+import uk.gov.hmrc.test.ui.pages.YourApplicationsPage.elements._
 
 class YourApplicationsPage extends BasePage[YourApplicationsPage](pageReadyTest) {
 
   def hasApplication(id: String): Boolean = {
-    findElements(By.cssSelector(s"[$applicationIdAttribute='$id']")).nonEmpty
+    exists(application(id))
   }
 
 }
@@ -31,7 +32,10 @@ object YourApplicationsPage {
 
   val pageReadyTest: PageReadyTest = UrlPageReadyTest("applications")
 
-  val applicationIdAttribute = "data-application-id"
+  object elements {
+    val applicationIdAttribute = "data-application-id"
+    def application(id: String): By = By.cssSelector(s"[$applicationIdAttribute='$id']")
+  }
 
   def apply(): YourApplicationsPage = {
     new YourApplicationsPage()

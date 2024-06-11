@@ -30,11 +30,11 @@ class ApiDetailsPage(id: String) extends BasePage[ApiDetailsPage](pageReadyTest(
   }
 
   def getApiId: String = {
-    findElement(details).getAttribute("data-api-id")
+    findElement(details).getAttribute(apiIdAttribute)
   }
 
   def getApiTitle: String = {
-    findElement(details).getAttribute("data-api-title")
+    findElement(details).getAttribute(apiTitleAttribute)
   }
 
 }
@@ -44,6 +44,8 @@ object ApiDetailsPage {
   def pageReadyTest(id: String): PageReadyTest = UrlPageReadyTest(s"apis/details/$id")
 
   object elements {
+    val apiIdAttribute = "data-api-id"
+    val apiTitleAttribute = "data-api-title"
     val addToAnApplicationButton: By = By.id("addToAnApplicationButton")
     val details: By = By.id("details")
   }

@@ -25,7 +25,11 @@ import uk.gov.hmrc.test.ui.pages.{ApiHubTitlePageReadyTest, BasePage, PageReadyT
 class AddAnApiSuccessPage extends BasePage[AddAnApiSuccessPage](pageReadyTest) {
 
   def viewApplication(): ApplicationDetailsPage = {
-    val applicationId = getApplicationId
+    val applicationId = getApplicationId match {
+      case Some(id) => id
+      case _ => throw new IllegalStateException("Application Id is missing from this page.")
+    }
+
     click(applicationLink)
     ApplicationDetailsPage(applicationId)
   }
@@ -34,8 +38,8 @@ class AddAnApiSuccessPage extends BasePage[AddAnApiSuccessPage](pageReadyTest) {
     getText(successSummary)
   }
 
-  private def getApplicationId: String = {
-    getAttribute(applicationLink, "data-application-id")
+  private def getApplicationId: Option[String] = {
+    getAttribute(applicationLink, applicationIdAttribute)
   }
 
 }
@@ -47,6 +51,7 @@ object AddAnApiSuccessPage {
   val pageReadyTest: PageReadyTest = ApiHubTitlePageReadyTest("API added successfully")
 
   object elements {
+    val applicationIdAttribute = "data-application-id"
     val applicationLink: By = By.id("applicationLink")
     val successSummary: By = By.id("successSummary")
   }

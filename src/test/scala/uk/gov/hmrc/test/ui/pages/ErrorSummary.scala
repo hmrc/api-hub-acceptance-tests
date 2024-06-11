@@ -22,6 +22,13 @@ import uk.gov.hmrc.test.ui.pages.ErrorSummary.elements._
 
 import scala.util.matching.Regex
 
+/**
+ * Abstracts validation failure behaviour using the "Error summary" and "Error
+ * message" components.
+ *
+ * Add this to question pages to allow step definitions to access validation
+ * failure details.
+ */
 trait ErrorSummary {
   self: Robot =>
 

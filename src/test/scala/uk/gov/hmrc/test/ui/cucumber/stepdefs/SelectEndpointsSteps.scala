@@ -21,6 +21,7 @@ import io.cucumber.guice.ScenarioScoped
 import uk.gov.hmrc.test.ui.domain.AddressWeighting
 import uk.gov.hmrc.test.ui.pages.addanapi.SelectEndpointsPage
 import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage
+import uk.gov.hmrc.test.ui.utilities.SharedState
 
 @ScenarioScoped
 class SelectEndpointsSteps @Inject()(sharedState: SharedState) extends BaseStepDef {

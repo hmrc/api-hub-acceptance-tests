@@ -14,14 +14,20 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.pages
+package uk.gov.hmrc.test.ui.utilities
 
-case class WrongPageException(message: String) extends Exception(message)
+import com.google.inject.Singleton
 
-object WrongPageException extends Robot {
+/**
+ * State that is shared between step definition classes.
+ *
+ * Step definition classes wanting to access shared state should inject this
+ * class in their constructor.
+ */
 
-  def expecting(expectedPage: String): WrongPageException = {
-    WrongPageException(s"Expected to be on page $expectedPage but currently on page $getCurrentUrl")
-  }
+@Singleton
+class SharedState {
+
+  val application = new Application()
 
 }

@@ -41,8 +41,8 @@ class ApplicationDetailsPage(id: String) extends BasePage[ApplicationDetailsPage
   }
 
   def getTeamMembers: Seq[String] = {
-    findElements(By.cssSelector("[data-team-member-email]"))
-      .map(_.getAttribute("data-team-member-email"))
+    findElements(teamMember)
+      .map(_.getAttribute(teamMemberEmailAttribute))
   }
 
   def getCountOfTeamMembersFromHeading: Int = {
@@ -55,7 +55,7 @@ class ApplicationDetailsPage(id: String) extends BasePage[ApplicationDetailsPage
   }
 
   def hasApiAdded(id: String): Boolean = {
-    findElements(By.cssSelector(s"[data-api-id='$id']")).nonEmpty
+    exists(api(id))
   }
 
   def addApis(): HipApisPage = {
@@ -92,8 +92,12 @@ object ApplicationDetailsPage {
     val applicationName: By = By.id("applicationName")
     val applicationCreated: By = By.id("applicationCreated")
     val noApisMessage: By = By.id("noApisMessage")
-    val hipApisLink: By = By.id("hipApisLink")
+    val hipApisLink: By = By.id("addHipApisLink")
+    val apiIdAttribute = "data-api-id"
+    def api(id: String): By = By.cssSelector(s"[$apiIdAttribute='$id']")
     val teamMembersHeading: By = By.id("teamMembersHeading")
+    val teamMemberEmailAttribute = "data-team-member-email"
+    val teamMember: By = By.cssSelector(s"[$teamMemberEmailAttribute]")
     val applicationApisLink: By = By.cssSelector("[data-nav-item-page='ApisPage']")
     val environmentsAndCredentialsLink: By = By.cssSelector("[data-nav-item-page='EnvironmentsAndCredentialsPage']")
     val deleteApplicationLink: By = By.cssSelector("[data-nav-item-page='DeleteApplicationPage']")

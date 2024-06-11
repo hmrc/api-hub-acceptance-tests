@@ -19,6 +19,7 @@ package uk.gov.hmrc.test.ui.cucumber.stepdefs
 import com.google.inject.Inject
 import io.cucumber.guice.ScenarioScoped
 import uk.gov.hmrc.test.ui.pages.Journeys
+import uk.gov.hmrc.test.ui.utilities.SharedState
 
 @ScenarioScoped
 class JourneySteps @Inject()(sharedState: SharedState) extends BaseStepDef {

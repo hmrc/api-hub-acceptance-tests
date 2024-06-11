@@ -26,13 +26,13 @@ class SelectApplicationPage extends BasePage[SelectApplicationPage](pageReadyTes
 
   def selectApplication(id: String): SelectEndpointsPage = {
     // Note that if there are more than 5 applications then the view changes to
-    // using a dropdown instead of radios.
+    // using a dropdown instead of radios. Determine which by presence of select
+    // input.
     if (exists(applicationSelect)) {
       new Select(findElement(applicationSelect)).selectByValue(id)
     }
     else {
-      val radio = findElement(By.cssSelector(s"[data-application-id='$id']"))
-      radio.click()
+      findElement(applicationRadio(id)).click()
     }
 
     click(continueButton)
@@ -47,6 +47,7 @@ object SelectApplicationPage {
 
   object elements {
     val applicationSelect: By = By.id("applicationSelect")
+    def applicationRadio(id: String): By = By.cssSelector(s"[data-application-id='$id']")
     val continueButton: By = By.id("continueButton")
   }
 

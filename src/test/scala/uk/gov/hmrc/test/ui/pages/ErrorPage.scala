@@ -20,6 +20,11 @@ import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.ErrorPage._
 import uk.gov.hmrc.test.ui.pages.ErrorPage.elements._
 
+/**
+ * Represents the error template view used to render errors such as:
+ *    - Technical difficulties
+ *    - Application not found
+ */
 class ErrorPage extends BasePage[ErrorPage](pageReadyTest) {
 
   def getErrorHeading: String = {
