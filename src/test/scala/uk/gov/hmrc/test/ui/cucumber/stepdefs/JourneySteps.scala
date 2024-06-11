@@ -19,7 +19,7 @@ package uk.gov.hmrc.test.ui.cucumber.stepdefs
 import com.google.inject.Inject
 import io.cucumber.guice.ScenarioScoped
 import uk.gov.hmrc.test.ui.pages.Journeys
-import uk.gov.hmrc.test.ui.utilities.SharedState
+import uk.gov.hmrc.test.ui.utilities.{Roles, SharedState}
 
 @ScenarioScoped
 class JourneySteps @Inject()(sharedState: SharedState) extends BaseStepDef {
@@ -30,6 +30,26 @@ class JourneySteps @Inject()(sharedState: SharedState) extends BaseStepDef {
 
   Given("a user has signed-in") { () =>
     Journeys.signIn()
+  }
+
+  Given("a user has signed in with role {string}") { (role: String) =>
+    Journeys.signIn(Roles.forName(role))
+  }
+
+  Given("a user has signed-in with LDAP") { () =>
+    Journeys.signInViaLdap()
+  }
+
+  Given("a user has signed in with LDAP and role {string}") { (role: String) =>
+    Journeys.signInViaLdap(Roles.forName(role))
+  }
+
+  Given("a user has signed in with Stride") { () =>
+    Journeys.signInViaStride()
+  }
+
+  Given("a user has signed in with Stride and role {string}") { (role: String) =>
+    Journeys.signInViaStride(Roles.forName(role))
   }
 
 }

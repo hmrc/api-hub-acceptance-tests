@@ -17,7 +17,7 @@
 package uk.gov.hmrc.test.ui.pages
 
 import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage
-import uk.gov.hmrc.test.ui.utilities.SharedState
+import uk.gov.hmrc.test.ui.utilities.{Role, SharedState, UserRole}
 
 /**
  * Journeys are effectively shortcuts that can be used by step definition
@@ -45,20 +45,32 @@ object Journeys extends Robot {
     signInViaLdap()
   }
 
+  def signIn(role: Role): DashboardPage = {
+    signInViaLdap(role)
+  }
+
   def signInViaLdap(): DashboardPage = {
+    signInViaLdap(UserRole)
+  }
+
+  def signInViaLdap(role: Role): DashboardPage = {
     Journeys
       .openStartPage()
       .startNow()
       .signInViaLdap()
-      .signInWithDefaults()
+      .signIn(role)
   }
 
   def signInViaStride(): DashboardPage = {
+    signInViaStride(UserRole)
+  }
+
+  def signInViaStride(role: Role): DashboardPage = {
     Journeys
       .openStartPage()
       .startNow()
       .signInViaStride()
-      .signIn()
+      .signIn(role)
   }
 
   def registerAnApplication(sharedState: SharedState): ApplicationDetailsPage = {

@@ -9,6 +9,11 @@ Prior to executing the tests ensure you have:
  - Installed/configured [service manager](https://github.com/hmrc/service-manager).
  - Installed/configured [service manager config](https://github.com/hmrc/service-manager-config)
 
+Start the required dependencies using Service Manager:
+```bash
+sm2 --start API_HUB_MIN
+```
+
 ## Running tests on a developer machine
 
 Execute the `run_tests.sh` script:

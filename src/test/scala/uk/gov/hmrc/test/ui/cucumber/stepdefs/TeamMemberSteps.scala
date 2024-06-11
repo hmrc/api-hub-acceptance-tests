@@ -141,7 +141,7 @@ class TeamMemberSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
         checkYourAnswersPage => {
           checkYourAnswersPage.getApplicationName shouldBe sharedState.application.name
           checkYourAnswersPage.getStatedNumberOfTeamMembers shouldBe expectedNoTeamMembersText
-          checkYourAnswersPage.getTeamMembers should contain theSameElementsAs Seq(User.Email)
+          checkYourAnswersPage.getTeamMembers should contain theSameElementsAs Seq(User.email)
         }
       )
   }

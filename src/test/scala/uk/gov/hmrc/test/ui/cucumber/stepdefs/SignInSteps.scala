@@ -18,10 +18,9 @@ package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
 import com.google.inject.Inject
 import io.cucumber.guice.ScenarioScoped
-import uk.gov.hmrc.test.ui.pages.DashboardPage
 import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage
-import uk.gov.hmrc.test.ui.pages.{Journeys, LdapSignInPage, SignInPage}
-import uk.gov.hmrc.test.ui.utilities.{SharedState, User}
+import uk.gov.hmrc.test.ui.pages.{DashboardPage, Journeys, LdapSignInPage, SignInPage}
+import uk.gov.hmrc.test.ui.utilities.SharedState
 
 @ScenarioScoped
 class SignInSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
@@ -37,14 +36,9 @@ class SignInSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
       .signInViaLdap()
   }
 
-  When("""an approver with write privileges logs in""") { () =>
+  When("""the user submits valid LDAP details""") { () =>
     LdapSignInPage()
-      .signInWithDefaults()
-  }
-
-  When("""a new user with approver resource type with write privileges logs in""") { () =>
-    LdapSignInPage()
-      .signInWithEmailAddress(User.Email)
+      .signIn()
   }
 
   Then("""the user should be authenticated""") { () =>
@@ -53,11 +47,6 @@ class SignInSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
 
   Then("""the application should be registered""") { () =>
     ApplicationDetailsPage(sharedState.application.id)
-  }
-
-  Given("a user logs in with role {string}") { (role: String) =>
-    LdapSignInPage()
-      .signInWithEmailAddressAndRole(User.Email, role)
   }
 
   Then("your applications has the following header links {string} {string} {string}") {

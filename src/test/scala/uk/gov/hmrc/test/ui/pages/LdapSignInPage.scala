@@ -17,32 +17,29 @@
 package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.By
-import uk.gov.hmrc.test.ui.conf.TestConfiguration
 import uk.gov.hmrc.test.ui.pages.LdapSignInPage._
 import uk.gov.hmrc.test.ui.pages.LdapSignInPage.elements._
-import uk.gov.hmrc.test.ui.utilities.User
+import uk.gov.hmrc.test.ui.utilities.{Role, User, UserRole}
 
 class LdapSignInPage extends BasePage[LdapSignInPage](pageReadyTest) {
 
-  // TODO: move to dashboard?
-  private val dashboardPath: String       = "/dashboard"
-
-  def signInWithDefaults(): DashboardPage = {
-    signInWithEmailAddress(User.Email)
+  def signIn(): DashboardPage = {
+    signIn(UserRole)
   }
 
-  def signInWithEmailAddress(emailAddress: String): DashboardPage = {
-    signInWithEmailAddressAndRole(emailAddress, "approvals")
-  }
-
-  // TODO: make role optional?
-  def signInWithEmailAddressAndRole(emailAddress: String, role: String): DashboardPage = {
+  def signIn(role: Role): DashboardPage = {
     sendKeys(principal, "auto-test")
-    sendKeys(email, emailAddress)
-    sendKeys(redirectUrl, TestConfiguration.url("api-hub") + dashboardPath)
-    sendKeys(resourceTypes, "api-hub-frontend")
-    sendKeys(resourceLocations, role)
-    sendKeys(actions, "WRITE")
+    sendKeys(email, User.email)
+    sendKeys(redirectUrl, buildFullUrl("dashboard"))
+
+    role.ldapResourceLocation.foreach(
+      resourceLocation => {
+        sendKeys(resourceTypes, "api-hub-frontend")
+        sendKeys(resourceLocations, resourceLocation)
+        sendKeys(actions, "WRITE")
+      }
+    )
+
     click(signInButton)
     DashboardPage()
   }

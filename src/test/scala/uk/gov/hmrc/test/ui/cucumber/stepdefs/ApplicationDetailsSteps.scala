@@ -67,7 +67,7 @@ class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseSt
           applicationDetailsPage.getApplicationName shouldBe sharedState.application.name
           applicationDetailsPage.getCreated shouldBe DateFormatterUtil.getFormattedDate
           applicationDetailsPage.getNoApisMessage.toLowerCase should include(expectedApplicationApisText.toLowerCase)
-          applicationDetailsPage.getTeamMembers shouldBe Seq(User.Email)
+          applicationDetailsPage.getTeamMembers shouldBe Seq(User.email)
           applicationDetailsPage.getCountOfTeamMembersFromHeading shouldBe applicationDetailsPage.getTeamMembers.size
         }
       )

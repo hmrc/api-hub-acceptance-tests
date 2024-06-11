@@ -6,17 +6,17 @@ Feature: Ldap Login
     And the user decides to login via ldap
 
   Scenario: Login via LDAP
-    When an approver with write privileges logs in
+    When the user submits valid LDAP details
     Then the user should be authenticated
 
   Scenario: Register first application for a new user account
-    And a new user with approver resource type with write privileges logs in
-    When the new user registers an application
+    When the user submits valid LDAP details
+    And the new user registers an application
     Then the application should be registered
 
   Scenario: View Application
-    And a new user with approver resource type with write privileges logs in
-    When the new user registers an application
+    When the user submits valid LDAP details
+    And the new user registers an application
     Then the application can be viewed
 
 #  @regression @HIPP_531

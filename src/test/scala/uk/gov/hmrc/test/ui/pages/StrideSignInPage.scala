@@ -19,27 +19,36 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.StrideSignInPage._
 import uk.gov.hmrc.test.ui.pages.StrideSignInPage.elements._
+import uk.gov.hmrc.test.ui.utilities.{Role, User, UserRole}
 
 class StrideSignInPage extends BasePage[StrideSignInPage](pageReadyTest) {
 
-  // TODO: standardise sign-in methods
   def signIn(): DashboardPage = {
-    sendKeys(pid, "7297091")
-    sendKeys(givenName, "sarita")
-    sendKeys(surName, "parigi")
-    sendKeys(emailAddress, "sarita.reddy.parigi@digital.hmrc.gov.uk")
-    sendKeys(roles, "api_hub_approver")
-    click(submitButton)
+    signIn(UserRole)
+  }
+
+  def signIn(role: Role): DashboardPage = {
+    submitForm(Some(role))
     DashboardPage()
   }
 
   def signInWithoutRole(): UnauthorisedPage = {
-    sendKeys(pid, "7297091")
-    sendKeys(givenName, "sarita")
-    sendKeys(surName, "parigi")
-    sendKeys(emailAddress, "sarita.reddy.parigi@digital.hmrc.gov.uk")
-    click(submitButton)
+    submitForm(None)
     UnauthorisedPage()
+  }
+
+  private def submitForm(role: Option[Role]): Unit = {
+    sendKeys(pid, "7297091")
+    sendKeys(givenName, User.firstName)
+    sendKeys(surName, User.lastName)
+    sendKeys(emailAddress, User.email)
+
+    role.foreach(
+      role =>
+        sendKeys(roles, role.srsRole)
+    )
+
+    click(submitButton)
   }
 
 }
