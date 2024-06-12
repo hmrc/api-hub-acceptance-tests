@@ -2,9 +2,7 @@
 Feature: Check your answers
 
   Background:
-    Given a user is on the sign in page
-    And the user decides to login via ldap
-    And an approver with write privileges logs in
+    Given a user has signed-in
     And the new user starts the registration process
     When the user chooses to not add a new team member
 

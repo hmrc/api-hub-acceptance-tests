@@ -16,53 +16,66 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-import uk.gov.hmrc.test.ui.pages._
+import com.google.inject.Inject
+import io.cucumber.guice.ScenarioScoped
+import uk.gov.hmrc.test.ui.pages.Journeys
+import uk.gov.hmrc.test.ui.pages.application._
+import uk.gov.hmrc.test.ui.utilities.SharedState
 
-class ProductionAccessSteps extends BaseStepDef {
+@ScenarioScoped
+class ProductionAccessSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
+
   Given("""an api is added to an application""") { () =>
-    ServiceStartPage
-      .loadPage()
-      .startNow()
+    var apiId = ""
+    var apiTitle = ""
 
-    SignInPage.clickLdapContinue()
-    CreateSignInPage.defaultLoginUser()
-
-    YourApplicationPage.registerApplication()
-    ApplicationNamePage.fillInApplicationName(application.name)
-    TeamMembersPage.addNoTeamMember()
-    CheckYourAnswersPage.registerApplication()
-    ApplicationSuccessPage.viewRegisteredApplication()
-    assert(ApplicationDetailsPage.getApplicationName == application.name)
-
-    ApplicationDetailsPage.addApis()
-    HipApisPage.selectRandomApi()
-    ApiDetailsPage.addToAnApplication()
-    SelectApplicationPage.selectApplicationRadioButton(application.name).continue()
-    SelectEndpointsPage.selectAllEndpoints().continue()
-    ReviewPolicyPage.confirmCheckbox()
-    ReviewPolicyPage.acceptAndContinue()
-    CheckYourAnswersPage.continue()
-
-    assert(ApiAddedSuccessfullyPage.getApiName.startsWith(HipApisPage.getSelectedApiName))
-    ApiAddedSuccessfullyPage.viewApplication()
-    assert(ApplicationDetailsPage.isApiNameAddedToApplication(HipApisPage.getSelectedApiName))
+    Journeys
+      .signInAndRegisterAnApplication(sharedState)
+      .addApis()
+      .selectRandomApi()
+      .foreach(
+        apiDetailsPage => {
+          apiId = apiDetailsPage.getApiId
+          apiTitle = apiDetailsPage.getApiTitle
+        }
+      )
+      .addToAnApplication()
+      .selectApplication(sharedState.application.id)
+      .selectAllEndpoints()
+      .confirmUsagePolicy()
+      .continue()
+      .foreach(
+        addAnApiSuccessPage=>
+          addAnApiSuccessPage.getSuccessSummary should startWith(apiTitle)
+      )
+      .viewApplication()
+      .foreach(
+        applicationDetailsPage =>
+          applicationDetailsPage.hasApiAdded(apiId) shouldBe true
+      )
   }
 
   //from the left hand menu the user chooses 'Application APIs'"
   When("from the left hand menu the user chooses {string}") { (lhnmOption: String) =>
-    ApplicationDetailsPage.chooseLhnmOption(lhnmOption)
+    lhnmOption match {
+      case "Application APIs" => ApplicationDetailsPage(sharedState.application.id).applicationApis()
+      case _ => new IllegalArgumentException(s"Unknown application navigation link: $lhnmOption")
+    }
   }
 
   When("the user requests prod access") { () =>
-    ApplicationDetailsPage.requestProductionAccess()
-    RequestProductionAccessPage.confirm().continue()
+    ApplicationApisPage(sharedState.application.id)
+      .requestProductionAccess()
+      .confirmUsagePolicies()
   }
 
   And("the user supports the request with a reason") { () =>
-    ProvideSupportingInformationPage.randomlyFillInTextBoxReason().continue()
+    ProvideSupportingInformationPage()
+      .setSupportingInformation("Lorem ipsum")
   }
 
   Then("the pending request is logged") { () =>
-    assert(RequestProductionAccessSuccessPage.isProductionAccessBannerRequestMessageDisplayed, true)
+    RequestProductionAccessSuccessPage().isSuccessMessageDisplayed shouldBe true
   }
+
 }

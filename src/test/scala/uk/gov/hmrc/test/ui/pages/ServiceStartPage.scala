@@ -17,19 +17,28 @@
 package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.By
-import uk.gov.hmrc.test.ui.conf.TestConfiguration
+import uk.gov.hmrc.test.ui.pages.ServiceStartPage._
+import uk.gov.hmrc.test.ui.pages.ServiceStartPage.elements._
 
-object ServiceStartPage extends BasePage {
-  private val url: String         = TestConfiguration.url("api-hub")
-  private val startNowLcr: String = ".govuk-button"
+class ServiceStartPage extends BasePage[ServiceStartPage](pageReadyTest) with ApiHubMenu {
 
-  def loadPage(): this.type = {
-    driver.navigate().to(url)
-
-    waitForElementPresent(driver.findElement(By.cssSelector(startNowLcr)))
-    this
+  def startNow(): SignInPage = {
+    click(startNowButton)
+    SignInPage()
   }
 
-  def startNow(): Unit =
-    driver.findElement(By.cssSelector(startNowLcr)).click()
+}
+
+object ServiceStartPage {
+
+  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("")
+
+  object elements {
+    val startNowButton: By = By.id("startNowButton")
+  }
+
+  def apply(): ServiceStartPage = {
+    new ServiceStartPage()
+  }
+
 }

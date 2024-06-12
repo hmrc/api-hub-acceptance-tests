@@ -16,7 +16,18 @@
 
 package uk.gov.hmrc.test.ui.pages
 
-object UnauthorisedPage extends BasePage {
-  def currentUrlEndsWith(url: String): Boolean =
-    driver.getCurrentUrl.endsWith(url)
+import uk.gov.hmrc.test.ui.pages.UnauthorisedPage._
+
+class UnauthorisedPage extends BasePage[UnauthorisedPage](pageReadyTest) {
+
+}
+
+object UnauthorisedPage {
+
+  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("unauthorised")
+
+  def apply(): UnauthorisedPage = {
+    new UnauthorisedPage()
+  }
+
 }

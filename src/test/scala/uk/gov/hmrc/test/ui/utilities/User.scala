@@ -19,5 +19,7 @@ package uk.gov.hmrc.test.ui.utilities
 import faker.Faker
 
 object User {
-  var Email: String = s"${Faker.en_GB.lastName()}@digital.hmrc.gov.uk"
+  val firstName: String = Faker.en_GB.firstName()
+  val lastName: String = Faker.en_GB.lastName()
+  val email: String = s"$firstName.$lastName@digital.hmrc.gov.uk".toLowerCase
 }

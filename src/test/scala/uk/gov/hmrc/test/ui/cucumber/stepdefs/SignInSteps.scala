@@ -16,54 +16,52 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-import uk.gov.hmrc.test.ui.pages._
-import uk.gov.hmrc.test.ui.utilities.User
+import com.google.inject.Inject
+import io.cucumber.guice.ScenarioScoped
+import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage
+import uk.gov.hmrc.test.ui.pages.{DashboardPage, Journeys, LdapSignInPage, SignInPage}
+import uk.gov.hmrc.test.ui.utilities.SharedState
 
-class SignInSteps extends BaseStepDef {
+@ScenarioScoped
+class SignInSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
+
   Given("""a user is on the sign in page""") { () =>
-    ServiceStartPage
-      .loadPage()
+    Journeys
+      .openStartPage()
       .startNow()
-
-    assert(SignInPage.isLdapContinueButtonDisplayed, true)
   }
 
   Given("""the user decides to login via ldap""") { () =>
-    SignInPage.clickLdapContinue()
+    SignInPage()
+      .signInViaLdap()
   }
 
-  When("""an approver with write privileges logs in""") { () =>
-    CreateSignInPage.defaultLoginUser()
-  }
-
-  When("""a new user with approver resource type with write privileges logs in""") { () =>
-    CreateSignInPage.loginWithUserEmail(User.Email)
+  When("""the user submits valid LDAP details""") { () =>
+    LdapSignInPage()
+      .signIn()
   }
 
   Then("""the user should be authenticated""") { () =>
-    assert(YourApplicationPage.yourApplicationsIsDisplayed(), true)
+    DashboardPage()
   }
 
   Then("""the application should be registered""") { () =>
-    assert(ApplicationSuccessPage.isApplicationSuccessDisplayed(), true)
-  }
-
-  Then("""the api is added to the application""") { () =>
-    assert(ApiAddedSuccessfullyPage.getApiName.startsWith(HipApisPage.getSelectedApiName))
-    ApiAddedSuccessfullyPage.viewApplication()
-    assert(ApplicationDetailsPage.isApiNameAddedToApplication(HipApisPage.getSelectedApiName))
-  }
-
-  Given("a user logs in with role {string}") { (role: String) =>
-    CreateSignInPage.loginWithRoleAndEmailAddress(role, User.Email)
+    ApplicationDetailsPage(sharedState.application.id)
   }
 
   Then("your applications has the following header links {string} {string} {string}") {
     (linkOne: String, linkTwo: String, linkThree: String) =>
-      assert(YourApplicationPage.getHeaderLinkTexts().contains(linkOne))
-      assert(YourApplicationPage.getHeaderLinkTexts().contains(linkTwo))
-      if (linkThree.nonEmpty) {
-        assert(YourApplicationPage.getHeaderLinkTexts().contains(linkThree))
-      }
+      DashboardPage()
+        .foreach(
+          dashboardPage => {
+            dashboardPage.getHeaderLinkTexts should contain(linkOne)
+            dashboardPage.getHeaderLinkTexts should contain(linkTwo)
+
+            if (linkThree.nonEmpty) {
+              dashboardPage.getHeaderLinkTexts should contain(linkThree)
+            }
+          }
+        )
   }
+
 }

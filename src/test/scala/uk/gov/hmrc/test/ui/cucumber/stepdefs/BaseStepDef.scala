@@ -26,4 +26,4 @@ trait World {
   val application = new Application()
 }
 
-trait BaseStepDef extends ScalaDsl with EN with BrowserDriver with Eventually with Matchers with World {}
+trait BaseStepDef extends ScalaDsl with EN with BrowserDriver with Eventually with Matchers {}

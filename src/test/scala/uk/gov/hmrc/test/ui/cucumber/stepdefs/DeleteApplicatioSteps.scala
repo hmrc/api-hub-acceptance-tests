@@ -16,26 +16,46 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-import uk.gov.hmrc.test.ui.pages.{ApplicationDeletePage, ApplicationDetailsPage}
+import com.google.inject.Inject
+import io.cucumber.guice.ScenarioScoped
+import uk.gov.hmrc.test.ui.pages.Journeys
+import uk.gov.hmrc.test.ui.pages.application.{ApplicationDeleteConfirmationPage, ApplicationDeleteSuccessPage}
+import uk.gov.hmrc.test.ui.utilities.SharedState
 
-class DeleteApplicatioSteps extends BaseStepDef {
-  Given("""the user chooses {string} from the left hand nav menu""") { (string: String) =>
-    ApplicationDetailsPage.chooseLhnmOption(string)
-  }
+@ScenarioScoped
+class DeleteApplicatioSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
 
   When("""deletes the application""") { () =>
-    ApplicationDeletePage.confirmDeletionOfApplication()
+    ApplicationDeleteConfirmationPage(sharedState.application.id)
+      .acceptAndContinue()
   }
 
   When("""the user attempts to delete the application without confirming""") { () =>
-    ApplicationDeletePage.clickAcceptAndContinueButton()
+    ApplicationDeleteConfirmationPage(sharedState.application.id)
+      .acceptAndContinueWithoutConfirm()
   }
+
   When("""the error make a selection error is displayed""") { () =>
-    assert(ApplicationDeletePage.isDeleteApplicationErrorDisplayed())
-    assert(ApplicationDeletePage.isConfirmCheckboxDisplayed())
+    ApplicationDeleteConfirmationPage(sharedState.application.id)
+      .hasErrorSummary
   }
 
   When("""the user chooses to cancel the deletion of the application""") { () =>
-    ApplicationDeletePage.cancel()
+    ApplicationDeleteConfirmationPage(sharedState.application.id)
+      .cancel()
   }
+
+  Then("""the previously registered application should no no longer be listed in all applications""") { () =>
+    ApplicationDeleteSuccessPage(sharedState.application.id)
+      .returnToYourApplications()
+
+    // Should the success page return Dashboard or Your applications? See HIPP-1298
+    Journeys
+      .openYourApplicationsPage()
+      .foreach(
+        yourApplicationsPage =>
+          yourApplicationsPage.hasApplication(sharedState.application.id) shouldBe false
+      )
+  }
+
 }

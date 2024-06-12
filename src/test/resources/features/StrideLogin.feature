@@ -10,5 +10,5 @@ Feature: Logging in via Stride
     Then the user should be successfully signed in via stride
 
   Scenario: Display you do not have permissions page if user has an invalid role
-    When user fills in all fields except role
-    Then user should be on the "unauthorised" url page
+    When the user fills in all fields except role
+    Then the user should be on the unauthorised url page

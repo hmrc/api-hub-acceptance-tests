@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 HM Revenue & Customs
+ * Copyright 2024 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,61 +16,66 @@
 
 package uk.gov.hmrc.test.ui.pages
 
-import org.openqa.selenium.support.ui.FluentWait
-import org.openqa.selenium.{By, JavascriptExecutor, WebDriver, WebElement}
-import org.scalatest.matchers.should.Matchers
-import uk.gov.hmrc.test.ui.driver.BrowserDriver
+import com.typesafe.scalalogging.LazyLogging
 
-import java.time.Duration
-import java.util
+/**
+ * The base page object. Provides common functionality for all page objects
+ * and forms a pattern to follow.
+ *
+ * Calls the page ready check on instantiation to confirm the current page
+ * matches any expectations and is ready for interaction.
+ *
+ * Page objects should expose two basic types of method:
+ *    1) Getters to access state
+ *    2) Actions to move from one page object to another
+ *
+ * All actions should return a reference to the next page object. This means we
+ * should think of actions as mini scenarios. A submit button for example may
+ * move to the next page or present the current page with validation failures.
+ * Rather than a simple "submit(data): NextPage" action we might prefer to
+ * implement the separate mini scenarios "submitValidData(data): NextPage" and
+ * "submitInvalidData(data): ThisPage".
+ *
+ * Avoid chatty interfaces. This is bad:
+ *    MyPageObject()
+ *      .setFoo(foo)
+ *      .setBar(bar)
+ *      .submit()
+ *
+ * This is a much better style:
+ *    MyPageObject()
+ *      .submitValidData(foo, bar)
+ *
+ * Remembering that the submit() method should of course return another
+ * PageObject:
+ *    def submitValidData(foo: String, bar: String): NextPageObject
+ *
+ * @param pageReadyTest  a test of page correctness and readiness
+ * @tparam T  the precise type of a sub-class: used for self-referencing to
+ *            create a fluent API
+ */
+abstract class BasePage[T](pageReadyTest: PageReadyTest) extends Robot with LazyLogging {
+  self: T =>
 
-trait BasePage extends BrowserDriver with Matchers {
-  protected val continueButton = "continue-button"
+  waitForPageReady(pageReadyTest)
 
-  def submitPage(): Unit =
-    driver.findElement(By.id(continueButton)).click()
+  logger.info(s"Current page title: $getTitle")
+  logger.info(s"Current page URL: $getCurrentUrl")
 
-  def onPage(pageTitle: String): Unit =
-    if (driver.getTitle != pageTitle)
-      throw PageNotFoundException(
-        s"Expected '$pageTitle' page, but found '${driver.getTitle}' page."
-      )
-
-  def customWaiter: FluentWait[WebDriver] =
-    new FluentWait[WebDriver](driver)
-      .withTimeout(Duration.ofSeconds(30L))
-      .pollingEvery(Duration.ofSeconds(1L))
-      .ignoring(classOf[NoSuchElementException])
-
-  // Don't use these methods with the element: WebElement parameter
-  def waitForElementPresent(element: WebElement): WebElement =
-    customWaiter.until(_ => element)
-
-  def waitForElementPresentAndClick(element: WebElement): Unit =
-    waitForElementPresent(element).click()
-
-  // Do use these methods with the by: By parameter
-  def waitForElementPresent(by: By): WebElement =
-    customWaiter.until(driver => driver.findElement(by))
-
-  def waitForElementPresentAndClick(by: By): Unit =
-    waitForElementPresent(by).click()
-
-  // Don't use this if the list could be empty
-  def waitForElementsPresent(by: By): util.List[WebElement] = {
-    waitForElementPresent(by)
-    driver.findElements(by)
-  }
-
-  def scrollIntoView(element: WebElement): Unit = {
-    val js = driver.asInstanceOf[JavascriptExecutor]
-    js.executeScript("arguments[0].scrollIntoView(true);", element)
-  }
-
-  def scrollIntoView(by: By): Unit = {
-    scrollIntoView(waitForElementPresent(by))
+  /**
+   * Apply the given procedure f to the page object. A side-effecting method.
+   *
+   * The side-effects would typically be an assertion within a step def.
+   *
+   * Returns a reference to 'this' to allow methods to be chained together in a
+   * fluent style.
+   *
+   * @param f  the procedure to apply
+   * @return  a self-reference supporting fluent APIs
+   */
+  def foreach[U](f: T => U): this.type = {
+    f.apply(self)
+    self
   }
 
 }
-
-case class PageNotFoundException(s: String) extends Exception(s)
