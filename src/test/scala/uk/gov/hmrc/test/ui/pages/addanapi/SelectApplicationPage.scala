@@ -20,9 +20,10 @@ import org.openqa.selenium.By
 import org.openqa.selenium.support.ui.Select
 import uk.gov.hmrc.test.ui.pages.addanapi.SelectApplicationPage._
 import uk.gov.hmrc.test.ui.pages.addanapi.SelectApplicationPage.elements._
-import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
+import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode}
 
-class SelectApplicationPage extends BasePage[SelectApplicationPage](pageReadyTest) {
+class SelectApplicationPage(mode: Mode) extends BasePage[SelectApplicationPage](pageReadyTest(mode)) {
 
   def selectApplication(id: String): SelectEndpointsPage = {
     // Note that if there are more than 5 applications then the view changes to
@@ -43,7 +44,9 @@ class SelectApplicationPage extends BasePage[SelectApplicationPage](pageReadyTes
 
 object SelectApplicationPage {
 
-  val pageReadyTest: PageReadyTest = UrlPageReadyTest("apis/add-an-api/select-application")
+  def pageReadyTest(mode: Mode): PageReadyTest = {
+    PageReadyTests.journeyQuestionPage.url("apis/add-an-api/select-application", mode)
+  }
 
   object elements {
     val applicationSelect: By = By.id("applicationSelect")
@@ -51,8 +54,8 @@ object SelectApplicationPage {
     val continueButton: By = By.id("continueButton")
   }
 
-  def apply(): SelectApplicationPage = {
-    new SelectApplicationPage()
+  def apply(mode: Mode = NormalMode): SelectApplicationPage = {
+    new SelectApplicationPage(mode)
   }
 
 }

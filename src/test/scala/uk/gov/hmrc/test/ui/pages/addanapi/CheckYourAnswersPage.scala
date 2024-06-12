@@ -19,7 +19,7 @@ package uk.gov.hmrc.test.ui.pages.addanapi
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.addanapi.CheckYourAnswersPage._
 import uk.gov.hmrc.test.ui.pages.addanapi.CheckYourAnswersPage.elements._
-import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
 class CheckYourAnswersPage extends BasePage[CheckYourAnswersPage](pageReadyTest) {
 
@@ -32,7 +32,7 @@ class CheckYourAnswersPage extends BasePage[CheckYourAnswersPage](pageReadyTest)
 
 object CheckYourAnswersPage {
 
-  val pageReadyTest: PageReadyTest = UrlPageReadyTest("apis/add-an-api/check-your-answers")
+  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("apis/add-an-api/check-your-answers")
 
   object elements {
     val continueButton: By = By.id("continueButton")

@@ -19,7 +19,7 @@ package uk.gov.hmrc.test.ui.pages.application
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.application.ApplicationApisPage._
 import uk.gov.hmrc.test.ui.pages.application.ApplicationApisPage.elements._
-import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
 class ApplicationApisPage(id: String) extends BasePage[ApplicationApisPage](pageReadyTest(id)) {
 
@@ -32,7 +32,7 @@ class ApplicationApisPage(id: String) extends BasePage[ApplicationApisPage](page
 
 object ApplicationApisPage {
 
-  def pageReadyTest(id: String): PageReadyTest = UrlPageReadyTest(s"application/apis/$id")
+  def pageReadyTest(id: String): PageReadyTest = PageReadyTests.apiHubPage.url(s"application/apis/$id")
 
   object elements {
     val requestProductionAccessButton: By = By.id("requestProductionAccessButton")

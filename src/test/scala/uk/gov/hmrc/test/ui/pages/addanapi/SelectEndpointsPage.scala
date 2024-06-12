@@ -19,9 +19,10 @@ package uk.gov.hmrc.test.ui.pages.addanapi
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.addanapi.SelectEndpointsPage._
 import uk.gov.hmrc.test.ui.pages.addanapi.SelectEndpointsPage.elements._
-import uk.gov.hmrc.test.ui.pages.{BasePage, ErrorSummary, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages.{BasePage, ErrorSummary, PageReadyTest, PageReadyTests}
+import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode}
 
-class SelectEndpointsPage extends BasePage[SelectEndpointsPage](pageReadyTest) with ErrorSummary {
+class SelectEndpointsPage(mode: Mode) extends BasePage[SelectEndpointsPage](pageReadyTest(mode)) with ErrorSummary {
 
   def selectAllEndpoints(): ReviewUsagePolicyPage = {
     findElements(selectEndpointCheckbox)
@@ -45,7 +46,9 @@ class SelectEndpointsPage extends BasePage[SelectEndpointsPage](pageReadyTest) w
 
 object SelectEndpointsPage {
 
-  val pageReadyTest: PageReadyTest = UrlPageReadyTest("apis/add-an-api/select-endpoints")
+  def pageReadyTest(mode: Mode): PageReadyTest = {
+    PageReadyTests.journeyQuestionPage.url("apis/add-an-api/select-endpoints", mode)
+  }
 
   object elements {
     val scopeAttribute = "data-scope"
@@ -54,8 +57,8 @@ object SelectEndpointsPage {
     val continueButton: By = By.id("continueButton")
   }
 
-  def apply(): SelectEndpointsPage = {
-    new SelectEndpointsPage()
+  def apply(mode: Mode = NormalMode): SelectEndpointsPage = {
+    new SelectEndpointsPage(mode)
   }
 
 }

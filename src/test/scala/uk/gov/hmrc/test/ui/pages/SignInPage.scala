@@ -36,7 +36,7 @@ class SignInPage extends BasePage[SignInPage](pageReadyTest) {
 
 object SignInPage {
 
-  val pageReadyTest: PageReadyTest = UrlPageReadyTest("sign-in")
+  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("sign-in")
 
   object elements {
     val signInViaLdapButton: By = By.id("signInViaLdapButton")

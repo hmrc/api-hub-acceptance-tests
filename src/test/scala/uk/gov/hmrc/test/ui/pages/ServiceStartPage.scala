@@ -31,7 +31,7 @@ class ServiceStartPage extends BasePage[ServiceStartPage](pageReadyTest) with Ap
 
 object ServiceStartPage {
 
-  val pageReadyTest: PageReadyTest = UrlPageReadyTest("")
+  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("")
 
   object elements {
     val startNowButton: By = By.id("startNowButton")

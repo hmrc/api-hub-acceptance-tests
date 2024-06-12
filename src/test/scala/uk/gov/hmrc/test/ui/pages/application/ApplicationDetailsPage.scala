@@ -20,7 +20,7 @@ import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.api.HipApisPage
 import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage._
 import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage.elements._
-import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
 class ApplicationDetailsPage(id: String) extends BasePage[ApplicationDetailsPage](pageReadyTest(id)) {
 
@@ -85,7 +85,9 @@ class ApplicationDetailsPage(id: String) extends BasePage[ApplicationDetailsPage
 
 object ApplicationDetailsPage {
 
-  def pageReadyTest(id: String): PageReadyTest = UrlPageReadyTest(s"application/details/$id")
+  def pageReadyTest(id: String): PageReadyTest = {
+    PageReadyTests.apiHubPage.url(s"application/details/$id")
+  }
 
   object elements {
     val applicationId: By = By.id("applicationId")

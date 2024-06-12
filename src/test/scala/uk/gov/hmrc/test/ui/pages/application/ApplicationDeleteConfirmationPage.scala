@@ -45,12 +45,12 @@ object ApplicationDeleteConfirmationPage {
 
   // The confirmation and success pages have the same URL so test on both URL and title
   // As this is a question page we might have the error variant of title
-  def pageReadyTest(id: String): PageReadyTest = AllOfPageReadyTest(
-    Seq(
-      UrlPageReadyTest(s"application/delete/$id"),
-      QuestionPageTitlePageReadyTest("Delete application")
+  def pageReadyTest(id: String): PageReadyTest = {
+    PageReadyTests.allOf(
+      PageReadyTests.questionPage.url(s"application/delete/$id"),
+      PageReadyTests.questionPage.title("Delete application")
     )
-  )
+  }
 
   object elements {
     val confirmCheckbox: By = By.id("value_0")

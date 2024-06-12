@@ -19,7 +19,7 @@ package uk.gov.hmrc.test.ui.pages.api
 import org.openqa.selenium.{By, WebElement}
 import uk.gov.hmrc.test.ui.pages.api.HipApisPage._
 import uk.gov.hmrc.test.ui.pages.api.HipApisPage.elements._
-import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
 import scala.util.Random
 
@@ -54,7 +54,7 @@ class HipApisPage extends BasePage[HipApisPage](pageReadyTest) {
 
 object HipApisPage {
 
-  val pageReadyTest: PageReadyTest = UrlPageReadyTest("apis")
+  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("apis")
 
   object elements {
     val apiIdAttribute = "data-api-id"

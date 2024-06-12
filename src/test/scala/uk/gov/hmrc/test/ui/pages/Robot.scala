@@ -192,22 +192,23 @@ trait Robot extends LazyLogging {
    *
    * @param by  the locating mechanism to use
    * @param attributeName  the name of the attribute
-   * @return  the attribute/property's current value or None if the value is not
-   *          set.
+   * @return  the attribute/property's current value with leading and trailing
+   *          whitespace stripped or None if the value is not set.
    */
   def getAttribute(by: By, attributeName: String): Option[String] = {
     Option(
       Driver.instance
         .findElement(by)
         .getAttribute(attributeName)
-    )
+    ).map(_.trim)
   }
 
   /**
    * Find the first WebElement using the given method.
    *
    * findElement should not be used to look for non-present elements, use
-   * findElements(By) and assert zero length response instead.
+   * findElements(By) and assert zero length response instead or to simply
+   * check if an element exists use exists(By).
    *
    * @param by  the locating mechanism to use
    * @return  the first matching element on the current page

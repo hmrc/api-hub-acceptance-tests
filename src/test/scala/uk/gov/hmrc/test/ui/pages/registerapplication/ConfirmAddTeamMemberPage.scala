@@ -19,7 +19,7 @@ package uk.gov.hmrc.test.ui.pages.registerapplication
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.registerapplication.ConfirmAddTeamMemberPage._
 import uk.gov.hmrc.test.ui.pages.registerapplication.ConfirmAddTeamMemberPage.elements._
-import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 import uk.gov.hmrc.test.ui.utilities.{CheckMode, Mode}
 
 class ConfirmAddTeamMemberPage(mode: Mode) extends BasePage[ConfirmAddTeamMemberPage](pageReadyTest(mode)) {
@@ -70,7 +70,7 @@ class ConfirmAddTeamMemberPage(mode: Mode) extends BasePage[ConfirmAddTeamMember
 object ConfirmAddTeamMemberPage {
 
   def pageReadyTest(mode: Mode): PageReadyTest = {
-    UrlPageReadyTest.withMode("application/register/team-members-overview", mode)
+    PageReadyTests.journeyQuestionPage.url("application/register/team-members-overview", mode)
   }
 
   object elements  {

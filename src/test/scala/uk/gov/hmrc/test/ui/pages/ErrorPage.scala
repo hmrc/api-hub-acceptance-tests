@@ -41,12 +41,12 @@ object ErrorPage {
 
   // The URL and title of this page are variable
   // Test on the presence of the heading and message
-  val pageReadyTest: PageReadyTest = AllOfPageReadyTest(
-    Seq(
-      ElementPageReadyTest(errorHeading),
-      ElementPageReadyTest(errorMessage)
+  val pageReadyTest: PageReadyTest = {
+    PageReadyTests.allOf(
+      PageReadyTests.element.locator(errorHeading),
+      PageReadyTests.element.locator(errorMessage)
     )
-  )
+  }
 
   object elements {
     val errorHeading: By = By.id("errorHeading")

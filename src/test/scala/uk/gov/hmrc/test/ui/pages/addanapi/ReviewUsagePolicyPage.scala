@@ -19,9 +19,10 @@ package uk.gov.hmrc.test.ui.pages.addanapi
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.addanapi.ReviewUsagePolicyPage._
 import uk.gov.hmrc.test.ui.pages.addanapi.ReviewUsagePolicyPage.elements._
-import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
+import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode}
 
-class ReviewUsagePolicyPage extends BasePage[ReviewUsagePolicyPage](pageReadyTest) {
+class ReviewUsagePolicyPage(mode: Mode) extends BasePage[ReviewUsagePolicyPage](pageReadyTest(mode)) {
 
   def confirmUsagePolicy(): CheckYourAnswersPage = {
     click(confirmUsagePolicyCheckbox)
@@ -33,15 +34,17 @@ class ReviewUsagePolicyPage extends BasePage[ReviewUsagePolicyPage](pageReadyTes
 
 object ReviewUsagePolicyPage {
 
-  val pageReadyTest: PageReadyTest = UrlPageReadyTest("apis/add-an-api/review-policy")
+  def pageReadyTest(mode: Mode): PageReadyTest = {
+    PageReadyTests.journeyQuestionPage.url("apis/add-an-api/review-policy", mode)
+  }
 
   object elements {
     val confirmUsagePolicyCheckbox: By = By.id("value_0")
     val acceptAndContinueButton: By = By.id("acceptAndContinueButton")
   }
 
-  def apply(): ReviewUsagePolicyPage = {
-    new ReviewUsagePolicyPage()
+  def apply(mode: Mode = NormalMode): ReviewUsagePolicyPage = {
+    new ReviewUsagePolicyPage(mode)
   }
 
 }

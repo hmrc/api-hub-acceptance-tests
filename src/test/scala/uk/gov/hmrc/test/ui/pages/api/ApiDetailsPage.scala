@@ -20,7 +20,7 @@ import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.addanapi.SelectApplicationPage
 import uk.gov.hmrc.test.ui.pages.api.ApiDetailsPage._
 import uk.gov.hmrc.test.ui.pages.api.ApiDetailsPage.elements._
-import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
 class ApiDetailsPage(id: String) extends BasePage[ApiDetailsPage](pageReadyTest(id)) {
 
@@ -41,7 +41,7 @@ class ApiDetailsPage(id: String) extends BasePage[ApiDetailsPage](pageReadyTest(
 
 object ApiDetailsPage {
 
-  def pageReadyTest(id: String): PageReadyTest = UrlPageReadyTest(s"apis/details/$id")
+  def pageReadyTest(id: String): PageReadyTest = PageReadyTests.apiHubPage.url(s"apis/details/$id")
 
   object elements {
     val apiIdAttribute = "data-api-id"

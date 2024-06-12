@@ -32,9 +32,23 @@ import com.typesafe.scalalogging.LazyLogging
  * All actions should return a reference to the next page object. This means we
  * should think of actions as mini scenarios. A submit button for example may
  * move to the next page or present the current page with validation failures.
- * Rather than a simple "submit(): NextPage" action we might prefer to
- * implement the separate mini scenarios "submitValidData(): NextPage" and
- * "submitInvalidData(): ThisPage".
+ * Rather than a simple "submit(data): NextPage" action we might prefer to
+ * implement the separate mini scenarios "submitValidData(data): NextPage" and
+ * "submitInvalidData(data): ThisPage".
+ *
+ * Avoid chatty interfaces. This is bad:
+ *    MyPageObject()
+ *      .setFoo(foo)
+ *      .setBar(bar)
+ *      .submit()
+ *
+ * This is a much better style:
+ *    MyPageObject()
+ *      .submitValidData(foo, bar)
+ *
+ * Remembering that the submit() method should of course return another
+ * PageObject:
+ *    def submitValidData(foo: String, bar: String): NextPageObject
  *
  * @param pageReadyTest  a test of page correctness and readiness
  * @tparam T  the precise type of a sub-class: used for self-referencing to

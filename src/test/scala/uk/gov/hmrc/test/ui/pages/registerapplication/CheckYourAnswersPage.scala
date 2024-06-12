@@ -19,7 +19,7 @@ package uk.gov.hmrc.test.ui.pages.registerapplication
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.registerapplication.CheckYourAnswersPage._
 import uk.gov.hmrc.test.ui.pages.registerapplication.CheckYourAnswersPage.elements._
-import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 import uk.gov.hmrc.test.ui.utilities.CheckMode
 
 class CheckYourAnswersPage extends BasePage[CheckYourAnswersPage](pageReadyTest) {
@@ -69,7 +69,7 @@ class CheckYourAnswersPage extends BasePage[CheckYourAnswersPage](pageReadyTest)
 
 object CheckYourAnswersPage {
 
-  val pageReadyTest: PageReadyTest = UrlPageReadyTest("application/register/check-your-answers")
+  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("application/register/check-your-answers")
 
   object elements {
     val applicationName: By = By.cssSelector("[data-summary-for='application-details'] .govuk-summary-list__value")

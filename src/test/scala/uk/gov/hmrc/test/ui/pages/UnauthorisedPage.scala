@@ -24,7 +24,7 @@ class UnauthorisedPage extends BasePage[UnauthorisedPage](pageReadyTest) {
 
 object UnauthorisedPage {
 
-  val pageReadyTest: PageReadyTest = UrlPageReadyTest("unauthorised")
+  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("unauthorised")
 
   def apply(): UnauthorisedPage = {
     new UnauthorisedPage()

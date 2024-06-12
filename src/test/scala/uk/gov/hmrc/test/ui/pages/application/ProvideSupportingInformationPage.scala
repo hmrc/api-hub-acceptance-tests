@@ -19,7 +19,7 @@ package uk.gov.hmrc.test.ui.pages.application
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.application.ProvideSupportingInformationPage._
 import uk.gov.hmrc.test.ui.pages.application.ProvideSupportingInformationPage.elements._
-import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
 class ProvideSupportingInformationPage extends BasePage[ProvideSupportingInformationPage](pageReadyTest) {
 
@@ -32,7 +32,7 @@ class ProvideSupportingInformationPage extends BasePage[ProvideSupportingInforma
 
 object ProvideSupportingInformationPage {
 
-  val pageReadyTest: PageReadyTest = UrlPageReadyTest("application/provide-supporting-information")
+  val pageReadyTest: PageReadyTest = PageReadyTests.questionPage.url("application/provide-supporting-information")
 
   object elements {
     val supportingInformation: By = By.id("value")

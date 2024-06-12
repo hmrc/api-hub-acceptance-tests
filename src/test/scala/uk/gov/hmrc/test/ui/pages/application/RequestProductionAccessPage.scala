@@ -19,7 +19,7 @@ package uk.gov.hmrc.test.ui.pages.application
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.application.RequestProductionAccessPage._
 import uk.gov.hmrc.test.ui.pages.application.RequestProductionAccessPage.elements._
-import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
 class RequestProductionAccessPage extends BasePage[RequestProductionAccessPage](pageReadyTest) {
 
@@ -33,7 +33,7 @@ class RequestProductionAccessPage extends BasePage[RequestProductionAccessPage](
 
 object RequestProductionAccessPage {
 
-  val pageReadyTest: PageReadyTest = UrlPageReadyTest("application/request-production-access")
+  val pageReadyTest: PageReadyTest = PageReadyTests.questionPage.url("application/request-production-access")
 
   object elements {
     val confirmationCheckbox: By = By.id("accept_0")

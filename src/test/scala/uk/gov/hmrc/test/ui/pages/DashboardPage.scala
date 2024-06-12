@@ -33,7 +33,7 @@ class DashboardPage extends BasePage[DashboardPage](pageReadyTest) with ApiHubMe
 
 object DashboardPage {
 
-  val pageReadyTest: PageReadyTest = UrlPageReadyTest("dashboard")
+  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("dashboard")
 
   object elements {
     val registerAnApplicationButton: By = By.id("registerAnApplicationButton")

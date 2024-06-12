@@ -30,7 +30,7 @@ class YourApplicationsPage extends BasePage[YourApplicationsPage](pageReadyTest)
 
 object YourApplicationsPage {
 
-  val pageReadyTest: PageReadyTest = UrlPageReadyTest("applications")
+  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("applications")
 
   object elements {
     val applicationIdAttribute = "data-application-id"

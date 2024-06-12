@@ -20,7 +20,7 @@ import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.addanapi.AddAnApiSuccessPage._
 import uk.gov.hmrc.test.ui.pages.addanapi.AddAnApiSuccessPage.elements._
 import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage
-import uk.gov.hmrc.test.ui.pages.{ApiHubTitlePageReadyTest, BasePage, PageReadyTest}
+import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
 class AddAnApiSuccessPage extends BasePage[AddAnApiSuccessPage](pageReadyTest) {
 
@@ -48,7 +48,7 @@ object AddAnApiSuccessPage {
 
   // The URL for this page includes identifiers that are difficult to work with
   // Therefore we'll use a title-based page ready test
-  val pageReadyTest: PageReadyTest = ApiHubTitlePageReadyTest("API added successfully")
+  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.title("API added successfully")
 
   object elements {
     val applicationIdAttribute = "data-application-id"

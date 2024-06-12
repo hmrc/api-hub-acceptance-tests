@@ -24,7 +24,7 @@ class GetSupportPage extends BasePage[GetSupportPage](pageReadyTest) {
 
 object GetSupportPage {
 
-  val pageReadyTest: PageReadyTest = UrlPageReadyTest("get-support")
+  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("get-support")
 
   def apply(): GetSupportPage = {
     new GetSupportPage()

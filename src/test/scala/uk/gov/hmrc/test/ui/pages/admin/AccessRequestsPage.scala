@@ -17,7 +17,7 @@
 package uk.gov.hmrc.test.ui.pages.admin
 
 import uk.gov.hmrc.test.ui.pages.admin.AccessRequestsPage._
-import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
 class AccessRequestsPage extends BasePage[AccessRequestsPage](pageReadyTest) {
 
@@ -25,7 +25,7 @@ class AccessRequestsPage extends BasePage[AccessRequestsPage](pageReadyTest) {
 
 object AccessRequestsPage {
 
-  val pageReadyTest: PageReadyTest = UrlPageReadyTest("admin/access-requests")
+  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("admin/access-requests")
 
   def apply(): AccessRequestsPage = {
     new AccessRequestsPage()

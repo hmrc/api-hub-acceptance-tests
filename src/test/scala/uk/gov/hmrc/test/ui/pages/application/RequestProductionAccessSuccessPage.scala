@@ -19,7 +19,7 @@ package uk.gov.hmrc.test.ui.pages.application
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.application.RequestProductionAccessSuccessPage._
 import uk.gov.hmrc.test.ui.pages.application.RequestProductionAccessSuccessPage.elements._
-import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
 class RequestProductionAccessSuccessPage extends BasePage[RequestProductionAccessSuccessPage](pageReadyTest) {
 
@@ -31,7 +31,7 @@ class RequestProductionAccessSuccessPage extends BasePage[RequestProductionAcces
 
 object RequestProductionAccessSuccessPage {
 
-  val pageReadyTest: PageReadyTest = UrlPageReadyTest("application/request-production-access/success")
+  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("application/request-production-access/success")
 
   object elements {
     val successHeading: By = By.id("successHeading")

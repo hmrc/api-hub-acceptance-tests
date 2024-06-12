@@ -34,12 +34,12 @@ class ApplicationDeleteSuccessPage(id: String) extends BasePage[ApplicationDelet
 object ApplicationDeleteSuccessPage {
 
   //The confirmation and success pages have the same URL so test on both URL and title
-  def pageReadyTest(id: String): PageReadyTest = AllOfPageReadyTest(
-    Seq(
-      UrlPageReadyTest(s"application/delete/$id"),
-      ApiHubTitlePageReadyTest("Application successfully deleted")
+  def pageReadyTest(id: String): PageReadyTest = {
+    PageReadyTests.allOf(
+      PageReadyTests.apiHubPage.url(s"application/delete/$id"),
+      PageReadyTests.apiHubPage.title("Application successfully deleted")
     )
-  )
+  }
 
   object elements {
     val yourApplicationsLink: By = By.id("yourApplicationsLink")

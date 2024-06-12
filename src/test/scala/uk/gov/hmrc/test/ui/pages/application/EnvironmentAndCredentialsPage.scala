@@ -19,7 +19,7 @@ package uk.gov.hmrc.test.ui.pages.application
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.application.EnvironmentAndCredentialsPage._
 import uk.gov.hmrc.test.ui.pages.application.EnvironmentAndCredentialsPage.elements._
-import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
 class EnvironmentAndCredentialsPage(id: String) extends BasePage[EnvironmentAndCredentialsPage](pageReadyTest(id)) {
 
@@ -31,7 +31,9 @@ class EnvironmentAndCredentialsPage(id: String) extends BasePage[EnvironmentAndC
 
 object EnvironmentAndCredentialsPage {
 
-  def pageReadyTest(id: String): PageReadyTest = UrlPageReadyTest(s"application/environment-and-credentials/$id")
+  def pageReadyTest(id: String): PageReadyTest = {
+    PageReadyTests.apiHubPage.url(s"application/environment-and-credentials/$id")
+  }
 
   object elements {
     val secondaryCredentialClientId: By = By.cssSelector("[data-secondary-credential-client-id]")

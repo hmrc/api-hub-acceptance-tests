@@ -19,7 +19,7 @@ package uk.gov.hmrc.test.ui.pages.registerapplication
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.registerapplication.ApplicationNamePage._
 import uk.gov.hmrc.test.ui.pages.registerapplication.ApplicationNamePage.elements._
-import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, UrlPageReadyTest}
+import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 import uk.gov.hmrc.test.ui.utilities.Mode
 
 class ApplicationNamePage(mode: Mode) extends BasePage[ApplicationNamePage](pageReadyTest(mode)) {
@@ -41,7 +41,7 @@ class ApplicationNamePage(mode: Mode) extends BasePage[ApplicationNamePage](page
 object ApplicationNamePage {
 
   def pageReadyTest(mode: Mode): PageReadyTest = {
-    UrlPageReadyTest.withMode("application/register/application-name", mode)
+    PageReadyTests.journeyQuestionPage.url("application/register/application-name", mode)
   }
 
   object elements {

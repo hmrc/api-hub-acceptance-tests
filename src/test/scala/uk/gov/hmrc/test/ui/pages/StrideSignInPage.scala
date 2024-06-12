@@ -57,7 +57,7 @@ object StrideSignInPage {
 
   // The URL for this page is complex and not suitable for matching
   // Therefore we'll use a title-based page ready test
-  val pageReadyTest: PageReadyTest = TitlePageReadyTest("Stride IdP Login")
+  val pageReadyTest: PageReadyTest = PageReadyTests.nonApiHubPage.title("Stride IdP Login")
 
   object elements {
     val pid: By = By.id("pid")

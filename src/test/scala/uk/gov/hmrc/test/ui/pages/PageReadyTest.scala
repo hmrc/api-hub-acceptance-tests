@@ -56,6 +56,150 @@ sealed trait PageReadyTest {
 }
 
 /**
+ * A fluent interface for picking the PageReadyTest to use.
+ *
+ * All page objects should pick their test from here.
+ */
+object PageReadyTests {
+
+  /**
+   * A non-API Hub page is any page without the standard API Hub menu at the top.
+   *
+   * Examples are the Stride and LDAP sign-in stubs.
+   */
+  object nonApiHubPage {
+    def url(url: String): PageReadyTest = {
+      UrlPageReadyTest(url)
+    }
+
+    def urlContaining(url: String): PageReadyTest = {
+      UrlContainingPageReadyTest(url)
+    }
+
+    def title(title: String): PageReadyTest = {
+      TitlePageReadyTest(title)
+    }
+  }
+
+  /**
+   * An API Hub page with the standard API Hub menu at the top
+   *
+   * An API Hub page title follows the format:
+   *    [Page title] - The API Hub - GOV.UK
+   *
+   */
+  object apiHubPage {
+    def url(url: String): PageReadyTest = {
+      UrlPageReadyTest(url)
+    }
+
+    def urlContaining(url: String): PageReadyTest = {
+      UrlContainingPageReadyTest(url)
+    }
+
+    def title(title: String): PageReadyTest = {
+      TitlePageReadyTest(s"$title - The API Hub - GOV.UK")
+    }
+  }
+
+  /**
+   * An extension to API Hub page for question pages that recognises that a page
+   * failing validation will have a different title.
+   *
+   * A question page failing validation will have a title in this format:
+   *    Error: [Page title]
+   *
+   */
+  object questionPage {
+    def url(url: String): PageReadyTest = {
+      apiHubPage.url(url)
+    }
+
+    def urlContaining(url: String): PageReadyTest = {
+      apiHubPage.urlContaining(url)
+    }
+
+    def title(title: String): PageReadyTest = {
+      AnyOfPageReadyTest(
+        Seq(
+          apiHubPage.title(title),
+          apiHubPage.title(s"Error: $title")
+        )
+      )
+    }
+  }
+
+  /**
+   * An extension to API Hub Question page that adds in awareness of Mode for
+   * questions that can be revisited from a Check Your Answers page.
+   *
+   * Mode can alter the URL of the page:
+   *    NormalMode: /service-name/question
+   *    CheckMode:  /service-name/change-question
+   */
+  object journeyQuestionPage {
+    def url(url: String, mode: Mode): PageReadyTest = {
+      questionPage.url(urlForMode(url, mode))
+    }
+
+    def urlContaining(url: String, mode: Mode): PageReadyTest = {
+      questionPage.urlContaining(urlForMode(url, mode))
+    }
+
+    def title(title: String): PageReadyTest = {
+      questionPage.title(title)
+    }
+
+    //noinspection RegExpRedundantEscape
+    private val pathRegex: Regex = """^(.*\/)(.*)$""".r
+
+    private def urlForMode(url: String, mode: Mode): String = {
+      mode match {
+        case NormalMode => url
+        case CheckMode => url match {
+          case pathRegex(left, right) => s"${left}change-$right"
+          case _ => url
+        }
+      }
+    }
+  }
+
+  /**
+   * Page ready tests for individual elements on a page.
+   */
+  object element {
+    def locator(by: By): PageReadyTest = {
+      ElementPageReadyTest(by)
+    }
+  }
+
+  /**
+   * Wraps a series of page ready tests inside AND logic.
+   *
+   * The page is only ready if all tests pass.
+   *
+   * @param tests  the tests to AND together
+   * @return  a PageReadyTest
+   */
+  def allOf(tests: PageReadyTest*): PageReadyTest = {
+    AllOfPageReadyTest(tests)
+  }
+
+  /**
+   * Wraps a series of page ready tests inside OR logic.
+   *
+   * The page is ready if any test passes.
+   *
+   * @param tests  the tests to OR together
+   * @return  a PageReadyTest
+   */
+  def anyOf(tests: PageReadyTest*): PageReadyTest = {
+    AnyOfPageReadyTest(tests)
+  }
+
+}
+
+/**
  * A PageReadyTest that checks the current page has the correct URL.
  *
  * @param url  the URL, relative to the base service URL
@@ -64,34 +208,6 @@ case class UrlPageReadyTest(url: String) extends PageReadyTest with Robot {
 
   override def expectedCondition: ExpectedCondition[_] = {
     ExpectedConditions.urlToBe(buildFullUrl(url))
-  }
-
-}
-
-object UrlPageReadyTest {
-
-  private val pathRegex: Regex = """^(.*\/)(.*)$""".r
-
-  /**
-   * Creates a UrlPageReadyTest for a given URL and Mode. The Mode can change
-   * the URL when in CheckMode.
-   *
-   * @param url  the URL, relative to the base service URL
-   * @param mode  Mode that the page is called in
-   * @return  UrlPageReadyTest configured with a URL correct for the Mode
-   */
-  def withMode(url: String, mode: Mode): UrlPageReadyTest = {
-    UrlPageReadyTest(urlForMode(url, mode))
-  }
-
-  def urlForMode(url: String, mode: Mode): String = {
-    mode match {
-      case NormalMode => url
-      case CheckMode => url match {
-        case pathRegex(left, right) => s"${left}change-$right"
-        case _ => url
-      }
-    }
   }
 
 }
@@ -111,23 +227,6 @@ case class UrlContainingPageReadyTest(url: String) extends PageReadyTest {
 
 }
 
-object UrlContainingPageReadyTest {
-
-  /**
-   * Creates a UrlContainingPageReadyTest for a given URL and Mode. The Mode can
-   * change the URL when in CheckMode.
-   *
-   * @param url  the URL, relative to the base service URL
-   * @param mode  Mode that the page is called in
-   * @return  UrlContainingPageReadyTest configured with a URL correct for the
-   *          Mode
-   */
-  def withMode(url: String, mode: Mode): UrlContainingPageReadyTest = {
-    UrlContainingPageReadyTest(UrlPageReadyTest.urlForMode(url, mode))
-  }
-
-}
-
 /**
  * A PageReadyTest that tests that the current page's title matches a given
  * value.
@@ -138,45 +237,6 @@ case class TitlePageReadyTest(title: String) extends PageReadyTest {
 
   override def expectedCondition: ExpectedCondition[_] = {
     ExpectedConditions.titleIs(title)
-  }
-
-}
-
-/**
- * An extension to TitlePageReadyTest that adds the common title components of
- * a standard API Hub/HMRC page.
- *
- * An API Hub page title follows the format:
- *    [Page title] - The API Hub - GOV.UK
- *
- * @param title  the page title
- */
-case class ApiHubTitlePageReadyTest(title: String) extends PageReadyTest {
-
-  override def expectedCondition: ExpectedCondition[_] = {
-    TitlePageReadyTest(s"$title - The API Hub - GOV.UK").expectedCondition
-  }
-
-}
-
-/**
- * An extension to ApiHubTitlePageReadyTest for API Hub question pages that
- * recognises that a page failing validation will have a different title.
- *
- * A question page failing validation will have a title in this format:
- *    Error: [Page title]
- *
- * @param title  the page title
- */
-case class QuestionPageTitlePageReadyTest(title: String) extends PageReadyTest {
-
-  override def expectedCondition: ExpectedCondition[_] = {
-    AnyOfPageReadyTest(
-      Seq(
-        ApiHubTitlePageReadyTest(title),
-        ApiHubTitlePageReadyTest(s"Error: $title")
-      )
-    ).expectedCondition
   }
 
 }
