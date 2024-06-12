@@ -32,7 +32,7 @@ class SelectEndpointsPage(mode: Mode) extends BasePage[SelectEndpointsPage](page
     ReviewUsagePolicyPage()
   }
 
-  def selectNoEndpoints(): Unit = {
+  def selectNoEndpoints(): SelectEndpointsPage = {
     click(continueButton)
     SelectEndpointsPage()
   }

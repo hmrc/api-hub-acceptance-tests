@@ -28,6 +28,17 @@ class JourneySteps @Inject()(sharedState: SharedState) extends BaseStepDef {
     Journeys.signInAndRegisterAnApplication(sharedState)
   }
 
+  Given("a signed-in user registers an application") { () =>
+    Journeys.registerAnApplication(sharedState)
+  }
+
+  Given("a signed in user registers {int} applications") { (count: Int) =>
+    (1 to count).foreach(
+      _ =>
+        Journeys.registerAnApplication(sharedState)
+    )
+  }
+
   Given("a user has signed-in") { () =>
     Journeys.signIn()
   }
