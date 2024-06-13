@@ -21,6 +21,9 @@ import uk.gov.hmrc.test.ui.pages.api.HipApisPage
 import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage._
 import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage.elements._
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
+import uk.gov.hmrc.test.ui.utilities.DateFormatterUtil
+
+import java.time.LocalDate
 
 class ApplicationDetailsPage(id: String) extends BasePage[ApplicationDetailsPage](pageReadyTest(id)) {
 
@@ -32,8 +35,8 @@ class ApplicationDetailsPage(id: String) extends BasePage[ApplicationDetailsPage
     getText(applicationName)
   }
 
-  def getCreated: String = {
-    getText(applicationCreated)
+  def getCreated: LocalDate = {
+    DateFormatterUtil.parseLongDateTolerantly(getText(applicationCreated))
   }
 
   def getNoApisMessage: String = {

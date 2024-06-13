@@ -21,7 +21,9 @@ import io.cucumber.guice.ScenarioScoped
 import uk.gov.hmrc.test.ui.pages.addanapi.AddAnApiSuccessPage
 import uk.gov.hmrc.test.ui.pages.application.{ApplicationDetailsPage, EnvironmentAndCredentialsPage}
 import uk.gov.hmrc.test.ui.pages.{Journeys, Robot}
-import uk.gov.hmrc.test.ui.utilities.{DateFormatterUtil, SharedState, User}
+import uk.gov.hmrc.test.ui.utilities.{SharedState, User}
+
+import java.time.LocalDate
 
 @ScenarioScoped
 class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseStepDef with Robot {
@@ -65,7 +67,7 @@ class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseSt
       .foreach(
         applicationDetailsPage => {
           applicationDetailsPage.getApplicationName shouldBe sharedState.application.name
-          applicationDetailsPage.getCreated shouldBe DateFormatterUtil.getFormattedDate
+          applicationDetailsPage.getCreated shouldBe LocalDate.now()
           applicationDetailsPage.getNoApisMessage.toLowerCase should include(expectedApplicationApisText.toLowerCase)
           applicationDetailsPage.getTeamMembers shouldBe Seq(User.email)
           applicationDetailsPage.getCountOfTeamMembersFromHeading shouldBe applicationDetailsPage.getTeamMembers.size
