@@ -17,20 +17,31 @@
 package uk.gov.hmrc.test.ui.utilities
 
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
 object DateFormatterUtil {
-  private var dateFormat: String = _
+
   def getFormattedDate: String = {
     val calendarInstance = Calendar.getInstance()
 
-    if (calendarInstance.get(Calendar.DATE) >= 10) {
-      dateFormat = "dd MMMM yyyy"
+    val dateFormat = if (calendarInstance.get(Calendar.DATE) >= 10) {
+      "dd MMMM yyyy"
     } else {
-      dateFormat = "d MMMM yyyy"
+      "d MMMM yyyy"
     }
+
     val today         = calendarInstance.getTime
     val dateFormatter = new SimpleDateFormat(dateFormat)
     dateFormatter.format(today)
   }
+
+  def parseLongDateTolerantly(text: String): LocalDate = {
+    LocalDate.parse(
+      text,
+      DateTimeFormatter.ofPattern("[d MMMM yyyy][MMMM d yyyy][MMMM d',' yyyy]")
+    )
+  }
+
 }
