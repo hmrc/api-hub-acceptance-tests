@@ -23,9 +23,8 @@ import uk.gov.hmrc.test.ui.pages._
 
 class ApplicationDeleteSuccessPage(id: String) extends BasePage[ApplicationDeleteSuccessPage](pageReadyTest(id)) {
 
-  // Should this go to the Dashboard or Your applications page? See HIPP-1298
-  def returnToYourApplications(): DashboardPage = {
-    click(yourApplicationsLink)
+  def returnToDashboard(): DashboardPage = {
+    click(dashboardLink)
     DashboardPage()
   }
 
@@ -42,7 +41,7 @@ object ApplicationDeleteSuccessPage {
   }
 
   object elements {
-    val yourApplicationsLink: By = By.id("yourApplicationsLink")
+    val dashboardLink: By = By.id("returnToDashboardLink")
   }
 
   def apply(id: String): ApplicationDeleteSuccessPage = {

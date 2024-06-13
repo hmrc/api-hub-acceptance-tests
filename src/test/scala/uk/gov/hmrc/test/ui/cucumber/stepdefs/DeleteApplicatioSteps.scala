@@ -45,11 +45,10 @@ class DeleteApplicatioSteps @Inject()(sharedState: SharedState) extends BaseStep
       .cancel()
   }
 
-  Then("""the previously registered application should no no longer be listed in all applications""") { () =>
+  Then("""the previously registered application should no longer be listed in all applications""") { () =>
     ApplicationDeleteSuccessPage(sharedState.application.id)
-      .returnToYourApplications()
+      .returnToDashboard()
 
-    // Should the success page return Dashboard or Your applications? See HIPP-1298
     Journeys
       .openYourApplicationsPage()
       .foreach(

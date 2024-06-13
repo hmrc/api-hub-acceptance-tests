@@ -7,7 +7,7 @@ Feature: Delete Application
 
   Scenario: Delete a registered application
     And deletes the application
-    Then the previously registered application should no no longer be listed in all applications
+    Then the previously registered application should no longer be listed in all applications
 
   Scenario: Display error message when attempting to delete an application without confirming
     When the user attempts to delete the application without confirming
