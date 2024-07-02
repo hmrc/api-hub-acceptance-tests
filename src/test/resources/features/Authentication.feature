@@ -8,7 +8,7 @@ Feature: Stride authentication
     When the user selects to sign-in with Stride
     Then the user should be redirected to the stride login page
 
-  Scenario: Redirect an authenticated user to the api hub home page
+  Scenario: Redirect an authenticated user to the integration hub home page
     When the user selects to sign-in with Stride
     And the user fills in the required stride information
-    Then the user should be directed to the api hub home page
+    Then the user should be directed to the integration hub home page

@@ -63,7 +63,7 @@ sealed trait PageReadyTest {
 object PageReadyTests {
 
   /**
-   * A non-API Hub page is any page without the standard API Hub menu at the top.
+   * A non-Integration Hub page is any page without the standard Integration Hub menu at the top.
    *
    * Examples are the Stride and LDAP sign-in stubs.
    */
@@ -82,10 +82,10 @@ object PageReadyTests {
   }
 
   /**
-   * An API Hub page with the standard API Hub menu at the top
+   * An Integration Hub page with the standard Integration Hub menu at the top
    *
-   * An API Hub page title follows the format:
-   *    [Page title] - The API Hub - GOV.UK
+   * An Integration Hub page title follows the format:
+   *    [Page title] - The Integration Hub - GOV.UK
    *
    */
   object apiHubPage {
@@ -98,12 +98,12 @@ object PageReadyTests {
     }
 
     def title(title: String): PageReadyTest = {
-      TitlePageReadyTest(s"$title - The API Hub - GOV.UK")
+      TitlePageReadyTest(s"$title - The Integration Hub - GOV.UK")
     }
   }
 
   /**
-   * An extension to API Hub page for question pages that recognises that a page
+   * An extension to Integration Hub page for question pages that recognises that a page
    * failing validation will have a different title.
    *
    * A question page failing validation will have a title in this format:
@@ -130,7 +130,7 @@ object PageReadyTests {
   }
 
   /**
-   * An extension to API Hub Question page that adds in awareness of Mode for
+   * An extension to Integration Hub Question page that adds in awareness of Mode for
    * questions that can be revisited from a Check Your Answers page.
    *
    * Mode can alter the URL of the page:
