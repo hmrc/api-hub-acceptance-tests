@@ -37,7 +37,7 @@ class HomepageSteps extends BaseStepDef {
       .signIn()
   }
 
-  Then("the user should be directed to the api hub home page") { () =>
+  Then("the user should be directed to the integration hub home page") { () =>
     DashboardPage()
   }
 
