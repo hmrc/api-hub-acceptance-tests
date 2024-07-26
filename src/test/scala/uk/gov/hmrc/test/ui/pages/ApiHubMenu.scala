@@ -18,7 +18,7 @@ package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.admin.AccessRequestsPage
-import uk.gov.hmrc.test.ui.pages.api.HipApisPage
+import uk.gov.hmrc.test.ui.pages.api.ExploreApisPage
 
 trait ApiHubMenu {
   self: BasePage[_] =>
@@ -59,9 +59,9 @@ trait ApiHubMenu {
     AccessRequestsPage()
   }
 
-  def hipApis(): HipApisPage = {
-    click(hipApisLink)
-    HipApisPage()
+  def exploreApis(): ExploreApisPage = {
+    click(exploreApisLink)
+    ExploreApisPage()
   }
 
   //noinspection AccessorLikeMethodIsEmptyParen
@@ -87,7 +87,7 @@ object ApiHubMenu {
     val headerLinks: By = By.cssSelector("[data-header-link-name]")
     val dashboardLink: By = By.id("dashboardLink")
     val apiHubAdminLink: By = By.id("apiHubAdminLink")
-    val hipApisLink: By = By.id("hipApisLink")
+    val exploreApisLink: By = By.id("exploreApisLink")
     val getSupportLink: By = By.id("getSupportLink")
   }
 
