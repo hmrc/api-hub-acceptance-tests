@@ -17,13 +17,13 @@
 package uk.gov.hmrc.test.ui.pages.api
 
 import org.openqa.selenium.{By, WebElement}
-import uk.gov.hmrc.test.ui.pages.api.HipApisPage._
-import uk.gov.hmrc.test.ui.pages.api.HipApisPage.elements._
+import uk.gov.hmrc.test.ui.pages.api.ExploreApisPage._
+import uk.gov.hmrc.test.ui.pages.api.ExploreApisPage.elements._
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
 import scala.util.Random
 
-class HipApisPage extends BasePage[HipApisPage](pageReadyTest) {
+class ExploreApisPage extends BasePage[ExploreApisPage](pageReadyTest) {
 
   private val random = new Random(System.currentTimeMillis())
 
@@ -52,7 +52,7 @@ class HipApisPage extends BasePage[HipApisPage](pageReadyTest) {
 
 }
 
-object HipApisPage {
+object ExploreApisPage {
 
   val pageReadyTest: PageReadyTest = PageReadyTests.allOf(
     PageReadyTests.apiHubPage.url("apis"),
@@ -65,8 +65,8 @@ object HipApisPage {
     val searchResultsSize = By.id("searchResultsSize")
   }
 
-  def apply(): HipApisPage = {
-    new HipApisPage()
+  def apply(): ExploreApisPage = {
+    new ExploreApisPage()
   }
 
 }

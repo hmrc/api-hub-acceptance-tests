@@ -17,7 +17,7 @@
 package uk.gov.hmrc.test.ui.pages.application
 
 import org.openqa.selenium.By
-import uk.gov.hmrc.test.ui.pages.api.HipApisPage
+import uk.gov.hmrc.test.ui.pages.api.ExploreApisPage
 import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage._
 import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage.elements._
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
@@ -61,9 +61,9 @@ class ApplicationDetailsPage(id: String) extends BasePage[ApplicationDetailsPage
     exists(api(id))
   }
 
-  def addApis(): HipApisPage = {
-    click(hipApisLink)
-    HipApisPage()
+  def addApis(): ExploreApisPage = {
+    click(exploreApisLink)
+    ExploreApisPage()
   }
 
   def applicationApis(): ApplicationApisPage = {
@@ -97,7 +97,7 @@ object ApplicationDetailsPage {
     val applicationName: By = By.id("applicationName")
     val applicationCreated: By = By.id("applicationCreated")
     val noApisMessage: By = By.id("noApisMessage")
-    val hipApisLink: By = By.id("addExploreApisLink")
+    val exploreApisLink: By = By.id("addExploreApisLink")
     val apiIdAttribute = "data-api-id"
     def api(id: String): By = By.cssSelector(s"[$apiIdAttribute='$id']")
     val teamMembersHeading: By = By.id("teamMembersHeading")

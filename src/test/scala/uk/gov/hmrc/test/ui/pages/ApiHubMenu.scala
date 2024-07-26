@@ -18,7 +18,7 @@ package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.admin.AccessRequestsPage
-import uk.gov.hmrc.test.ui.pages.api.HipApisPage
+import uk.gov.hmrc.test.ui.pages.api.ExploreApisPage
 
 trait ApiHubMenu {
   self: BasePage[_] =>
@@ -59,9 +59,9 @@ trait ApiHubMenu {
     AccessRequestsPage()
   }
 
-  def hipApis(): HipApisPage = {
+  def exploreApis(): ExploreApisPage = {
     click(exploreApisLink)
-    HipApisPage()
+    ExploreApisPage()
   }
 
   //noinspection AccessorLikeMethodIsEmptyParen
