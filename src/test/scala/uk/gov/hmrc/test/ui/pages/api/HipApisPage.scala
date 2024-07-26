@@ -47,18 +47,22 @@ class HipApisPage extends BasePage[HipApisPage](pageReadyTest) {
   }
 
   private def getApiDetailLinks: Seq[WebElement] = {
-    findElements(apiLink)
+    findElements(apiLink).filter(_.isDisplayed)
   }
 
 }
 
 object HipApisPage {
 
-  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("apis")
+  val pageReadyTest: PageReadyTest = PageReadyTests.allOf(
+    PageReadyTests.apiHubPage.url("apis"),
+    PageReadyTests.element.locator(searchResultsSize)
+  )
 
   object elements {
     val apiIdAttribute = "data-api-id"
     val apiLink: By = By.cssSelector(s"[$apiIdAttribute]")
+    val searchResultsSize = By.id("searchResultsSize")
   }
 
   def apply(): HipApisPage = {

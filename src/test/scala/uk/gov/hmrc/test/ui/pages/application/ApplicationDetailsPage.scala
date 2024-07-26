@@ -97,7 +97,7 @@ object ApplicationDetailsPage {
     val applicationName: By = By.id("applicationName")
     val applicationCreated: By = By.id("applicationCreated")
     val noApisMessage: By = By.id("noApisMessage")
-    val hipApisLink: By = By.id("addHipApisLink")
+    val hipApisLink: By = By.id("addExploreApisLink")
     val apiIdAttribute = "data-api-id"
     def api(id: String): By = By.cssSelector(s"[$apiIdAttribute='$id']")
     val teamMembersHeading: By = By.id("teamMembersHeading")
