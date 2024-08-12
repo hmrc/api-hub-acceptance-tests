@@ -56,13 +56,13 @@ object ExploreApisPage {
 
   val pageReadyTest: PageReadyTest = PageReadyTests.allOf(
     PageReadyTests.apiHubPage.url("apis"),
-    PageReadyTests.element.locator(searchResultsSize)
+    PageReadyTests.element.locator(apiResultsSize)
   )
 
   object elements {
     val apiIdAttribute = "data-api-id"
     val apiLink: By = By.cssSelector(s"[$apiIdAttribute]")
-    val searchResultsSize = By.id("searchResultsSize")
+    val apiResultsSize = By.id("apiResultsSize")
   }
 
   def apply(): ExploreApisPage = {
