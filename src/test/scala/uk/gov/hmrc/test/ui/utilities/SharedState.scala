@@ -29,5 +29,6 @@ import com.google.inject.Singleton
 class SharedState {
 
   val application = new Application()
+  val team = new Team()
 
 }

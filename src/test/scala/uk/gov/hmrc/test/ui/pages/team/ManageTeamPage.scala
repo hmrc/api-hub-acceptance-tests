@@ -14,16 +14,27 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.cucumber.runner
+package uk.gov.hmrc.test.ui.pages.team
 
-import io.cucumber.junit.{Cucumber, CucumberOptions}
-import org.junit.runner.RunWith
+import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
+import uk.gov.hmrc.test.ui.pages.team.ManageTeamPage._
 
-@RunWith(classOf[Cucumber])
-@CucumberOptions(
-  features = Array("src/test/resources/features"),
-  glue = Array("uk.gov.hmrc.test.ui.cucumber.stepdefs", "uk.gov.hmrc.test.ui.utilities"),
-  plugin = Array("pretty", "html:target/cucumber", "json:target/cucumber.json", "junit:target/test-reports/Runner.xml"),
-  tags = "@regression not @ignore"
-)
-class RegressionRunner {}
+class ManageTeamPage(id: String) extends BasePage[ManageTeamPage](pageReadyTest(id)) {
+
+  def getTeamId: String = {
+    id
+  }
+
+}
+
+object ManageTeamPage {
+
+  def pageReadyTest(id: String): PageReadyTest = {
+    PageReadyTests.apiHubPage.url(s"team/$id")
+  }
+
+  def apply(id: String): ManageTeamPage = {
+    new ManageTeamPage(id)
+  }
+
+}

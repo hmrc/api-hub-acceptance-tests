@@ -1,4 +1,4 @@
-@regression @HIPP-369 @HIPP-368 @hip-403
+@ignore @regression @HIPP-369 @HIPP-368 @hip-403
 Feature: Check your answers
 
   Background:

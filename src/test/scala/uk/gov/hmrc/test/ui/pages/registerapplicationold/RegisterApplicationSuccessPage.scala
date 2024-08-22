@@ -14,32 +14,41 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.pages.registerapplication
+package uk.gov.hmrc.test.ui.pages.registerapplicationold
 
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage
+import uk.gov.hmrc.test.ui.pages.registerapplicationold.RegisterApplicationSuccessPage._
+import uk.gov.hmrc.test.ui.pages.registerapplicationold.RegisterApplicationSuccessPage.elements._
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
-import uk.gov.hmrc.test.ui.pages.registerapplication.RegisterApplicationSuccessPage._
-import uk.gov.hmrc.test.ui.pages.registerapplication.RegisterApplicationSuccessPage.elements._
 
 class RegisterApplicationSuccessPage extends BasePage[RegisterApplicationSuccessPage](pageReadyTest) {
 
-  def viewApplication(): ApplicationDetailsPage = {
-    val link = findElement(viewApplicationLink)
-    val applicationId = link.getAttribute(applicationIdAttribute)
-    link.click()
+  def viewRegisteredApplication(): ApplicationDetailsPage = {
+    val applicationId = getApplicationId match {
+      case Some(id) => id
+      case _ => throw new IllegalStateException("Application Id is missing from this page.")
+    }
+
+    click(applicationLink)
     ApplicationDetailsPage(applicationId)
+  }
+
+  private def getApplicationId: Option[String] = {
+    getAttribute(applicationLink, applicationIdAttribute)
   }
 
 }
 
 object RegisterApplicationSuccessPage {
 
-  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("application/register/register")
+  // The URL contains the Application Id which we can't possibly know prior to the page being displayed
+  // Therefore we'll use a title-based page ready test
+  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.title("Register Application Success")
 
   object elements {
-    val viewApplicationLink: By = By.id("viewApplicationLink")
-    val applicationIdAttribute: String = "data-application-id"
+    val applicationIdAttribute = "data-application-id"
+    val applicationLink: By = By.id("applicationLink")
   }
 
   def apply(): RegisterApplicationSuccessPage = {

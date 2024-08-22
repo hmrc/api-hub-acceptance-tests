@@ -43,18 +43,8 @@ class ApplicationDetailsPage(id: String) extends BasePage[ApplicationDetailsPage
     getText(noApisMessage)
   }
 
-  def getTeamMembers: Seq[String] = {
-    findElements(teamMember)
-      .map(_.getAttribute(teamMemberEmailAttribute))
-  }
-
-  def getCountOfTeamMembersFromHeading: Int = {
-    val pattern     = "^.*\\((\\d+)\\)$".r
-
-    getText(teamMembersHeading) match {
-      case pattern(count) => count.toInt
-      case _ => -1
-    }
+  def getOwningTeamName: String = {
+    getText(owningTeam)
   }
 
   def hasApiAdded(id: String): Boolean = {
@@ -100,9 +90,7 @@ object ApplicationDetailsPage {
     val exploreApisLink: By = By.id("addExploreApisLink")
     val apiIdAttribute = "data-api-id"
     def api(id: String): By = By.cssSelector(s"[$apiIdAttribute='$id']")
-    val teamMembersHeading: By = By.id("teamMembersHeading")
-    val teamMemberEmailAttribute = "data-team-member-email"
-    val teamMember: By = By.cssSelector(s"[$teamMemberEmailAttribute]")
+    val owningTeam: By = By.id("owningTeam")
     val applicationApisLink: By = By.cssSelector("[data-nav-item-page='ApisPage']")
     val environmentsAndCredentialsLink: By = By.cssSelector("[data-nav-item-page='EnvironmentsAndCredentialsPage']")
     val deleteApplicationLink: By = By.cssSelector("[data-nav-item-page='DeleteApplicationPage']")

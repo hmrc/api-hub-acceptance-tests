@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.pages.registerapplication
+package uk.gov.hmrc.test.ui.pages.registerapplicationold
 
 import org.openqa.selenium.By
-import uk.gov.hmrc.test.ui.pages.registerapplication.AddTeamMemberDetailsPage._
-import uk.gov.hmrc.test.ui.pages.registerapplication.AddTeamMemberDetailsPage.elements._
+import uk.gov.hmrc.test.ui.pages.registerapplicationold.AddTeamMemberDetailsPage._
+import uk.gov.hmrc.test.ui.pages.registerapplicationold.AddTeamMemberDetailsPage.elements._
 import uk.gov.hmrc.test.ui.pages.{BasePage, ErrorSummary, PageReadyTest, PageReadyTests}
 import uk.gov.hmrc.test.ui.utilities.Mode
 

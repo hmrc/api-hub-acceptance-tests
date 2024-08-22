@@ -16,7 +16,8 @@
 
 package uk.gov.hmrc.test.ui.pages
 
-import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage
+import uk.gov.hmrc.test.ui.pages.application.{ApplicationDetailsPage, YourApplicationsPage}
+import uk.gov.hmrc.test.ui.pages.team.{ManageMyTeamsPage, ManageTeamPage}
 import uk.gov.hmrc.test.ui.utilities.{Role, SharedState, UserRole}
 
 /**
@@ -39,6 +40,13 @@ object Journeys extends Robot {
   def openYourApplicationsPage(): YourApplicationsPage = {
     navigateTo("applications")
     YourApplicationsPage()
+  }
+
+  // This page is difficult to access directly as the dashboard link is only
+  // available when the user has more than 5 teams
+  def openManageMyTeamsPage(): ManageMyTeamsPage = {
+    navigateTo("team/manage-my-teams")
+    ManageMyTeamsPage()
   }
 
   def signIn(): DashboardPage = {
@@ -79,9 +87,9 @@ object Journeys extends Robot {
       .dashboard()
       .registerAnApplication()
       .setApplicationNameNormalMode(sharedState.application.name)
-      .doNotAddTeamMembers()
+      .setTeamNormalMode(sharedState.team)
       .registerApplication()
-      .viewRegisteredApplication()
+      .viewApplication()
       .foreach(
         applicationDetailsPage =>
           sharedState.application.id = applicationDetailsPage.getApplicationId
@@ -90,7 +98,26 @@ object Journeys extends Robot {
 
   def signInAndRegisterAnApplication(sharedState: SharedState): ApplicationDetailsPage = {
     signIn()
+    if (!Journeys.openManageMyTeamsPage().hasTeamWithName(sharedState.team.name)) {
+      createTeam(sharedState)
+    }
     registerAnApplication(sharedState)
+  }
+
+  def createTeam(sharedState: SharedState): ManageTeamPage = {
+    Journeys
+      .openStartPage()
+      .dashboard()
+      .createTeam()
+      .setTeamNameNormalMode(sharedState.team.name)
+      .continue()
+      .createTeam()
+      .viewManageTeams()
+      .viewTeamWithName(sharedState.team.name)
+      .foreach(
+        manageTeamPage =>
+          sharedState.team.id = manageTeamPage.getTeamId
+      )
   }
 
 }
