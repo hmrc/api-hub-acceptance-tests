@@ -33,6 +33,10 @@ class CreateTeamMembersPage extends BasePage[CreateTeamMembersPage](pageReadyTes
     CheckYourAnswersPage()
   }
 
+  def getTeamMembers: Seq[String] = {
+    findElements(teamMemberRow).map(_.getText.trim)
+  }
+
 }
 
 object CreateTeamMembersPage {
@@ -42,6 +46,7 @@ object CreateTeamMembersPage {
   object elements {
     val addTeamMemberButton: By = By.id("addTeamMemberButton")
     val continueButton: By = By.id("continueButton")
+    val teamMemberRow: By = By.cssSelector(".govuk-summary-list__key")
   }
 
   def apply(): CreateTeamMembersPage = {

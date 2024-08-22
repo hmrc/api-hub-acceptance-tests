@@ -98,9 +98,7 @@ object Journeys extends Robot {
 
   def signInAndRegisterAnApplication(sharedState: SharedState): ApplicationDetailsPage = {
     signIn()
-    if (!Journeys.openManageMyTeamsPage().hasTeamWithName(sharedState.team.name)) {
-      createTeam(sharedState)
-    }
+    checkUserHasATeam(sharedState)
     registerAnApplication(sharedState)
   }
 
@@ -112,12 +110,18 @@ object Journeys extends Robot {
       .setTeamNameNormalMode(sharedState.team.name)
       .continue()
       .createTeam()
-      .viewManageTeams()
-      .viewTeamWithName(sharedState.team.name)
       .foreach(
-        manageTeamPage =>
-          sharedState.team.id = manageTeamPage.getTeamId
+        createTeamSuccessPage =>
+          sharedState.team.id = createTeamSuccessPage.getTeamId
       )
+      .viewManageTeams()
+      .viewTeamWithId(sharedState.team.id)
+  }
+
+  def checkUserHasATeam(sharedState: SharedState): Unit = {
+    if (!Journeys.openManageMyTeamsPage().hasTeamWithName(sharedState.team.name)) {
+      createTeam(sharedState)
+    }
   }
 
 }

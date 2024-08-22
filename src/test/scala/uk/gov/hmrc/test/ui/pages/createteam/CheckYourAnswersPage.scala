@@ -28,6 +28,15 @@ class CheckYourAnswersPage extends BasePage[CheckYourAnswersPage](pageReadyTest)
     CreateTeamSuccessPage()
   }
 
+  def getTeamMembers: Seq[String] = {
+    findElements(teamMemberRow).map(_.getText.trim)
+  }
+
+  def changeTeamMembers(): CreateTeamMembersPage = {
+    click(changeTeamMembersLink)
+    CreateTeamMembersPage()
+  }
+
 }
 
 object CheckYourAnswersPage {
@@ -36,6 +45,8 @@ object CheckYourAnswersPage {
 
   object elements {
     val createTeamButton: By = By.id("createTeamButton")
+    val teamMemberRow: By = By.cssSelector("[data-summary-for='team-members'] .govuk-summary-list__key")
+    val changeTeamMembersLink: By = By.id("changeTeamMembersLink")
   }
 
   def apply(): CheckYourAnswersPage = {

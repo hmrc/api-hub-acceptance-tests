@@ -29,6 +29,10 @@ class CreateTeamSuccessPage extends BasePage[CreateTeamSuccessPage](pageReadyTes
     ManageMyTeamsPage()
   }
 
+  def getTeamId: String = {
+    findElement(teamIdInput).getAttribute("value")
+  }
+
 }
 
 object CreateTeamSuccessPage {
@@ -37,6 +41,7 @@ object CreateTeamSuccessPage {
 
   object elements {
     val manageTeamsLink: By = By.id("manageTeamsLink")
+    val teamIdInput: By = By.id("teamId")
   }
 
   def apply(): CreateTeamSuccessPage = {

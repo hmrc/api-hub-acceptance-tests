@@ -25,10 +25,13 @@ import uk.gov.hmrc.test.ui.pages.registerapplication.RegisterApplicationSuccessP
 class RegisterApplicationSuccessPage extends BasePage[RegisterApplicationSuccessPage](pageReadyTest) {
 
   def viewApplication(): ApplicationDetailsPage = {
-    val link = findElement(viewApplicationLink)
-    val applicationId = link.getAttribute(applicationIdAttribute)
-    link.click()
+    val applicationId = getApplicationId
+    findElement(viewApplicationLink).click()
     ApplicationDetailsPage(applicationId)
+  }
+
+  def getApplicationId: String = {
+    findElement(viewApplicationLink).getAttribute(applicationIdAttribute)
   }
 
 }

@@ -41,6 +41,11 @@ class ManageMyTeamsPage extends BasePage[ManageMyTeamsPage](pageReadyTest) {
     findElements(teamLinkByName(teamName)).nonEmpty
   }
 
+  def viewTeamWithId(teamId: String): ManageTeamPage = {
+    findElement(teamLinkById(teamId)).click()
+    ManageTeamPage(teamId)
+  }
+
 }
 
 object ManageMyTeamsPage {
@@ -51,6 +56,7 @@ object ManageMyTeamsPage {
     val addNewTeamButton: By = By.id("addNewTeamButton")
     val teamIdAttribute = "data-team-id"
     val teamNameAttribute = "data-team-name"
+    def teamLinkById(teamId: String): By = By.cssSelector(s"[$teamIdAttribute=\"$teamId\"]")
     def teamLinkByName(teamName: String): By = By.cssSelector(s"[$teamNameAttribute=\"$teamName\"]")
   }
 

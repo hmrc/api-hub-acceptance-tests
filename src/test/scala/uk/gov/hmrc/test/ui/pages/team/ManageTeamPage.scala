@@ -16,13 +16,23 @@
 
 package uk.gov.hmrc.test.ui.pages.team
 
+import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 import uk.gov.hmrc.test.ui.pages.team.ManageTeamPage._
+import uk.gov.hmrc.test.ui.pages.team.ManageTeamPage.elements._
 
 class ManageTeamPage(id: String) extends BasePage[ManageTeamPage](pageReadyTest(id)) {
 
   def getTeamId: String = {
     id
+  }
+
+  def getTeamName: String = {
+    findElement(h1).getText.replaceFirst("Manage ", "").trim
+  }
+
+  def getTeamMemberEmails: Seq[String] = {
+    findElements(teamMemberEmails).map(_.getAttribute(teamMemberEmailAttribute).trim)
   }
 
 }
@@ -31,6 +41,12 @@ object ManageTeamPage {
 
   def pageReadyTest(id: String): PageReadyTest = {
     PageReadyTests.apiHubPage.url(s"team/$id")
+  }
+
+  object elements {
+    val teamMemberEmailAttribute: String = "data-team-member-email"
+    val teamMemberEmails: By = By.cssSelector(s"[$teamMemberEmailAttribute]")
+    val h1: By = By.id("h1")
   }
 
   def apply(id: String): ManageTeamPage = {
