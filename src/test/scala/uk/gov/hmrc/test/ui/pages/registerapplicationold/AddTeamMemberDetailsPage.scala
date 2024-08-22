@@ -22,7 +22,7 @@ import uk.gov.hmrc.test.ui.pages.registerapplicationold.AddTeamMemberDetailsPage
 import uk.gov.hmrc.test.ui.pages.{BasePage, ErrorSummary, PageReadyTest, PageReadyTests}
 import uk.gov.hmrc.test.ui.utilities.Mode
 
-class AddTeamMemberDetailsPage(mode: Mode) extends BasePage[AddTeamMemberDetailsPage](pageReadyTest(mode)) with ErrorSummary {
+private class AddTeamMemberDetailsPage(mode: Mode) extends BasePage[AddTeamMemberDetailsPage](pageReadyTest(mode)) with ErrorSummary {
 
   def setEmail(email: String): ConfirmAddTeamMemberPage = {
     sendKeys(emailInput, email)
@@ -38,7 +38,7 @@ class AddTeamMemberDetailsPage(mode: Mode) extends BasePage[AddTeamMemberDetails
 
 }
 
-object AddTeamMemberDetailsPage {
+private object AddTeamMemberDetailsPage {
 
   // The URL in CheckMode ends in /i where i is the index in the user answers collection
   // Therefore use a URL containing test as the precise URL is difficult to determine

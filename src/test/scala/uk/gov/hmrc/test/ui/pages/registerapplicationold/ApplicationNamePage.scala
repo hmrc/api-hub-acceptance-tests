@@ -22,7 +22,7 @@ import uk.gov.hmrc.test.ui.pages.registerapplicationold.ApplicationNamePage.elem
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 import uk.gov.hmrc.test.ui.utilities.Mode
 
-class ApplicationNamePage(mode: Mode) extends BasePage[ApplicationNamePage](pageReadyTest(mode)) {
+private class ApplicationNamePage(mode: Mode) extends BasePage[ApplicationNamePage](pageReadyTest(mode)) {
 
   def setApplicationNameNormalMode(applicationName: String): AddTeamMembersPage = {
     sendKeys(applicationNameInput, applicationName)
@@ -38,7 +38,7 @@ class ApplicationNamePage(mode: Mode) extends BasePage[ApplicationNamePage](page
 
 }
 
-object ApplicationNamePage {
+private object ApplicationNamePage {
 
   def pageReadyTest(mode: Mode): PageReadyTest = {
     PageReadyTests.journeyQuestionPage.url("application/register/application-name", mode)

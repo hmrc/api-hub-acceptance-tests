@@ -22,7 +22,7 @@ import uk.gov.hmrc.test.ui.pages.registerapplicationold.RegisterApplicationSucce
 import uk.gov.hmrc.test.ui.pages.registerapplicationold.RegisterApplicationSuccessPage.elements._
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
-class RegisterApplicationSuccessPage extends BasePage[RegisterApplicationSuccessPage](pageReadyTest) {
+private class RegisterApplicationSuccessPage extends BasePage[RegisterApplicationSuccessPage](pageReadyTest) {
 
   def viewRegisteredApplication(): ApplicationDetailsPage = {
     val applicationId = getApplicationId match {
@@ -40,7 +40,7 @@ class RegisterApplicationSuccessPage extends BasePage[RegisterApplicationSuccess
 
 }
 
-object RegisterApplicationSuccessPage {
+private object RegisterApplicationSuccessPage {
 
   // The URL contains the Application Id which we can't possibly know prior to the page being displayed
   // Therefore we'll use a title-based page ready test

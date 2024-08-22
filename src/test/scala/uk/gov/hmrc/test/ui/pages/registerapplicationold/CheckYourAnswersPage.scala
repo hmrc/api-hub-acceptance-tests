@@ -22,7 +22,7 @@ import uk.gov.hmrc.test.ui.pages.registerapplicationold.CheckYourAnswersPage.ele
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 import uk.gov.hmrc.test.ui.utilities.CheckMode
 
-class CheckYourAnswersPage extends BasePage[CheckYourAnswersPage](pageReadyTest) {
+private class CheckYourAnswersPage extends BasePage[CheckYourAnswersPage](pageReadyTest) {
 
   def getApplicationName: String = {
     getText(applicationName)
@@ -67,7 +67,7 @@ class CheckYourAnswersPage extends BasePage[CheckYourAnswersPage](pageReadyTest)
 
 }
 
-object CheckYourAnswersPage {
+private object CheckYourAnswersPage {
 
   val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("application/register/check-your-answers")
 

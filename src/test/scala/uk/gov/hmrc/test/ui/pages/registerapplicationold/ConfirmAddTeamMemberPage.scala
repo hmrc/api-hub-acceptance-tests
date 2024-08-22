@@ -22,7 +22,7 @@ import uk.gov.hmrc.test.ui.pages.registerapplicationold.ConfirmAddTeamMemberPage
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 import uk.gov.hmrc.test.ui.utilities.{CheckMode, Mode}
 
-class ConfirmAddTeamMemberPage(mode: Mode) extends BasePage[ConfirmAddTeamMemberPage](pageReadyTest(mode)) {
+private class ConfirmAddTeamMemberPage(mode: Mode) extends BasePage[ConfirmAddTeamMemberPage](pageReadyTest(mode)) {
 
   def getTeamMembers: Seq[String] = {
     findElements(summaryRowEmail)
@@ -67,7 +67,7 @@ class ConfirmAddTeamMemberPage(mode: Mode) extends BasePage[ConfirmAddTeamMember
 
 }
 
-object ConfirmAddTeamMemberPage {
+private object ConfirmAddTeamMemberPage {
 
   def pageReadyTest(mode: Mode): PageReadyTest = {
     PageReadyTests.journeyQuestionPage.url("application/register/team-members-overview", mode)
