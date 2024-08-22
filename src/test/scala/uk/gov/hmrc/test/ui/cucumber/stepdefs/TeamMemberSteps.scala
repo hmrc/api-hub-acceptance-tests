@@ -19,9 +19,8 @@ package uk.gov.hmrc.test.ui.cucumber.stepdefs
 import com.google.inject.Inject
 import faker.Faker
 import io.cucumber.guice.ScenarioScoped
-import uk.gov.hmrc.test.ui.utilities.{CheckMode, NormalMode, SharedState, User}
-import uk.gov.hmrc.test.ui.pages.DashboardPage
-import uk.gov.hmrc.test.ui.pages.registerapplication.{AddTeamMemberDetailsPage, AddTeamMembersPage, CheckYourAnswersPage, ConfirmAddTeamMemberPage}
+import uk.gov.hmrc.test.ui.utilities.SharedState
+//import uk.gov.hmrc.test.ui.pages.registerapplicationold.{AddTeamMemberDetailsPage, AddTeamMembersPage, CheckYourAnswersPage, ConfirmAddTeamMemberPage}
 
 @ScenarioScoped
 class TeamMemberSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
@@ -31,142 +30,142 @@ class TeamMemberSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
   val expectedNoTeamMembersText: String             = "No team members added"
   val updatedApplicationName: String                = sharedState.application.name.reverse.toLowerCase
 
-  Then("""the new user starts the registration process""") { () =>
-    DashboardPage()
-      .registerAnApplication()
-      .setApplicationNameNormalMode(sharedState.application.name)
-  }
+//  Then("""the new user starts the registration process""") { () =>
+//    DashboardPage()
+//      .registerAnApplication()
+//      .setApplicationNameNormalMode(sharedState.application.name)
+//  }
 
   When("""{int} additional team members are added""") { (int: Int) =>
-    if (int > 0) {
-      AddTeamMembersPage(NormalMode).addTeamMembers()
-
-      (1 to int).foreach(
-        i => {
-          val email = s"${Faker.en_GB.firstName()}.${Faker.en_GB.lastName()}@digital.hmrc.gov.uk"
-
-          AddTeamMemberDetailsPage(NormalMode).setEmail(email)
-
-          if (i < int) {
-            ConfirmAddTeamMemberPage(NormalMode).addTeamMembers()
-          }
-        }
-      )
-    }
+//    if (int > 0) {
+//      AddTeamMembersPage(NormalMode).addTeamMembers()
+//
+//      (1 to int).foreach(
+//        i => {
+//          val email = s"${Faker.en_GB.firstName()}.${Faker.en_GB.lastName()}@digital.hmrc.gov.uk"
+//
+//          AddTeamMemberDetailsPage(NormalMode).setEmail(email)
+//
+//          if (i < int) {
+//            ConfirmAddTeamMemberPage(NormalMode).addTeamMembers()
+//          }
+//        }
+//      )
+//    }
   }
 
   Then("""{int} team members exist""") { (int: Int) =>
-    ConfirmAddTeamMemberPage(NormalMode)
-      .foreach(
-        confirmAddTeamMemberPage => {
-          confirmAddTeamMemberPage.getTeamMembers.size shouldBe int
-          confirmAddTeamMemberPage.getTeamMembersHeading should startWith(int.toString)
-        }
-      )
+//    ConfirmAddTeamMemberPage(NormalMode)
+//      .foreach(
+//        confirmAddTeamMemberPage => {
+//          confirmAddTeamMemberPage.getTeamMembers.size shouldBe int
+//          confirmAddTeamMemberPage.getTeamMembersHeading should startWith(int.toString)
+//        }
+//      )
   }
 
   Then("""the count of team members on the check your answers page is {int}""") { (int: Int) =>
-    ConfirmAddTeamMemberPage(NormalMode)
-      .doNotAddTeamMembers()
-      .foreach(
-        checkYourAnswersPage => {
-          checkYourAnswersPage.getStatedNumberOfTeamMembers shouldBe int.toString
-        }
-
-      )
+//    ConfirmAddTeamMemberPage(NormalMode)
+//      .doNotAddTeamMembers()
+//      .foreach(
+//        checkYourAnswersPage => {
+//          checkYourAnswersPage.getStatedNumberOfTeamMembers shouldBe int.toString
+//        }
+//
+//      )
   }
 
   When("""the user changes the team members email address""") { () =>
-    ConfirmAddTeamMemberPage(NormalMode)
-      .changeLast()
-      .setEmail(updatedEmail)
+//    ConfirmAddTeamMemberPage(NormalMode)
+//      .changeLast()
+//      .setEmail(updatedEmail)
   }
 
   Then("""the team members email is changed""") { () =>
-    ConfirmAddTeamMemberPage(CheckMode)
-      .foreach(
-        confirmAddTeamMemberPage =>
-          confirmAddTeamMemberPage.getTeamMembers.last shouldBe updatedEmail
-      )
+//    ConfirmAddTeamMemberPage(CheckMode)
+//      .foreach(
+//        confirmAddTeamMemberPage =>
+//          confirmAddTeamMemberPage.getTeamMembers.last shouldBe updatedEmail
+//      )
   }
 
   Then("""the user removes the last added team member""") { () =>
-    ConfirmAddTeamMemberPage(NormalMode)
-      .removeLast()
+//    ConfirmAddTeamMemberPage(NormalMode)
+//      .removeLast()
   }
 
   Then("""the user attempts to add a new team member with no radio button option chosen""") { () =>
-    AddTeamMembersPage(NormalMode)
-      .continueWithoutSelection()
+//    AddTeamMembersPage(NormalMode)
+//      .continueWithoutSelection()
   }
 
   When("""the user chooses to not add a new team member""") { () =>
-    AddTeamMembersPage(NormalMode)
-      .doNotAddTeamMembers()
+//    AddTeamMembersPage(NormalMode)
+//      .doNotAddTeamMembers()
   }
 
   Then("the add team members page displays an error summary") { () =>
-    AddTeamMembersPage(NormalMode)
-      .foreach(
-        addTeamMembersPage =>
-          addTeamMembersPage.hasErrorSummary shouldBe true
-      )
+//    AddTeamMembersPage(NormalMode)
+//      .foreach(
+//        addTeamMembersPage =>
+//          addTeamMembersPage.hasErrorSummary shouldBe true
+//      )
   }
 
   Then("the add team member details page displays an error summary") { () =>
-    AddTeamMemberDetailsPage(NormalMode)
-      .foreach(
-        addTeamMemberDetailsPage =>
-          addTeamMemberDetailsPage.hasErrorSummary shouldBe true
-      )
+//    AddTeamMemberDetailsPage(NormalMode)
+//      .foreach(
+//        addTeamMemberDetailsPage =>
+//          addTeamMemberDetailsPage.hasErrorSummary shouldBe true
+//      )
   }
 
   Then("""the user attempts to add a new team member using an unaccepted domain""") { () =>
-    AddTeamMembersPage(NormalMode)
-      .addTeamMembers()
-      .setInvalidEmail(invalidDomainEmail)
+//    AddTeamMembersPage(NormalMode)
+//      .addTeamMembers()
+//      .setInvalidEmail(invalidDomainEmail)
   }
 
   Then("""the email alert message is displayed""") { () =>
-    AddTeamMemberDetailsPage(NormalMode)
-      .foreach(
-        addTeamMemberDetailsPage =>
-          addTeamMemberDetailsPage.hasErrorSummary shouldBe true
-      )
+//    AddTeamMemberDetailsPage(NormalMode)
+//      .foreach(
+//        addTeamMemberDetailsPage =>
+//          addTeamMemberDetailsPage.hasErrorSummary shouldBe true
+//      )
   }
 
   Then("""the check your answers page displays the correct information for no team members added""") { () =>
-    CheckYourAnswersPage()
-      .foreach(
-        checkYourAnswersPage => {
-          checkYourAnswersPage.getApplicationName shouldBe sharedState.application.name
-          checkYourAnswersPage.getStatedNumberOfTeamMembers shouldBe expectedNoTeamMembersText
-          checkYourAnswersPage.getTeamMembers should contain theSameElementsAs Seq(User.email)
-        }
-      )
+//    CheckYourAnswersPage()
+//      .foreach(
+//        checkYourAnswersPage => {
+//          checkYourAnswersPage.getApplicationName shouldBe sharedState.application.name
+//          checkYourAnswersPage.getStatedNumberOfTeamMembers shouldBe expectedNoTeamMembersText
+//          checkYourAnswersPage.getTeamMembers should contain theSameElementsAs Seq(User.email)
+//        }
+//      )
   }
 
   Then("""the user changes the application name""") { () =>
-    CheckYourAnswersPage()
-      .changeApplicationName()
-      .setApplicationNameCheckMode(updatedApplicationName)
+//    CheckYourAnswersPage()
+//      .changeApplicationName()
+//      .setApplicationNameCheckMode(updatedApplicationName)
   }
 
   Then("""the application name should be changed""") { () =>
-    CheckYourAnswersPage()
-      .foreach(
-        checkYourAnswersPage =>
-          checkYourAnswersPage.getApplicationName shouldBe updatedApplicationName
-      )
+//    CheckYourAnswersPage()
+//      .foreach(
+//        checkYourAnswersPage =>
+//          checkYourAnswersPage.getApplicationName shouldBe updatedApplicationName
+//      )
   }
 
   Then("""the user chooses to change the team member""") { () =>
-    CheckYourAnswersPage()
-      .addTeamMember()
+//    CheckYourAnswersPage()
+//      .addTeamMember()
   }
 
   Then("""the user should be redirected to the team members overview page""") { () =>
-    AddTeamMembersPage(CheckMode)
+//    AddTeamMembersPage(CheckMode)
   }
 
 }

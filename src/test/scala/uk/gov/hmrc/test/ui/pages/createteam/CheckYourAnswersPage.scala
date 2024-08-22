@@ -14,29 +14,39 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.pages.registerapplication
+package uk.gov.hmrc.test.ui.pages.createteam
 
 import org.openqa.selenium.By
+import uk.gov.hmrc.test.ui.pages.createteam.CheckYourAnswersPage._
+import uk.gov.hmrc.test.ui.pages.createteam.CheckYourAnswersPage.elements._
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
-import uk.gov.hmrc.test.ui.pages.registerapplication.CheckYourAnswersPage._
-import uk.gov.hmrc.test.ui.pages.registerapplication.CheckYourAnswersPage.elements._
 
 class CheckYourAnswersPage extends BasePage[CheckYourAnswersPage](pageReadyTest) {
 
-  def registerApplication(): RegisterApplicationSuccessPage = {
-    click(registerApplicationButton)
-    RegisterApplicationSuccessPage()
+  def createTeam(): CreateTeamSuccessPage = {
+    click(createTeamButton)
+    CreateTeamSuccessPage()
+  }
+
+  def getTeamMembers: Seq[String] = {
+    findElements(teamMemberRow).map(_.getText.trim)
+  }
+
+  def changeTeamMembers(): CreateTeamMembersPage = {
+    click(changeTeamMembersLink)
+    CreateTeamMembersPage()
   }
 
 }
 
 object CheckYourAnswersPage {
 
-  // TODO: fix URL on HIPP-1042
-  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("application/register/check-your-answers2")
+  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("team/create-team/check-your-answers")
 
   object elements {
-    val registerApplicationButton: By = By.id("registerApplicationButton")
+    val createTeamButton: By = By.id("createTeamButton")
+    val teamMemberRow: By = By.cssSelector("[data-summary-for='team-members'] .govuk-summary-list__key")
+    val changeTeamMembersLink: By = By.id("changeTeamMembersLink")
   }
 
   def apply(): CheckYourAnswersPage = {

@@ -26,6 +26,6 @@ import org.junit.runner.RunWith
   glue = Array("uk.gov.hmrc.test.ui.cucumber.stepdefs", "uk.gov.hmrc.test.ui.utilities"),
   plugin =
     Array("pretty", "html:target/cucumber", "json:target/cucumber.json", "junit:target/test-reports/ZapRunner.xml"),
-  tags = "@ZAP"
+  tags = "@ZAP not @ignore"
 )
 class ZapRunner {}

@@ -17,40 +17,41 @@
 package uk.gov.hmrc.test.ui.pages.registerapplication
 
 import org.openqa.selenium.By
-import uk.gov.hmrc.test.ui.pages.registerapplication.ApplicationNamePage._
-import uk.gov.hmrc.test.ui.pages.registerapplication.ApplicationNamePage.elements._
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
-import uk.gov.hmrc.test.ui.utilities.Mode
+import uk.gov.hmrc.test.ui.pages.registerapplication.RegisterApplicationTeamPage._
+import uk.gov.hmrc.test.ui.pages.registerapplication.RegisterApplicationTeamPage.elements._
+import uk.gov.hmrc.test.ui.utilities.{Mode, Team}
 
-class ApplicationNamePage(mode: Mode) extends BasePage[ApplicationNamePage](pageReadyTest(mode)) {
+class RegisterApplicationTeamPage(mode: Mode) extends BasePage[RegisterApplicationTeamPage](pageReadyTest(mode)) {
 
-  def setApplicationNameNormalMode(applicationName: String): AddTeamMembersPage = {
-    sendKeys(applicationNameInput, applicationName)
+  def setTeamNormalMode(team: Team): CheckYourAnswersPage = {
+    click(teamRadio(team.id))
     click(continueButton)
-    AddTeamMembersPage(mode)
+    CheckYourAnswersPage()
   }
 
-  def setApplicationNameCheckMode(applicationName: String): CheckYourAnswersPage = {
-    sendKeys(applicationNameInput, applicationName)
+  def setTeamCheckMode(team: Team): CheckYourAnswersPage = {
+    click(teamRadio(team.id))
     click(continueButton)
     CheckYourAnswersPage()
   }
 
 }
 
-object ApplicationNamePage {
+object RegisterApplicationTeamPage {
 
   def pageReadyTest(mode: Mode): PageReadyTest = {
-    PageReadyTests.journeyQuestionPage.url("application/register/application-name", mode)
+    PageReadyTests.journeyQuestionPage.url("application/register/team", mode)
   }
 
   object elements {
-    val applicationNameInput: By = By.id("value")
     val continueButton: By = By.id("continueButton")
+    val teamIdAttribute: String = "data-team-id"
+    def teamRadio(id: String): By = By.cssSelector(s"[$teamIdAttribute=\"$id\"]")
   }
 
-  def apply(mode: Mode): ApplicationNamePage = {
-    new ApplicationNamePage(mode)
+  def apply(mode: Mode): RegisterApplicationTeamPage = {
+    new RegisterApplicationTeamPage(mode)
   }
 
 }

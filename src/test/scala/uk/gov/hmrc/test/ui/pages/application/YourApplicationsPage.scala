@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.pages
+package uk.gov.hmrc.test.ui.pages.application
 
 import org.openqa.selenium.By
-import uk.gov.hmrc.test.ui.pages.YourApplicationsPage._
-import uk.gov.hmrc.test.ui.pages.YourApplicationsPage.elements._
+import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
+import uk.gov.hmrc.test.ui.pages.application.YourApplicationsPage._
+import uk.gov.hmrc.test.ui.pages.application.YourApplicationsPage.elements._
 
 class YourApplicationsPage extends BasePage[YourApplicationsPage](pageReadyTest) {
 

@@ -11,11 +11,13 @@ Feature: Ldap Login
 
   Scenario: Register first application for a new user account
     When the user submits valid LDAP details
+    And the user is in a team
     And the new user registers an application
     Then the application should be registered
 
   Scenario: View Application
     When the user submits valid LDAP details
+    And the user is in a team
     And the new user registers an application
     Then the application can be viewed
 

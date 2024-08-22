@@ -16,17 +16,24 @@
 
 package uk.gov.hmrc.test.ui.pages
 
-import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.DashboardPage._
-import uk.gov.hmrc.test.ui.pages.DashboardPage.elements._
-import uk.gov.hmrc.test.ui.pages.registerapplication.ApplicationNamePage
+import uk.gov.hmrc.test.ui.pages.createteam.CreateTeamNamePage
+import uk.gov.hmrc.test.ui.pages.registerapplication.RegisterApplicationNamePage
 import uk.gov.hmrc.test.ui.utilities.NormalMode
 
 class DashboardPage extends BasePage[DashboardPage](pageReadyTest) with ApiHubMenu {
 
-  def registerAnApplication(): ApplicationNamePage = {
-    click(registerAnApplicationButton)
-    ApplicationNamePage(NormalMode)
+  def registerAnApplication(): RegisterApplicationNamePage = {
+    // TODO: dashboard hack, fix with HIPP-1042, the register application button should be on the dashboard
+    Journeys.navigateTo("application/register/start2")
+    RegisterApplicationNamePage(NormalMode)
+  }
+
+  def createTeam(): CreateTeamNamePage = {
+    // TODO: dashboard hack, fix with HIPP-1042, the create team button should be on the dashboard
+    Journeys
+      .openManageMyTeamsPage()
+      .addNewTeam()
   }
 
 }
@@ -34,10 +41,6 @@ class DashboardPage extends BasePage[DashboardPage](pageReadyTest) with ApiHubMe
 object DashboardPage {
 
   val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("dashboard")
-
-  object elements {
-    val registerAnApplicationButton: By = By.id("registerAnApplicationButton")
-  }
 
   def apply(): DashboardPage = {
     new DashboardPage()

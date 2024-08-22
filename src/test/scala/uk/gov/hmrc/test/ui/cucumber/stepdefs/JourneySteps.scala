@@ -63,4 +63,8 @@ class JourneySteps @Inject()(sharedState: SharedState) extends BaseStepDef {
     Journeys.signInViaStride(Roles.forName(role))
   }
 
+  Given("the user is in a team") { () =>
+    Journeys.checkUserHasATeam(sharedState)
+  }
+
 }

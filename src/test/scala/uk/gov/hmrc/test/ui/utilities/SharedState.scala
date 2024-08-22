@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.test.ui.utilities
 
-import com.google.inject.Singleton
+import io.cucumber.guice.ScenarioScoped
 
 /**
  * State that is shared between step definition classes.
@@ -25,9 +25,10 @@ import com.google.inject.Singleton
  * class in their constructor.
  */
 
-@Singleton
+@ScenarioScoped
 class SharedState {
 
   val application = new Application()
+  val team = new Team()
 
 }

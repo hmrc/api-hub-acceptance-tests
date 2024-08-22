@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.pages.registerapplication
+package uk.gov.hmrc.test.ui.pages.registerapplicationold
 
 import org.openqa.selenium.By
-import uk.gov.hmrc.test.ui.pages.registerapplication.AddTeamMembersPage._
-import uk.gov.hmrc.test.ui.pages.registerapplication.AddTeamMembersPage.elements._
+import uk.gov.hmrc.test.ui.pages.registerapplicationold.AddTeamMembersPage._
+import uk.gov.hmrc.test.ui.pages.registerapplicationold.AddTeamMembersPage.elements._
 import uk.gov.hmrc.test.ui.pages.{BasePage, ErrorSummary, PageReadyTest, PageReadyTests}
 import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode}
 
-class AddTeamMembersPage(mode: Mode) extends BasePage[AddTeamMembersPage](pageReadyTest(mode)) with ErrorSummary {
+private class AddTeamMembersPage(mode: Mode) extends BasePage[AddTeamMembersPage](pageReadyTest(mode)) with ErrorSummary {
 
   def addTeamMembers(): AddTeamMemberDetailsPage = {
     click(yesRadio)
@@ -43,7 +43,7 @@ class AddTeamMembersPage(mode: Mode) extends BasePage[AddTeamMembersPage](pageRe
 
 }
 
-object AddTeamMembersPage {
+private object AddTeamMembersPage {
 
   def pageReadyTest(mode: Mode): PageReadyTest = {
     PageReadyTests.journeyQuestionPage.url("application/register/add-team-members", mode)

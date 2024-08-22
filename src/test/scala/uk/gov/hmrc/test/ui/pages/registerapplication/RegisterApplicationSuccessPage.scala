@@ -18,37 +18,31 @@ package uk.gov.hmrc.test.ui.pages.registerapplication
 
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage
+import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 import uk.gov.hmrc.test.ui.pages.registerapplication.RegisterApplicationSuccessPage._
 import uk.gov.hmrc.test.ui.pages.registerapplication.RegisterApplicationSuccessPage.elements._
-import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
 class RegisterApplicationSuccessPage extends BasePage[RegisterApplicationSuccessPage](pageReadyTest) {
 
-  def viewRegisteredApplication(): ApplicationDetailsPage = {
-    val applicationId = getApplicationId match {
-      case Some(id) => id
-      case _ => throw new IllegalStateException("Application Id is missing from this page.")
-    }
-
-    click(applicationLink)
+  def viewApplication(): ApplicationDetailsPage = {
+    val applicationId = getApplicationId
+    findElement(viewApplicationLink).click()
     ApplicationDetailsPage(applicationId)
   }
 
-  private def getApplicationId: Option[String] = {
-    getAttribute(applicationLink, applicationIdAttribute)
+  def getApplicationId: String = {
+    findElement(viewApplicationLink).getAttribute(applicationIdAttribute)
   }
 
 }
 
 object RegisterApplicationSuccessPage {
 
-  // The URL contains the Application Id which we can't possibly know prior to the page being displayed
-  // Therefore we'll use a title-based page ready test
-  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.title("Register Application Success")
+  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("application/register/register")
 
   object elements {
-    val applicationIdAttribute = "data-application-id"
-    val applicationLink: By = By.id("applicationLink")
+    val viewApplicationLink: By = By.id("viewApplicationLink")
+    val applicationIdAttribute: String = "data-application-id"
   }
 
   def apply(): RegisterApplicationSuccessPage = {

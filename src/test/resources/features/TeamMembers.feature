@@ -1,4 +1,4 @@
-@regression
+@ignore @regression
 Feature: Team Members
 
   Background:
