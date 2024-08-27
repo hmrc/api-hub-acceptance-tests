@@ -32,8 +32,7 @@ class CheckYourAnswersPage extends BasePage[CheckYourAnswersPage](pageReadyTest)
 
 object CheckYourAnswersPage {
 
-  // TODO: fix URL on HIPP-1042
-  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("application/register/check-your-answers2")
+  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("application/register/check-your-answers")
 
   object elements {
     val registerApplicationButton: By = By.id("registerApplicationButton")
