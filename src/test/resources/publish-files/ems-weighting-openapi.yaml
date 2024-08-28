@@ -1,7 +1,7 @@
 ---
 openapi: 3.0.1
 info:
-  title: API Documentation for Address Weighting Service
+  title: Address Weighting Service
   description: |-
     This relates to the address weighting API service. When a request is sent with details about a person, the API responds   with details of a matched person, if a match is found. If no matched person is found, the response will indicate as such.
     ```
