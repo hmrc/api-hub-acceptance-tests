@@ -28,7 +28,10 @@ class ManageTeamPage(id: String) extends BasePage[ManageTeamPage](pageReadyTest(
   }
 
   def getTeamName: String = {
-    findElement(h1).getText.replaceFirst("Manage ", "").trim
+    findElement(h1).getText match {
+      case titleRegex(team)  => team
+      case _ => ""
+    }
   }
 
   def getTeamMemberEmails: Seq[String] = {
@@ -38,6 +41,8 @@ class ManageTeamPage(id: String) extends BasePage[ManageTeamPage](pageReadyTest(
 }
 
 object ManageTeamPage {
+
+  val titleRegex = "Manage (.+) team".r
 
   def pageReadyTest(id: String): PageReadyTest = {
     PageReadyTests.apiHubPage.url(s"team/$id")
