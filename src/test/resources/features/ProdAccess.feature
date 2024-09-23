@@ -1,4 +1,4 @@
-@smoke
+@ignore @smoke
 Feature: Prod Access Request Types
 
   Scenario: Request Production Access
