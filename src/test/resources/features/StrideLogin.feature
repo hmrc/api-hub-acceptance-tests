@@ -22,3 +22,5 @@ Feature: Logging in via Stride
       | approver        | Dashboard | Integration Hub Admin | Explore APIs |
       | support         | Dashboard | Integration Hub Admin | Explore APIs |
       | user            | Dashboard | Explore APIs          |              |
+      | privileged-user | Dashboard | Explore APIs          |              |
+
