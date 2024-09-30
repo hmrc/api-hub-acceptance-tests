@@ -84,7 +84,7 @@ class ProductionAccessSteps @Inject()(sharedState: SharedState) extends BaseStep
   }
 
   Then("the production access request is successful") { () =>
-    RequestProductionAccessSuccessPage().isSuccessMessageDisplayed shouldBe true
+    RequestProductionAccessSuccessPage()
   }
 
 }

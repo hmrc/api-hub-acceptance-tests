@@ -37,7 +37,7 @@ object SelectApisPage {
 
   object elements {
     val selectedApi: By = By.id("value_0")
-    val continueButton: By = By.cssSelector("#main-content > div > div > form > button")
+    val continueButton: By = By.id("continueButton")
   }
 
   def apply(): SelectApisPage = {
