@@ -17,31 +17,31 @@
 package uk.gov.hmrc.test.ui.pages.application
 
 import org.openqa.selenium.By
-import uk.gov.hmrc.test.ui.pages.application.RequestProductionAccessPage._
-import uk.gov.hmrc.test.ui.pages.application.RequestProductionAccessPage.elements._
+import uk.gov.hmrc.test.ui.pages.application.SelectApisPage._
+import uk.gov.hmrc.test.ui.pages.application.SelectApisPage.elements._
+import uk.gov.hmrc.test.ui.pages.application.SelectApisPage.elements.selectedApi
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
-class RequestProductionAccessPage extends BasePage[RequestProductionAccessPage](pageReadyTest) {
+class SelectApisPage extends BasePage[SelectApisPage](pageReadyTest) {
 
-  def confirmUsagePolicies(): ProvideSupportingInformationPage = {
-    click(confirmationCheckbox)
+  def setSelectedApi(): Unit = {
+    click(selectedApi)
     click(continueButton)
-    ProvideSupportingInformationPage()
   }
 
 }
 
-object RequestProductionAccessPage {
+object SelectApisPage {
 
-  val pageReadyTest: PageReadyTest = PageReadyTests.questionPage.url("application/request-production-access")
+  val pageReadyTest: PageReadyTest = PageReadyTests.questionPage.url("application/request-production-access/select-apis")
 
   object elements {
-    val confirmationCheckbox: By = By.id("accept_0")
+    val selectedApi: By = By.id("value_0")
     val continueButton: By = By.id("continueButton")
   }
 
-  def apply(): RequestProductionAccessPage = {
-    new RequestProductionAccessPage()
+  def apply(): SelectApisPage = {
+    new SelectApisPage()
   }
 
 }

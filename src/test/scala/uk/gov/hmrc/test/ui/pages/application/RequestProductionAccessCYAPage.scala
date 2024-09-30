@@ -17,30 +17,30 @@
 package uk.gov.hmrc.test.ui.pages.application
 
 import org.openqa.selenium.By
-import uk.gov.hmrc.test.ui.pages.application.ProvideSupportingInformationPage._
-import uk.gov.hmrc.test.ui.pages.application.ProvideSupportingInformationPage.elements._
+import uk.gov.hmrc.test.ui.pages.application.RequestProductionAccessCYAPage._
+import uk.gov.hmrc.test.ui.pages.application.RequestProductionAccessCYAPage.elements._
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
-class ProvideSupportingInformationPage extends BasePage[ProvideSupportingInformationPage](pageReadyTest) {
+class RequestProductionAccessCYAPage extends BasePage[RequestProductionAccessCYAPage](pageReadyTest) {
 
-  def setSupportingInformation(information: String): Unit = {
-    sendKeys(supportingInformation, information)
+  def confirmAnswers(): Unit = {
+    click(confirm)
     click(continueButton)
   }
 
 }
 
-object ProvideSupportingInformationPage {
+object RequestProductionAccessCYAPage {
 
-  val pageReadyTest: PageReadyTest = PageReadyTests.questionPage.url("application/request-production-access/supporting-information")
+  val pageReadyTest: PageReadyTest = PageReadyTests.questionPage.url("application/request-production-access/check-your-answers")
 
   object elements {
-    val supportingInformation: By = By.id("value")
+    val confirm: By = By.id("accept_0")
     val continueButton: By = By.id("continueButton")
   }
 
-  def apply(): ProvideSupportingInformationPage = {
-    new ProvideSupportingInformationPage()
+  def apply(): RequestProductionAccessCYAPage = {
+    new RequestProductionAccessCYAPage()
   }
 
 }

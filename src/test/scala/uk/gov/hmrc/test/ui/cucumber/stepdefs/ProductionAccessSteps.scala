@@ -66,7 +66,11 @@ class ProductionAccessSteps @Inject()(sharedState: SharedState) extends BaseStep
   When("the user requests prod access") { () =>
     ApplicationApisPage(sharedState.application.id)
       .requestProductionAccess()
-      .confirmUsagePolicies()
+  }
+
+  And("the user selects which API") { () =>
+    SelectApisPage()
+      .setSelectedApi()
   }
 
   And("the user supports the request with a reason") { () =>
@@ -74,8 +78,13 @@ class ProductionAccessSteps @Inject()(sharedState: SharedState) extends BaseStep
       .setSupportingInformation("Lorem ipsum")
   }
 
-  Then("the pending request is logged") { () =>
-    RequestProductionAccessSuccessPage().isSuccessMessageDisplayed shouldBe true
+  And("the user checks their answers") { () =>
+    RequestProductionAccessCYAPage()
+      .confirmAnswers()
+  }
+
+  Then("the production access request is successful") { () =>
+    RequestProductionAccessSuccessPage()
   }
 
 }
