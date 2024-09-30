@@ -23,17 +23,17 @@ import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
 class RequestProductionAccessPage extends BasePage[RequestProductionAccessPage](pageReadyTest) {
 
-  def confirmUsagePolicies(): ProvideSupportingInformationPage = {
+  def confirmUsagePolicies(): SelectApisPage = {
     click(confirmationCheckbox)
     click(continueButton)
-    ProvideSupportingInformationPage()
+    SelectApisPage()
   }
 
 }
 
 object RequestProductionAccessPage {
 
-  val pageReadyTest: PageReadyTest = PageReadyTests.questionPage.url("application/request-production-access")
+  val pageReadyTest: PageReadyTest = PageReadyTests.questionPage.url("application/select-apis")
 
   object elements {
     val confirmationCheckbox: By = By.id("accept_0")

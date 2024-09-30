@@ -17,30 +17,31 @@
 package uk.gov.hmrc.test.ui.pages.application
 
 import org.openqa.selenium.By
-import uk.gov.hmrc.test.ui.pages.application.ProvideSupportingInformationPage._
-import uk.gov.hmrc.test.ui.pages.application.ProvideSupportingInformationPage.elements._
+import uk.gov.hmrc.test.ui.pages.application.SelectApisPage._
+import uk.gov.hmrc.test.ui.pages.application.SelectApisPage.elements._
+import uk.gov.hmrc.test.ui.pages.application.SelectApisPage.elements.selectedApi
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
-class ProvideSupportingInformationPage extends BasePage[ProvideSupportingInformationPage](pageReadyTest) {
+class SelectApisPage extends BasePage[SelectApisPage](pageReadyTest) {
 
-  def setSupportingInformation(information: String): Unit = {
-    sendKeys(supportingInformation, information)
+  def setSelectedApi(): Unit = {
+    click(selectedApi)
     click(continueButton)
   }
 
 }
 
-object ProvideSupportingInformationPage {
+object SelectApisPage {
 
-  val pageReadyTest: PageReadyTest = PageReadyTests.questionPage.url("application/request-production-access/supporting-information")
+  val pageReadyTest: PageReadyTest = PageReadyTests.questionPage.url("application/request-production-access/select-apis")
 
   object elements {
-    val supportingInformation: By = By.id("value")
-    val continueButton: By = By.id("continueButton")
+    val selectedApi: By = By.id("value_0")
+    val continueButton: By = By.cssSelector("#main-content > div > div > form > button")
   }
 
-  def apply(): ProvideSupportingInformationPage = {
-    new ProvideSupportingInformationPage()
+  def apply(): SelectApisPage = {
+    new SelectApisPage()
   }
 
 }

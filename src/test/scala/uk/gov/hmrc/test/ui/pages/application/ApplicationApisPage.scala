@@ -23,9 +23,9 @@ import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
 class ApplicationApisPage(id: String) extends BasePage[ApplicationApisPage](pageReadyTest(id)) {
 
-  def requestProductionAccess(): RequestProductionAccessPage = {
+  def requestProductionAccess(): SelectApisPage = {
     click(requestProductionAccessButton)
-    RequestProductionAccessPage()
+    SelectApisPage()
   }
 
 }
