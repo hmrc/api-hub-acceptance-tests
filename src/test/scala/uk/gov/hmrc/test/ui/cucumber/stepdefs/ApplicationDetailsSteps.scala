@@ -111,8 +111,8 @@ class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseSt
       }
   }
 
-  Given("""the user chooses Add credentials""") { () =>
-    EnvironmentAndCredentialsPage(sharedState.application.id).selectAddCredentials()
+  When("""the user adds Test credentials""") { () =>
+    EnvironmentAndCredentialsPage(sharedState.application.id).selectAddTestCredentials()
   }
 
   Given("""the user chooses {string} from the application left hand nav menu""") { (string: String) =>

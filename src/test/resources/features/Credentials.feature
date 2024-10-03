@@ -8,5 +8,5 @@ Feature: Application Environments
     Then the client id should be added to the test environments credentials with count 1
 
   Scenario: Add Test credentials
-    And the user chooses Add credentials
+    When the user adds Test credentials
     Then the client id should be added to the test environments credentials with count 2

@@ -26,8 +26,10 @@ class EnvironmentAndCredentialsPage(id: String) extends BasePage[EnvironmentAndC
   def getSecondaryCredentialCount: Int = {
     findElements(secondaryCredentialClientId).size
   }
-  def selectAddCredentials(): Unit = {
+
+  def selectAddTestCredentials(): EnvironmentAndCredentialsPage = {
     click(addCredentials)
+    new EnvironmentAndCredentialsPage(id)
   }
 
 }
