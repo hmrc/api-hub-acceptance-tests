@@ -103,12 +103,16 @@ class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseSt
     navigateTo(s"application/details/$string")
   }
 
-  Then("the client id should be added to the development environments credentials") { () =>
+  Then("""the client id should be added to the test environments credentials with count {int}""") { (expectedCount: Int) =>
     EnvironmentAndCredentialsPage(sharedState.application.id)
-      .foreach(
-        page =>
-          page.getSecondaryCredentialCount shouldBe 1
-      )
+      .foreach { page =>
+        val credentialCount = page.getSecondaryCredentialCount // Extract the credential count once
+        credentialCount shouldBe expectedCount // Use the dynamic expected count
+      }
+  }
+
+  Given("""the user chooses Add credentials""") { () =>
+    EnvironmentAndCredentialsPage(sharedState.application.id).selectAddCredentials()
   }
 
   Given("""the user chooses {string} from the application left hand nav menu""") { (string: String) =>

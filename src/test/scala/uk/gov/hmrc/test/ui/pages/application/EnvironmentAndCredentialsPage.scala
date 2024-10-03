@@ -26,6 +26,9 @@ class EnvironmentAndCredentialsPage(id: String) extends BasePage[EnvironmentAndC
   def getSecondaryCredentialCount: Int = {
     findElements(secondaryCredentialClientId).size
   }
+  def selectAddCredentials(): Unit = {
+    click(addCredentials)
+  }
 
 }
 
@@ -37,6 +40,7 @@ object EnvironmentAndCredentialsPage {
 
   object elements {
     val secondaryCredentialClientId: By = By.cssSelector("[data-secondary-credential-client-id]")
+    val addCredentials: By = By.xpath("//button[normalize-space(text())='Add new credential']")
   }
 
   def apply(id: String): EnvironmentAndCredentialsPage = {
