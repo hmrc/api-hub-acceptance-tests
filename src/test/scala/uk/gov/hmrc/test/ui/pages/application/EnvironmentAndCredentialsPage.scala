@@ -42,7 +42,7 @@ object EnvironmentAndCredentialsPage {
 
   object elements {
     val secondaryCredentialClientId: By = By.cssSelector("[data-secondary-credential-client-id]")
-    val addCredentials: By = By.xpath("//button[normalize-space(text())='Add new credential']")
+    val addCredentials: By = By.id("addTestCredentialButton")
   }
 
   def apply(id: String): EnvironmentAndCredentialsPage = {
