@@ -1,9 +1,9 @@
-Feature: Development and Prod credential types
+Feature: Application Environments
 
-  @wip
-  Scenario: Create client id for registered application
+  Background:
     Given a user has signed-in and registers an application
     And the user chooses "Environments and credentials" from the application left hand nav menu
-    Then the client id should be added to the development environments credentials
 
-  Scenario: Adding Dev and Prod Credentials
+  Scenario: Add Test credentials
+    When the user adds Test credentials
+    Then the client id should be added to the test environments credentials with count 2

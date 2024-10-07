@@ -27,6 +27,11 @@ class EnvironmentAndCredentialsPage(id: String) extends BasePage[EnvironmentAndC
     findElements(secondaryCredentialClientId).size
   }
 
+  def selectAddTestCredentials(): EnvironmentAndCredentialsPage = {
+    click(addCredentials)
+    new EnvironmentAndCredentialsPage(id)
+  }
+
 }
 
 object EnvironmentAndCredentialsPage {
@@ -37,6 +42,7 @@ object EnvironmentAndCredentialsPage {
 
   object elements {
     val secondaryCredentialClientId: By = By.cssSelector("[data-secondary-credential-client-id]")
+    val addCredentials: By = By.id("addTestCredentialButton")
   }
 
   def apply(id: String): EnvironmentAndCredentialsPage = {
