@@ -18,6 +18,7 @@ info:
     publisher-reference: nps-get-agent-details
     short-description: Retrieve Agent Details for a specified individual
     status: BETA
+    api-type: SIMPLE
     platform: HIP
     backends:
     - NPS

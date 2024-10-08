@@ -19,6 +19,7 @@ info:
     short-description: "Trigger issuing of National Insurance Number Letter from NINO,\
       \ Name and Address"
     status: BETA
+    api-type: SIMPLE
     platform: HIP
     backends:
     - NPS

@@ -18,6 +18,7 @@ info:
     publisher-reference: nps-get-person-address
     short-description: Retrieve an Individual's Address from NINO
     status: BETA
+    api-type: SIMPLE
     platform: HIP
     backends:
     - NPS

@@ -19,6 +19,7 @@ info:
     short-description: Retrieve Employment Summary for the specified NINO and Tax
       Year
     status: BETA
+    api-type: SIMPLE
     platform: HIP
     backends:
     - NPS

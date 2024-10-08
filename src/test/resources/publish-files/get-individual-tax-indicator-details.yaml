@@ -18,6 +18,7 @@ info:
     publisher-reference: nps-get-individual-tax-indicator-details
     short-description: Retrieve Tax Account Indicator Details for the specified identifier
     status: BETA
+    api-type: SIMPLE
     platform: HIP
     backends:
     - NPS
