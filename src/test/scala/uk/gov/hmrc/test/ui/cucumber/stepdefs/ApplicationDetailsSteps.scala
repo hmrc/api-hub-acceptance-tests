@@ -111,8 +111,16 @@ class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseSt
       }
   }
 
+  Given("""the user clicks HIP Production link""") { () =>
+    EnvironmentAndCredentialsPage(sharedState.application.id).selectAddProdCredentialsLink()
+   }
+
   When("""the user adds Test credentials""") { () =>
     EnvironmentAndCredentialsPage(sharedState.application.id).selectAddTestCredentials()
+  }
+
+  When("""the user adds Prod credentials""") { () =>
+    EnvironmentAndCredentialsPage(sharedState.application.id).selectAddProdCredentials()
   }
 
   Given("""the user chooses {string} from the application left hand nav menu""") { (string: String) =>
@@ -120,6 +128,7 @@ class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseSt
       case "Application APIs" => ApplicationDetailsPage(sharedState.application.id).applicationApis()
       case "Environments and credentials" => ApplicationDetailsPage(sharedState.application.id).environmentsAndCredentials()
       case "Delete application" => ApplicationDetailsPage(sharedState.application.id).deleteApplication()
+//      case "HIP Production" => ApplicationDetailsPage(sharedState.application.id).HIPProduction()
       case _ => throw new IllegalArgumentException(s"Unknown option: $string")
     }
   }

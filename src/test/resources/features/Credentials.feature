@@ -1,3 +1,4 @@
+@hipp-1252
 Feature: Application Environments
 
   Background:
@@ -7,3 +8,11 @@ Feature: Application Environments
   Scenario: Add Test credentials
     When the user adds Test credentials
     Then the client id should be added to the test environments credentials with count 2
+
+
+  Scenario: Add Prod credentials
+    And the user clicks HIP Production link
+    When the user adds Prod credentials
+    Then the user confirms generation production credentials
+    And the user sees "Client secret successfully created"
+    Then the client id should be added to the test environments credentials with count 1

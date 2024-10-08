@@ -1,0 +1,629 @@
+---
+openapi: 3.0.1
+info:
+  title: API Documentation for Keying Service
+  description: |-
+    This relates to the keying API service.  When a request is sent with details about a person, the API responds with details of a matched person, if a match is found, along with any associated addresses. If no matched person is found, the response will indicate as such.
+    ```
+    Change Log
+    ```
+    
+      | Version | Date | Author | Description |
+      |---|-----|------|-----|
+      | 1.1.0 | 24-11-2022 | Mark Stead | Initial draft - Created from EMS OAS file created by Ankur Mishra |
+      | 1.1.1 | 20-12-2022 | Mark Stead | Removed version from server parameters and added scope to security |
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0
+  version: "1.1"
+  x-integration-catalogue:
+    reviewed-date: 2022-11-17T12:00:00Z
+    platform: HIP
+    publisher-reference: ems-keying-service
+    short-description: Keying Service API
+    status: ALPHA
+    backends:
+      - EMS
+servers:
+  - url: https://api.hip.prod.eis.ns2p.corp.hmrc.gov.uk/ems/
+    description: Corporate - Production
+  - url: https://api.hip.test.eis.ns2n.corp.hmrc.gov.uk/ems/
+    description: Corporate - Test
+  - url: https://hip.ws.hmrc.gov.uk/ems/
+    description: MDTP - Production
+  - url: https://hip.ws.ibt.hmrc.gov.uk/ems/
+    description: MDTP - QA
+security:
+  - oAuth2:
+      - read:address-matching
+tags:
+  - name: person-plus-addresses-endpoint
+    description: Person Plus Addresses Endpoint
+paths:
+  /v1/person-details:
+    post:
+      tags:
+        - person-plus-addresses-endpoint
+      description:
+        "Send a request containing details about a person. API response\
+                \ will contain details of a matching person (if found), along with match score\
+                \ and all addresses linked to that person."
+      operationId: doPersonLookupUsingPOST_2
+      parameters:
+        - name: CorrelationID
+          in: header
+          description: DES/IF Correlation ID - used for traceability purposes when present
+          required: true
+          schema:
+            type: string
+        - name: OriginatingSystem
+          in: header
+          description: The Originating System
+          schema:
+            type: string
+      requestBody:
+        description: the request parameters passed to match an entity
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/requestBody"
+            examples:
+              requestBodyExample:
+                $ref: "#/components/examples/RequestBodyExample"
+              requestBody2Example:
+                $ref: "#/components/examples/RequestBody2Example"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MatchPersonAddressResponseBody"
+              examples:
+                MatchedPersonAddressResponseBodyExample:
+                  $ref: "#/components/examples/MatchedPersonAddressResponseBodyExample"
+                PersonNotFoundResponseExample:
+                  $ref: "#/components/examples/PersonNotFoundResponseExample"
+        "201":
+          description: Created
+          content: {}
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                required:
+                  - origin
+                  - response
+                type: object
+                properties:
+                  origin:
+                    $ref: "#/components/schemas/HIP-originEnum"
+                  response:
+                    oneOf:
+                      - $ref: "#/components/schemas/HIP-failureResponse"
+                      - $ref: "#/components/schemas/SimpleError400Object"
+                additionalProperties: false
+              examples: {}
+        "401":
+          description: Unauthorized
+          content: {}
+        "403":
+          description: Forbidden
+          content: {}
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SimpleError404Object"
+              examples:
+                Unprocessable1:
+                  $ref: "#/components/examples/SimpleError404Object1Example"
+        "422":
+          description: Unprocessable
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SimpleError422Object"
+              examples:
+                Unprocessable1:
+                  $ref: "#/components/examples/SimpleError422Object1Example"
+                Unprocessable2:
+                  $ref: "#/components/examples/SimpleError422Object2Example"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                required:
+                  - origin
+                  - response
+                type: object
+                properties:
+                  origin:
+                    $ref: "#/components/schemas/HIP-originEnum"
+                  response:
+                    oneOf:
+                      - $ref: "#/components/schemas/HIP-failureResponse"
+                      - $ref: "#/components/schemas/SimpleError500Object"
+                additionalProperties: false
+              examples: {}
+      deprecated: false
+      x-codegen-request-body-name: matchRequest
+components:
+  schemas:
+    MatchPersonAddressResponseBody:
+      title: MatchPersonAddressResponseBody
+      type: object
+      properties:
+        addressSource:
+          description:
+            the source evidence dataset where the matched entity's details
+            are found
+          type: string
+        matchedEntity:
+          $ref: "#/components/schemas/MatchedPersonWithAddresses"
+        matchingAnalytics:
+          $ref: "#/components/schemas/MatchingAnalyticsResponse"
+        matchingOutcome:
+          description:
+            "the outcome of person matching, confirming whether a person\
+                        \ matching the request parameters was found"
+          enum:
+            - IDENTIFIED_A_PERSON
+            - FAILED_TO_IDENTIFY_THE_PERSON
+            - FAILED_TO_IDENTIFY_A_SINGLE_BEST_MATCH_FOR_PERSON
+          type: string
+        requestNino:
+          description: National Insurance Number of the person contained in the request
+          type: string
+        uuid:
+          description: uuid of the response
+          type: string
+    MatchedPersonWithAddresses:
+      title: MatchedPersonWithAddresses
+      type: object
+      properties:
+        addresses:
+          type: array
+          items:
+            $ref: "#/components/schemas/OneOfresponseBodyMatchedEntityAddressesItems"
+        confidence:
+          format: double
+          description:
+            "match score to indicate how good the match is, with a value\
+                        \ between 0 and 1. The higher the score, the better the match based on\
+                        \ the parameters contained within the request."
+          type: number
+        dateOfBirth:
+          $ref: "#/components/schemas/PartialDate"
+        firstname:
+          description: The first name or forename of the person
+          type: string
+        key:
+          description: key or id of the entity matched
+          type: string
+        nino:
+          description: The National Insurance Number of the person
+          type: string
+        surname:
+          description: The surname or family name of the person
+          type: string
+    MatchingAnalyticsResponse:
+      title: MatchingAnalyticsResponse
+      type: object
+      properties:
+        matchedEntities:
+          description:
+            Identifies the fields on which there was a match between the
+            request and a person in the evidence data
+          type: string
+        matchingThreshold:
+          description:
+            "the minimum score needed to determine a match between the\
+                        \ request and a person in the evidence data, as defined in the scorecard"
+          type: string
+        maximumPossibleScore:
+          description: the maximum score achievable in the scorecard
+          type: string
+    OneOfresponseBodyMatchedEntityAddressesItems:
+      title: OneOfresponseBodyMatchedEntityAddressesItems
+      type: object
+      properties:
+        buildingName:
+          description: name of the building
+          type: string
+        buildingNumber:
+          description: building number
+          type: string
+        county:
+          description: county
+          type: string
+        dependentThoroughfare:
+          description: the thoroughfare
+          type: string
+        locality:
+          description: the locality
+          type: string
+        matchingDatasets:
+          type: array
+          items:
+            $ref: "#/components/schemas/AddressMetadataMatchingDatasets"
+        postTown:
+          description: the postal town
+          type: string
+        postcode:
+          description: the post code
+          type: string
+        subbuildingName:
+          description: the sub building name
+          type: string
+        thoroughfare:
+          description: the thoroughfare
+          type: string
+        uprn:
+          description:
+            "Unique Property Reference Number (UPRN) of the address, as\
+                        \ defined by Ordnance Survey"
+          type: string
+    PartialDate:
+      title: PartialDate
+      type: object
+      properties:
+        day:
+          type: string
+        month:
+          type: string
+        year:
+          type: string
+    AddressMetadataMatchingDatasets:
+      title: AddressMetadataMatchingDatasets
+      type: object
+      properties:
+        effectiveDate:
+          format: date
+          type: string
+        name:
+          description: name of the evidence data source
+          type: string
+    SimpleError422Object:
+      title: SimpleErrorObject
+      type: object
+      properties:
+        error:
+          description: error
+          type: string
+        message:
+          description: error message
+          type: string
+        timestamp:
+          format: date-time
+          description: timestamp
+          type: string
+        status:
+          description: http status
+          type: string
+        errorValue:
+          description: timestamp
+          type: string
+    SimpleError400Object:
+      title: SimpleErrorObject
+      type: object
+      properties:
+        error:
+          description: error
+          type: string
+          example:
+            "Exception thrown: org.springframework.web.bind.MissingRequestHeaderException:\
+                        \ Missing request header 'CorrelationID' for method parameter of type\
+                        \ String"
+        message:
+          description: error message
+          type: string
+          example:
+            Missing request header 'CorrelationID' for method parameter of
+            type String
+        timestamp:
+          format: date-time
+          description: timestamp
+          type: string
+        status:
+          description: http status
+          type: string
+          example: "400"
+        errorValue:
+          description: timestamp
+          type: string
+          example: ""
+    SimpleError404Object:
+      title: SimpleErrorObject
+      type: object
+      properties:
+        error:
+          description: error
+          type: string
+        message:
+          description: error message
+          type: string
+        timestamp:
+          format: date-time
+          description: timestamp
+          type: string
+        status:
+          description: http status
+          type: string
+        path:
+          description: resource path
+          type: string
+    SimpleError500Object:
+      title: SimpleErrorObject
+      type: object
+      properties:
+        error:
+          description: error
+          type: string
+          example:
+            "Exception thrown: org.springframework.web.HttpMediaTypeNotSupportedException:\
+                        \ Content type 'text/plain;charset=UTF-8' not supported"
+        message:
+          description: error message
+          type: string
+          example: Content type 'text/plain;charset=UTF-8' not supported
+        timestamp:
+          format: date-time
+          description: timestamp
+          type: string
+        status:
+          description: http status
+          type: string
+          example: "500"
+    requestBody:
+      title: requestBody
+      required:
+        - addressLine1
+        - country
+        - dateOfBirth
+        - firstName
+        - nino
+        - surname
+        - uuid
+      type: object
+      properties:
+        addressLine1:
+          description: Address Line 1 of the person's current or last known address
+          maxLength: 35
+          minLength: 1
+          type: string
+        addressLine2:
+          description: Address Line 2 of the person's current or last known address
+          maxLength: 35
+          minLength: 0
+          type: string
+        addressLine3:
+          description: Address Line 3 of the person's current or last known address
+          maxLength: 35
+          minLength: 0
+          type: string
+        addressLine4:
+          description: Address Line 4 of the person's current or last known address
+          maxLength: 35
+          minLength: 0
+          type: string
+        addressLine5:
+          description: Address Line 5 of the person's current or last known address
+          maxLength: 35
+          minLength: 0
+          type: string
+        country:
+          description:
+            "The country of the person's current or last known address\
+                        \ address. This should be entered as <q>UNITED KINGDOM</q>, which includes\
+                        \ England, Scotland, Wales and Northern Ireland but excludes the Isle\
+                        \ of Man and Channel Islands. For international addresses (anything not\
+                        \ within the United Kingdom) the description should conform to ISO-3166\
+                        \ standard e.g. <q>AFGANISTAN</q>."
+          maxLength: 99
+          minLength: 1
+          type: string
+        dateOfBirth:
+          format: date
+          description: The date of birth of the person.
+          type: string
+        firstName:
+          description: The first name or forename of the person
+          maxLength: 99
+          minLength: 1
+          pattern: "^[-a-zA-Z ']{1,99}?$"
+          type: string
+        matchingAnalytics:
+          description: boolean to indicate whether to show score analytics details
+          type: boolean
+        nino:
+          description: The National Insurance Number of the person
+          pattern: "^((?:[ACEHJLMOPRSWXY][A-CEGHJ-NPR-TW-Z]|B[A-CEHJ-NPR-TW-Z]|G[ACEGHJ-NPR-TW-Z]|[KT][A-CEGHJ-MPR-TW-Z]|N[A-CEGHJL-NPR-SW-Z]|Z[A-CEGHJ-NPR-TW-Y])[0-9]{6}[A-D]?)$"
+          type: string
+        postcode:
+          description:
+            The postcode of the person's current or last known address.
+            Postcode should only be populated when country is UNITED KINGDOM.
+          pattern:
+            "([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9][A-Za-z]?))))\\\
+                        s?[0-9][A-Za-z]{2})"
+          type: string
+        secondName:
+          description:
+            The second or middle name(s) of the person. Should be separated
+            by spaces where there are multiple
+          maxLength: 99
+          minLength: 0
+          pattern: "^[-a-zA-Z ']{1,99}?$"
+          type: string
+        sex:
+          description: The person's sex or gender
+          enum:
+            - Male
+            - Female
+            - Not Known
+            - Not Specified
+          type: string
+        surname:
+          description: The surname or family name of the person.
+          maxLength: 99
+          minLength: 1
+          pattern: "^[-a-zA-Z ']{2,99}?$"
+          type: string
+        title:
+          description: The title of the person
+          enum:
+            - Mr
+            - Mrs
+            - Miss
+            - Ms
+            - Dr
+            - Rev
+            - Sir
+            - Lady
+            - Lord
+            - Dame
+          type: string
+        uuid:
+          description: The universally unique identifier
+          maxLength: 36
+          minLength: 1
+          type: string
+    HIP-originEnum:
+      enum:
+        - HIP
+        - HoD
+      type: string
+    HIP-failureResponse:
+      required:
+        - failures
+      type: object
+      properties:
+        failures:
+          minItems: 1
+          uniqueItems: true
+          type: array
+          items:
+            required:
+              - type
+              - reason
+            type: object
+            properties:
+              type:
+                type: string
+              reason:
+                type: string
+            additionalProperties: false
+    HIP-originResponse:
+      required:
+        - origin
+        - response
+      type: object
+      properties:
+        origin:
+          $ref: "#/components/schemas/HIP-originEnum"
+        response:
+          $ref: "#/components/schemas/HIP-failureResponse"
+      additionalProperties: false
+  examples:
+    RequestBodyExample:
+      value:
+        uuid: 12345678-1234-1234-1234-123456789012
+        nino: JB224466
+        firstName: SARAH
+        surname: MACPHERSON
+        dateOfBirth: 2004-03-01
+        addressLine1: 12 CORONATION STREET
+        country: United Kingdom
+    RequestBody2Example:
+      value:
+        uuid: 12345678-1234-1234-1234-123456789012
+        nino: JB224466
+        title: Ms
+        firstName: SARAH
+        surname: MACPHERSON
+        dateOfBirth: 2004-03-01
+        addressLine1: 12 CORONATION STREET
+        postcode: SK11 3IJ
+        country: United Kingdom
+        matchingAnalytics: true
+    MatchedPersonAddressResponseBodyExample:
+      value:
+        uuid: 12345678-1234-1234-1234-123456789012
+        requestNino: JB224466
+        matchingOutcome: IDENTIFIED_A_PERSON
+        addressSource: Enterprise Matching
+        matchedEntity:
+          nino: JB224466
+          firstname: GEOFF
+          surname: PHILLIPS
+          key: P3323704791B
+          dateOfBirth:
+            year: "1999"
+            month: "12"
+          confidence: 0.09
+          addresses:
+            - matchingDatasets:
+                - name: COMPANIES_HOUSE_PSC
+                  effectiveDate: 2021-06-05
+              buildingNumber: 73D
+              thoroughfare: ST JAMES'S HILL
+              locality: CLAPHAM
+              postTown: LONDON
+              postcode: SW116GV
+        matchingAnalytics:
+          matchedEntities: "reference-NINO AND : 5"
+          matchingThreshold: "0.0"
+          maximumPossibleScore: "53.0"
+    PersonNotFoundResponseExample:
+      value:
+        uuid: 472ee977-0ca2-448b-ab13-d1e01060b71d
+        requestNino: JX826162
+        matchingOutcome: FAILED_TO_IDENTIFY_THE_PERSON
+        addressSource: Enterprise Matching
+    SimpleError422Object1Example:
+      value:
+        error: Unprocessable
+        message: Text '1964/04/25' could not be parsed at index 4
+        timestamp: 2022-11-07T10:28:12.745198
+        status: "422"
+        errorValue: ""
+    SimpleError422Object2Example:
+      value:
+        timestamp: 2022-11-07T10:29:15.209218
+        status: "422"
+        error: Unprocessable
+        message: |-
+          Unrecognized field "dateofBirth" (class uk.gov.hmrc.matching.api.nps.PersonAddressMatchRequest), not marked as ignorable (16 known properties: "sex", "addressLine1", "addressLine2", "addressLine3", "addressLine4", "addressLine5", "country", "title", "dateOfBirth", "uuid", "nino", "secondName", "matchingAnalytics", "postcode", "firstName", "surname"])
+            at [Source: (PushbackInputStream); line: 7, column: 21] (through reference chain: uk.gov.hmrc.matching.api.nps.PersonAddressMatchRequest["dateofBirth"])
+        errorValue: ""
+    SimpleError400Object1Example:
+      value:
+        timestamp: 2022-11-07T10:31:19.915802
+        status: "400"
+        error:
+          "Exception thrown: org.springframework.web.bind.MissingRequestHeaderException:\
+                    \ Missing request header 'CorrelationID' for method parameter of type String"
+        message:
+          Missing request header 'CorrelationID' for method parameter of type
+          String
+    SimpleError404Object1Example:
+      value:
+        timestamp: 2022-11-07T10:32:13.912+0000
+        status: "404"
+        error: Not Found
+        message: No message available
+        path: /v1/person-details/
+  securitySchemes:
+    oAuth2:
+      type: oauth2
+      description: Keycloak OAuth2 Client Credentials Flow
+      flows:
+        clientCredentials:
+          tokenUrl: /realms/hip/protocol/openid-connect/token
+          scopes:
+            read:address-matching: Return all addresses associated with an individual
