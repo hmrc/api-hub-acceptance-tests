@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-//package scala.uk.gov.hmrc.test.ui.cucumber.stepdefs
-//
-//import uk.gov.hmrc.test.ui.pages.application.ApplicationDeleteConfirmationPage
-//
-//class ProdClientSecretCreation extends BaseStepDef {
-//
-// Then("""the user sees {string}""") { (string: String) =>
-//
-// }
+package scala.uk.gov.hmrc.test.ui.cucumber.stepdefs
+
+import uk.gov.hmrc.test.ui.pages.application.ApplicationDeleteConfirmationPage
+
+class ProdClientSecretCreation extends BaseStepDef {
+
+ Then("""the user sees {string}""") { (string: String) =>
+
+ }
 
 
-//}
+}
