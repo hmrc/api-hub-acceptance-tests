@@ -21,38 +21,37 @@ import uk.gov.hmrc.test.ui.pages.application.EnvironmentAndCredentialsPage._
 import uk.gov.hmrc.test.ui.pages.application.EnvironmentAndCredentialsPage.elements._
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
-class GenProdCredentialsPage(id: String) extends BasePage[GenProdCredentialsPage](pageReadyTest(id)) {
+import scala.uk.gov.hmrc.test.ui.pages.application.GenerateProductionCredentialsPage.elements.{confirmandcontinue, confirmcheckbox}
+
+class GenerateProductionCredentialsPage(id: String) extends BasePage[GenerateProductionCredentialsPage](pageReadyTest(id)) {
 
 
-  def selectconfirmcheckbox(): GenProdCredentialsPage = {
-    selectconfirmcheckbox()
-    new GenProdCredentialsPage(id)
+  def selectconfirmcheckbox(): GenerateProductionCredentialsPage = {
+    click(confirmcheckbox)
+     new GenerateProductionCredentialsPage(id)
   }
 
-  def clickconfirmandcontinue(): GenProdCredentialsPage = {
-    clickconfirmandcontinue()
-    new GenProdCredentialsPage(id)
+  def clickconfirmandcontinue(): GenerateProductionCredentialsPage = {
+    click(confirmandcontinue)
+    new GenerateProductionCredentialsPage(id)
   }
+
 
 }
 
-object GenProdCredentialsPage {
+object GenerateProductionCredentialsPage {
 
   def pageReadyTest(id: String): PageReadyTest = {
     PageReadyTests.apiHubPage.url(s"application/add-credential-checklist/$id")
   }
 
   object elements {
-//    val secondaryCredentialClientId: By = By.cssSelector("[data-secondary-credential-client-id]")
-//    val addCredentials: By = By.id("addTestCredentialButton")
-//    val addProdCredentials: By = By.id("addProductionCredentialButton")
-//    val addProdCredentialsLink: By = By.id("tab_hip-production")
     val confirmcheckbox: By = By.id("value_0")
-    val confirmandcontinue: By = By.id("button.govuk-button")
+    val confirmandcontinue: By = By.id("")
   }
 
-  def apply(id: String): GenProdCredentialsPage = {
-    new GenProdCredentialsPage(id)
+  def apply(id: String): GenerateProductionCredentialsPage = {
+    new GenerateProductionCredentialsPage(id)
   }
 
 }

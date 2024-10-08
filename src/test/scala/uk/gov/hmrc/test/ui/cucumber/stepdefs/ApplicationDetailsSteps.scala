@@ -111,15 +111,21 @@ class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseSt
       }
   }
 
-  Given("""the user clicks HIP Production link""") { () =>
+  Then("""the client id should be added to the Production environments credentials with count {int}""") { (expectedCount: Int) =>
     EnvironmentAndCredentialsPage(sharedState.application.id).selectAddProdCredentialsLink()
-   }
+    EnvironmentAndCredentialsPage(sharedState.application.id)
+      .foreach { page =>
+        val credentialCount = page.getSecondaryCredentialCount // Extract the credential count once
+        credentialCount shouldBe expectedCount // Use the dynamic expected count
+      }
+  }
 
   When("""the user adds Test credentials""") { () =>
     EnvironmentAndCredentialsPage(sharedState.application.id).selectAddTestCredentials()
   }
 
   When("""the user adds Prod credentials""") { () =>
+    EnvironmentAndCredentialsPage(sharedState.application.id).selectAddProdCredentialsLink()
     EnvironmentAndCredentialsPage(sharedState.application.id).selectAddProdCredentials()
   }
 
