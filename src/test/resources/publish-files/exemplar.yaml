@@ -15,6 +15,7 @@ info:
     publisher-reference: hip-exemplar-boardgames
     short-description: The HIP Exemplar Board Game Store API
     status: ALPHA
+    api-type: SIMPLE
     platform: HIP
     backends:
     - internal

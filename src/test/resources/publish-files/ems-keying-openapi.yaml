@@ -22,6 +22,7 @@ info:
     publisher-reference: ems-keying-service
     short-description: Keying Service API
     status: ALPHA
+    api-type: SIMPLE
     backends:
       - EMS
 servers:

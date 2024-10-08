@@ -10,6 +10,7 @@ info:
     publisher-reference: identity-management-service
     short-description: Identity Management Service for API Hub to manage clients and associated scopes.
     status: LIVE
+    api-type: SIMPLE
 paths:
   /identity/clients:
     post:

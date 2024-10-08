@@ -19,6 +19,7 @@ info:
     short-description: Retrieve Individuals Identity Indicator Details for the specified
       NINO
     status: BETA
+    api-type: SIMPLE
     platform: HIP
     backends:
     - NPS

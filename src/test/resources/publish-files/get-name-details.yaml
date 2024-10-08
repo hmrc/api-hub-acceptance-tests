@@ -18,6 +18,7 @@ info:
     publisher-reference: nps-get-name-details
     short-description: Retrieve Name History from NINO
     status: BETA
+    api-type: SIMPLE
     platform: HIP
     backends:
     - NPS

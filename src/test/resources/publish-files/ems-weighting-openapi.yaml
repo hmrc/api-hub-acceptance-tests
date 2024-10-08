@@ -24,6 +24,7 @@ info:
     publisher-reference: ems-address-weighting-service
     short-description: Address Weighting Service API
     status: ALPHA
+    api-type: SIMPLE
     backends:
       - EMS
 servers:

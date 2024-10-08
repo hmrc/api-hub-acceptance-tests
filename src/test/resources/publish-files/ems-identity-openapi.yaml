@@ -12,6 +12,7 @@ info:
     publisher-reference: ems-identity
     short-description: EMS Identity Service
     status: ALPHA
+    api-type: SIMPLE
     backends:
       - EMS
 servers:
