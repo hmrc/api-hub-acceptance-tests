@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package scala.uk.gov.hmrc.test.ui.cucumber.stepdefs
+package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
 import com.google.inject.Inject
 import io.cucumber.guice.ScenarioScoped
 import uk.gov.hmrc.test.ui.cucumber.stepdefs.BaseStepDef
 import uk.gov.hmrc.test.ui.pages.application.GenerateProductionCredentialsPage
-import uk.gov.hmrc.test.ui.pages.{Journeys, Robot}
+//import uk.gov.hmrc.test.ui.pages.{Journeys, Robot}
 import uk.gov.hmrc.test.ui.utilities.SharedState
 
-import java.time.LocalDate
-import scala.uk.gov.hmrc.test.ui.pages.application.GenerateProductionCredentialsPage
+//import java.time.LocalDate
+import uk.gov.hmrc.test.ui.pages.application.GenerateProductionCredentialsPage
 
 @ScenarioScoped
 class GenerateProductionCredentialsSteps @Inject()(sharedState: SharedState) extends BaseStepDef {

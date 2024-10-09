@@ -47,7 +47,7 @@ class EnvironmentAndCredentialsPage(id: String) extends BasePage[EnvironmentAndC
 object EnvironmentAndCredentialsPage {
 
   def pageReadyTest(id: String): PageReadyTest = {
-    PageReadyTests.apiHubPage.url(s"application/environment-and-credentials/$id")
+    PageReadyTests.apiHubPage.url(s"application/environment-and-credentials/$id" + "#hip-production")
   }
 
   object elements {

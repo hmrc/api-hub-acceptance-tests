@@ -126,6 +126,7 @@ class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseSt
 
   When("""the user adds Prod credentials""") { () =>
     EnvironmentAndCredentialsPage(sharedState.application.id).selectAddProdCredentialsLink()
+    Thread.sleep(6000)
     EnvironmentAndCredentialsPage(sharedState.application.id).selectAddProdCredentials()
   }
 

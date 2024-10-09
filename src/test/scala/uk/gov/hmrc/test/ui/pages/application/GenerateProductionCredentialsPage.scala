@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package scala.uk.gov.hmrc.test.ui.pages.application
+package uk.gov.hmrc.test.ui.pages.application
 
-import uk.gov.hmrc.test.ui.pages.application.EnvironmentAndCredentialsPage
-import uk.gov.hmrc.test.ui.pages.application.EnvironmentAndCredentialsPage._
-import uk.gov.hmrc.test.ui.pages.application.EnvironmentAndCredentialsPage.elements._
+import org.openqa.selenium.By
+import uk.gov.hmrc.test.ui.pages.application.GenerateProductionCredentialsPage._
+import uk.gov.hmrc.test.ui.pages.application.GenerateProductionCredentialsPage.elements._
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
-import scala.uk.gov.hmrc.test.ui.pages.application.GenerateProductionCredentialsPage.elements.{confirmandcontinue, confirmcheckbox}
+//import uk.gov.hmrc.test.ui.pages.application.GenerateProductionCredentialsPage.elements.{confirmandcontinue, confirmcheckbox}
 
 class GenerateProductionCredentialsPage(id: String) extends BasePage[GenerateProductionCredentialsPage](pageReadyTest(id)) {
 
@@ -43,11 +43,14 @@ object GenerateProductionCredentialsPage {
 
   def pageReadyTest(id: String): PageReadyTest = {
     PageReadyTests.apiHubPage.url(s"application/add-credential-checklist/$id")
+
   }
 
   object elements {
-    val confirmcheckbox: By = By.id("value_0")
-    val confirmandcontinue: By = By.id("")
+//    val confirmcheckbox: By = By.id("value_0")
+//    val confirmandcontinue: By = By.id("")
+    val confirmcheckbox: By = By.id("confirmcheckbox")
+    val confirmandcontinue: By = By.id("confirmandcontinue")
   }
 
   def apply(id: String): GenerateProductionCredentialsPage = {
