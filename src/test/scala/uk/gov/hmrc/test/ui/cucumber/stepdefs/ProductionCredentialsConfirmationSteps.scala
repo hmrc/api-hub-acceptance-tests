@@ -34,11 +34,11 @@
 //
 //import uk.gov.hmrc.test.ui.pages.application.ApplicationDeleteConfirmationPage
 //
-//class ProdClientSecretCreation extends BaseStepDef {
-//
-// Then("""the user sees {string}""") { (string: String) =>
-//
-// }
-//
-//
-//}
+class ProdClientSecretCreation extends BaseStepDef {
+
+ Then("""the user sees {string}""") { (string: String) =>
+
+ }
+
+
+}
