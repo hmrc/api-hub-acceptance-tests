@@ -112,8 +112,8 @@ class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseSt
   }
 
   Then("""the client id should be added to the Production environments credentials with count {int}""") { (expectedCount: Int) =>
-    EnvironmentAndCredentialsPage(sharedState.application.id).selectAddProdCredentialsLink()
     EnvironmentAndCredentialsPage(sharedState.application.id)
+      .addProductionCredential()
       .foreach { page =>
         val credentialCount = page.getSecondaryCredentialCount // Extract the credential count once
         credentialCount shouldBe expectedCount // Use the dynamic expected count
@@ -121,13 +121,13 @@ class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseSt
   }
 
   When("""the user adds Test credentials""") { () =>
-    EnvironmentAndCredentialsPage(sharedState.application.id).selectAddTestCredentials()
+    EnvironmentAndCredentialsPage(sharedState.application.id).addTestCredential()
   }
 
   When("""the user adds Prod credentials""") { () =>
-    EnvironmentAndCredentialsPage(sharedState.application.id).selectAddProdCredentialsLink()
-//    Thread.sleep(6000)
-    EnvironmentAndCredentialsPage(sharedState.application.id).selectAddProdCredentials()
+    EnvironmentAndCredentialsPage(sharedState.application.id)
+      .viewProductionEnvironment()
+      .addProductionCredential()
   }
 
   Given("""the user chooses {string} from the application left hand nav menu""") { (string: String) =>

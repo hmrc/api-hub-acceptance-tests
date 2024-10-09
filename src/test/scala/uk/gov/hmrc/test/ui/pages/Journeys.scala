@@ -18,8 +18,7 @@ package uk.gov.hmrc.test.ui.pages
 
 import uk.gov.hmrc.test.ui.pages.application.{ApplicationDetailsPage, YourApplicationsPage}
 import uk.gov.hmrc.test.ui.pages.team.{ManageMyTeamsPage, ManageTeamPage}
-import uk.gov.hmrc.test.ui.utilities.{Role, SharedState, UserRole}
-import uk.gov.hmrc.test.ui.utilities.{Role, SharedState, PrivilegedUserRole}
+import uk.gov.hmrc.test.ui.utilities.{PrivilegedUserRole, Role, SharedState, UserRole}
 
 /**
  * Journeys are effectively shortcuts that can be used by step definition

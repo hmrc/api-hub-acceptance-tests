@@ -21,44 +21,72 @@ import uk.gov.hmrc.test.ui.pages.application.EnvironmentAndCredentialsPage._
 import uk.gov.hmrc.test.ui.pages.application.EnvironmentAndCredentialsPage.elements._
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
-class EnvironmentAndCredentialsPage(id: String) extends BasePage[EnvironmentAndCredentialsPage](pageReadyTest(id)) {
+class EnvironmentAndCredentialsPage(id: String, environmentTab: Option[EnvironmentTab] = None) extends BasePage[EnvironmentAndCredentialsPage](pageReadyTest(id, environmentTab)) {
 
   def getSecondaryCredentialCount: Int = {
     findElements(secondaryCredentialClientId).size
   }
 
-  def selectAddTestCredentials(): EnvironmentAndCredentialsPage = {
-    click(addCredentials)
-    new EnvironmentAndCredentialsPage(id)
+  def viewTestEnvironment(): EnvironmentAndCredentialsPage = {
+    click(hipTestTab)
+    EnvironmentAndCredentialsPage(id, Some(TestTab))
   }
 
-  def selectAddProdCredentialsLink(): EnvironmentAndCredentialsPage = {
-    click(addProdCredentialsLink)
-    new EnvironmentAndCredentialsPage(id)
+  def viewProductionEnvironment(): EnvironmentAndCredentialsPage = {
+    click(hipProductionTab)
+    EnvironmentAndCredentialsPage(id, Some(ProductionTab))
   }
 
-  def selectAddProdCredentials(): EnvironmentAndCredentialsPage = {
-    click(addProdCredentials)
-    new EnvironmentAndCredentialsPage(id)
+  def addTestCredential(): EnvironmentAndCredentialsPage = {
+    click(addTestCredentialButton)
+    EnvironmentAndCredentialsPage(id)
+  }
+
+  // This isn't going to work. Clicking the button takes us to the "Add credential checklist" not environments and
+  // credentials. You'll need to return GenerateProductionCredentialsPage I think.
+  def addProductionCredential(): EnvironmentAndCredentialsPage = {
+    click(addProductionCredentialButton)
+    EnvironmentAndCredentialsPage(id)
   }
 
 }
 
 object EnvironmentAndCredentialsPage {
 
-  def pageReadyTest(id: String): PageReadyTest = {
-    PageReadyTests.apiHubPage.url(s"application/environment-and-credentials/$id" + "#hip-production")
+  // We need an enumeration to represent which environment tab is selected. Scala 2 enumerations aren't very good
+  // so we'll use an abstract trait and case objects. In Scala 3 we would do this differently.
+  //  enum EnvironmentTab:
+  //    case TestTab, ProductionTab
+  sealed trait EnvironmentTab
+  case object TestTab extends EnvironmentTab
+  case object ProductionTab extends EnvironmentTab
+
+  // We may have an environment tab selected in which case that is in the URL
+  // If no tab is selected then we just want the basic page URL
+  // In Scala we use Option to represent something that is not mandatory. The value of environmentTab is one of:
+  //  Some(tab) - we can now use tab in code
+  //  None - there's is no tab selected
+  // We're defaulting environmentTab to None as that is the current behaviour of the tests. We don't need to change it
+  // anywhere unless we specifically want to select a tab.
+  def pageReadyTest(id: String, environmentTab: Option[EnvironmentTab] = None): PageReadyTest = {
+    val fragment = environmentTab match {
+      case Some(TestTab) => "#hip-development"
+      case Some(ProductionTab) => "#hip-production"
+      case None => ""
+    }
+    PageReadyTests.apiHubPage.url(s"application/environment-and-credentials/$id$fragment")
   }
 
   object elements {
     val secondaryCredentialClientId: By = By.cssSelector("[data-secondary-credential-client-id]")
-    val addCredentials: By = By.id("addTestCredentialButton")
-    val addProdCredentials: By = By.id("addProductionCredentialButton")
-    val addProdCredentialsLink: By = By.id("tab_hip-production")
+    val addTestCredentialButton: By = By.id("addTestCredentialButton")
+    val addProductionCredentialButton: By = By.id("addProductionCredentialButton")
+    val hipTestTab: By = By.id("tab_hip-development")
+    val hipProductionTab: By = By.id("tab_hip-production")
   }
 
-  def apply(id: String): EnvironmentAndCredentialsPage = {
-    new EnvironmentAndCredentialsPage(id)
+  def apply(id: String, environmentTab: Option[EnvironmentTab] = None): EnvironmentAndCredentialsPage = {
+    new EnvironmentAndCredentialsPage(id, environmentTab)
   }
 
 }

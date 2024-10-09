@@ -25,6 +25,9 @@ import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
 class GenerateProductionCredentialsPage(id: String) extends BasePage[GenerateProductionCredentialsPage](pageReadyTest(id)) {
 
+  // Don't code it like this. Read the documentation for PageObject. Avoid click this and then click this. Simply have a
+  // confirmAndContinue method that clicks the checkbox, clicks the button, and then returns the success page. I can't
+  // see a PageObject for the success page yet so that probably needs adding.
 
   def selectconfirmcheckbox(): GenerateProductionCredentialsPage = {
     click(confirmcheckbox)
@@ -35,7 +38,6 @@ class GenerateProductionCredentialsPage(id: String) extends BasePage[GeneratePro
     click(confirmandcontinue)
     new GenerateProductionCredentialsPage(id)
   }
-
 
 }
 
