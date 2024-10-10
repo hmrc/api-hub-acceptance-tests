@@ -103,7 +103,12 @@ object Journeys extends Robot {
 
   def signInAndRegisterAnApplication(sharedState: SharedState): ApplicationDetailsPage = {
     signIn()
-//    signInViaLdapPrivilagesUser(PrivilegedUserRole)
+    checkUserHasATeam(sharedState)
+    registerAnApplication(sharedState)
+  }
+
+  def signInWithRoleAndRegisterAnApplication(sharedState: SharedState, role: Role): ApplicationDetailsPage = {
+    signInViaStride(role)
     checkUserHasATeam(sharedState)
     registerAnApplication(sharedState)
   }

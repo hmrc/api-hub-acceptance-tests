@@ -6,8 +6,7 @@ Feature: Application Environments
 #    And the user chooses "Environments and credentials" from the application left hand nav menu
 
   Background:
-    Given a user has signed in with Stride and role "privileged-user"
-    And a signed-in user registers an application
+    Given a user has signed-in with role "privileged-user" and registers an application
     And the user chooses "Environments and credentials" from the application left hand nav menu
 
 #  Scenario: Add Test credentials - HIPP-1251
