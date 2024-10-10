@@ -19,6 +19,7 @@ package uk.gov.hmrc.test.ui.pages
 import uk.gov.hmrc.test.ui.pages.application.{ApplicationDetailsPage, YourApplicationsPage}
 import uk.gov.hmrc.test.ui.pages.team.{ManageMyTeamsPage, ManageTeamPage}
 import uk.gov.hmrc.test.ui.utilities.{PrivilegedUserRole, Role, SharedState, UserRole}
+import uk.gov.hmrc.test.ui.utilities.{Role, SharedState, PrivilegedUserRole}
 
 /**
  * Journeys are effectively shortcuts that can be used by step definition
@@ -102,6 +103,7 @@ object Journeys extends Robot {
 
   def signInAndRegisterAnApplication(sharedState: SharedState): ApplicationDetailsPage = {
     signIn()
+//    signInViaLdapPrivilagesUser(PrivilegedUserRole)
     checkUserHasATeam(sharedState)
     registerAnApplication(sharedState)
   }

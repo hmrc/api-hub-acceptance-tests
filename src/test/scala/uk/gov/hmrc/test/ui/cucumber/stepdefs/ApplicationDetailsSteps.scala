@@ -17,9 +17,10 @@
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
 import com.google.inject.Inject
+
 import io.cucumber.guice.ScenarioScoped
 import uk.gov.hmrc.test.ui.pages.addanapi.AddAnApiSuccessPage
-import uk.gov.hmrc.test.ui.pages.application.{ApplicationDetailsPage, EnvironmentAndCredentialsPage}
+import uk.gov.hmrc.test.ui.pages.application.{ApplicationDetailsPage, EnvironmentAndCredentialsPage, GenerateProductionCredentialsPage}
 import uk.gov.hmrc.test.ui.pages.{Journeys, Robot}
 import uk.gov.hmrc.test.ui.utilities.SharedState
 
@@ -113,6 +114,7 @@ class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseSt
 
   Then("""the client id should be added to the Production environments credentials with count {int}""") { (expectedCount: Int) =>
     EnvironmentAndCredentialsPage(sharedState.application.id)
+//    GenerateProductionCredentialsPage(sharedState.application.id)
       .addProductionCredential()
       .foreach { page =>
         val credentialCount = page.getSecondaryCredentialCount // Extract the credential count once
@@ -128,6 +130,7 @@ class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseSt
     EnvironmentAndCredentialsPage(sharedState.application.id)
       .viewProductionEnvironment()
       .addProductionCredential()
+
   }
 
   Given("""the user chooses {string} from the application left hand nav menu""") { (string: String) =>

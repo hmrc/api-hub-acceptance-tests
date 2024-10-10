@@ -17,6 +17,7 @@
 package uk.gov.hmrc.test.ui.pages.application
 
 import org.openqa.selenium.By
+//import uk.gov.hmrc.test.ui.pages.application.EnvironmentAndCredentialsPage.elements.addProductionCredentialButton
 import uk.gov.hmrc.test.ui.pages.application.GenerateProductionCredentialsPage._
 import uk.gov.hmrc.test.ui.pages.application.GenerateProductionCredentialsPage.elements._
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
@@ -39,6 +40,13 @@ class GenerateProductionCredentialsPage(id: String) extends BasePage[GeneratePro
     new GenerateProductionCredentialsPage(id)
   }
 
+//  def addProductionCredential(): GenerateProductionCredentialsPage = {
+//    click(addProductionCredentialButton)
+//    GenerateProductionCredentialsPage(id)
+//  }
+
+
+  object getSecondaryCredentialCount
 }
 
 object GenerateProductionCredentialsPage {
@@ -53,6 +61,7 @@ object GenerateProductionCredentialsPage {
 //    val confirmandcontinue: By = By.id("")
     val confirmcheckbox: By = By.id("confirmcheckbox")
     val confirmandcontinue: By = By.id("confirmandcontinue")
+//    val addProductionCredentialButton: By = By.id("addProductionCredentialButton")
   }
 
   def apply(id: String): GenerateProductionCredentialsPage = {
