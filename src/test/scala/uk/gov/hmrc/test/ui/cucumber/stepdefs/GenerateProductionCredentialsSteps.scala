@@ -19,6 +19,7 @@ package uk.gov.hmrc.test.ui.cucumber.stepdefs
 import com.google.inject.Inject
 import io.cucumber.guice.ScenarioScoped
 import uk.gov.hmrc.test.ui.pages.application.GenerateProductionCredentialsPage
+import uk.gov.hmrc.test.ui.pages.application.ProductionCredentialsSuccessPage
 import uk.gov.hmrc.test.ui.utilities.SharedState
 
 @ScenarioScoped
@@ -28,7 +29,10 @@ class GenerateProductionCredentialsSteps @Inject()(sharedState: SharedState) ext
 
     GenerateProductionCredentialsPage(sharedState.application.id).selectconfirmcheckbox()
     GenerateProductionCredentialsPage(sharedState.application.id).clickconfirmandcontinue()
-
-    }
-
+  }
+//  Then("""the user sees {string}""") { () =>
+//    ProductionCredentialsSuccessPage(sharedState.application.id).click()
+//
+//  }
 }
+

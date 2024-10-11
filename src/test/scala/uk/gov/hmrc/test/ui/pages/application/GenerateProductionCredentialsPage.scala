@@ -20,6 +20,7 @@ import org.openqa.selenium.By
 //import uk.gov.hmrc.test.ui.pages.application.EnvironmentAndCredentialsPage.elements.addProductionCredentialButton
 import uk.gov.hmrc.test.ui.pages.application.GenerateProductionCredentialsPage._
 import uk.gov.hmrc.test.ui.pages.application.GenerateProductionCredentialsPage.elements._
+import uk.gov.hmrc.test.ui.pages.application.ProductionCredentialsSuccessPage
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
 //import uk.gov.hmrc.test.ui.pages.application.GenerateProductionCredentialsPage.elements.{confirmandcontinue, confirmcheckbox}
@@ -34,33 +35,31 @@ class GenerateProductionCredentialsPage(id: String) extends BasePage[GeneratePro
     click(confirmcheckbox)
      new GenerateProductionCredentialsPage(id)
   }
+//  def clickconfirmandcontinue(): GenerateProductionCredentialsPage = {
+//    click(confirmandcontinue)
+//    new GenerateProductionCredentialsPage(id)
+//  }
 
-  def clickconfirmandcontinue(): GenerateProductionCredentialsPage = {
+  def clickconfirmandcontinue(): ProductionCredentialsSuccessPage = {
     click(confirmandcontinue)
-    new GenerateProductionCredentialsPage(id)
+    new ProductionCredentialsSuccessPage(id)
   }
-
 //  def addProductionCredential(): GenerateProductionCredentialsPage = {
 //    click(addProductionCredentialButton)
 //    GenerateProductionCredentialsPage(id)
 //  }
-
-
   object getSecondaryCredentialCount
 }
-
 object GenerateProductionCredentialsPage {
-
   def pageReadyTest(id: String): PageReadyTest = {
-    PageReadyTests.apiHubPage.url(s"application/add-credential-checklist/$id")
-
+//    PageReadyTests.apiHubPage.url(s"application/add-credential-checklist/$id")
+    PageReadyTests.apiHubPage.url(s"application/environment-and-credentials/$id")
   }
-
   object elements {
 //    val confirmcheckbox: By = By.id("value_0")
 //    val confirmandcontinue: By = By.id("")
-    val confirmcheckbox: By = By.id("confirmcheckbox")
-    val confirmandcontinue: By = By.id("confirmandcontinue")
+    val confirmcheckbox: By = By.id("value_0")
+    val confirmandcontinue: By = By.id("confirmAndContinueButton")
 //    val addProductionCredentialButton: By = By.id("addProductionCredentialButton")
   }
 
