@@ -42,13 +42,6 @@ class EnvironmentAndCredentialsPage(id: String, environmentTab: Option[Environme
     EnvironmentAndCredentialsPage(id)
   }
 
-  // This isn't going to work. Clicking the button takes us to the "Add credential checklist" not environments and
-  // credentials. You'll need to return GenerateProductionCredentialsPage I think.
-  //  def addProductionCredential(): EnvironmentAndCredentialsPage = {
-  //    click(addProductionCredentialButton)
-  //    EnvironmentAndCredentialsPage(id)
-  //  }
-
   def addProductionCredential(): GenerateProductionCredentialsPage = {
     click(addProductionCredentialButton)
     GenerateProductionCredentialsPage(id)
@@ -56,10 +49,6 @@ class EnvironmentAndCredentialsPage(id: String, environmentTab: Option[Environme
 
 
 }
-
-//  def addProductionCredential() = ???
-
-
 
 object EnvironmentAndCredentialsPage {
 

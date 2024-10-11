@@ -17,10 +17,9 @@
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
 import com.google.inject.Inject
-
 import io.cucumber.guice.ScenarioScoped
 import uk.gov.hmrc.test.ui.pages.addanapi.AddAnApiSuccessPage
-import uk.gov.hmrc.test.ui.pages.application.{ApplicationDetailsPage, EnvironmentAndCredentialsPage, GenerateProductionCredentialsPage}
+import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage
 import uk.gov.hmrc.test.ui.pages.{Journeys, Robot}
 import uk.gov.hmrc.test.ui.utilities.SharedState
 
@@ -104,41 +103,11 @@ class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseSt
     navigateTo(s"application/details/$string")
   }
 
-  Then("""the client id should be added to the test environments credentials with count {int}""") { (expectedCount: Int) =>
-    EnvironmentAndCredentialsPage(sharedState.application.id)
-      .foreach { page =>
-        val credentialCount = page.getSecondaryCredentialCount // Extract the credential count once
-        credentialCount shouldBe expectedCount // Use the dynamic expected count
-      }
-  }
-
-  Then("""the client id should be added to the Production environments credentials with count {int}""") { (expectedCount: Int) =>
-    EnvironmentAndCredentialsPage(sharedState.application.id)
-//    GenerateProductionCredentialsPage(sharedState.application.id)
-      .addProductionCredential()
-      .foreach { page =>
-        val credentialCount = page.getSecondaryCredentialCount // Extract the credential count once
-        credentialCount shouldBe expectedCount // Use the dynamic expected count
-      }
-  }
-
-  When("""the user adds Test credentials""") { () =>
-    EnvironmentAndCredentialsPage(sharedState.application.id).addTestCredential()
-  }
-
-  When("""the user adds Prod credentials""") { () =>
-    EnvironmentAndCredentialsPage(sharedState.application.id)
-      .viewProductionEnvironment()
-      .addProductionCredential()
-
-  }
-
   Given("""the user chooses {string} from the application left hand nav menu""") { (string: String) =>
     string match {
       case "Application APIs" => ApplicationDetailsPage(sharedState.application.id).applicationApis()
       case "Environments and credentials" => ApplicationDetailsPage(sharedState.application.id).environmentsAndCredentials()
       case "Delete application" => ApplicationDetailsPage(sharedState.application.id).deleteApplication()
-//      case "HIP Production" => ApplicationDetailsPage(sharedState.application.id).HIPProduction()
       case _ => throw new IllegalArgumentException(s"Unknown option: $string")
     }
   }

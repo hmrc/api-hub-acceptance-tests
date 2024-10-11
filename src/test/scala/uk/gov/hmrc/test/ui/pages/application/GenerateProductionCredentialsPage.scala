@@ -17,50 +17,29 @@
 package uk.gov.hmrc.test.ui.pages.application
 
 import org.openqa.selenium.By
-//import uk.gov.hmrc.test.ui.pages.application.EnvironmentAndCredentialsPage.elements.addProductionCredentialButton
 import uk.gov.hmrc.test.ui.pages.application.GenerateProductionCredentialsPage._
 import uk.gov.hmrc.test.ui.pages.application.GenerateProductionCredentialsPage.elements._
-import uk.gov.hmrc.test.ui.pages.application.ProductionCredentialsSuccessPage
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
-
-//import uk.gov.hmrc.test.ui.pages.application.GenerateProductionCredentialsPage.elements.{confirmandcontinue, confirmcheckbox}
 
 class GenerateProductionCredentialsPage(id: String) extends BasePage[GenerateProductionCredentialsPage](pageReadyTest(id)) {
 
-  // Don't code it like this. Read the documentation for PageObject. Avoid click this and then click this. Simply have a
-  // confirmAndContinue method that clicks the checkbox, clicks the button, and then returns the success page. I can't
-  // see a PageObject for the success page yet so that probably needs adding.
-
-  def selectconfirmcheckbox(): GenerateProductionCredentialsPage = {
-    click(confirmcheckbox)
-     new GenerateProductionCredentialsPage(id)
+  def confirmAndContinue(): ProductionCredentialsSuccessPage = {
+    click(confirmCheckbox)
+    click(confirmAndContinueButton)
+    ProductionCredentialsSuccessPage(id)
   }
-//  def clickconfirmandcontinue(): GenerateProductionCredentialsPage = {
-//    click(confirmandcontinue)
-//    new GenerateProductionCredentialsPage(id)
-//  }
 
-  def clickconfirmandcontinue(): ProductionCredentialsSuccessPage = {
-    click(confirmandcontinue)
-    new ProductionCredentialsSuccessPage(id)
-  }
-//  def addProductionCredential(): GenerateProductionCredentialsPage = {
-//    click(addProductionCredentialButton)
-//    GenerateProductionCredentialsPage(id)
-//  }
-  object getSecondaryCredentialCount
 }
+
 object GenerateProductionCredentialsPage {
+
   def pageReadyTest(id: String): PageReadyTest = {
-//    PageReadyTests.apiHubPage.url(s"application/add-credential-checklist/$id")
-    PageReadyTests.apiHubPage.url(s"application/environment-and-credentials/$id")
+    PageReadyTests.apiHubPage.url(s"application/add-credential-checklist/$id")
   }
+
   object elements {
-//    val confirmcheckbox: By = By.id("value_0")
-//    val confirmandcontinue: By = By.id("")
-    val confirmcheckbox: By = By.id("value_0")
-    val confirmandcontinue: By = By.id("confirmAndContinueButton")
-//    val addProductionCredentialButton: By = By.id("addProductionCredentialButton")
+    val confirmCheckbox: By = By.id("value_0")
+    val confirmAndContinueButton: By = By.id("confirmAndContinueButton")
   }
 
   def apply(id: String): GenerateProductionCredentialsPage = {

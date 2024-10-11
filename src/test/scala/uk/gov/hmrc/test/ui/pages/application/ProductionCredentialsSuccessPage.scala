@@ -17,32 +17,31 @@
 package uk.gov.hmrc.test.ui.pages.application
 
 import org.openqa.selenium.By
-//import uk.gov.hmrc.test.ui.pages.application.GenerateProductionCredentialsPage.elements.{confirmandcontinue, confirmcheckbox}
-//import uk.gov.hmrc.test.ui.pages.application.GenerateProductionCredentialsPage.pageReadyTest
 import uk.gov.hmrc.test.ui.pages.application.ProductionCredentialsSuccessPage.pageReadyTest
-import uk.gov.hmrc.test.ui.pages.application.ProductionCredentialsSuccessPage._
+import uk.gov.hmrc.test.ui.pages.application.ProductionCredentialsSuccessPage.elements.yourCredentialsLink
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
+
 class ProductionCredentialsSuccessPage(id: String) extends BasePage[ProductionCredentialsSuccessPage](pageReadyTest(id)) {
 
+  def returnToEnvironmentsAndCredentials(): EnvironmentAndCredentialsPage = {
+    click(yourCredentialsLink)
+    EnvironmentAndCredentialsPage(id)
   }
+
+}
+
 object ProductionCredentialsSuccessPage {
 
-//  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url(s"application/add-credential-success/$id")
   def pageReadyTest(id: String): PageReadyTest = {
     PageReadyTests.apiHubPage.url(s"application/add-credential-success/$id")
-
   }
-//  object elements {
-//    //    val confirmcheckbox: By = By.id("value_0")
-//    //    val confirmandcontinue: By = By.id("")
-//    val confirmcheckbox: By = By.id("value_0")
-//    val confirmandcontinue: By = By.id("confirmAndContinueButton")
-//    val viewApplicationLink: By = By.id("XXXXXXXXX")
-//    //    val addProductionCredentialButton: By = By.id("addProductionCredentialButton")
-//  }
+
+  object elements {
+    val yourCredentialsLink: By = By.id("yourCredentials")
+  }
+
   def apply(id: String): ProductionCredentialsSuccessPage = {
     new ProductionCredentialsSuccessPage(id)
   }
 
 }
-
