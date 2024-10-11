@@ -23,9 +23,10 @@ import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
 class ProvideSupportingInformationPage extends BasePage[ProvideSupportingInformationPage](pageReadyTest) {
 
-  def setSupportingInformation(information: String): Unit = {
+  def setSupportingInformation(information: String): RequestProductionAccessCYAPage = {
     sendKeys(supportingInformation, information)
     click(continueButton)
+    RequestProductionAccessCYAPage()
   }
 
 }

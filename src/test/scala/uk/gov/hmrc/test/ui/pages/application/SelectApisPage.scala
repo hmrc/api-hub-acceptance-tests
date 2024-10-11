@@ -24,9 +24,10 @@ import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
 class SelectApisPage extends BasePage[SelectApisPage](pageReadyTest) {
 
-  def setSelectedApi(): Unit = {
+  def setSelectedApi(): ProvideSupportingInformationPage = {
     click(selectedApi)
     click(continueButton)
+    ProvideSupportingInformationPage()
   }
 
 }

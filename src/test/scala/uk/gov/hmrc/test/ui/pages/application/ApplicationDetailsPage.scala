@@ -20,6 +20,7 @@ import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.api.ExploreApisPage
 import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage._
 import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage.elements._
+import uk.gov.hmrc.test.ui.pages.cancelaccessrequest.CancelAccessRequestSelectApiPage
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 import uk.gov.hmrc.test.ui.utilities.DateFormatterUtil
 
@@ -74,6 +75,11 @@ class ApplicationDetailsPage(id: String) extends BasePage[ApplicationDetailsPage
     ApplicationDeleteConfirmationPage(applicationId)
   }
 
+  def cancelAccessRequests(): CancelAccessRequestSelectApiPage = {
+    click(cancelAccessRequestsLink)
+    CancelAccessRequestSelectApiPage()
+  }
+
 }
 
 object ApplicationDetailsPage {
@@ -94,6 +100,7 @@ object ApplicationDetailsPage {
     val applicationApisLink: By = By.cssSelector("[data-nav-item-page='ApisPage']")
     val environmentsAndCredentialsLink: By = By.cssSelector("[data-nav-item-page='EnvironmentsAndCredentialsPage']")
     val deleteApplicationLink: By = By.cssSelector("[data-nav-item-page='DeleteApplicationPage']")
+    val cancelAccessRequestsLink: By = By.id("cancelAccessRequestsLink")
   }
 
   def apply(id: String): ApplicationDetailsPage = {

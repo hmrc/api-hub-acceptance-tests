@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.pages.application
+package uk.gov.hmrc.test.ui.pages.cancelaccessrequest
 
 import org.openqa.selenium.By
-import uk.gov.hmrc.test.ui.pages.application.RequestProductionAccessSuccessPage._
-import uk.gov.hmrc.test.ui.pages.registerapplication.RegisterApplicationSuccessPage.elements.{applicationIdAttribute, viewApplicationLink}
+import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
+import uk.gov.hmrc.test.ui.pages.cancelaccessrequest.CancelAccessRequestSuccessPage.pageReadyTest
+import uk.gov.hmrc.test.ui.pages.registerapplication.RegisterApplicationSuccessPage.elements.{applicationIdAttribute, viewApplicationLink}
 
-class RequestProductionAccessSuccessPage extends BasePage[RequestProductionAccessSuccessPage](pageReadyTest) {
+class CancelAccessRequestSuccessPage extends BasePage[CancelAccessRequestSuccessPage](pageReadyTest) {
 
   def viewApplication(): ApplicationDetailsPage = {
     val applicationId = getApplicationId
@@ -35,17 +36,17 @@ class RequestProductionAccessSuccessPage extends BasePage[RequestProductionAcces
 
 }
 
-object RequestProductionAccessSuccessPage {
+object CancelAccessRequestSuccessPage {
 
-  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("application/request-production-access/success")
+  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("application/cancel-access-request/submit")
 
   object elements {
     val viewApplicationLink: By = By.id("viewApplicationLink")
     val applicationIdAttribute: String = "data-application-id"
   }
 
-  def apply(): RequestProductionAccessSuccessPage = {
-    new RequestProductionAccessSuccessPage()
+  def apply(): CancelAccessRequestSuccessPage = {
+    new CancelAccessRequestSuccessPage()
   }
 
 }

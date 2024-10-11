@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.test.ui.pages
 
-import uk.gov.hmrc.test.ui.pages.application.{ApplicationDetailsPage, YourApplicationsPage}
+import uk.gov.hmrc.test.ui.pages.application.{ApplicationApisPage, ApplicationDetailsPage, YourApplicationsPage}
 import uk.gov.hmrc.test.ui.pages.team.{ManageMyTeamsPage, ManageTeamPage}
 import uk.gov.hmrc.test.ui.utilities.{Role, SharedState, UserRole}
 
@@ -122,6 +122,27 @@ object Journeys extends Robot {
     if (!Journeys.openManageMyTeamsPage().hasTeamWithName(sharedState.team.name)) {
       createTeam(sharedState)
     }
+  }
+
+  def addAnApi(sharedState: SharedState): ApplicationDetailsPage = {
+    ApplicationDetailsPage(sharedState.application.id)
+      .addApis()
+      .selectRandomApi()
+      .addToAnApplication()
+      .selectApplication(sharedState.application.id)
+      .selectAllEndpoints()
+      .confirmUsagePolicy()
+      .continue()
+      .viewApplication()
+  }
+
+  def requestProductionAccess(sharedState: SharedState): ApplicationDetailsPage = {
+    ApplicationApisPage(sharedState.application.id)
+      .requestProductionAccess()
+      .setSelectedApi()
+      .setSupportingInformation("test-supporting-information")
+      .confirmAnswers()
+      .viewApplication()
   }
 
 }
