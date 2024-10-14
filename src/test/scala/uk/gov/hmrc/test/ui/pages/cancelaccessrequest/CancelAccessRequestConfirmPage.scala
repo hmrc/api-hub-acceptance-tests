@@ -14,34 +14,34 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.test.ui.pages.application
+package uk.gov.hmrc.test.ui.pages.cancelaccessrequest
 
 import org.openqa.selenium.By
-import uk.gov.hmrc.test.ui.pages.application.RequestProductionAccessCYAPage._
-import uk.gov.hmrc.test.ui.pages.application.RequestProductionAccessCYAPage.elements._
+import uk.gov.hmrc.test.ui.pages.cancelaccessrequest.CancelAccessRequestConfirmPage.pageReadyTest
+import uk.gov.hmrc.test.ui.pages.cancelaccessrequest.CancelAccessRequestConfirmPage.elements._
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
-class RequestProductionAccessCYAPage extends BasePage[RequestProductionAccessCYAPage](pageReadyTest) {
+class CancelAccessRequestConfirmPage extends BasePage[CancelAccessRequestConfirmPage](pageReadyTest) {
 
-  def confirmAnswers(): RequestProductionAccessSuccessPage = {
-    click(confirm)
+  def confirmAndContinue(): CancelAccessRequestSuccessPage = {
+    click(yesRadio)
     click(continueButton)
-    RequestProductionAccessSuccessPage()
+    CancelAccessRequestSuccessPage()
   }
 
 }
 
-object RequestProductionAccessCYAPage {
+object CancelAccessRequestConfirmPage {
 
-  val pageReadyTest: PageReadyTest = PageReadyTests.questionPage.url("application/request-production-access/check-your-answers")
+  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("application/cancel-access-request/confirm")
 
   object elements {
-    val confirm: By = By.id("accept_0")
+    val yesRadio: By = By.id("value")
     val continueButton: By = By.id("continueButton")
   }
 
-  def apply(): RequestProductionAccessCYAPage = {
-    new RequestProductionAccessCYAPage()
+  def apply(): CancelAccessRequestConfirmPage = {
+    new CancelAccessRequestConfirmPage()
   }
 
 }

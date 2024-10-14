@@ -67,4 +67,12 @@ class JourneySteps @Inject()(sharedState: SharedState) extends BaseStepDef {
     Journeys.checkUserHasATeam(sharedState)
   }
 
+  Given("the user adds an API to the application") { () =>
+    Journeys.addAnApi(sharedState)
+  }
+
+  Given("the user requests production access") { () =>
+    Journeys.requestProductionAccess(sharedState)
+  }
+
 }
