@@ -1,4 +1,4 @@
-@hipp-1252
+@regression @hipp-1252
 Feature: Application Environments
 
   Background:
