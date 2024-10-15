@@ -19,7 +19,7 @@ package uk.gov.hmrc.test.ui.cucumber.stepdefs
 import com.google.inject.Inject
 import io.cucumber.guice.ScenarioScoped
 import uk.gov.hmrc.test.ui.pages.addanapi.AddAnApiSuccessPage
-import uk.gov.hmrc.test.ui.pages.application.{ApplicationDetailsPage, EnvironmentAndCredentialsPage}
+import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage
 import uk.gov.hmrc.test.ui.pages.{Journeys, Robot}
 import uk.gov.hmrc.test.ui.utilities.SharedState
 
@@ -101,18 +101,6 @@ class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseSt
 
   When("the user navigates to an invalid application id {string}") { (string: String) =>
     navigateTo(s"application/details/$string")
-  }
-
-  Then("""the client id should be added to the test environments credentials with count {int}""") { (expectedCount: Int) =>
-    EnvironmentAndCredentialsPage(sharedState.application.id)
-      .foreach { page =>
-        val credentialCount = page.getSecondaryCredentialCount // Extract the credential count once
-        credentialCount shouldBe expectedCount // Use the dynamic expected count
-      }
-  }
-
-  When("""the user adds Test credentials""") { () =>
-    EnvironmentAndCredentialsPage(sharedState.application.id).selectAddTestCredentials()
   }
 
   Given("""the user chooses {string} from the application left hand nav menu""") { (string: String) =>

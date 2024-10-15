@@ -102,6 +102,12 @@ object Journeys extends Robot {
     registerAnApplication(sharedState)
   }
 
+  def signInWithRoleAndRegisterAnApplication(sharedState: SharedState, role: Role): ApplicationDetailsPage = {
+    signInViaStride(role)
+    checkUserHasATeam(sharedState)
+    registerAnApplication(sharedState)
+  }
+
   def createTeam(sharedState: SharedState): ManageTeamPage = {
     Journeys
       .openStartPage()
