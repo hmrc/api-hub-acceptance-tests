@@ -10,4 +10,4 @@ Feature: Application Details Page
     Given a user has signed-in
     When the user navigates to an invalid application id "123456"
     Then the application not found header message should be displayed
-    And the error message should be "Cannot find an application with Id 123456"
+    And the error message should be "Cannot find an application with ID 123456"

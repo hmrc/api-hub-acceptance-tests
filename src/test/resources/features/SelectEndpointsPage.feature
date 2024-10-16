@@ -6,7 +6,7 @@ Feature: Select Endpoints Page
 
   Scenario: Display error if checkbox is not checked before continuing
     When the user attempts to continue without selecting an endpoint
-    Then an error 'Please select at least one end point' should be displayed
+    Then an error 'Select at least one endpoint' should be displayed
 
   Scenario: Display correct scopes for endpoint
     When the user adds a particular api to an application
