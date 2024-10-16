@@ -28,7 +28,7 @@ import java.time.LocalDate
 @ScenarioScoped
 class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseStepDef with Robot {
 
-  private val expectedApplicationApisText: String = "You have no APIs added"
+  private val expectedApplicationApisText: String = "You have not added any APIs"
   private var apiId = ""
   private var apiTitle = ""
 
