@@ -100,7 +100,7 @@ class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseSt
   }
 
   When("the user navigates to an invalid application id {string}") { (string: String) =>
-    navigateTo(s"application/details/$string")
+    navigateToRelativeUrl(s"application/details/$string")
   }
 
   Given("""the user chooses {string} from the application left hand nav menu""") { (string: String) =>
