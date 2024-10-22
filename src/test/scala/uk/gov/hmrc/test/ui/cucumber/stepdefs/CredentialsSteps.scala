@@ -18,6 +18,7 @@ package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
 import com.google.inject.Inject
 import io.cucumber.guice.ScenarioScoped
+import uk.gov.hmrc.test.ui.pages.application.EnvironmentAndCredentialsPage.TestTab
 import uk.gov.hmrc.test.ui.pages.application.{EnvironmentAndCredentialsPage, GenerateProductionCredentialsPage, ProductionCredentialsSuccessPage}
 import uk.gov.hmrc.test.ui.utilities.SharedState
 
@@ -25,7 +26,9 @@ import uk.gov.hmrc.test.ui.utilities.SharedState
 class CredentialsSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
 
   When("""the user adds a test credential""") { () =>
-    EnvironmentAndCredentialsPage(sharedState.application.id).addTestCredential()
+    EnvironmentAndCredentialsPage(sharedState.application.id)
+      .addTestCredential()
+      .viewTestEnvironment()
   }
 
   When("""the user adds a production credential""") { () =>
@@ -50,8 +53,8 @@ class CredentialsSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
     ProductionCredentialsSuccessPage(sharedState.application.id).returnToEnvironmentsAndCredentials()
   }
 
-  Then("""the client id should be added to the test environments credentials with count {int}""") { (expectedCount: Int) =>
-    EnvironmentAndCredentialsPage(sharedState.application.id)
+  Then("""there are {int} test environment credentials""") { (expectedCount: Int) =>
+    EnvironmentAndCredentialsPage(sharedState.application.id, Some(TestTab))
       .foreach { page =>
         val credentialCount = page.getSecondaryCredentialCount // Extract the credential count once
         credentialCount shouldBe expectedCount // Use the dynamic expected count
@@ -65,6 +68,11 @@ class CredentialsSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
         val credentialCount = page.getSecondaryCredentialCount // Extract the credential count once
         credentialCount shouldBe expectedCount // Use the dynamic expected count
       }
+  }
+
+  When("the user revokes a test credential") { () =>
+    EnvironmentAndCredentialsPage(sharedState.application.id, Some(TestTab))
+      .revokeTestCredential()
   }
 
 }

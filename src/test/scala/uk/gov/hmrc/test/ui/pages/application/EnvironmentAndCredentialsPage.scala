@@ -24,7 +24,7 @@ import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 class EnvironmentAndCredentialsPage(id: String, environmentTab: Option[EnvironmentTab] = None) extends BasePage[EnvironmentAndCredentialsPage](pageReadyTest(id, environmentTab)) {
 
   def getSecondaryCredentialCount: Int = {
-    findElements(secondaryCredentialClientId).size
+    findElements(secondaryCredentials).size
   }
 
   def viewTestEnvironment(): EnvironmentAndCredentialsPage = {
@@ -47,6 +47,10 @@ class EnvironmentAndCredentialsPage(id: String, environmentTab: Option[Environme
     GenerateProductionCredentialsPage(id)
   }
 
+  def revokeTestCredential(): EnvironmentAndCredentialsPage = {
+    click(revokeTestCredentialLink)
+    EnvironmentAndCredentialsPage(id, Some(TestTab))
+  }
 
 }
 
@@ -77,8 +81,9 @@ object EnvironmentAndCredentialsPage {
   }
 
   object elements {
-    val secondaryCredentialClientId: By = By.cssSelector("[data-secondary-credential-client-id]")
+    val secondaryCredentials: By = By.cssSelector("p[data-secondary-credential-client-id]")
     val addTestCredentialButton: By = By.id("addTestCredentialButton")
+    val revokeTestCredentialLink: By = By.cssSelector("a[data-secondary-credential-client-id]:first-child")
     val addProductionCredentialButton: By = By.id("addProductionCredentialButton")
     val hipTestTab: By = By.id("tab_hip-development")
     val hipProductionTab: By = By.id("tab_hip-production")
