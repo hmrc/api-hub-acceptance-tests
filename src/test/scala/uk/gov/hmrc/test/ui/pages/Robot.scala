@@ -94,12 +94,34 @@ trait Robot extends LazyLogging {
    *
    * @param relativeUrl  the relative URL to navigate to
    */
-  def navigateTo(relativeUrl: String): Unit = {
-    val url = buildFullUrl(relativeUrl)
+  def navigateToRelativeUrl(relativeUrl: String): Unit = {
+    navigateToFullUrl(buildFullUrl(relativeUrl))
+  }
 
-    logger.info(s"Navigating to $url")
+  /**
+   * Navigates to a full URL.
+   *
+   * We don't really want to navigate directly to pages. We prefer to move
+   * from page to page by clicking links or performing actions.
+   *
+   * When we use direct navigation we do not get a reference to the target
+   * page. This means we do not confirm we have successfully arrived at our
+   * destination. Try and instantiate a page object immediately after
+   * navigating to confirm where we are.
+   *
+   * It is Ok to use this method but it should be a last resort. Examples
+   * of sensibly using direct navigation are:
+   *   - Initial navigation to a start page
+   *   - Accessing a page that is not always linked to
+   *
+   * Specify a full URL.
+   *
+   * @param fullUrl  the full URL to navigate to
+   */
+  def navigateToFullUrl(fullUrl: String): Unit = {
+    logger.info(s"Navigating to $fullUrl")
 
-    Driver.instance.navigate().to(url)
+    Driver.instance.navigate().to(fullUrl)
   }
 
   /**

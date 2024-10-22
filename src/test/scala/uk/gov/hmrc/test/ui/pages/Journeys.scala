@@ -31,30 +31,30 @@ import uk.gov.hmrc.test.ui.utilities.{Role, SharedState, UserRole}
 object Journeys extends Robot {
 
   def openStartPage(): ServiceStartPage = {
-    navigateTo("")
+    navigateToRelativeUrl("")
     ServiceStartPage()
   }
 
   // This page is difficult to access directly as the dashboard link is only
   // available when the user has more than 5 applications
   def openYourApplicationsPage(): YourApplicationsPage = {
-    navigateTo("applications")
+    navigateToRelativeUrl("applications")
     YourApplicationsPage()
   }
 
   // This page is difficult to access directly as the dashboard link is only
   // available when the user has more than 5 teams
   def openManageMyTeamsPage(): ManageMyTeamsPage = {
-    navigateTo("team/manage-my-teams")
+    navigateToRelativeUrl("team/manage-my-teams")
     ManageMyTeamsPage()
   }
 
   def signIn(): DashboardPage = {
-    signInViaLdap()
+    signInViaStride()
   }
 
   def signIn(role: Role): DashboardPage = {
-    signInViaLdap(role)
+    signInViaStride(role)
   }
 
   def signInViaLdap(): DashboardPage = {
@@ -103,7 +103,7 @@ object Journeys extends Robot {
   }
 
   def signInWithRoleAndRegisterAnApplication(sharedState: SharedState, role: Role): ApplicationDetailsPage = {
-    signInViaStride(role)
+    signIn(role)
     checkUserHasATeam(sharedState)
     registerAnApplication(sharedState)
   }
@@ -149,6 +149,18 @@ object Journeys extends Robot {
       .setSupportingInformation("test-supporting-information")
       .confirmAnswers()
       .viewApplication()
+  }
+
+  def swapRole(role: Role): Unit = {
+    val url = getCurrentUrl
+
+    navigateToRelativeUrl("sign-in")
+
+    SignInPage()
+      .signInViaStride()
+      .signIn(role)
+
+    navigateToFullUrl(url)
   }
 
 }

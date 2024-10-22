@@ -79,4 +79,8 @@ class JourneySteps @Inject()(sharedState: SharedState) extends BaseStepDef {
     Journeys.requestProductionAccess(sharedState)
   }
 
+  Given("the user swaps role to {string}") { (role: String) =>
+    Journeys.swapRole(Roles.forName(role))
+  }
+
 }
