@@ -1,17 +1,24 @@
-@regression @hipp-1252
-Feature: Application Environments
+@credentials
+Feature: Credentials
 
   Background:
-    Given a user has signed-in with role "privileged-user" and registers an application
+    Given a user has signed-in and registers an application
     And the user chooses "Environments and credentials" from the application left hand nav menu
 
-  Scenario: Add Test credentials - HIPP-1251
-    When the user adds a test credential
-    Then the client id should be added to the test environments credentials with count 2
+  Scenario: Create new test credential
+    When the user creates a new test credential
+    Then there are 2 test credentials
 
-  Scenario: Add Prod credentials - HIPP-1252
-    When the user adds a production credential
-    Then the user confirms generation production credentials
-    And the user sees the generate production credentials success page
-    And the user selects to return to the environments and credentials page
-    Then the client id should be added to the Production environments credentials with count 1
+  Scenario: Create new production credential
+    When the user swaps role to "privileged-user"
+    And the user starts the create new production credential journey
+    Then the user confirms they meet the conditions to create a new production credential
+    And the client secret successfully created page is displayed
+    And the user returns to the environments and credentials page
+    Then there is 1 production credential
+
+  Scenario: Delete test credential
+    Given the user creates a new test credential
+    When the user revokes the first test credential
+    Then there is 1 test credential
+    And the recently created test credential still exists
