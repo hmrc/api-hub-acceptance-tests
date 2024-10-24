@@ -32,8 +32,8 @@ class EnvironmentAndCredentialsPage(id: String, environmentTab: Option[Environme
     findElements(testCredentials).size
   }
 
-  def addTestCredential(): EnvironmentAndCredentialsPage = {
-    click(addTestCredentialButton)
+  def createNewTestCredential(): EnvironmentAndCredentialsPage = {
+    click(createNewTestCredentialButton)
     EnvironmentAndCredentialsPage(id)
   }
 
@@ -55,8 +55,12 @@ class EnvironmentAndCredentialsPage(id: String, environmentTab: Option[Environme
     EnvironmentAndCredentialsPage(id, Some(ProductionTab))
   }
 
-  def addProductionCredential(): GenerateProductionCredentialsPage = {
-    click(addProductionCredentialButton)
+  def getProductionCredentialCount: Int = {
+    findElements(productionCredentials).size
+  }
+
+  def createNewProductionCredential(): GenerateProductionCredentialsPage = {
+    click(createNewProductionCredentialButton)
     GenerateProductionCredentialsPage(id)
   }
 
@@ -90,13 +94,15 @@ object EnvironmentAndCredentialsPage {
 
   object elements {
     val hipTestTab: By = By.id("tab_hip-development")
-    val testCredentialAttribute: String = "data-secondary-credential-client-id"
+    val testCredentialAttribute: String = "data-test-credential-client-id"
     val testCredentials: By = By.cssSelector(s"p[$testCredentialAttribute]")
+    val createNewTestCredentialButton: By = By.id("addTestCredentialButton")
     def testCredentialForClientId(clientId: String): By = By.cssSelector(s"p[$testCredentialAttribute='$clientId']")
-    val addTestCredentialButton: By = By.id("addTestCredentialButton")
     val revokeFirstTestCredentialLink: By = By.cssSelector(s"a[$testCredentialAttribute]:first-child")
     val hipProductionTab: By = By.id("tab_hip-production")
-    val addProductionCredentialButton: By = By.id("addProductionCredentialButton")
+    val productionCredentialAttribute: String = "data-production-credential-client-id"
+    val productionCredentials: By = By.cssSelector(s"p[$productionCredentialAttribute]")
+    val createNewProductionCredentialButton: By = By.id("addProductionCredentialButton")
   }
 
   def apply(id: String, environmentTab: Option[EnvironmentTab] = None): EnvironmentAndCredentialsPage = {

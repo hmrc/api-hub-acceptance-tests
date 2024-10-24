@@ -1,4 +1,3 @@
-@paul
 Feature: Cancel access request
 
   Scenario: The user cancels an access request
