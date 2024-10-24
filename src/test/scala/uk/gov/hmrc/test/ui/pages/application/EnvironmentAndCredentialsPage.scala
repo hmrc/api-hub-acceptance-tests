@@ -23,18 +23,13 @@ import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
 class EnvironmentAndCredentialsPage(id: String, environmentTab: Option[EnvironmentTab] = None) extends BasePage[EnvironmentAndCredentialsPage](pageReadyTest(id, environmentTab)) {
 
-  def getSecondaryCredentialCount: Int = {
-    findElements(secondaryCredentials).size
-  }
-
   def viewTestEnvironment(): EnvironmentAndCredentialsPage = {
     click(hipTestTab)
     EnvironmentAndCredentialsPage(id, Some(TestTab))
   }
 
-  def viewProductionEnvironment(): EnvironmentAndCredentialsPage = {
-    click(hipProductionTab)
-    EnvironmentAndCredentialsPage(id, Some(ProductionTab))
+  def getTestCredentialCount: Int = {
+    findElements(testCredentials).size
   }
 
   def addTestCredential(): EnvironmentAndCredentialsPage = {
@@ -42,14 +37,27 @@ class EnvironmentAndCredentialsPage(id: String, environmentTab: Option[Environme
     EnvironmentAndCredentialsPage(id)
   }
 
+  def revokeFirstTestCredential(): EnvironmentAndCredentialsPage = {
+    click(revokeFirstTestCredentialLink)
+    EnvironmentAndCredentialsPage(id, Some(TestTab))
+  }
+
+  def lastTestCredentialClientId: String = {
+    findElements(testCredentials).last.getAttribute(testCredentialAttribute)
+  }
+
+  def hasTestCredential(clientId: String): Boolean = {
+    findElements(testCredentialForClientId(clientId)).nonEmpty
+  }
+
+  def viewProductionEnvironment(): EnvironmentAndCredentialsPage = {
+    click(hipProductionTab)
+    EnvironmentAndCredentialsPage(id, Some(ProductionTab))
+  }
+
   def addProductionCredential(): GenerateProductionCredentialsPage = {
     click(addProductionCredentialButton)
     GenerateProductionCredentialsPage(id)
-  }
-
-  def revokeTestCredential(): EnvironmentAndCredentialsPage = {
-    click(revokeTestCredentialLink)
-    EnvironmentAndCredentialsPage(id, Some(TestTab))
   }
 
 }
@@ -81,12 +89,14 @@ object EnvironmentAndCredentialsPage {
   }
 
   object elements {
-    val secondaryCredentials: By = By.cssSelector("p[data-secondary-credential-client-id]")
-    val addTestCredentialButton: By = By.id("addTestCredentialButton")
-    val revokeTestCredentialLink: By = By.cssSelector("a[data-secondary-credential-client-id]:first-child")
-    val addProductionCredentialButton: By = By.id("addProductionCredentialButton")
     val hipTestTab: By = By.id("tab_hip-development")
+    val testCredentialAttribute: String = "data-secondary-credential-client-id"
+    val testCredentials: By = By.cssSelector(s"p[$testCredentialAttribute]")
+    def testCredentialForClientId(clientId: String): By = By.cssSelector(s"p[$testCredentialAttribute='$clientId']")
+    val addTestCredentialButton: By = By.id("addTestCredentialButton")
+    val revokeFirstTestCredentialLink: By = By.cssSelector(s"a[$testCredentialAttribute]:first-child")
     val hipProductionTab: By = By.id("tab_hip-production")
+    val addProductionCredentialButton: By = By.id("addProductionCredentialButton")
   }
 
   def apply(id: String, environmentTab: Option[EnvironmentTab] = None): EnvironmentAndCredentialsPage = {

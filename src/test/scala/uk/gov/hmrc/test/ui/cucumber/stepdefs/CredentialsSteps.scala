@@ -25,9 +25,15 @@ import uk.gov.hmrc.test.ui.utilities.SharedState
 @ScenarioScoped
 class CredentialsSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
 
+  private var clientId: String = ""
+
   When("""the user adds a test credential""") { () =>
     EnvironmentAndCredentialsPage(sharedState.application.id)
       .addTestCredential()
+      .foreach(
+        environmentAndCredentialsPage =>
+          clientId = environmentAndCredentialsPage.lastTestCredentialClientId
+      )
       .viewTestEnvironment()
   }
 
@@ -56,23 +62,27 @@ class CredentialsSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
   Then("""there are {int} test environment credentials""") { (expectedCount: Int) =>
     EnvironmentAndCredentialsPage(sharedState.application.id, Some(TestTab))
       .foreach { page =>
-        val credentialCount = page.getSecondaryCredentialCount // Extract the credential count once
+        val credentialCount = page.getTestCredentialCount // Extract the credential count once
         credentialCount shouldBe expectedCount // Use the dynamic expected count
       }
   }
 
-  Then("""the client id should be added to the Production environments credentials with count {int}""") { (expectedCount: Int) =>
+  Then("""there are {int} production environment credentials""") { (expectedCount: Int) =>
     EnvironmentAndCredentialsPage(sharedState.application.id)
       .viewProductionEnvironment()
       .foreach { page =>
-        val credentialCount = page.getSecondaryCredentialCount // Extract the credential count once
+        val credentialCount = page.getTestCredentialCount // Extract the credential count once
         credentialCount shouldBe expectedCount // Use the dynamic expected count
       }
   }
 
-  When("the user revokes a test credential") { () =>
+  When("the user revokes the first test credential") { () =>
     EnvironmentAndCredentialsPage(sharedState.application.id, Some(TestTab))
-      .revokeTestCredential()
+      .revokeFirstTestCredential()
+  }
+
+  Then("the recently created test credential still exists") { () =>
+    EnvironmentAndCredentialsPage(sharedState.application.id, Some(TestTab)).hasTestCredential(clientId)
   }
 
 }
