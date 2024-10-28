@@ -42,12 +42,21 @@ class EnvironmentAndCredentialsPage(id: String, environmentTab: Option[Environme
     EnvironmentAndCredentialsPage(id, Some(TestTab))
   }
 
+  def revokeFirstProductionCredential(): EnvironmentAndCredentialsPage = {
+    click(revokeFirstProductionCredentialLink)
+    EnvironmentAndCredentialsPage(id, Some(ProductionTab))
+  }
+
   def lastTestCredentialClientId: String = {
     findElements(testCredentials).last.getAttribute(testCredentialAttribute)
   }
 
   def hasTestCredential(clientId: String): Boolean = {
     findElements(testCredentialForClientId(clientId)).nonEmpty
+  }
+
+  def hasProductionCredential(clientId: String): Boolean = {
+    findElements(productionCredentialForClientId(clientId)).nonEmpty
   }
 
   def viewProductionEnvironment(): EnvironmentAndCredentialsPage = {
@@ -99,10 +108,15 @@ object EnvironmentAndCredentialsPage {
     val createNewTestCredentialButton: By = By.id("addTestCredentialButton")
     def testCredentialForClientId(clientId: String): By = By.cssSelector(s"p[$testCredentialAttribute='$clientId']")
     val revokeFirstTestCredentialLink: By = By.cssSelector(s"a[$testCredentialAttribute]:first-child")
+
+
     val hipProductionTab: By = By.id("tab_hip-production")
     val productionCredentialAttribute: String = "data-production-credential-client-id"
     val productionCredentials: By = By.cssSelector(s"p[$productionCredentialAttribute]")
     val createNewProductionCredentialButton: By = By.id("addProductionCredentialButton")
+
+    def productionCredentialForClientId(clientId: String): By = By.cssSelector(s"p[$productionCredentialAttribute='$clientId']")
+    val revokeFirstProductionCredentialLink: By = By.cssSelector(s"a[$productionCredentialAttribute]:first-child")
   }
 
   def apply(id: String, environmentTab: Option[EnvironmentTab] = None): EnvironmentAndCredentialsPage = {
