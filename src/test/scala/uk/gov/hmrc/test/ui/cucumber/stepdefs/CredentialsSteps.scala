@@ -53,7 +53,9 @@ class CredentialsSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
   }
 
   Then("""the user returns to the environments and credentials page""") { () =>
-    ProductionCredentialsSuccessPage(sharedState.application.id).returnToEnvironmentsAndCredentials()
+    ProductionCredentialsSuccessPage(sharedState.application.id)
+      .returnToEnvironmentsAndCredentials()
+      .viewProductionEnvironment()
   }
 
   Then("""there is/are {int} test credential(s)""") { (expectedCount: Int) =>
@@ -65,18 +67,8 @@ class CredentialsSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
   }
 
   Then("""there is/are {int} production credential(s)""") { (expectedCount: Int) =>
-    EnvironmentAndCredentialsPage(sharedState.application.id)
-      .viewProductionEnvironment()
-      .foreach { page =>
-        val credentialCount = page.getProductionCredentialCount // Extract the credential count once
-        credentialCount shouldBe expectedCount // Use the dynamic expected count
-      }
-  }
-
-  Then("""there is/are {int} production credential(s) left after deletion""") { (expectedCount: Int) =>
-
-          EnvironmentAndCredentialsPage(sharedState.application.id, Some(ProductionTab))
-      .viewProductionEnvironment()
+    EnvironmentAndCredentialsPage(sharedState.application.id, Some(ProductionTab))
+//      .viewProductionEnvironment()
       .foreach { page =>
         val credentialCount = page.getProductionCredentialCount // Extract the credential count once
         credentialCount shouldBe expectedCount // Use the dynamic expected count

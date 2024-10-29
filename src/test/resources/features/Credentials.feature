@@ -27,5 +27,5 @@ Feature: Credentials
     When the user swaps role to "privileged-user"
     And the user creates TWO production credentials
     When the user revokes the first production credential
-    Then there is 1 production credential left after deletion
+    Then there is 1 production credential
     And the recently created production credential still exists
