@@ -16,16 +16,30 @@
 
 package uk.gov.hmrc.test.ui.pages.admin
 
+import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.admin.AccessRequestsPage._
+import uk.gov.hmrc.test.ui.pages.admin.AccessRequestsPage.elements._
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
 class AccessRequestsPage extends BasePage[AccessRequestsPage](pageReadyTest) {
+
+  def openFirstAccessRequest(): AccessRequestPage = {
+    val link = findElement(firstAccessRequestLink)
+    val accessRequestId = link.getAttribute(accessRequestIdAttribute)
+    link.click()
+    AccessRequestPage(accessRequestId)
+  }
 
 }
 
 object AccessRequestsPage {
 
   val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("admin/access-requests")
+
+  object elements {
+    val accessRequestIdAttribute: String = "data-access-request-id"
+    val firstAccessRequestLink: By = By.cssSelector(s"a[$accessRequestIdAttribute]:first-child")
+  }
 
   def apply(): AccessRequestsPage = {
     new AccessRequestsPage()
