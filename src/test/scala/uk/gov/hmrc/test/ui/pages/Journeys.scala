@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.test.ui.pages
 
-import uk.gov.hmrc.test.ui.pages.application.{ApplicationDetailsPage, YourApplicationsPage}
+import uk.gov.hmrc.test.ui.pages.application.{ApplicationApisPage, ApplicationDetailsPage, EnvironmentAndCredentialsPage, YourApplicationsPage}
 import uk.gov.hmrc.test.ui.pages.team.{ManageMyTeamsPage, ManageTeamPage}
 import uk.gov.hmrc.test.ui.utilities.{Role, SharedState, UserRole}
 
@@ -162,6 +162,14 @@ object Journeys extends Robot {
       .signIn(role)
 
     navigateToFullUrl(url)
+  }
+
+  def createProductionCredential(sharedState: SharedState): EnvironmentAndCredentialsPage = {
+    EnvironmentAndCredentialsPage(sharedState.application.id)
+      .viewProductionEnvironment()
+      .createNewProductionCredential()
+      .confirmAndContinue()
+      .returnToEnvironmentsAndCredentials()
   }
 
 }

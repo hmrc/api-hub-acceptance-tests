@@ -21,6 +21,7 @@ import io.cucumber.guice.ScenarioScoped
 import uk.gov.hmrc.test.ui.pages.application.EnvironmentAndCredentialsPage.TestTab
 import uk.gov.hmrc.test.ui.pages.application.EnvironmentAndCredentialsPage.ProductionTab
 import uk.gov.hmrc.test.ui.pages.application.{EnvironmentAndCredentialsPage, GenerateProductionCredentialsPage, ProductionCredentialsSuccessPage}
+import uk.gov.hmrc.test.ui.pages.Journeys
 import uk.gov.hmrc.test.ui.utilities.SharedState
 
 @ScenarioScoped
@@ -68,7 +69,7 @@ class CredentialsSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
 
   Then("""there is/are {int} production credential(s)""") { (expectedCount: Int) =>
     EnvironmentAndCredentialsPage(sharedState.application.id, Some(ProductionTab))
-//      .viewProductionEnvironment()
+
       .foreach { page =>
         val credentialCount = page.getProductionCredentialCount // Extract the credential count once
         credentialCount shouldBe expectedCount // Use the dynamic expected count
@@ -89,33 +90,20 @@ class CredentialsSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
   }
 
   When("""the user creates TWO production credentials""") { () =>
-    EnvironmentAndCredentialsPage(sharedState.application.id)
-      .viewProductionEnvironment()
-      .createNewProductionCredential()
 
-    GenerateProductionCredentialsPage(sharedState.application.id).confirmAndContinue()
-    ProductionCredentialsSuccessPage(sharedState.application.id)
-
-    ProductionCredentialsSuccessPage(sharedState.application.id).returnToEnvironmentsAndCredentials()
-
-    EnvironmentAndCredentialsPage(sharedState.application.id)
-      .viewProductionEnvironment()
-      .createNewProductionCredential()
-
-    GenerateProductionCredentialsPage(sharedState.application.id).confirmAndContinue()
-    ProductionCredentialsSuccessPage(sharedState.application.id)
-
-    ProductionCredentialsSuccessPage(sharedState.application.id).returnToEnvironmentsAndCredentials()
-
-    EnvironmentAndCredentialsPage(sharedState.application.id)
+    Journeys
+      .createProductionCredential(sharedState)
+    Journeys
+      .createProductionCredential(sharedState)
       .viewProductionEnvironment()
 
   }
 
   When("""the user revokes the first production credential""") { () =>
     EnvironmentAndCredentialsPage(sharedState.application.id, Some(ProductionTab))
-//      .revokeFirstTestCredential()
+
       .revokeFirstProductionCredential()
   }
+
 
 }
