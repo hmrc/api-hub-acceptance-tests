@@ -18,50 +18,14 @@ package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
 import com.google.inject.Inject
 import io.cucumber.guice.ScenarioScoped
-import uk.gov.hmrc.test.ui.pages.Journeys
+import uk.gov.hmrc.test.ui.pages.admin.{AccessRequestApprovedPage, AccessRequestPage, AccessRequestsPage}
 import uk.gov.hmrc.test.ui.pages.application._
 import uk.gov.hmrc.test.ui.utilities.SharedState
 
 @ScenarioScoped
 class ProductionAccessSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
 
-  Given("""an api is added to an application""") { () =>
-    var apiId = ""
-    var apiTitle = ""
-
-    Journeys
-      .signInAndRegisterAnApplication(sharedState)
-      .addApis()
-      .selectRandomApi()
-      .foreach(
-        apiDetailsPage => {
-          apiId = apiDetailsPage.getApiId
-          apiTitle = apiDetailsPage.getApiTitle
-        }
-      )
-      .addToAnApplication()
-      .selectApplication(sharedState.application.id)
-      .selectAllEndpoints()
-      .confirmUsagePolicy()
-      .continue()
-      .foreach(
-        addAnApiSuccessPage=>
-          addAnApiSuccessPage.getSuccessSummary should startWith(apiTitle)
-      )
-      .viewApplication()
-      .foreach(
-        applicationDetailsPage =>
-          applicationDetailsPage.hasApiAdded(apiId) shouldBe true
-      )
-  }
-
-  //from the left hand menu the user chooses 'Application APIs'"
-  When("from the left hand menu the user chooses {string}") { (lhnmOption: String) =>
-    lhnmOption match {
-      case "Application APIs" => ApplicationDetailsPage(sharedState.application.id).applicationApis()
-      case _ => new IllegalArgumentException(s"Unknown application navigation link: $lhnmOption")
-    }
-  }
+  var accessRequestId: String = _
 
   When("the user requests prod access") { () =>
     ApplicationApisPage(sharedState.application.id)
@@ -85,6 +49,31 @@ class ProductionAccessSteps @Inject()(sharedState: SharedState) extends BaseStep
 
   Then("the production access request is successful") { () =>
     RequestProductionAccessSuccessPage()
+  }
+
+  And("views the access requests page") { () =>
+    ApplicationDetailsPage(sharedState.application.id).apiHubAdmin()
+  }
+
+  And("opens the first access request") { () =>
+    AccessRequestsPage()
+      .openFirstAccessRequest()
+      .foreach(
+        accessRequestPage =>
+          accessRequestId = accessRequestPage.getId
+      )
+  }
+
+  When("the user approves the access request") { () =>
+    AccessRequestPage(accessRequestId).approveAccessRequest()
+  }
+
+  Then("the access request approved page is displayed") { () =>
+    AccessRequestApprovedPage(accessRequestId)
+  }
+
+  Then("returns to the access requests page") { () =>
+    AccessRequestApprovedPage(accessRequestId).returnToAccessRequests()
   }
 
 }

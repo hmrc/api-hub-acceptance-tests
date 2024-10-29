@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.test.ui.pages
 
-import uk.gov.hmrc.test.ui.pages.application.{ApplicationApisPage, ApplicationDetailsPage, YourApplicationsPage}
+import uk.gov.hmrc.test.ui.pages.application.{ApplicationDetailsPage, YourApplicationsPage}
 import uk.gov.hmrc.test.ui.pages.team.{ManageMyTeamsPage, ManageTeamPage}
 import uk.gov.hmrc.test.ui.utilities.{Role, SharedState, UserRole}
 
@@ -143,7 +143,8 @@ object Journeys extends Robot {
   }
 
   def requestProductionAccess(sharedState: SharedState): ApplicationDetailsPage = {
-    ApplicationApisPage(sharedState.application.id)
+    ApplicationDetailsPage(sharedState.application.id)
+      .applicationApis()
       .requestProductionAccess()
       .setSelectedApi()
       .setSupportingInformation("test-supporting-information")

@@ -21,12 +21,12 @@ import uk.gov.hmrc.test.ui.pages.api.ExploreApisPage
 import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage._
 import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage.elements._
 import uk.gov.hmrc.test.ui.pages.cancelaccessrequest.CancelAccessRequestSelectApiPage
-import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
+import uk.gov.hmrc.test.ui.pages.{ApiHubMenu, BasePage, PageReadyTest, PageReadyTests}
 import uk.gov.hmrc.test.ui.utilities.DateFormatterUtil
 
 import java.time.LocalDate
 
-class ApplicationDetailsPage(id: String) extends BasePage[ApplicationDetailsPage](pageReadyTest(id)) {
+class ApplicationDetailsPage(id: String) extends BasePage[ApplicationDetailsPage](pageReadyTest(id)) with ApiHubMenu {
 
   def getApplicationId: String = {
     getText(applicationId)
