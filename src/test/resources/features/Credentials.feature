@@ -22,3 +22,10 @@ Feature: Credentials
     When the user revokes the first test credential
     Then there is 1 test credential
     And the recently created test credential still exists
+
+  Scenario: Delete production credential
+    When the user swaps role to "privileged-user"
+    And the user creates TWO production credentials
+    When the user revokes the first production credential
+    Then there is 1 production credential
+    And the recently created production credential still exists
