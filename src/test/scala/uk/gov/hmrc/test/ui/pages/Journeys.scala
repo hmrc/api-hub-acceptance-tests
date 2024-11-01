@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.test.ui.pages
 
-import uk.gov.hmrc.test.ui.pages.application.{ApplicationApisPage, ApplicationDetailsPage, EnvironmentAndCredentialsPage, YourApplicationsPage}
+import uk.gov.hmrc.test.ui.pages.application.{ApplicationDetailsPage, EnvironmentAndCredentialsPage, YourApplicationsPage}
 import uk.gov.hmrc.test.ui.pages.team.{ManageMyTeamsPage, ManageTeamPage}
 import uk.gov.hmrc.test.ui.utilities.{Role, SharedState, UserRole}
 
