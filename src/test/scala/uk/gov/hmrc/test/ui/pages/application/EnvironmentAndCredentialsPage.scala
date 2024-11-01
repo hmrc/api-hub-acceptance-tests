@@ -92,13 +92,22 @@ object EnvironmentAndCredentialsPage {
   //  None - there's is no tab selected
   // We're defaulting environmentTab to None as that is the current behaviour of the tests. We don't need to change it
   // anywhere unless we specifically want to select a tab.
+  //
+  // We have seen issues waiting for elements to be available. A second PageReadyTest tests that the correct
+  // environment tab is ready.
   def pageReadyTest(id: String, environmentTab: Option[EnvironmentTab] = None): PageReadyTest = {
-    val fragment = environmentTab match {
-      case Some(TestTab) => "#hip-development"
-      case Some(ProductionTab) => "#hip-production"
-      case None => ""
+    case class Context(fragment: String, element: By)
+
+    val context = environmentTab match {
+      case Some(TestTab) => Context("#hip-development", hipTestTab)
+      case Some(ProductionTab) => Context("#hip-production", hipProductionTab)
+      case None => Context("", hipTestTab)
     }
-    PageReadyTests.apiHubPage.url(s"application/environment-and-credentials/$id$fragment")
+
+    PageReadyTests.allOf(
+      PageReadyTests.apiHubPage.url(s"application/environment-and-credentials/$id${context.fragment}"),
+      PageReadyTests.element.locator(context.element)
+    )
   }
 
   object elements {
