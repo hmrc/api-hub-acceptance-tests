@@ -30,20 +30,6 @@ class DeleteApplicatioSteps @Inject()(sharedState: SharedState) extends BaseStep
       .acceptAndContinue()
   }
 
-  When("""the user attempts to delete the application without confirming""") { () =>
-    ApplicationDeleteConfirmationPage(sharedState.application.id)
-      .acceptAndContinueWithoutConfirm()
-  }
-
-  When("""the error make a selection error is displayed""") { () =>
-    ApplicationDeleteConfirmationPage(sharedState.application.id)
-      .hasErrorSummary
-  }
-
-  When("""the user chooses to cancel the deletion of the application""") { () =>
-    ApplicationDeleteConfirmationPage(sharedState.application.id)
-      .cancel()
-  }
 
   Then("""the previously registered application should no longer be listed in all applications""") { () =>
     ApplicationDeleteSuccessPage(sharedState.application.id)

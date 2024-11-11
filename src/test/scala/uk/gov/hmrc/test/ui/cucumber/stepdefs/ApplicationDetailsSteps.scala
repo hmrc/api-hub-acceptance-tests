@@ -74,17 +74,6 @@ class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseSt
       )
   }
 
-  Then("""the user is redirected to the {string} page""") { (string: String) =>
-    string match {
-      case "Application details" =>
-        ApplicationDetailsPage(sharedState.application.id)
-          .foreach(
-            applicationDetailsPage =>
-              applicationDetailsPage.getApplicationName shouldBe sharedState.application.name
-          )
-      case _ => throw new IllegalArgumentException(s"Don't know how to process value $string")
-    }
-  }
 
   Then("""the api is added to the application""") { () =>
     AddAnApiSuccessPage()

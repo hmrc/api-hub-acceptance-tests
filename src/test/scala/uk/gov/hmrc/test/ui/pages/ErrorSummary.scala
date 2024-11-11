@@ -32,9 +32,6 @@ import scala.util.matching.Regex
 trait ErrorSummary {
   self: Robot =>
 
-  def hasErrorSummary: Boolean = {
-    findElements(errorSummary).nonEmpty
-  }
 
   // Error messages at the top of the page in the summary
   def getErrorSummaryList: Seq[String] = {
