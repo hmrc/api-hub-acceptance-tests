@@ -55,6 +55,7 @@ class SelectEndpointsSteps @Inject()(sharedState: SharedState) extends BaseStepD
     SelectEndpointsPage()
       .foreach(
         selectEndpointsPage => {
+          selectEndpointsPage.hasErrorSummary shouldBe true
           selectEndpointsPage.getErrorSummaryList should contain(string)
           selectEndpointsPage.getErrorMessages should contain(string)
         }
