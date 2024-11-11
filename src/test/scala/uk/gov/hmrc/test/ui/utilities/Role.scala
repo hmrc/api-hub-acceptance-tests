@@ -26,7 +26,7 @@ sealed trait Role {
 
 object Roles {
 
-  private val roles = Seq(UserRole, ApproverRole, SupportRole, PrivilegedUserRole)
+  private val roles = Seq(UserRole, ApproverRole, SupportRole, PrivilegedUserRole, IpaasLiveServiceRole, IpaasLiveAdminRole, IpaasLiveServiceSCRole)
 
   def forName(name: String): Role = {
     roles
@@ -40,6 +40,14 @@ object UserRole extends Role {
 
   override def name = "user"
   override def srsRole: String = "api_hub_user"
+  override def ldapResourceLocation: Option[String] = None
+
+}
+
+object IpaasLiveServiceRole extends Role {
+
+  override def name = "ipaas-live-service-user"
+  override def srsRole: String = "ipaas_live_service"
   override def ldapResourceLocation: Option[String] = None
 
 }
@@ -60,10 +68,26 @@ object SupportRole extends Role {
 
 }
 
+object IpaasLiveAdminRole extends Role {
+
+  override def name = "ipaas-live-admin-user"
+  override def srsRole: String = "ipaas_live_admins"
+  override def ldapResourceLocation: Option[String] = None
+
+}
+
 object PrivilegedUserRole extends Role {
 
   override def name = "privileged-user"
   override def srsRole: String = "api_hub_privileged_user"
+  override def ldapResourceLocation: Option[String] = Some("privileged-usage")
+
+}
+
+object IpaasLiveServiceSCRole extends Role {
+
+  override def name = "ipaas-live-service-sc-user"
+  override def srsRole: String = "ipaas_live_service_sc"
   override def ldapResourceLocation: Option[String] = Some("privileged-usage")
 
 }
