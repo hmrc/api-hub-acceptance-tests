@@ -39,7 +39,7 @@ object Roles {
 object UserRole extends Role {
 
   override def name = "user"
-  override def srsRole: String = "api_hub_user"
+  override def srsRole: String = "ipaas_live_service"
   override def ldapResourceLocation: Option[String] = None
 
 }
@@ -47,7 +47,7 @@ object UserRole extends Role {
 object ApproverRole extends Role {
 
   override def name = "approver"
-  override def srsRole: String = "api_hub_approver"
+  override def srsRole: String = "ipaas_live_admins"
   override def ldapResourceLocation: Option[String] = Some("approvals")
 
 }
@@ -55,7 +55,7 @@ object ApproverRole extends Role {
 object SupportRole extends Role {
 
   override def name = "support"
-  override def srsRole: String = "api_hub_support"
+  override def srsRole: String = "ipaas_live_admins"
   override def ldapResourceLocation: Option[String] = Some("support")
 
 }
@@ -63,7 +63,7 @@ object SupportRole extends Role {
 object PrivilegedUserRole extends Role {
 
   override def name = "privileged-user"
-  override def srsRole: String = "api_hub_privileged_user"
+  override def srsRole: String = "ipaas_live_service_sc"
   override def ldapResourceLocation: Option[String] = Some("privileged-usage")
 
 }
