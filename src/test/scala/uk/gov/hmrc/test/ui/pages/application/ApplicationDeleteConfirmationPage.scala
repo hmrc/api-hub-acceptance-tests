@@ -29,15 +29,6 @@ class ApplicationDeleteConfirmationPage(id: String) extends BasePage[Application
     ApplicationDeleteSuccessPage(id)
   }
 
-  def acceptAndContinueWithoutConfirm(): ApplicationDeleteConfirmationPage = {
-    click(acceptAndContinueButton)
-    ApplicationDeleteConfirmationPage(id)
-  }
-
-  def cancel(): ApplicationDetailsPage = {
-    click(cancelButton)
-    ApplicationDetailsPage(id)
-  }
 
 }
 
@@ -55,7 +46,6 @@ object ApplicationDeleteConfirmationPage {
   object elements {
     val confirmCheckbox: By = By.id("value_0")
     val acceptAndContinueButton: By = By.id("acceptAndContinueButton")
-    val cancelButton: By = By.id("cancelButton")
   }
 
   def apply(id: String): ApplicationDeleteConfirmationPage = {
