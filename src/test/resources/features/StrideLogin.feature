@@ -18,12 +18,9 @@ Feature: Logging in via Stride
     Then your applications has the following header links "<link_one>" "<link_two>" "<link_three>"
 
     Examples:
-      | role                       | link_one  | link_two              | link_three   |
-      | approver                   | Dashboard | Integration Hub Admin | Explore APIs |
-      | support                    | Dashboard | Integration Hub Admin | Explore APIs |
-      | user                       | Dashboard | Explore APIs          |              |
-      | privileged-user            | Dashboard | Explore APIs          |              |
-      | ipaas-live-service-user    | Dashboard | Explore APIs          |              |
-      | ipaas-live-service-sc-user | Dashboard | Explore APIs          |              |
-      | ipaas-live-admin-user      | Dashboard | Integration Hub Admin | Explore APIs |
+      | role            | link_one  | link_two              | link_three   |
+      | approver        | Dashboard | Integration Hub Admin | Explore APIs |
+      | support         | Dashboard | Integration Hub Admin | Explore APIs |
+      | user            | Dashboard | Explore APIs          |              |
+      | privileged-user | Dashboard | Explore APIs          |              |
 

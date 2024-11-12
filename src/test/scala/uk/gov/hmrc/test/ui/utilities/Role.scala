@@ -26,7 +26,7 @@ sealed trait Role {
 
 object Roles {
 
-  private val roles = Seq(UserRole, ApproverRole, SupportRole, PrivilegedUserRole, IpaasLiveServiceRole, IpaasLiveAdminRole, IpaasLiveServiceSCRole)
+  private val roles = Seq(UserRole, ApproverRole, SupportRole, PrivilegedUserRole)
 
   def forName(name: String): Role = {
     roles
@@ -39,14 +39,6 @@ object Roles {
 object UserRole extends Role {
 
   override def name = "user"
-  override def srsRole: String = "api_hub_user"
-  override def ldapResourceLocation: Option[String] = None
-
-}
-
-object IpaasLiveServiceRole extends Role {
-
-  override def name = "ipaas-live-service-user"
   override def srsRole: String = "ipaas_live_service"
   override def ldapResourceLocation: Option[String] = None
 
@@ -55,7 +47,7 @@ object IpaasLiveServiceRole extends Role {
 object ApproverRole extends Role {
 
   override def name = "approver"
-  override def srsRole: String = "api_hub_approver"
+  override def srsRole: String = "ipaas_live_admins"
   override def ldapResourceLocation: Option[String] = Some("approvals")
 
 }
@@ -63,30 +55,14 @@ object ApproverRole extends Role {
 object SupportRole extends Role {
 
   override def name = "support"
-  override def srsRole: String = "api_hub_support"
-  override def ldapResourceLocation: Option[String] = Some("support")
-
-}
-
-object IpaasLiveAdminRole extends Role {
-
-  override def name = "ipaas-live-admin-user"
   override def srsRole: String = "ipaas_live_admins"
-  override def ldapResourceLocation: Option[String] = None
+  override def ldapResourceLocation: Option[String] = Some("support")
 
 }
 
 object PrivilegedUserRole extends Role {
 
   override def name = "privileged-user"
-  override def srsRole: String = "api_hub_privileged_user"
-  override def ldapResourceLocation: Option[String] = Some("privileged-usage")
-
-}
-
-object IpaasLiveServiceSCRole extends Role {
-
-  override def name = "ipaas-live-service-sc-user"
   override def srsRole: String = "ipaas_live_service_sc"
   override def ldapResourceLocation: Option[String] = Some("privileged-usage")
 
