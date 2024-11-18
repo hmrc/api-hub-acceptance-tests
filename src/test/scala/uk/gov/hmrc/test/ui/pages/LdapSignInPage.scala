@@ -50,7 +50,7 @@ object LdapSignInPage {
 
   // The URL is different for local-dev vs local testing so is not stable
   // Therefore we'll use a title-based page ready test
-  val pageReadyTest: PageReadyTest = PageReadyTests.nonApiHubPage.title("Create test sign in – site.service_name")
+  val pageReadyTest: PageReadyTest = PageReadyTests.nonApiHubPage.titleContaining("Create test sign in")
 
   object elements {
     val principal: By = By.id("principal")

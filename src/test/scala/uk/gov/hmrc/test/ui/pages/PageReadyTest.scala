@@ -79,6 +79,10 @@ object PageReadyTests {
     def title(title: String): PageReadyTest = {
       TitlePageReadyTest(title)
     }
+
+    def titleContaining(title: String): PageReadyTest = {
+      TitleContainingPageReadyTest(title)
+    }
   }
 
   /**
@@ -237,6 +241,20 @@ case class TitlePageReadyTest(title: String) extends PageReadyTest {
 
   override def expectedCondition: ExpectedCondition[_] = {
     ExpectedConditions.titleIs(title)
+  }
+
+}
+
+/**
+ * A PageReadyTest that tests that the current page's title contains a given
+ * value.
+ *
+ * @param title  the value to match
+ */
+case class TitleContainingPageReadyTest(title: String) extends PageReadyTest {
+
+  override def expectedCondition: ExpectedCondition[_] = {
+    ExpectedConditions.titleContains(title)
   }
 
 }
