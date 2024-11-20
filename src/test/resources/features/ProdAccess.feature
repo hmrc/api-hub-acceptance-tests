@@ -21,3 +21,14 @@ Feature: Production access requests
     When the user approves the access request
     Then the access request approved page is displayed
     And returns to the access requests page
+
+  Scenario: Reject production access request
+    Given a user has signed-in and registers an application
+    And the user adds an API to the application
+    And the user requests production access
+    And the user swaps role to "approver"
+    And views the access requests page
+    And opens the first access request
+    When the user rejects the access request with reason "Not Valid"
+    Then the access request rejected page is displayed
+    And returns to the access requests page after rejection
