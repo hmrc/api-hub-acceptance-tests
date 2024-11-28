@@ -15,12 +15,11 @@ Feature: Logging in via Stride
 
   Scenario Outline: Verify top level navigation for stride roles <role>
     Given a user has signed in with Stride and role "<role>"
-    Then your applications has the following header links "<link_one>" "<link_two>" "<link_three>"
+    Then your applications has the following header links "<link_one>" "<link_two>" "<link_three>" "<link_four>" "<link_five>"
 
     Examples:
-      | role            | link_one  | link_two              | link_three   |
-      | approver        | Dashboard | Integration Hub Admin | Explore APIs |
-      | support         | Dashboard | Integration Hub Admin | Explore APIs |
-      | user            | Dashboard | Explore APIs          |              |
-      | privileged-user | Dashboard | Explore APIs          |              |
-
+      | role            | link_one  | link_two              | link_three   | link_four   | link_five   |
+      | approver        | Dashboard | Integration Hub Admin | Explore APIs | Help guide  | Get support |
+      | support         | Dashboard | Integration Hub Admin | Explore APIs | Help guide  | Get support |
+      | user            | Dashboard | Explore APIs          | Help guide   | Get support |             |
+      | privileged-user | Dashboard | Explore APIs          | Help guide   | Get support |             |

@@ -49,16 +49,18 @@ class SignInSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
     ApplicationDetailsPage(sharedState.application.id)
   }
 
-  Then("your applications has the following header links {string} {string} {string}") {
-    (linkOne: String, linkTwo: String, linkThree: String) =>
+  Then("your applications has the following header links {string} {string} {string} {string} {string}") {
+    (linkOne: String, linkTwo: String, linkThree: String, linkFour: String, linkFive: String) =>
       DashboardPage()
         .foreach(
           dashboardPage => {
             dashboardPage.getHeaderLinkTexts should contain(linkOne)
             dashboardPage.getHeaderLinkTexts should contain(linkTwo)
+            dashboardPage.getHeaderLinkTexts should contain(linkThree)
+            dashboardPage.getHeaderLinkTexts should contain(linkFour)
 
-            if (linkThree.nonEmpty) {
-              dashboardPage.getHeaderLinkTexts should contain(linkThree)
+            if (linkFive.nonEmpty) {
+              dashboardPage.getHeaderLinkTexts should contain(linkFive)
             }
           }
         )

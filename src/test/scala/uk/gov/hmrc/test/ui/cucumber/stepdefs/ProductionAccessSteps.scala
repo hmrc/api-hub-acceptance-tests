@@ -18,7 +18,7 @@ package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
 import com.google.inject.Inject
 import io.cucumber.guice.ScenarioScoped
-import uk.gov.hmrc.test.ui.pages.admin.{AccessRequestApprovedPage, AccessRequestPage, AccessRequestsPage}
+import uk.gov.hmrc.test.ui.pages.admin.{AccessRequestApprovedPage, AccessRequestPage, AccessRequestsPage, AccessRequestRejectedPage}
 import uk.gov.hmrc.test.ui.pages.application._
 import uk.gov.hmrc.test.ui.utilities.SharedState
 
@@ -68,12 +68,24 @@ class ProductionAccessSteps @Inject()(sharedState: SharedState) extends BaseStep
     AccessRequestPage(accessRequestId).approveAccessRequest()
   }
 
+  When("the user rejects the access request with reason {string}") { (rejectedReason: String) =>
+    AccessRequestPage(accessRequestId).rejectAccessRequest(rejectedReason)
+  }
+
   Then("the access request approved page is displayed") { () =>
     AccessRequestApprovedPage(accessRequestId)
   }
 
+  Then("the access request rejected page is displayed") { () =>
+    AccessRequestRejectedPage(accessRequestId)
+  }
+
   Then("returns to the access requests page") { () =>
     AccessRequestApprovedPage(accessRequestId).returnToAccessRequests()
+  }
+
+  Then("returns to the access requests page after rejection") { () =>
+    AccessRequestRejectedPage(accessRequestId).returnToAccessRequests()
   }
 
 }
