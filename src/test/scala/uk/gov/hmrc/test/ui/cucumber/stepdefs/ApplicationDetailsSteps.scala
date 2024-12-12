@@ -96,6 +96,8 @@ class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseSt
     string match {
       case "Application APIs" => ApplicationDetailsPage(sharedState.application.id).applicationApis()
       case "Environments and credentials" => ApplicationDetailsPage(sharedState.application.id).environmentsAndCredentials()
+      case "Production Environment" => ApplicationDetailsPage(sharedState.application.id).environment("production")
+      case "Test Environment" => ApplicationDetailsPage(sharedState.application.id).environment("test")
       case "Delete application" => ApplicationDetailsPage(sharedState.application.id).deleteApplication()
       case _ => throw new IllegalArgumentException(s"Unknown option: $string")
     }

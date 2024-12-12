@@ -28,6 +28,11 @@ class ProductionCredentialsSuccessPage(id: String) extends BasePage[ProductionCr
     EnvironmentAndCredentialsPage(id)
   }
 
+  def returnToEnvironmentPage(): EnvironmentPage = {
+    click(yourCredentialsLink)
+    EnvironmentPage(id, "production")
+  }
+
 }
 
 object ProductionCredentialsSuccessPage {

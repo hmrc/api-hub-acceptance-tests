@@ -32,9 +32,9 @@ class EnvironmentAndCredentialsPage(id: String, environmentTab: Option[Environme
     findElements(testCredentials).size
   }
 
-  def createNewTestCredential(): EnvironmentAndCredentialsPage = {
+  def createNewTestCredential(): EnvironmentPage = {
     click(createNewTestCredentialButton)
-    EnvironmentAndCredentialsPage(id)
+    EnvironmentPage(id, "test")
   }
 
   def revokeFirstTestCredential(): EnvironmentAndCredentialsPage = {
