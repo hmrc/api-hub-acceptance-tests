@@ -23,9 +23,9 @@ import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
 class ProductionCredentialsSuccessPage(id: String) extends BasePage[ProductionCredentialsSuccessPage](pageReadyTest(id)) {
 
-  def returnToEnvironmentsAndCredentials(): EnvironmentAndCredentialsPage = {
+  def returnToEnvironmentPage(): EnvironmentPage = {
     click(yourCredentialsLink)
-    EnvironmentAndCredentialsPage(id)
+    EnvironmentPage(id, "production")
   }
 
 }

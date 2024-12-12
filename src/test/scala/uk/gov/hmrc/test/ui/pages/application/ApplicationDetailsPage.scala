@@ -63,10 +63,10 @@ class ApplicationDetailsPage(id: String) extends BasePage[ApplicationDetailsPage
     ApplicationApisPage(applicationId)
   }
 
-  def environmentsAndCredentials(): EnvironmentAndCredentialsPage = {
+  def environment(environment: String): EnvironmentPage = {
     val applicationId = getApplicationId
-    click(environmentsAndCredentialsLink)
-    EnvironmentAndCredentialsPage(applicationId)
+    click(environmentLink(environment))
+    EnvironmentPage(applicationId, environment)
   }
 
   def deleteApplication(): ApplicationDeleteConfirmationPage = {
@@ -98,7 +98,7 @@ object ApplicationDetailsPage {
     def api(id: String): By = By.cssSelector(s"[$apiIdAttribute='$id']")
     val owningTeam: By = By.id("owningTeam")
     val applicationApisLink: By = By.cssSelector("[data-nav-item-page='ApisPage']")
-    val environmentsAndCredentialsLink: By = By.cssSelector("[data-nav-item-page='EnvironmentsAndCredentialsPage']")
+    def environmentLink(environment: String): By = By.cssSelector(s"[data-nav-item-page='$environment']")
     val deleteApplicationLink: By = By.cssSelector("[data-nav-item-page='DeleteApplicationPage']")
     val cancelAccessRequestsLink: By = By.id("cancelAccessRequestsLink")
   }

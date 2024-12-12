@@ -34,7 +34,7 @@ class GenerateProductionCredentialsPage(id: String) extends BasePage[GeneratePro
 object GenerateProductionCredentialsPage {
 
   def pageReadyTest(id: String): PageReadyTest = {
-    PageReadyTests.apiHubPage.url(s"application/add-credential-checklist/$id")
+    PageReadyTests.apiHubPage.urlContaining(s"application/add-credential-checklist/$id")
   }
 
   object elements {
