@@ -49,12 +49,6 @@ class CredentialsSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
     ProductionCredentialsSuccessPage(sharedState.application.id)
   }
 
-  Then("""the user returns to the environments and credentials page""") { () =>
-    ProductionCredentialsSuccessPage(sharedState.application.id)
-      .returnToEnvironmentsAndCredentials()
-      .viewProductionEnvironment()
-  }
-
   Then("""the user returns to the production environment page""") { () =>
     ProductionCredentialsSuccessPage(sharedState.application.id)
       .returnToEnvironmentPage()

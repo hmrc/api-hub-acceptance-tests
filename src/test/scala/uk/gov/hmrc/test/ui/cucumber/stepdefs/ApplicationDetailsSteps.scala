@@ -95,7 +95,6 @@ class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseSt
   Given("""the user chooses {string} from the application left hand nav menu""") { (string: String) =>
     string match {
       case "Application APIs" => ApplicationDetailsPage(sharedState.application.id).applicationApis()
-      case "Environments and credentials" => ApplicationDetailsPage(sharedState.application.id).environmentsAndCredentials()
       case "Production Environment" => ApplicationDetailsPage(sharedState.application.id).environment("production")
       case "Test Environment" => ApplicationDetailsPage(sharedState.application.id).environment("test")
       case "Delete application" => ApplicationDetailsPage(sharedState.application.id).deleteApplication()
