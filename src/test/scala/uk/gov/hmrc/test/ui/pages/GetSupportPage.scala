@@ -16,15 +16,32 @@
 
 package uk.gov.hmrc.test.ui.pages
 
+import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.GetSupportPage._
+import uk.gov.hmrc.test.ui.pages.GetSupportPage.elements.{getSupportConsumerBlock, getSupportProducerBlock}
 
 class GetSupportPage extends BasePage[GetSupportPage](pageReadyTest) {
+  def getSupportConsumerBlockText: String = {
+    findElements(getSupportConsumerBlock)
+      .map(_.getText)
+      .mkString
+  }
 
+  def getSupportProducerBlockText: String = {
+    findElements(getSupportProducerBlock)
+      .map(_.getText)
+      .mkString
+  }
 }
 
 object GetSupportPage {
 
   val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("get-support")
+
+  object elements {
+    val  getSupportConsumerBlock: By = By.id("get-support-consumer")
+    val  getSupportProducerBlock: By = By.id("get-support-producer")
+  }
 
   def apply(): GetSupportPage = {
     new GetSupportPage()
