@@ -28,11 +28,13 @@ class EnvironmentPage(id: String, environment: String) extends BasePage[Environm
   }
 
   def createNewCredential(): EnvironmentPage = {
+    click(credentialTab)
     click(createNewCredentialButton)
     EnvironmentPage(id, environment)
   }
 
   def createNewProductionCredential(): GenerateProductionCredentialsPage = {
+    click(credentialTab)
     click(createNewCredentialButton)
     GenerateProductionCredentialsPage(id)
   }
@@ -46,6 +48,7 @@ class EnvironmentPage(id: String, environment: String) extends BasePage[Environm
   }
 
   def revokeFirstCredential(): EnvironmentPage = {
+    click(credentialTab)
     click(revokeFirstCredentialLink)
     EnvironmentPage(id, environment)
   }
@@ -64,6 +67,7 @@ object EnvironmentPage {
     val credentialAttribute: String = "data-credential-client-id"
     val credentials: By = By.cssSelector(s"p[$credentialAttribute]")
     val createNewCredentialButton: By = By.id("addCredentialButton")
+    val credentialTab: By = By.id("tab_credentials")
     def credentialForClientId(clientId: String): By = By.cssSelector(s"p[$credentialAttribute='$clientId']")
     val revokeFirstCredentialLink: By = By.className("hip-revoke-credential")
   }
