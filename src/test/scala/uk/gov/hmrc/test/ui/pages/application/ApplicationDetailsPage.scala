@@ -57,12 +57,6 @@ class ApplicationDetailsPage(id: String) extends BasePage[ApplicationDetailsPage
     ExploreApisPage()
   }
 
-  def applicationApis(): ApplicationApisPage = {
-    val applicationId = getApplicationId
-    click(applicationApisLink)
-    ApplicationApisPage(applicationId)
-  }
-
   def environment(environment: String): EnvironmentPage = {
     val applicationId = getApplicationId
     click(environmentLink(environment))
@@ -97,7 +91,6 @@ object ApplicationDetailsPage {
     val apiIdAttribute = "data-api-id"
     def api(id: String): By = By.cssSelector(s"[$apiIdAttribute='$id']")
     val owningTeam: By = By.id("owningTeam")
-    val applicationApisLink: By = By.cssSelector("[data-nav-item-page='ApisPage']")
     def environmentLink(environment: String): By = By.cssSelector(s"[data-nav-item-page='$environment']")
     val deleteApplicationLink: By = By.cssSelector("[data-nav-item-page='DeleteApplicationPage']")
     val cancelAccessRequestsLink: By = By.id("cancelAccessRequestsLink")

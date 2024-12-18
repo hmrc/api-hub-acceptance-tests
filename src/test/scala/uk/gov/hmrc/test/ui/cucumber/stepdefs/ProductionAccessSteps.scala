@@ -18,7 +18,8 @@ package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
 import com.google.inject.Inject
 import io.cucumber.guice.ScenarioScoped
-import uk.gov.hmrc.test.ui.pages.admin.{AccessRequestApprovedPage, AccessRequestPage, AccessRequestsPage, AccessRequestRejectedPage}
+import uk.gov.hmrc.test.ui.pages.DashboardPage
+import uk.gov.hmrc.test.ui.pages.admin.{AccessRequestApprovedPage, AccessRequestPage, AccessRequestRejectedPage, AccessRequestsPage}
 import uk.gov.hmrc.test.ui.pages.application._
 import uk.gov.hmrc.test.ui.utilities.SharedState
 
@@ -28,8 +29,8 @@ class ProductionAccessSteps @Inject()(sharedState: SharedState) extends BaseStep
   var accessRequestId: String = _
 
   When("the user requests prod access") { () =>
-    ApplicationApisPage(sharedState.application.id)
-      .requestProductionAccess()
+    EnvironmentPage(sharedState.application.id, "production")
+      .requestAccess()
   }
 
   And("the user selects which API") { () =>
@@ -49,6 +50,10 @@ class ProductionAccessSteps @Inject()(sharedState: SharedState) extends BaseStep
 
   Then("the production access request is successful") { () =>
     RequestProductionAccessSuccessPage()
+  }
+
+  Then("follow the application link") { () =>
+    RequestProductionAccessSuccessPage().viewApplication()
   }
 
   And("views the access requests page") { () =>
