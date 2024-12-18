@@ -20,6 +20,7 @@ Feature: Production access requests
     And the user supports the request with a reason
     And the user checks their answers
     And the production access request is successful
+    And follow the application link
     And the user swaps role to "approver"
     And views the access requests page
     And opens the first access request
@@ -36,6 +37,7 @@ Feature: Production access requests
     And the user supports the request with a reason
     And the user checks their answers
     And the production access request is successful
+    And follow the application link
     And the user swaps role to "approver"
     And views the access requests page
     And opens the first access request

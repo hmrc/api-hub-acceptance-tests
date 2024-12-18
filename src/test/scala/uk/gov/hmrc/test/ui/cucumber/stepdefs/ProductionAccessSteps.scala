@@ -49,11 +49,15 @@ class ProductionAccessSteps @Inject()(sharedState: SharedState) extends BaseStep
   }
 
   Then("the production access request is successful") { () =>
-    RequestProductionAccessSuccessPage().dashboard()
+    RequestProductionAccessSuccessPage()
+  }
+
+  Then("follow the application link") { () =>
+    RequestProductionAccessSuccessPage().viewApplication()
   }
 
   And("views the access requests page") { () =>
-    DashboardPage().apiHubAdmin()
+    ApplicationDetailsPage(sharedState.application.id).apiHubAdmin()
   }
 
   And("opens the first access request") { () =>
