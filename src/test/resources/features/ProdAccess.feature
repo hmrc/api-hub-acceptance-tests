@@ -4,7 +4,7 @@ Feature: Production access requests
   Scenario: Request production access
     Given a user has signed-in and registers an application
     And the user adds an API to the application
-    And the user chooses "Application APIs" from the application left hand nav menu
+    And the user chooses "Production Environment" from the application left hand nav menu
     When the user requests prod access
     And the user selects which API
     And the user supports the request with a reason
@@ -14,7 +14,12 @@ Feature: Production access requests
   Scenario: Approve production access request
     Given a user has signed-in and registers an application
     And the user adds an API to the application
-    And the user requests production access
+    And the user chooses "Production Environment" from the application left hand nav menu
+    And the user requests prod access
+    And the user selects which API
+    And the user supports the request with a reason
+    And the user checks their answers
+    And the production access request is successful
     And the user swaps role to "approver"
     And views the access requests page
     And opens the first access request
@@ -25,7 +30,12 @@ Feature: Production access requests
   Scenario: Reject production access request
     Given a user has signed-in and registers an application
     And the user adds an API to the application
-    And the user requests production access
+    And the user chooses "Production Environment" from the application left hand nav menu
+    And the user requests prod access
+    And the user selects which API
+    And the user supports the request with a reason
+    And the user checks their answers
+    And the production access request is successful
     And the user swaps role to "approver"
     And views the access requests page
     And opens the first access request

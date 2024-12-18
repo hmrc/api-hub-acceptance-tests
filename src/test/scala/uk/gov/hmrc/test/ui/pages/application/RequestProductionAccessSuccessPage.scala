@@ -19,9 +19,9 @@ package uk.gov.hmrc.test.ui.pages.application
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.application.RequestProductionAccessSuccessPage._
 import uk.gov.hmrc.test.ui.pages.registerapplication.RegisterApplicationSuccessPage.elements.{applicationIdAttribute, viewApplicationLink}
-import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
+import uk.gov.hmrc.test.ui.pages.{ApiHubMenu, BasePage, PageReadyTest, PageReadyTests}
 
-class RequestProductionAccessSuccessPage extends BasePage[RequestProductionAccessSuccessPage](pageReadyTest) {
+class RequestProductionAccessSuccessPage extends BasePage[RequestProductionAccessSuccessPage](pageReadyTest) with ApiHubMenu {
 
   def viewApplication(): ApplicationDetailsPage = {
     val applicationId = getApplicationId

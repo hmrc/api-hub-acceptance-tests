@@ -53,6 +53,11 @@ class EnvironmentPage(id: String, environment: String) extends BasePage[Environm
     EnvironmentPage(id, environment)
   }
 
+  def requestAccess(): SelectApisPage = {
+    click(requestAccessButton(environment))
+    SelectApisPage()
+  }
+
 }
 
 object EnvironmentPage {
@@ -70,6 +75,7 @@ object EnvironmentPage {
     val credentialTab: By = By.id("tab_credentials")
     def credentialForClientId(clientId: String): By = By.cssSelector(s"p[$credentialAttribute='$clientId']")
     val revokeFirstCredentialLink: By = By.className("hip-revoke-credential")
+    def requestAccessButton(environment: String): By = By.id(s"request${environment.capitalize}AccessButton")
   }
 
   def apply(id: String, environment: String): EnvironmentPage = {

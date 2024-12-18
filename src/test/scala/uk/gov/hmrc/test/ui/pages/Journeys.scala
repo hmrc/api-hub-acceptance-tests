@@ -144,8 +144,8 @@ object Journeys extends Robot {
 
   def requestProductionAccess(sharedState: SharedState): ApplicationDetailsPage = {
     ApplicationDetailsPage(sharedState.application.id)
-      .applicationApis()
-      .requestProductionAccess()
+      .environment("production")
+      .requestAccess()
       .setSelectedApi()
       .setSupportingInformation("test-supporting-information")
       .confirmAnswers()
