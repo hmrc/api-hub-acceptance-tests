@@ -16,7 +16,7 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-import uk.gov.hmrc.test.ui.pages.{DashboardPage, Journeys, SignInPage, StrideSignInPage}
+import uk.gov.hmrc.test.ui.pages.{DashboardPage, Journeys, SignInPage, StrideSignInPage, GetHelpGuidePage}
 
 class HomepageSteps extends BaseStepDef {
 
@@ -48,6 +48,10 @@ class HomepageSteps extends BaseStepDef {
 
   Then("the user should be redirected to the stride login page") { () =>
     StrideSignInPage()
+  }
+
+  Then("the user should be redirected to the Help Guide page") { () =>
+    GetHelpGuidePage()
   }
 
 }
