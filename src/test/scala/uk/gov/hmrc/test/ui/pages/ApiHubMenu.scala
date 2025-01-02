@@ -70,6 +70,11 @@ trait ApiHubMenu {
     GetSupportPage()
   }
 
+  def getHelpGuide(): GetHelpGuidePage = {
+    click(helpDocsLink)
+    GetHelpGuidePage()
+  }
+
   def getHeaderLinkTexts: Seq[String] = {
     findElements(headerLinks)
       .map(_.getText)
@@ -89,6 +94,7 @@ object ApiHubMenu {
     val apiHubAdminLink: By = By.id("apiHubAdminLink")
     val exploreApisLink: By = By.id("exploreApisLink")
     val getSupportLink: By = By.id("getSupportLink")
+    val helpDocsLink: By = By.id("helpDocsLink")
   }
 
 }
