@@ -50,6 +50,9 @@ class ExploreApisPage extends BasePage[ExploreApisPage](pageReadyTest) {
     findElements(apiLink).filter(_.isDisplayed)
   }
 
+  def getApiHeader: Option[String] = {
+    findElements(apiHeader).headOption.map(_.getText)
+  }
 }
 
 object ExploreApisPage {
@@ -63,6 +66,7 @@ object ExploreApisPage {
     val apiIdAttribute = "data-api-id"
     val apiLink: By = By.cssSelector(s"[$apiIdAttribute]")
     val apiResultsSize = By.id("apiResultsSize")
+    val apiHeader: By = By.cssSelector("h2.govuk-heading-l")
   }
 
   def apply(): ExploreApisPage = {
