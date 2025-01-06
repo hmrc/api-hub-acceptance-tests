@@ -33,7 +33,7 @@ class ProductionCredentialsSuccessPage(id: String) extends BasePage[ProductionCr
 object ProductionCredentialsSuccessPage {
 
   def pageReadyTest(id: String): PageReadyTest = {
-    PageReadyTests.apiHubPage.url(s"application/add-credential-success/$id")
+    PageReadyTests.apiHubPage.url(s"application/add-credential/$id/production")
   }
 
   object elements {
