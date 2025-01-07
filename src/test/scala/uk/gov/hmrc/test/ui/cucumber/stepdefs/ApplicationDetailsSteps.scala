@@ -82,10 +82,8 @@ class ApplicationDetailsSteps @Inject()(sharedState: SharedState) extends BaseSt
           addAnApiSuccessPage.getSuccessSummary should startWith(apiTitle)
       )
       .viewApplication()
-      .foreach(
-        applicationDetailsPage =>
-          applicationDetailsPage.hasApiAdded(apiId) shouldBe true
-      )
+      .environment("test")
+      .hasApi(apiId) shouldBe true
   }
 
   When("the user navigates to an invalid application id {string}") { (string: String) =>
