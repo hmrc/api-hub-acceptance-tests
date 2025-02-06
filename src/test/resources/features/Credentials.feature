@@ -7,7 +7,7 @@ Feature: Credentials
   Scenario: Create new test credential
     Given the user chooses "Test Environment" from the application left hand nav menu
     When the user creates a new test credential
-    Then there are 2 test credentials
+    Then there is 1 test credential
 
   Scenario: Create new production credential
     When the user swaps role to "privileged-user"
@@ -20,6 +20,7 @@ Feature: Credentials
 
   Scenario: Delete test credential
     Given the user chooses "Test Environment" from the application left hand nav menu
+    And the user creates a new test credential
     And the user creates a new test credential
     When the user revokes the first test credential
     Then there is 1 credential for "test"
