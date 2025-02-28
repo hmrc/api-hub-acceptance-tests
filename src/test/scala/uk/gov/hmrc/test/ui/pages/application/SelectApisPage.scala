@@ -34,7 +34,7 @@ class SelectApisPage extends BasePage[SelectApisPage](pageReadyTest) {
 
 object SelectApisPage {
 
-  val pageReadyTest: PageReadyTest = PageReadyTests.questionPage.url("application/request-production-access/select-apis")
+  val pageReadyTest: PageReadyTest = PageReadyTests.questionPage.url("application/request-access/select-apis")
 
   object elements {
     val selectedApi: By = By.id("value_0")

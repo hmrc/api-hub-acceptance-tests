@@ -37,7 +37,7 @@ class RequestProductionAccessSuccessPage extends BasePage[RequestProductionAcces
 
 object RequestProductionAccessSuccessPage {
 
-  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("application/request-production-access/success")
+  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("application/request-access/success")
 
   object elements {
     val viewApplicationLink: By = By.id("viewApplicationLink")

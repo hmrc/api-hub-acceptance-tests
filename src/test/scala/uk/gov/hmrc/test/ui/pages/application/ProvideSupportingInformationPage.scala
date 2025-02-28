@@ -33,7 +33,7 @@ class ProvideSupportingInformationPage extends BasePage[ProvideSupportingInforma
 
 object ProvideSupportingInformationPage {
 
-  val pageReadyTest: PageReadyTest = PageReadyTests.questionPage.url("application/request-production-access/supporting-information")
+  val pageReadyTest: PageReadyTest = PageReadyTests.questionPage.url("application/request-access/supporting-information")
 
   object elements {
     val supportingInformation: By = By.id("value")
