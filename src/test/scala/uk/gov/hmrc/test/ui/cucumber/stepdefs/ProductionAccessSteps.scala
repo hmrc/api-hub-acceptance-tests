@@ -18,7 +18,6 @@ package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
 import com.google.inject.Inject
 import io.cucumber.guice.ScenarioScoped
-import uk.gov.hmrc.test.ui.pages.DashboardPage
 import uk.gov.hmrc.test.ui.pages.admin.{AccessRequestApprovedPage, AccessRequestPage, AccessRequestRejectedPage, AccessRequestsPage}
 import uk.gov.hmrc.test.ui.pages.application._
 import uk.gov.hmrc.test.ui.utilities.SharedState

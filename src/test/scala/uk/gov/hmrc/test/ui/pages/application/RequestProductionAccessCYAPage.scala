@@ -33,7 +33,7 @@ class RequestProductionAccessCYAPage extends BasePage[RequestProductionAccessCYA
 
 object RequestProductionAccessCYAPage {
 
-  val pageReadyTest: PageReadyTest = PageReadyTests.questionPage.url("application/request-production-access/check-your-answers")
+  val pageReadyTest: PageReadyTest = PageReadyTests.questionPage.url("application/request-access/check-your-answers")
 
   object elements {
     val confirm: By = By.id("accept_0")
