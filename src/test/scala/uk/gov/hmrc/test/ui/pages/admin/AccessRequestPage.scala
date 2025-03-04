@@ -45,7 +45,7 @@ object AccessRequestPage {
   // We need a combined test as the URL is common to the view, approved, and rejected pages
   def pageReadyTest(id: String): PageReadyTest = PageReadyTests.allOf(
     PageReadyTests.apiHubPage.url(s"admin/access-requests/$id"),
-    PageReadyTests.apiHubPage.title("Production API request")
+    PageReadyTests.apiHubPage.title("Review access request")
   )
 
   object elements {
