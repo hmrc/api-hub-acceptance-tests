@@ -59,7 +59,7 @@ class EnvironmentPage(id: String, environment: String) extends BasePage[Environm
   }
 
   def hasApi(apiId: String): Boolean = {
-    exists(viewApiSpecLink(apiId))
+    exists(dataApiId(apiId))
   }
 }
 
@@ -80,7 +80,7 @@ object EnvironmentPage {
     val revokeFirstCredentialLink: By = By.className("hip-revoke-credential")
     val requestProductionAccessButton: By = By.id(s"requestProductionAccessButton")
     val apiIdAttribute = "data-api-specification-api-id"
-    def viewApiSpecLink(apiId: String): By = By.cssSelector(s"a[$apiIdAttribute='$apiId']")
+    def dataApiId(apiId: String): By = By.cssSelector(s"[data-api-id='$apiId']")
   }
 
   def apply(id: String, environment: String): EnvironmentPage = {
