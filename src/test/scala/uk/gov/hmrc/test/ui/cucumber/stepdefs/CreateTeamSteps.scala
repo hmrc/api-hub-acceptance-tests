@@ -42,6 +42,10 @@ class CreateTeamSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
     CreateTeamApiProducerConsumerPage().setProducer()
   }
 
+  When("selects to continue to the create team add team members") { () =>
+    CreateTeamApiProducerConsumerPage().continue()
+  }
+
   When("selects to enter an additional team member") { () =>
     CreateTeamMembersPage().addTeamMember()
   }
