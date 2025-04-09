@@ -6,6 +6,8 @@ Feature: Create team
 
   Scenario: Create a team and check team details
     When the user enters a team name
+    And the user selects the team to be an api producer
+    And selects to continue to the create team add team members
     And selects to enter an additional team member
     And enters the new team member's email address
     And selects to continue to the create team check your answers page

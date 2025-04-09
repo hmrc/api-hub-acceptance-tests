@@ -114,6 +114,8 @@ object Journeys extends Robot {
       .dashboard()
       .createTeam()
       .setTeamNameNormalMode(sharedState.team.name)
+      .setProducer()
+      .continue()
       .continue()
       .createTeam()
       .foreach(
