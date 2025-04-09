@@ -24,16 +24,16 @@ import uk.gov.hmrc.test.ui.utilities.Mode
 
 class CreateTeamNamePage(mode: Mode) extends BasePage[CreateTeamNamePage](pageReadyTest(mode)) {
 
-  def setTeamNameNormalMode(teamName: String): CreateTeamMembersPage = {
+  def setTeamNameNormalMode(teamName: String): CreateTeamApiProducerConsumerPage = {
     sendKeys(teamNameInput, teamName)
     click(continueButton)
-    new CreateTeamMembersPage()
+    new CreateTeamApiProducerConsumerPage()
   }
 
-  def setTeamNameCheckMode(teamName: String): CheckYourAnswersPage = {
+  def setTeamNameCheckMode(teamName: String): CreateTeamApiProducerConsumerPage = {
     sendKeys(teamNameInput, teamName)
     click(continueButton)
-    CheckYourAnswersPage()
+    CreateTeamApiProducerConsumerPage()
   }
 
 }

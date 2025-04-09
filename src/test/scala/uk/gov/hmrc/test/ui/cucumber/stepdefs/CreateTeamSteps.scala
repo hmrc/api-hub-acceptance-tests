@@ -20,7 +20,7 @@ import com.google.inject.Inject
 import faker.Faker
 import io.cucumber.guice.ScenarioScoped
 import uk.gov.hmrc.test.ui.pages.Journeys
-import uk.gov.hmrc.test.ui.pages.createteam.{CheckYourAnswersPage, CreateTeamAddTeamMemberPage, CreateTeamMembersPage, CreateTeamNamePage, CreateTeamSuccessPage}
+import uk.gov.hmrc.test.ui.pages.createteam.{CheckYourAnswersPage, CreateTeamAddTeamMemberPage, CreateTeamApiProducerConsumerPage, CreateTeamMembersPage, CreateTeamNamePage, CreateTeamSuccessPage}
 import uk.gov.hmrc.test.ui.pages.team.{ManageMyTeamsPage, ManageTeamPage}
 import uk.gov.hmrc.test.ui.utilities.{NormalMode, SharedState}
 
@@ -36,6 +36,10 @@ class CreateTeamSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
 
   When("the user enters a team name") { () =>
     CreateTeamNamePage(NormalMode).setTeamNameNormalMode(sharedState.team.name)
+  }
+
+  When("the user selects the team to be an api producer") { () =>
+    CreateTeamApiProducerConsumerPage().setProducer()
   }
 
   When("selects to enter an additional team member") { () =>
