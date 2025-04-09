@@ -17,12 +17,10 @@
 package uk.gov.hmrc.test.ui.pages.createteam
 
 import org.openqa.selenium.By
-import uk.gov.hmrc.test.ui.pages.createteam.CreateTeamApiProducerConsumerPage.elements.isProducerButton
-import uk.gov.hmrc.test.ui.pages.createteam.CreateTeamMembersPage._
-import uk.gov.hmrc.test.ui.pages.createteam.CreateTeamMembersPage.elements._
+import uk.gov.hmrc.test.ui.pages.createteam.CreateTeamApiProducerConsumerPage.elements.{continueButton, isProducerButton}
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
-class CreateTeamApiProducerConsumerPage extends BasePage[CreateTeamApiProducerConsumerPage](pageReadyTest){
+class CreateTeamApiProducerConsumerPage extends BasePage[CreateTeamApiProducerConsumerPage](CreateTeamApiProducerConsumerPage.pageReadyTest){
 
   def setProducer(): CreateTeamApiProducerConsumerPage = {
     click(isProducerButton)
