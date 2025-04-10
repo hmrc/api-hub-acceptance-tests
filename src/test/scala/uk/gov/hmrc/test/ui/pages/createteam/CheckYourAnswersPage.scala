@@ -24,6 +24,7 @@ import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 class CheckYourAnswersPage extends BasePage[CheckYourAnswersPage](pageReadyTest) {
 
   def createTeam(): CreateTeamSuccessPage = {
+    findElements(createTeamCheckBox).headOption.foreach(_.click())
     click(createTeamButton)
     CreateTeamSuccessPage()
   }
@@ -45,6 +46,7 @@ object CheckYourAnswersPage {
 
   object elements {
     val createTeamButton: By = By.id("createTeamButton")
+    val createTeamCheckBox: By = By.id("value")
     val teamMemberRow: By = By.cssSelector("[data-summary-for='team-members'] .govuk-summary-list__key")
     val changeTeamMembersLink: By = By.id("changeTeamMembersLink")
   }

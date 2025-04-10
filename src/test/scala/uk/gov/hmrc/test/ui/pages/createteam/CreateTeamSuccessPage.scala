@@ -37,7 +37,7 @@ class CreateTeamSuccessPage extends BasePage[CreateTeamSuccessPage](pageReadyTes
 
 object CreateTeamSuccessPage {
 
-  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("team/create-team/create-team")
+  val pageReadyTest: PageReadyTest = PageReadyTests.apiHubPage.url("team/create-team/check-your-answers")
 
   object elements {
     val manageTeamsLink: By = By.id("manageTeamsLink")
