@@ -66,7 +66,7 @@ object ExploreApisPage {
     val apiIdAttribute = "data-api-id"
     val apiLink: By = By.cssSelector(s"[$apiIdAttribute]")
     val apiResultsSize = By.id("apiResultsSize")
-    val apiHeader: By = By.cssSelector("h2.govuk-heading-l")
+    val apiHeader: By = By.cssSelector("h1.govuk-heading-l")
   }
 
   def apply(): ExploreApisPage = {
