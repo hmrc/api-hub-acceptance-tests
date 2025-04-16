@@ -19,7 +19,7 @@ package uk.gov.hmrc.test.ui.pages.admin
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.admin.AccessRequestsPage._
 import uk.gov.hmrc.test.ui.pages.admin.AccessRequestsPage.elements._
-import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
+import uk.gov.hmrc.test.ui.pages.{ApiHubMenu, BasePage, PageReadyTest, PageReadyTests}
 
 class AccessRequestsPage extends BasePage[AccessRequestsPage](pageReadyTest) {
 
@@ -28,6 +28,11 @@ class AccessRequestsPage extends BasePage[AccessRequestsPage](pageReadyTest) {
     val accessRequestId = link.getAttribute(accessRequestIdAttribute)
     link.click()
     AccessRequestPage(accessRequestId)
+  }
+
+  def navigateToManageApplicationsPage() : ManageApplicationsPage = {
+    click(manageApplicationsLink)
+    ManageApplicationsPage()
   }
 
 }
@@ -39,6 +44,7 @@ object AccessRequestsPage {
   object elements {
     val accessRequestIdAttribute: String = "data-access-request-id"
     val firstAccessRequestLink: By = By.cssSelector(s"a[$accessRequestIdAttribute]:first-child")
+    val manageApplicationsLink: By = By.cssSelector(s"[data-nav-item-page='ManageApplicationsPage']")
   }
 
   def apply(): AccessRequestsPage = {
