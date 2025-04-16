@@ -16,6 +16,7 @@
 
 package uk.gov.hmrc.test.ui.pages
 
+import uk.gov.hmrc.test.ui.pages.admin.ManageApplicationsPage
 import uk.gov.hmrc.test.ui.pages.application.{ApplicationDetailsPage, EnvironmentPage, YourApplicationsPage}
 import uk.gov.hmrc.test.ui.pages.team.{ManageMyTeamsPage, ManageTeamPage}
 import uk.gov.hmrc.test.ui.utilities.{Role, SharedState, UserRole}
@@ -47,6 +48,11 @@ object Journeys extends Robot {
   def openManageMyTeamsPage(): ManageMyTeamsPage = {
     navigateToRelativeUrl("team/manage-my-teams")
     ManageMyTeamsPage()
+  }
+
+  def openAdminApplicationsPage(): ManageApplicationsPage = {
+    navigateToRelativeUrl("admin/applications")
+    ManageApplicationsPage()
   }
 
   def signIn(): DashboardPage = {
