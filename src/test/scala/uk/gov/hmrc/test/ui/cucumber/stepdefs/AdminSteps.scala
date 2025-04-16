@@ -34,7 +34,7 @@ class AdminSteps @Inject()(sharedState: SharedState) extends BaseStepDef with Ro
       .setFilterText(sharedState.application.id)
   }
 
-  Then("the api link is visible") { () =>
+  Then("the application link is visible") { () =>
     ManageApplicationsPage().hasApi(sharedState.application.id)
   }
 
