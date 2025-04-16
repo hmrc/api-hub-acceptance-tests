@@ -50,11 +50,6 @@ object Journeys extends Robot {
     ManageMyTeamsPage()
   }
 
-  def openAdminApplicationsPage(): ManageApplicationsPage = {
-    navigateToRelativeUrl("admin/applications")
-    ManageApplicationsPage()
-  }
-
   def signIn(): DashboardPage = {
     signInViaStride()
   }
