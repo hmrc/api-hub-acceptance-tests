@@ -29,52 +29,6 @@ class ManageApplicationsPage extends BasePage[ManageApplicationsPage](ManageAppl
   def hasApi(id: String): Boolean = {
       exists(applicationLink(id))
     }
-//  def getApplicationId: String = {
-//    getText(applicationId)
-//  }
-//
-//  def getApplicationName: String = {
-//    getText(applicationName)
-//  }
-//
-//  def getCreated: LocalDate = {
-//    DateFormatterUtil.parseLongDateTolerantly(getText(applicationCreated))
-//  }
-//
-//  def getNoApisMessage: String = {
-//    getText(noApisMessage)
-//  }
-//
-//  def getOwningTeamName: String = {
-//    getText(owningTeam)
-//  }
-//
-//  def hasApiAdded(id: String): Boolean = {
-//    exists(api(id))
-//  }
-//
-//  def addApis(): ExploreApisPage = {
-//    click(exploreApisLink)
-//    ExploreApisPage()
-//  }
-//
-//  def environment(environment: String): EnvironmentPage = {
-//    val applicationId = getApplicationId
-//    click(environmentLink(environment))
-//    EnvironmentPage(applicationId, environment)
-//  }
-//
-//  def deleteApplication(): ApplicationDeleteConfirmationPage = {
-//    val applicationId = getApplicationId
-//    click(deleteApplicationLink)
-//    ApplicationDeleteConfirmationPage(applicationId)
-//  }
-//
-//  def cancelAccessRequests(): CancelAccessRequestSelectApiPage = {
-//    click(cancelAccessRequestsLink)
-//    CancelAccessRequestSelectApiPage()
-//  }
-
 }
 
 object ManageApplicationsPage {
@@ -86,18 +40,6 @@ object ManageApplicationsPage {
   object elements {
     val appFilter: By = By.id("appFilter")
     def applicationLink(id: String): By = By.cssSelector(s"[data-app-id='$id']")
-
-    //    val applicationId: By = By.id("applicationId")
-//    val applicationName: By = By.id("applicationName")
-//    val applicationCreated: By = By.id("applicationCreated")
-//    val noApisMessage: By = By.id("noApisMessage")
-//    val exploreApisLink: By = By.id("addExploreApisLink")
-//    val apiIdAttribute = "data-api-id"
-//    def api(id: String): By = By.cssSelector(s"[$apiIdAttribute='$id']")
-//    val owningTeam: By = By.id("owningTeam")
-//    def environmentLink(environment: String): By = By.cssSelector(s"[data-nav-item-page='$environment']")
-//    val deleteApplicationLink: By = By.cssSelector("[data-nav-item-page='DeleteApplicationPage']")
-//    val cancelAccessRequestsLink: By = By.id("cancelAccessRequestsLink")
   }
 
   def apply(): ManageApplicationsPage = {
