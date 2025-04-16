@@ -1,0 +1,8 @@
+{
+  "exclusions": [
+    {
+      "path": "http://localhost:8490/guides/integration-hub-guide/",
+      "reason": "The accessibility issues are related to the tech-docs-gem template: https://github.com/hmrc/tech-docs-gem"
+    }
+  ]
+}
