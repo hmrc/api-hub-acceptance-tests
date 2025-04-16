@@ -26,9 +26,10 @@ class ManageApplicationsPage extends BasePage[ManageApplicationsPage](ManageAppl
     sendKeys(appFilter, text)
   }
 
-  def hasApi(id: String): Boolean = {
+  def hasApplication(id: String): Boolean = {
       exists(applicationLink(id))
-    }
+  }
+
 }
 
 object ManageApplicationsPage {

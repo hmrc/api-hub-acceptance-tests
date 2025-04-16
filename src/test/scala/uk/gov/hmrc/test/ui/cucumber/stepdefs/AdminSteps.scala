@@ -19,14 +19,19 @@ package uk.gov.hmrc.test.ui.cucumber.stepdefs
 import com.google.inject.Inject
 import io.cucumber.guice.ScenarioScoped
 import uk.gov.hmrc.test.ui.pages.Robot
-import uk.gov.hmrc.test.ui.pages.admin.ManageApplicationsPage
+import uk.gov.hmrc.test.ui.pages.admin.{AccessRequestsPage, ManageApplicationsPage}
+import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage
 import uk.gov.hmrc.test.ui.utilities.SharedState
 
 @ScenarioScoped
 class AdminSteps @Inject()(sharedState: SharedState) extends BaseStepDef with Robot {
 
-  When("the user navigates to the Integration Hub Admin page") {
-    navigateToRelativeUrl(s"admin/applications")
+  When("the user navigates from the application details page to the integration hub admin page") { () =>
+    ApplicationDetailsPage(sharedState.application.id).apiHubAdmin()
+  }
+
+  When("the user navigates to the Manage Applications page") { () =>
+    AccessRequestsPage().navigateToManageApplicationsPage()
   }
 
   When("the user the user enters the application id to filter") { () =>
@@ -35,7 +40,7 @@ class AdminSteps @Inject()(sharedState: SharedState) extends BaseStepDef with Ro
   }
 
   Then("the application link is visible") { () =>
-    ManageApplicationsPage().hasApi(sharedState.application.id)
+    ManageApplicationsPage().hasApplication(sharedState.application.id)
   }
 
 }
