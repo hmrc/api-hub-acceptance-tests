@@ -38,13 +38,4 @@ class AdminSteps @Inject()(sharedState: SharedState) extends BaseStepDef with Ro
     ManageApplicationsPage().hasApi(sharedState.application.id)
   }
 
-//  Given("""the user chooses {string} from the application left hand nav menu""") { (string: String) =>
-//    string match {
-//      case "Production Environment" => ApplicationDetailsPage(sharedState.application.id).environment("production")
-//      case "Test Environment" => ApplicationDetailsPage(sharedState.application.id).environment("test")
-//      case "Delete application" => ApplicationDetailsPage(sharedState.application.id).deleteApplication()
-//      case _ => throw new IllegalArgumentException(s"Unknown option: $string")
-//    }
-//  }
-
 }
