@@ -15,7 +15,7 @@ Feature: Ldap Login
 
     Examples:
       | role            | link_one  | link_two              | link_three   | link_four   | link_five   |
-      | approver        | Dashboard | Integration Hub Admin | Explore APIs | Help guide  | Get support |
-      | support         | Dashboard | Integration Hub Admin | Explore APIs | Help guide  | Get support |
+      | approver        | Dashboard | Explore APIs          | Help guide   | Get support | Admin       |
+      | support         | Dashboard | Explore APIs          | Help guide   | Get support | Admin       |
       | user            | Dashboard | Explore APIs          | Help guide   | Get support |             |
       | privileged-user | Dashboard | Explore APIs          | Help guide   | Get support |             |

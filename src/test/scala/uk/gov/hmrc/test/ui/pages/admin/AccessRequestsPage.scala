@@ -19,7 +19,7 @@ package uk.gov.hmrc.test.ui.pages.admin
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.admin.AccessRequestsPage._
 import uk.gov.hmrc.test.ui.pages.admin.AccessRequestsPage.elements._
-import uk.gov.hmrc.test.ui.pages.{ApiHubMenu, BasePage, PageReadyTest, PageReadyTests}
+import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 
 class AccessRequestsPage extends BasePage[AccessRequestsPage](pageReadyTest) {
 
