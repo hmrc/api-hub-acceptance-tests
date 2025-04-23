@@ -18,7 +18,8 @@ package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.DashboardPage._
-import uk.gov.hmrc.test.ui.pages.DashboardPage.elements.{registerAnApplicationButton, registerTeamButton}
+import uk.gov.hmrc.test.ui.pages.DashboardPage.elements.{newApiButton, registerAnApplicationButton, registerTeamButton}
+import uk.gov.hmrc.test.ui.pages.createapi.CreateApiPage
 import uk.gov.hmrc.test.ui.pages.createteam.CreateTeamNamePage
 import uk.gov.hmrc.test.ui.pages.registerapplication.RegisterApplicationNamePage
 import uk.gov.hmrc.test.ui.utilities.NormalMode
@@ -36,6 +37,10 @@ class DashboardPage extends BasePage[DashboardPage](pageReadyTest) with ApiHubMe
     CreateTeamNamePage(NormalMode)
   }
 
+  def createApi(): CreateApiPage = {
+    click(newApiButton)
+    CreateApiPage(NormalMode)
+  }
 }
 
 object DashboardPage {
@@ -45,6 +50,7 @@ object DashboardPage {
   object elements {
     val registerAnApplicationButton: By = By.id("registerAnApplicationButton")
     val registerTeamButton: By = By.id("registerTeamButton")
+    val newApiButton: By = By.id("createAnApiButton")
   }
 
   def apply(): DashboardPage = {

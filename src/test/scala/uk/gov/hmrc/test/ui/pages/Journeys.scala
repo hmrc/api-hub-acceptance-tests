@@ -108,6 +108,13 @@ object Journeys extends Robot {
     registerAnApplication(sharedState)
   }
 
+  def signInAndEnsureTeam(sharedState: SharedState): DashboardPage = {
+    signIn()
+    checkUserHasATeam(sharedState)
+    navigateToRelativeUrl("dashboard")
+    DashboardPage()
+  }
+
   def createTeam(sharedState: SharedState): ManageTeamPage = {
     Journeys
       .openStartPage()

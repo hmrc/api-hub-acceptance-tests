@@ -55,6 +55,10 @@ class JourneySteps @Inject()(sharedState: SharedState) extends BaseStepDef {
     Journeys.signInViaLdap()
   }
 
+  Given("a user has signed in and has an api producer team") { () =>
+    Journeys.signInAndEnsureTeam(sharedState)
+  }
+
   Given("a user has signed in with LDAP and role {string}") { (role: String) =>
     Journeys.signInViaLdap(Roles.forName(role))
   }
