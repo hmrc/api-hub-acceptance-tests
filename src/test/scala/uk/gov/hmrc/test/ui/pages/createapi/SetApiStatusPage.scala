@@ -39,7 +39,7 @@ object SetApiStatusPage {
 
   object elements {
     val alphaRadio: By = By.id("value_0")
-    val continueButton: By = By.cssSelector("govuk-button")
+    val continueButton: By = By.cssSelector("button[type = submit]")
   }
 
   def apply(mode: Mode = NormalMode): SetApiStatusPage = {

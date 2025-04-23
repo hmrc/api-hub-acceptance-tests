@@ -36,7 +36,7 @@ object TeamHasNoEgressesPage {
   }
 
   object elements {
-    val continueButton: By = By.id("continueButton")
+    val continueButton: By = By.cssSelector("button[type = submit]")
   }
 
   def apply(mode: Mode = NormalMode): TeamHasNoEgressesPage = {

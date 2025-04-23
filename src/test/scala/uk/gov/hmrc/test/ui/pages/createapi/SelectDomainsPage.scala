@@ -42,8 +42,8 @@ object SelectDomainsPage {
 
   object elements {
     val domain1: By = By.id("domain")
-    val subDomain1: By = By.id("subDomain")
-    val continueButton: By = By.cssSelector("govuk-button")
+    val subDomain1: By = By.cssSelector("label[for=subDomain-1_1]")
+    val continueButton: By = By.cssSelector("button[type = submit]")
   }
 
   def apply(mode: Mode = NormalMode): SelectDomainsPage = {

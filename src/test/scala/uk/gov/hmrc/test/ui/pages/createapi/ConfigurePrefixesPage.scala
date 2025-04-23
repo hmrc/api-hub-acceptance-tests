@@ -39,7 +39,7 @@ object ConfigurePrefixesPage {
 
   object elements {
     val noRadio: By = By.id("value-no")
-    val continueButton: By = By.cssSelector("govuk-button")
+    val continueButton: By = By.cssSelector("button[type = submit]")
   }
 
   def apply(mode: Mode = NormalMode): ConfigurePrefixesPage = {

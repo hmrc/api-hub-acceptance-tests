@@ -36,8 +36,8 @@ class CreateApiSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
     CreateApiPage().getStarted()
   }
 
-  When("the user selects their team"){ (teamId: String) =>
-    SelectOwningTeamPage().selectMyTeam(teamId)
+  When("the user selects their team"){ () =>
+    SelectOwningTeamPage().selectMyTeam(sharedState.team.id)
   }
 
   When("the user selects Continue"){ (teamId: String) =>
@@ -52,8 +52,19 @@ class CreateApiSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
     HowToCreateApiPage().selectUseVisualOasEditor()
   }
 
-  When("the user enters a valid oas") { () =>
-    EnterOasPage().setOas()
+  When("the user clicks in the editor window") { () =>
+    EnterOasPage().selectOasEditor()
+  }
+  When("the user sets the oas title to be something starting with {string}") { (title: String) =>
+    EnterOasPage().setOasTitle(title + System.currentTimeMillis())
+  }
+
+  When("the user selects continue on the oas editor page") { () =>
+    EnterOasPage().continue()
+  }
+
+  When("the user sets the oas version to be {string}") { (version: String) =>
+    EnterOasPage().setOasVersion(version)
   }
 
   When("the user enters a short description") { () =>
@@ -89,7 +100,7 @@ class CreateApiSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
   }
 
   When("the user checks their answers the second time") { () =>
-    CreateApiCheckYourAnswersPage().confirmAnswers()
+    CreateApiCheckYourAnswersPage().completeJourney()
   }
 
   When("the create api journey is completed") { () =>

@@ -1,10 +1,15 @@
 Feature: Produce API (V2 Journey)
   Scenario: User who is a member of an API producer team can create a new API
     Given a user has signed in and has an api producer team
+    And the user elects to create a new api
     And the user clicks Get Started button
     And the user selects their team
     And the user acknowledges they have no egresses available
-    And the user enters a valid oas
+    And the user selects to use visual editor
+    And the user clicks in the editor window
+    And the user sets the oas title to be something starting with "acceptance_test"
+    And the user sets the oas version to be "6.6.6"
+    And the user selects continue on the oas editor page
     And the user enters a short description
     And the user confirms api name
     And the user chooses to configure no prefixes

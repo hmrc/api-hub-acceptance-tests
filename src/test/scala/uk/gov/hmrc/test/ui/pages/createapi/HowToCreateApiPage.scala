@@ -37,7 +37,7 @@ object HowToCreateApiPage {
   }
 
   object elements {
-    val continueButton: By = By.cssSelector("govuk-button")
+    val continueButton: By = By.cssSelector("button[type = submit]")
     val visualEditorRadioButton: By = By.id("value_1")
   }
 

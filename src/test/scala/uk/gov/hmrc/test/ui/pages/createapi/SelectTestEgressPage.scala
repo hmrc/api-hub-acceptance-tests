@@ -37,7 +37,7 @@ object SelectTestEgressPage {
   }
 
   object elements {
-    val noEgressButton: By = By.cssSelector("button[name=noegress]")
+    val noEgressButton: By = By.cssSelector("button[name=noegress][value=true]")
   }
 
   def apply(mode: Mode = NormalMode): SelectTestEgressPage = {

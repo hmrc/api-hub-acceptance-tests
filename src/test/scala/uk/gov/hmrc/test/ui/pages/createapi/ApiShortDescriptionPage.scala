@@ -39,7 +39,7 @@ object ApiShortDescriptionPage {
   }
 
   object elements {
-    val continueButton: By = By.cssSelector("govuk-button")
+    val continueButton: By = By.cssSelector("button[type = submit]")
     val shortDescription: By = By.id("value")
   }
 

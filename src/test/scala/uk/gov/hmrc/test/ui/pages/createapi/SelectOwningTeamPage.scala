@@ -17,7 +17,7 @@
 package uk.gov.hmrc.test.ui.pages.createapi
 
 import org.openqa.selenium.By
-import uk.gov.hmrc.test.ui.pages.createapi.SelectOwningTeamPage.elements.teamRadioButton
+import uk.gov.hmrc.test.ui.pages.createapi.SelectOwningTeamPage.elements.{continueButton, teamRadioButton}
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode}
 
@@ -25,6 +25,7 @@ class SelectOwningTeamPage(mode: Mode) extends BasePage[SelectOwningTeamPage](Se
 
   def selectMyTeam(teamId: String): TeamHasNoEgressesPage = {
     click(teamRadioButton(teamId))
+    click(continueButton)
     TeamHasNoEgressesPage(mode)
   }
 }
@@ -36,6 +37,7 @@ object SelectOwningTeamPage {
   }
 
   object elements {
+    val continueButton: By = By.cssSelector("button[type = submit]")
     def teamRadioButton(teamId: String): By = By.cssSelector(s"[data-team-id='$teamId'")
   }
 

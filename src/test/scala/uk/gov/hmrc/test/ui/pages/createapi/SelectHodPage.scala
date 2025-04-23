@@ -39,7 +39,7 @@ object SelectHodPage {
 
   object elements {
     val firstHod: By = By.id("value_0")
-    val continueButton: By = By.cssSelector("govuk-button")
+    val continueButton: By = By.className("govuk-button")
   }
 
   def apply(mode: Mode = NormalMode): SelectHodPage = {

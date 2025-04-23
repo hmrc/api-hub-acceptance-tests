@@ -30,10 +30,10 @@ class CreateApiCheckYourAnswersPage(mode: Mode) extends BasePage[CreateApiCheckY
     SelectTestEgressPage()
   }
 
-  def completeJourney(): AddAnApiSuccessPage = {
+  def completeJourney(): CreateApiSuccessPage = {
     click(confirmCheckBox)
     click(continueButton)
-    AddAnApiSuccessPage()
+    CreateApiSuccessPage()
   }
 
 }
@@ -46,8 +46,7 @@ object CreateApiCheckYourAnswersPage {
 
   object elements {
     val confirmCheckBox: By = By.id("value")
-    val continueButton: By = By.cssSelector("govuk-button")
-  }
+    val continueButton: By = By.cssSelector("button[type = submit]")  }
 
   def apply(mode: Mode = NormalMode): CreateApiCheckYourAnswersPage = {
     new CreateApiCheckYourAnswersPage(mode)

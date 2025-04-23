@@ -25,6 +25,5 @@ object OasUtilities {
     defaultOasText
       .replace("title: ''", s"title: '$title'")
       .replace("version: 1.0.0", s"version: $version")
-
   }
 }
