@@ -19,4 +19,9 @@ Feature: Produce API (V2 Journey)
     And the user checks their answers the first time
     And the user selects no test egress
     And the user checks their answers the second time
-    Then the create api journey is completed
+    And the create api journey is completed
+    And the dashboard link is clicked
+    And the new api link is selected on the dashboard
+    And the new api is viewed as a consumer
+    Then the details of the new api are correct
+

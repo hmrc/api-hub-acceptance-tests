@@ -18,6 +18,7 @@ package uk.gov.hmrc.test.ui.pages.createapi
 
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.createapi.SelectDomainsPage.elements.{continueButton, domain1, subDomain1}
+import uk.gov.hmrc.test.ui.pages.createapi.SelectHodPage.elements.firstHod
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode, SharedState}
 
@@ -26,7 +27,9 @@ class SelectDomainsPage(sharedState: SharedState, mode: Mode) extends BasePage[S
 
   def selectDomains(): SetApiStatusPage = {
     click(domain1)
+    sharedState.api.domain = findElement(domain1).getText
     click(subDomain1)
+    sharedState.api.subDomain = findElement(subDomain1).getText
     click(continueButton)
     SetApiStatusPage(sharedState)
 

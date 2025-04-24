@@ -265,4 +265,14 @@ trait Robot extends LazyLogging {
     findElements(by).nonEmpty
   }
 
+  /**
+   * Switches to an indexed window
+   *
+   * @param i  the zero based index of the window
+   */
+  def switchToWindow(i: Int): Unit = {
+    val handles = Driver.instance.getWindowHandles.asScala
+    Driver.instance.switchTo().window(handles.toSeq(i))
+  }
+
 }

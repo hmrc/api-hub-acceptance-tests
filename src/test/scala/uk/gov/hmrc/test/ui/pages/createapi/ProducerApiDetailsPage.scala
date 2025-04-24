@@ -17,33 +17,32 @@
 package uk.gov.hmrc.test.ui.pages.createapi
 
 import org.openqa.selenium.By
-import uk.gov.hmrc.test.ui.pages.createapi.SelectHodPage.elements.{continueButton, firstHod}
+import uk.gov.hmrc.test.ui.pages.api.ApiDetailsPage
+import uk.gov.hmrc.test.ui.pages.createapi.ProducerApiDetailsPage.elements.viewAsConsumerLink
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
 import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode, SharedState}
 
-class SelectHodPage(sharedState: SharedState, mode: Mode) extends BasePage[SelectHodPage](SelectHodPage.pageReadyTest(mode)) {
+class ProducerApiDetailsPage(sharedState: SharedState, mode: Mode) extends BasePage[ProducerApiDetailsPage] (ProducerApiDetailsPage.pageReadyTest(mode)) {
 
-  def chooseFirstHod(): SelectDomainsPage = {
-    sharedState.api.hod = findElement(firstHod).getText
-    click(firstHod)
-    click(continueButton)
-    SelectDomainsPage(sharedState)
+  def viewApiAsConsumer() : ApiDetailsPage = {
+    click(viewAsConsumerLink)
+    switchToWindow(1)
+    ApiDetailsPage(sharedState.api.id)
   }
 }
 
-object SelectHodPage {
+object ProducerApiDetailsPage {
 
   def pageReadyTest(mode: Mode): PageReadyTest = {
-    PageReadyTests.journeyQuestionPage.url("my-apis/produce/hod", mode)
+    PageReadyTests.journeyQuestionPage.title("API details")
   }
 
   object elements {
-    val firstHod: By = By.id("value_0")
-    val continueButton: By = By.className("govuk-button")
+    val viewAsConsumerLink: By = By.cssSelector("[data-nav-item-page='ViewApiAsConsumerPage']")
   }
 
-  def apply(sharedState: SharedState, mode: Mode = NormalMode): SelectHodPage = {
-    new SelectHodPage(sharedState, mode)
+  def apply(sharedState: SharedState, mode: Mode = NormalMode): ProducerApiDetailsPage = {
+    new ProducerApiDetailsPage(sharedState, mode)
   }
 
 }

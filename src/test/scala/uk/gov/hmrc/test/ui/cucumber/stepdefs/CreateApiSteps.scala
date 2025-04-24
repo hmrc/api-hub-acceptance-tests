@@ -19,7 +19,8 @@ package uk.gov.hmrc.test.ui.cucumber.stepdefs
 import com.google.inject.Inject
 import faker.Faker
 import io.cucumber.guice.ScenarioScoped
-import uk.gov.hmrc.test.ui.pages.createapi.{ApiShortDescriptionPage, ConfigurePrefixesPage, CreateApiCheckYourAnswersPage, CreateApiPage, CreateApiSuccessPage, EnterOasPage, HowToCreateApiPage, ReviewApiNamePage, SelectDomainsPage, SelectHodPage, SelectOwningTeamPage, SelectTestEgressPage, SetApiStatusPage, TeamHasNoEgressesPage}
+import uk.gov.hmrc.test.ui.pages.api.ApiDetailsPage
+import uk.gov.hmrc.test.ui.pages.createapi.{ApiShortDescriptionPage, ConfigurePrefixesPage, CreateApiCheckYourAnswersPage, CreateApiPage, CreateApiSuccessPage, EnterOasPage, HowToCreateApiPage, ProducerApiDetailsPage, ReviewApiNamePage, SelectDomainsPage, SelectHodPage, SelectOwningTeamPage, SelectTestEgressPage, SetApiStatusPage, TeamHasNoEgressesPage}
 import uk.gov.hmrc.test.ui.pages.{DashboardPage, Journeys}
 import uk.gov.hmrc.test.ui.pages.createteam._
 import uk.gov.hmrc.test.ui.pages.team.{ManageMyTeamsPage, ManageTeamPage}
@@ -105,6 +106,22 @@ class CreateApiSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
 
   When("the create api journey is completed") { () =>
     CreateApiSuccessPage(sharedState)
+  }
+
+  When("the dashboard link is clicked") { () =>
+    CreateApiSuccessPage(sharedState).clickDashboardLink()
+  }
+
+  When("the new api link is selected on the dashboard"){ () =>
+    DashboardPage(sharedState).selectNewApi()
+  }
+
+  When("the new api is viewed as a consumer") { () =>
+    ProducerApiDetailsPage(sharedState).viewApiAsConsumer()
+  }
+
+  When("the details of the new api are correct") { () =>
+    ApiDetailsPage(sharedState.api.id).apiDetailsMatch(sharedState)
   }
 
 }

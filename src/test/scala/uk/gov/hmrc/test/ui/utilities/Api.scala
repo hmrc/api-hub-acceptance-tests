@@ -21,6 +21,10 @@ import uk.gov.hmrc.test.ui.utilities.Api.randomTitle
 
 class Api {
   val title: String = randomTitle
+  var id: String = _
+  var hod: String = _
+  var domain: String = _
+  var subDomain: String = _
 }
 
 object Api {

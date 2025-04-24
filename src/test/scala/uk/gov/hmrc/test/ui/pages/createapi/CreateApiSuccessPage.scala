@@ -16,10 +16,16 @@
 
 package uk.gov.hmrc.test.ui.pages.createapi
 
-import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
+import org.openqa.selenium.By
+import uk.gov.hmrc.test.ui.pages.createapi.CreateApiSuccessPage.elements.dashboardLink
+import uk.gov.hmrc.test.ui.pages.{BasePage, DashboardPage, PageReadyTest, PageReadyTests}
 import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode, SharedState}
 
 class CreateApiSuccessPage(sharedState: SharedState, mode: Mode) extends BasePage[CreateApiSuccessPage](CreateApiSuccessPage.pageReadyTest(sharedState, mode)) {
+  def clickDashboardLink(): DashboardPage = {
+    click(dashboardLink)
+    DashboardPage(sharedState)
+  }
 }
 
 object CreateApiSuccessPage {
@@ -30,6 +36,12 @@ object CreateApiSuccessPage {
 
   def apply(sharedState: SharedState, mode: Mode = NormalMode): CreateApiSuccessPage = {
     new CreateApiSuccessPage(sharedState, mode)
+  }
+
+  object elements {
+    def newApiDetailsLink(sharedState: SharedState): By = By.cssSelector(s"a[text()='${sharedState.api.title}']")
+
+    val dashboardLink: By = By.id("dashboardLink")
   }
 
 }
