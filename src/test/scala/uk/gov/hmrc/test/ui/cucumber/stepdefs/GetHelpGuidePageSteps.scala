@@ -17,14 +17,16 @@
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
 //import uk.gov.hmrc.test.ui.pages.{GetHelpGuidePage, Journeys}
-import uk.gov.hmrc.test.ui.pages.{Journeys}
+import com.google.inject.Inject
+import uk.gov.hmrc.test.ui.pages.Journeys
+import uk.gov.hmrc.test.ui.utilities.SharedState
 
 
-class GetHelpGuidePageSteps extends BaseStepDef {
+class GetHelpGuidePageSteps @Inject() (sharedState: SharedState) extends BaseStepDef {
 
   Given("""the user navigate to get HelpGuide page""") { () =>
     Journeys
-      .openStartPage()
+      .openStartPage(sharedState)
       .getHelpGuide()
 
   }

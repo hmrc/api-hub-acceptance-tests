@@ -19,13 +19,13 @@ package uk.gov.hmrc.test.ui.pages.createapi
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.createapi.TeamHasNoEgressesPage.elements.continueButton
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
-import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode}
+import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode, SharedState}
 
-class TeamHasNoEgressesPage(mode: Mode) extends BasePage[TeamHasNoEgressesPage](TeamHasNoEgressesPage.pageReadyTest(mode)) {
+class TeamHasNoEgressesPage(sharedState: SharedState, mode: Mode) extends BasePage[TeamHasNoEgressesPage](TeamHasNoEgressesPage.pageReadyTest(mode)) {
 
   def continue(): HowToCreateApiPage = {
     click(continueButton)
-    HowToCreateApiPage()
+    HowToCreateApiPage(sharedState, mode)
   }
 }
 
@@ -39,8 +39,8 @@ object TeamHasNoEgressesPage {
     val continueButton: By = By.cssSelector("button[type = submit]")
   }
 
-  def apply(mode: Mode = NormalMode): TeamHasNoEgressesPage = {
-    new TeamHasNoEgressesPage(mode)
+  def apply(sharedState: SharedState, mode: Mode = NormalMode): TeamHasNoEgressesPage = {
+    new TeamHasNoEgressesPage(sharedState, mode)
   }
 
 }

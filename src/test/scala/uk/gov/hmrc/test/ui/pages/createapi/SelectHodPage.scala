@@ -19,15 +19,14 @@ package uk.gov.hmrc.test.ui.pages.createapi
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.createapi.SelectHodPage.elements.{continueButton, firstHod}
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
-import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode}
+import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode, SharedState}
 
-class SelectHodPage(mode: Mode) extends BasePage[SelectHodPage](SelectHodPage.pageReadyTest(mode)) {
+class SelectHodPage(sharedState: SharedState, mode: Mode) extends BasePage[SelectHodPage](SelectHodPage.pageReadyTest(mode)) {
 
   def chooseFirstHod(): SelectDomainsPage = {
     click(firstHod)
     click(continueButton)
-    SelectDomainsPage()
-
+    SelectDomainsPage(sharedState)
   }
 }
 
@@ -42,8 +41,8 @@ object SelectHodPage {
     val continueButton: By = By.className("govuk-button")
   }
 
-  def apply(mode: Mode = NormalMode): SelectHodPage = {
-    new SelectHodPage(mode)
+  def apply(sharedState: SharedState, mode: Mode = NormalMode): SelectHodPage = {
+    new SelectHodPage(sharedState, mode)
   }
 
 }

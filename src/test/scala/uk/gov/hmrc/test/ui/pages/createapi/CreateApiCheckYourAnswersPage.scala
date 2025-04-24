@@ -20,20 +20,20 @@ import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.addanapi.AddAnApiSuccessPage
 import uk.gov.hmrc.test.ui.pages.createapi.CreateApiCheckYourAnswersPage.elements.{confirmCheckBox, continueButton}
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
-import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode}
+import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode, SharedState}
 
-class CreateApiCheckYourAnswersPage(mode: Mode) extends BasePage[CreateApiCheckYourAnswersPage](CreateApiCheckYourAnswersPage.pageReadyTest(mode)) {
+class CreateApiCheckYourAnswersPage(sharedState: SharedState, mode: Mode) extends BasePage[CreateApiCheckYourAnswersPage](CreateApiCheckYourAnswersPage.pageReadyTest(mode)) {
 
   def confirmAnswers(): SelectTestEgressPage = {
     click(confirmCheckBox)
     click(continueButton)
-    SelectTestEgressPage()
+    SelectTestEgressPage(sharedState)
   }
 
   def completeJourney(): CreateApiSuccessPage = {
     click(confirmCheckBox)
     click(continueButton)
-    CreateApiSuccessPage()
+    CreateApiSuccessPage(sharedState, mode)
   }
 
 }
@@ -48,8 +48,8 @@ object CreateApiCheckYourAnswersPage {
     val confirmCheckBox: By = By.id("value")
     val continueButton: By = By.cssSelector("button[type = submit]")  }
 
-  def apply(mode: Mode = NormalMode): CreateApiCheckYourAnswersPage = {
-    new CreateApiCheckYourAnswersPage(mode)
+  def apply(sharedState: SharedState, mode: Mode = NormalMode): CreateApiCheckYourAnswersPage = {
+    new CreateApiCheckYourAnswersPage(sharedState, mode)
   }
 
 }

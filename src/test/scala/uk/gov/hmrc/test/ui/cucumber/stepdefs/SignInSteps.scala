@@ -27,22 +27,22 @@ class SignInSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
 
   Given("""a user is on the sign in page""") { () =>
     Journeys
-      .openStartPage()
+      .openStartPage(sharedState)
       .startNow()
   }
 
   Given("""the user decides to login via ldap""") { () =>
-    SignInPage()
+    SignInPage(sharedState)
       .signInViaLdap()
   }
 
   When("""the user submits valid LDAP details""") { () =>
-    LdapSignInPage()
+    LdapSignInPage(sharedState)
       .signIn()
   }
 
   Then("""the user should be authenticated""") { () =>
-    DashboardPage()
+    DashboardPage(sharedState)
   }
 
   Then("""the application should be registered""") { () =>
@@ -51,7 +51,7 @@ class SignInSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
 
   Then("your applications has the following header links {string} {string} {string} {string} {string}") {
     (linkOne: String, linkTwo: String, linkThree: String, linkFour: String, linkFive: String) =>
-      DashboardPage()
+      DashboardPage(sharedState)
         .foreach(
           dashboardPage => {
             dashboardPage.getHeaderLinkTexts should contain(linkOne)

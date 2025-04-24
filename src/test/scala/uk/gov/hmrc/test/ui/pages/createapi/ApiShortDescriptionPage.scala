@@ -19,14 +19,14 @@ package uk.gov.hmrc.test.ui.pages.createapi
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.createapi.ApiShortDescriptionPage.elements.{continueButton, shortDescription}
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
-import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode}
+import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode, SharedState}
 
-class ApiShortDescriptionPage(mode: Mode) extends BasePage[ApiShortDescriptionPage](ApiShortDescriptionPage.pageReadyTest(mode)) {
+class ApiShortDescriptionPage(sharedState: SharedState, mode: Mode) extends BasePage[ApiShortDescriptionPage](ApiShortDescriptionPage.pageReadyTest(mode)) {
 
   def setShortDescription(): ReviewApiNamePage = {
     sendKeys(shortDescription, "a short description")
     click(continueButton)
-    ReviewApiNamePage()
+    ReviewApiNamePage(sharedState)
 
   }
 
@@ -43,8 +43,8 @@ object ApiShortDescriptionPage {
     val shortDescription: By = By.id("value")
   }
 
-  def apply(mode: Mode = NormalMode): ApiShortDescriptionPage = {
-    new ApiShortDescriptionPage(mode)
+  def apply(sharedState: SharedState, mode: Mode = NormalMode): ApiShortDescriptionPage = {
+    new ApiShortDescriptionPage(sharedState, mode)
   }
 
 }

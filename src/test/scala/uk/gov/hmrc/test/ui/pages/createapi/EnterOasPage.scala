@@ -19,13 +19,13 @@ package uk.gov.hmrc.test.ui.pages.createapi
 import org.openqa.selenium.{By, Keys}
 import uk.gov.hmrc.test.ui.pages.createapi.EnterOasPage.elements.{continueButton, oasEditor}
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
-import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode}
+import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode, SharedState}
 
-class EnterOasPage(mode: Mode) extends BasePage[EnterOasPage](EnterOasPage.pageReadyTest(mode)) {
+class EnterOasPage(sharedState: SharedState, mode: Mode) extends BasePage[EnterOasPage](EnterOasPage.pageReadyTest(mode)) {
 
   def selectOasEditor(): EnterOasPage = {
     click(oasEditor)
-    EnterOasPage()
+    EnterOasPage(sharedState, mode)
   }
 
   def setOasTitle(title: String): EnterOasPage = {
@@ -33,7 +33,7 @@ class EnterOasPage(mode: Mode) extends BasePage[EnterOasPage](EnterOasPage.pageR
     sendKeys(oasEditor, times(2, Keys.ARROW_DOWN), false)
     sendKeys(oasEditor, times(10, Keys.ARROW_RIGHT), false)
     sendKeys(oasEditor, title, false)
-    EnterOasPage()
+    EnterOasPage(sharedState, mode)
   }
 
   def setOasVersion(version: String): EnterOasPage = {
@@ -42,12 +42,12 @@ class EnterOasPage(mode: Mode) extends BasePage[EnterOasPage](EnterOasPage.pageR
     sendKeys(oasEditor, times(9, Keys.ARROW_RIGHT), false)
     sendKeys(oasEditor, times(5, Keys.DELETE), false)
     sendKeys(oasEditor, version, false)
-    EnterOasPage()
+    EnterOasPage(sharedState)
   }
 
   def continue(): ApiShortDescriptionPage = {
     click(continueButton)
-    ApiShortDescriptionPage()
+    ApiShortDescriptionPage(sharedState)
   }
 
   private def times(times: Int, key: Keys): String = {
@@ -67,8 +67,8 @@ object EnterOasPage {
     val oasEditor: By = By.className("ace_text-input")
   }
 
-  def apply(mode: Mode = NormalMode): EnterOasPage = {
-    new EnterOasPage(mode)
+  def apply(sharedState: SharedState, mode: Mode = NormalMode): EnterOasPage = {
+    new EnterOasPage(sharedState, mode)
   }
 
 }

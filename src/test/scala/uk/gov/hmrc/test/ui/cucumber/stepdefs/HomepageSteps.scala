@@ -16,38 +16,40 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
-import uk.gov.hmrc.test.ui.pages.{DashboardPage, Journeys, SignInPage, StrideSignInPage, GetHelpGuidePage}
+import com.google.inject.Inject
+import uk.gov.hmrc.test.ui.pages.{DashboardPage, GetHelpGuidePage, Journeys, SignInPage, StrideSignInPage}
+import uk.gov.hmrc.test.ui.utilities.SharedState
 
-class HomepageSteps extends BaseStepDef {
+class HomepageSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
 
   Given("""^an unauthenticated user navigates to the homepage$""") { () =>
     Journeys
-      .openStartPage()
+      .openStartPage(sharedState)
       .startNow()
   }
 
   Given("""^an authenticated user navigates to the homepage$""") { () =>
     Journeys
-      .openStartPage()
+      .openStartPage(sharedState)
       .startNow()
   }
 
   When("the user fills in the required stride information") { () =>
-    StrideSignInPage()
+    StrideSignInPage(sharedState)
       .signIn()
   }
 
   Then("the user should be directed to the integration hub home page") { () =>
-    DashboardPage()
+    DashboardPage(sharedState)
   }
 
   When("the user selects to sign-in with Stride") { () =>
-    SignInPage()
+    SignInPage(sharedState)
       .signInViaStride()
   }
 
   Then("the user should be redirected to the stride login page") { () =>
-    StrideSignInPage()
+    StrideSignInPage(sharedState)
   }
 
   Then("the user should be redirected to the Help Guide page") { () =>

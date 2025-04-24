@@ -19,6 +19,7 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.admin.AccessRequestsPage
 import uk.gov.hmrc.test.ui.pages.api.ExploreApisPage
+import uk.gov.hmrc.test.ui.utilities.SharedState
 
 trait ApiHubMenu {
   self: BasePage[_] =>
@@ -49,9 +50,9 @@ trait ApiHubMenu {
     getUserType.map(_.toUpperCase).contains("STRIDE")
   }
 
-  def dashboard(): DashboardPage = {
+  def dashboard(sharedState: SharedState): DashboardPage = {
     click(dashboardLink)
-    DashboardPage()
+    DashboardPage(sharedState)
   }
 
   def apiHubAdmin(): AccessRequestsPage = {

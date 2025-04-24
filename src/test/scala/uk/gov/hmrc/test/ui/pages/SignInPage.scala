@@ -19,17 +19,18 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.SignInPage._
 import uk.gov.hmrc.test.ui.pages.SignInPage.elements._
+import uk.gov.hmrc.test.ui.utilities.SharedState
 
-class SignInPage extends BasePage[SignInPage](pageReadyTest) {
+class SignInPage(sharedState: SharedState) extends BasePage[SignInPage](pageReadyTest) {
 
   def signInViaLdap(): LdapSignInPage = {
     click(signInViaLdapButton)
-    LdapSignInPage()
+    LdapSignInPage(sharedState)
   }
 
   def signInViaStride(): StrideSignInPage = {
     click(signInViaStrideButton)
-    StrideSignInPage()
+    StrideSignInPage(sharedState)
   }
 
 }
@@ -43,8 +44,8 @@ object SignInPage {
     val signInViaStrideButton: By = By.id("signInViaStrideButton")
   }
 
-  def apply(): SignInPage = {
-    new SignInPage ()
+  def apply(sharedState: SharedState): SignInPage = {
+    new SignInPage (sharedState)
   }
 
 }

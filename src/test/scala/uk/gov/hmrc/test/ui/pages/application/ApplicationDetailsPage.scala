@@ -22,7 +22,7 @@ import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage._
 import uk.gov.hmrc.test.ui.pages.application.ApplicationDetailsPage.elements._
 import uk.gov.hmrc.test.ui.pages.cancelaccessrequest.CancelAccessRequestSelectApiPage
 import uk.gov.hmrc.test.ui.pages.{ApiHubMenu, BasePage, PageReadyTest, PageReadyTests}
-import uk.gov.hmrc.test.ui.utilities.DateFormatterUtil
+import uk.gov.hmrc.test.ui.utilities.{DateFormatterUtil, SharedState}
 
 import java.time.LocalDate
 
@@ -63,10 +63,9 @@ class ApplicationDetailsPage(id: String) extends BasePage[ApplicationDetailsPage
     EnvironmentPage(applicationId, environment)
   }
 
-  def deleteApplication(): ApplicationDeleteConfirmationPage = {
-    val applicationId = getApplicationId
+  def deleteApplication(sharedState: SharedState): ApplicationDeleteConfirmationPage = {
     click(deleteApplicationLink)
-    ApplicationDeleteConfirmationPage(applicationId)
+    ApplicationDeleteConfirmationPage(sharedState)
   }
 
   def cancelAccessRequests(): CancelAccessRequestSelectApiPage = {

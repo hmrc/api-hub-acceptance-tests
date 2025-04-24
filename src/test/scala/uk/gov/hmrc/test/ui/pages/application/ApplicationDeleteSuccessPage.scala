@@ -20,12 +20,13 @@ import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.application.ApplicationDeleteSuccessPage._
 import uk.gov.hmrc.test.ui.pages.application.ApplicationDeleteSuccessPage.elements._
 import uk.gov.hmrc.test.ui.pages._
+import uk.gov.hmrc.test.ui.utilities.SharedState
 
-class ApplicationDeleteSuccessPage(id: String) extends BasePage[ApplicationDeleteSuccessPage](pageReadyTest(id)) {
+class ApplicationDeleteSuccessPage(sharedState: SharedState) extends BasePage[ApplicationDeleteSuccessPage](pageReadyTest(sharedState.application.id)) {
 
   def returnToDashboard(): DashboardPage = {
     click(dashboardLink)
-    DashboardPage()
+    DashboardPage(sharedState)
   }
 
 }
@@ -44,8 +45,8 @@ object ApplicationDeleteSuccessPage {
     val dashboardLink: By = By.id("returnToDashboardLink")
   }
 
-  def apply(id: String): ApplicationDeleteSuccessPage = {
-    new ApplicationDeleteSuccessPage(id)
+  def apply(sharedState: SharedState): ApplicationDeleteSuccessPage = {
+    new ApplicationDeleteSuccessPage(sharedState)
   }
 
 }

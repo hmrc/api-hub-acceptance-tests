@@ -19,14 +19,14 @@ package uk.gov.hmrc.test.ui.pages.createapi
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.createapi.ReviewApiNamePage.elements.{confirmCheckBox, continueButton}
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
-import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode}
+import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode, SharedState}
 
-class ReviewApiNamePage(mode: Mode) extends BasePage[ReviewApiNamePage](ReviewApiNamePage.pageReadyTest(mode)) {
+class ReviewApiNamePage(sharedState: SharedState, mode: Mode) extends BasePage[ReviewApiNamePage](ReviewApiNamePage.pageReadyTest(mode)) {
 
   def confirmApiName(): ConfigurePrefixesPage = {
     click(confirmCheckBox)
     click(continueButton)
-    ConfigurePrefixesPage()
+    ConfigurePrefixesPage(sharedState)
   }
 
 }
@@ -42,8 +42,8 @@ object ReviewApiNamePage {
     val continueButton: By = By.cssSelector("button[type=submit]")
   }
 
-  def apply(mode: Mode = NormalMode): ReviewApiNamePage = {
-    new ReviewApiNamePage(mode)
+  def apply(sharedState: SharedState, mode: Mode = NormalMode): ReviewApiNamePage = {
+    new ReviewApiNamePage(sharedState, mode)
   }
 
 }

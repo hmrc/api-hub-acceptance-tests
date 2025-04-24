@@ -19,13 +19,13 @@ package uk.gov.hmrc.test.ui.pages.createapi
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.createapi.CreateApiPage.elements.getStartedButton
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
-import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode}
+import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode, SharedState}
 
-class CreateApiPage(mode: Mode) extends BasePage[CreateApiPage](CreateApiPage.pageReadyTest(mode)) {
+class CreateApiPage(sharedState: SharedState, mode: Mode) extends BasePage[CreateApiPage](CreateApiPage.pageReadyTest(mode)) {
 
   def getStarted(): SelectOwningTeamPage = {
     click(getStartedButton)
-    SelectOwningTeamPage(mode)
+    SelectOwningTeamPage(sharedState, mode)
   }
 }
 
@@ -39,8 +39,8 @@ object CreateApiPage {
     val getStartedButton: By = By.id("getStartedButton")
   }
 
-  def apply(mode: Mode = NormalMode): CreateApiPage = {
-    new CreateApiPage(mode)
+  def apply(sharedState: SharedState, mode: Mode = NormalMode): CreateApiPage = {
+    new CreateApiPage(sharedState, mode)
   }
 
 }

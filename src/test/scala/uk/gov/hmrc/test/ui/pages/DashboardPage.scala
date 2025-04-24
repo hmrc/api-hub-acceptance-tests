@@ -22,9 +22,9 @@ import uk.gov.hmrc.test.ui.pages.DashboardPage.elements.{newApiButton, registerA
 import uk.gov.hmrc.test.ui.pages.createapi.CreateApiPage
 import uk.gov.hmrc.test.ui.pages.createteam.CreateTeamNamePage
 import uk.gov.hmrc.test.ui.pages.registerapplication.RegisterApplicationNamePage
-import uk.gov.hmrc.test.ui.utilities.NormalMode
+import uk.gov.hmrc.test.ui.utilities.{NormalMode, SharedState}
 
-class DashboardPage extends BasePage[DashboardPage](pageReadyTest) with ApiHubMenu {
+class DashboardPage(sharedState: SharedState) extends BasePage[DashboardPage](pageReadyTest) with ApiHubMenu {
 
   def registerAnApplication(): RegisterApplicationNamePage = {
     click(registerAnApplicationButton)
@@ -39,7 +39,7 @@ class DashboardPage extends BasePage[DashboardPage](pageReadyTest) with ApiHubMe
 
   def createApi(): CreateApiPage = {
     click(newApiButton)
-    CreateApiPage(NormalMode)
+    CreateApiPage(sharedState, NormalMode)
   }
 }
 
@@ -53,8 +53,8 @@ object DashboardPage {
     val newApiButton: By = By.id("createAnApiButton")
   }
 
-  def apply(): DashboardPage = {
-    new DashboardPage()
+  def apply(sharedState: SharedState): DashboardPage = {
+    new DashboardPage(sharedState)
   }
 
 }

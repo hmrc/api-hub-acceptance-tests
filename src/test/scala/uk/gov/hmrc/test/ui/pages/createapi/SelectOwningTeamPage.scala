@@ -19,14 +19,14 @@ package uk.gov.hmrc.test.ui.pages.createapi
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.createapi.SelectOwningTeamPage.elements.{continueButton, teamRadioButton}
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
-import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode}
+import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode, SharedState}
 
-class SelectOwningTeamPage(mode: Mode) extends BasePage[SelectOwningTeamPage](SelectOwningTeamPage.pageReadyTest(mode)) {
+class SelectOwningTeamPage(sharedState: SharedState, mode: Mode) extends BasePage[SelectOwningTeamPage](SelectOwningTeamPage.pageReadyTest(mode)) {
 
   def selectMyTeam(teamId: String): TeamHasNoEgressesPage = {
     click(teamRadioButton(teamId))
     click(continueButton)
-    TeamHasNoEgressesPage(mode)
+    TeamHasNoEgressesPage(sharedState, mode)
   }
 }
 
@@ -41,8 +41,8 @@ object SelectOwningTeamPage {
     def teamRadioButton(teamId: String): By = By.cssSelector(s"[data-team-id='$teamId'")
   }
 
-  def apply(mode: Mode = NormalMode): SelectOwningTeamPage = {
-    new SelectOwningTeamPage(mode)
+  def apply(sharedState: SharedState, mode: Mode = NormalMode): SelectOwningTeamPage = {
+    new SelectOwningTeamPage(sharedState, mode)
   }
 
 }

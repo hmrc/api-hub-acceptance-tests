@@ -19,14 +19,14 @@ package uk.gov.hmrc.test.ui.pages.createapi
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.createapi.SetApiStatusPage.elements.{alphaRadio, continueButton}
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
-import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode}
+import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode, SharedState}
 
-class SetApiStatusPage(mode: Mode) extends BasePage[SetApiStatusPage](SetApiStatusPage.pageReadyTest(mode)) {
+class SetApiStatusPage(sharedState: SharedState, mode: Mode) extends BasePage[SetApiStatusPage](SetApiStatusPage.pageReadyTest(mode)) {
 
   def setAlphaStatus(): CreateApiCheckYourAnswersPage = {
     click(alphaRadio)
     click(continueButton)
-    CreateApiCheckYourAnswersPage()
+    CreateApiCheckYourAnswersPage(sharedState)
   }
 
 }
@@ -42,8 +42,8 @@ object SetApiStatusPage {
     val continueButton: By = By.cssSelector("button[type = submit]")
   }
 
-  def apply(mode: Mode = NormalMode): SetApiStatusPage = {
-    new SetApiStatusPage(mode)
+  def apply(sharedState: SharedState, mode: Mode = NormalMode): SetApiStatusPage = {
+    new SetApiStatusPage(sharedState, mode)
   }
 
 }

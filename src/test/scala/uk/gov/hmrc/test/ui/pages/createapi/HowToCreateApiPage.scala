@@ -19,14 +19,14 @@ package uk.gov.hmrc.test.ui.pages.createapi
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.createapi.HowToCreateApiPage.elements.{continueButton, visualEditorRadioButton}
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
-import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode}
+import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode, SharedState}
 
-class HowToCreateApiPage(mode: Mode) extends BasePage[HowToCreateApiPage](HowToCreateApiPage.pageReadyTest(mode)) {
+class HowToCreateApiPage(sharedState: SharedState, mode: Mode) extends BasePage[HowToCreateApiPage](HowToCreateApiPage.pageReadyTest(mode)) {
 
   def selectUseVisualOasEditor(): EnterOasPage = {
     click(visualEditorRadioButton)
     click(continueButton)
-    EnterOasPage(mode)
+    EnterOasPage(sharedState, mode)
   }
 }
 
@@ -41,8 +41,8 @@ object HowToCreateApiPage {
     val visualEditorRadioButton: By = By.id("value_1")
   }
 
-  def apply(mode: Mode = NormalMode): HowToCreateApiPage = {
-    new HowToCreateApiPage(mode)
+  def apply(sharedState: SharedState, mode: Mode = NormalMode): HowToCreateApiPage = {
+    new HowToCreateApiPage(sharedState, mode)
   }
 
 }

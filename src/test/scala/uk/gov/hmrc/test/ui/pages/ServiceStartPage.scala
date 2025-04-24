@@ -19,12 +19,13 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.ServiceStartPage._
 import uk.gov.hmrc.test.ui.pages.ServiceStartPage.elements._
+import uk.gov.hmrc.test.ui.utilities.SharedState
 
-class ServiceStartPage extends BasePage[ServiceStartPage](pageReadyTest) with ApiHubMenu {
+class ServiceStartPage(sharedState: SharedState) extends BasePage[ServiceStartPage](pageReadyTest) with ApiHubMenu {
 
   def startNow(): SignInPage = {
     click(startNowButton)
-    SignInPage()
+    SignInPage(sharedState)
   }
 
 }
@@ -37,8 +38,8 @@ object ServiceStartPage {
     val startNowButton: By = By.id("startNowButton")
   }
 
-  def apply(): ServiceStartPage = {
-    new ServiceStartPage()
+  def apply(sharedState: SharedState): ServiceStartPage = {
+    new ServiceStartPage(sharedState)
   }
 
 }

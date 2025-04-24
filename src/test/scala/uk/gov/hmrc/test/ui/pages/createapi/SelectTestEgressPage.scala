@@ -19,13 +19,13 @@ package uk.gov.hmrc.test.ui.pages.createapi
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.createapi.SelectTestEgressPage.elements.noEgressButton
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
-import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode}
+import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode, SharedState}
 
-class SelectTestEgressPage(mode: Mode) extends BasePage[SelectTestEgressPage](SelectTestEgressPage.pageReadyTest(mode)) {
+class SelectTestEgressPage(sharedState: SharedState, mode: Mode) extends BasePage[SelectTestEgressPage](SelectTestEgressPage.pageReadyTest(mode)) {
 
   def selectNoTestEgress(): CreateApiCheckYourAnswersPage = {
     click(noEgressButton)
-    CreateApiCheckYourAnswersPage()
+    CreateApiCheckYourAnswersPage(sharedState)
   }
 
 }
@@ -40,8 +40,8 @@ object SelectTestEgressPage {
     val noEgressButton: By = By.cssSelector("button[name=noegress][value=true]")
   }
 
-  def apply(mode: Mode = NormalMode): SelectTestEgressPage = {
-    new SelectTestEgressPage(mode)
+  def apply(shareddState: SharedState, mode: Mode = NormalMode): SelectTestEgressPage = {
+    new SelectTestEgressPage(shareddState, mode)
   }
 
 }

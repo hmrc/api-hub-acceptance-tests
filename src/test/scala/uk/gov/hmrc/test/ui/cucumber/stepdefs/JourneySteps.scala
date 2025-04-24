@@ -44,15 +44,15 @@ class JourneySteps @Inject()(sharedState: SharedState) extends BaseStepDef {
   }
 
   Given("a user has signed-in") { () =>
-    Journeys.signIn()
+    Journeys.signIn(sharedState)
   }
 
   Given("a user has signed in with role {string}") { (role: String) =>
-    Journeys.signIn(Roles.forName(role))
+    Journeys.signIn(Roles.forName(role), sharedState)
   }
 
   Given("a user has signed-in with LDAP") { () =>
-    Journeys.signInViaLdap()
+    Journeys.signInViaLdap(sharedState)
   }
 
   Given("a user has signed in and has an api producer team") { () =>
@@ -60,15 +60,15 @@ class JourneySteps @Inject()(sharedState: SharedState) extends BaseStepDef {
   }
 
   Given("a user has signed in with LDAP and role {string}") { (role: String) =>
-    Journeys.signInViaLdap(Roles.forName(role))
+    Journeys.signInViaLdap(Roles.forName(role), sharedState)
   }
 
   Given("a user has signed in with Stride") { () =>
-    Journeys.signInViaStride()
+    Journeys.signInViaStride(sharedState)
   }
 
   Given("a user has signed in with Stride and role {string}") { (role: String) =>
-    Journeys.signInViaStride(Roles.forName(role))
+    Journeys.signInViaStride(Roles.forName(role), sharedState)
   }
 
   Given("the user is in a team") { () =>
@@ -84,7 +84,7 @@ class JourneySteps @Inject()(sharedState: SharedState) extends BaseStepDef {
   }
 
   Given("the user swaps role to {string}") { (role: String) =>
-    Journeys.swapRole(Roles.forName(role))
+    Journeys.swapRole(Roles.forName(role), sharedState)
   }
 
 }

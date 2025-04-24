@@ -19,14 +19,14 @@ package uk.gov.hmrc.test.ui.pages.createapi
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.createapi.ConfigurePrefixesPage.elements.{continueButton, noRadio}
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
-import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode}
+import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode, SharedState}
 
-class ConfigurePrefixesPage(mode: Mode) extends BasePage[ConfigurePrefixesPage](ConfigurePrefixesPage.pageReadyTest(mode)) {
+class ConfigurePrefixesPage(sharedState: SharedState, mode: Mode) extends BasePage[ConfigurePrefixesPage](ConfigurePrefixesPage.pageReadyTest(mode)) {
 
   def noPrefixes(): SelectHodPage = {
     click(noRadio)
     click(continueButton)
-    SelectHodPage()
+    SelectHodPage(sharedState)
   }
 
 }
@@ -42,8 +42,8 @@ object ConfigurePrefixesPage {
     val continueButton: By = By.cssSelector("button[type = submit]")
   }
 
-  def apply(mode: Mode = NormalMode): ConfigurePrefixesPage = {
-    new ConfigurePrefixesPage(mode)
+  def apply(sharedState: SharedState, mode: Mode = NormalMode): ConfigurePrefixesPage = {
+    new ConfigurePrefixesPage(sharedState, mode)
   }
 
 }

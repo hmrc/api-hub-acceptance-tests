@@ -23,88 +23,88 @@ import uk.gov.hmrc.test.ui.pages.createapi.{ApiShortDescriptionPage, ConfigurePr
 import uk.gov.hmrc.test.ui.pages.{DashboardPage, Journeys}
 import uk.gov.hmrc.test.ui.pages.createteam._
 import uk.gov.hmrc.test.ui.pages.team.{ManageMyTeamsPage, ManageTeamPage}
-import uk.gov.hmrc.test.ui.utilities.{NormalMode, SharedState}
+import uk.gov.hmrc.test.ui.utilities.{Api, NormalMode, SharedState}
 
 @ScenarioScoped
 class CreateApiSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
 
   When("the user elects to create a new api"){ () =>
-    DashboardPage().createApi()
+    DashboardPage(sharedState).createApi()
   }
 
   When("the user clicks Get Started button"){ () =>
-    CreateApiPage().getStarted()
+    CreateApiPage(sharedState).getStarted()
   }
 
   When("the user selects their team"){ () =>
-    SelectOwningTeamPage().selectMyTeam(sharedState.team.id)
+    SelectOwningTeamPage(sharedState).selectMyTeam(sharedState.team.id)
   }
 
   When("the user selects Continue"){ (teamId: String) =>
-    TeamHasNoEgressesPage().continue()
+    TeamHasNoEgressesPage(sharedState).continue()
   }
 
   When("the user acknowledges they have no egresses available") { () =>
-    TeamHasNoEgressesPage().continue()
+    TeamHasNoEgressesPage(sharedState).continue()
   }
 
   When("the user selects to use visual editor") { () =>
-    HowToCreateApiPage().selectUseVisualOasEditor()
+    HowToCreateApiPage(sharedState).selectUseVisualOasEditor()
   }
 
   When("the user clicks in the editor window") { () =>
-    EnterOasPage().selectOasEditor()
+    EnterOasPage(sharedState).selectOasEditor()
   }
-  When("the user sets the oas title to be something starting with {string}") { (title: String) =>
-    EnterOasPage().setOasTitle(title + System.currentTimeMillis())
+  When("the user sets the oas title") { () =>
+    EnterOasPage(sharedState).setOasTitle(sharedState.api.title)
   }
 
   When("the user selects continue on the oas editor page") { () =>
-    EnterOasPage().continue()
+    EnterOasPage(sharedState).continue()
   }
 
   When("the user sets the oas version to be {string}") { (version: String) =>
-    EnterOasPage().setOasVersion(version)
+    EnterOasPage(sharedState).setOasVersion(version)
   }
 
   When("the user enters a short description") { () =>
-    ApiShortDescriptionPage().setShortDescription()
+    ApiShortDescriptionPage(sharedState).setShortDescription()
   }
 
   When("the user confirms api name") { () =>
-    ReviewApiNamePage().confirmApiName()
+    ReviewApiNamePage(sharedState).confirmApiName()
   }
 
   When("the user chooses to configure no prefixes") { () =>
-    ConfigurePrefixesPage().noPrefixes()
+    ConfigurePrefixesPage(sharedState).noPrefixes()
   }
 
   When("the user selects a hod") { () =>
-    SelectHodPage().chooseFirstHod()
+    SelectHodPage(sharedState).chooseFirstHod()
   }
 
   When("the user selects domains") { () =>
-    SelectDomainsPage().selectDomains()
+    SelectDomainsPage(sharedState).selectDomains()
   }
 
   When("the user sets the api status") { () =>
-    SetApiStatusPage().setAlphaStatus()
+    SetApiStatusPage(sharedState).setAlphaStatus()
   }
 
   When("the user checks their answers the first time") { () =>
-    CreateApiCheckYourAnswersPage().confirmAnswers()
+    CreateApiCheckYourAnswersPage(sharedState).confirmAnswers()
   }
 
   When("the user selects no test egress") { () =>
-    SelectTestEgressPage().selectNoTestEgress()
+    SelectTestEgressPage(sharedState).selectNoTestEgress()
   }
 
   When("the user checks their answers the second time") { () =>
-    CreateApiCheckYourAnswersPage().completeJourney()
+    CreateApiCheckYourAnswersPage(sharedState).completeJourney()
   }
 
   When("the create api journey is completed") { () =>
-    CreateApiSuccessPage()
+    CreateApiSuccessPage(sharedState)
   }
 
 }

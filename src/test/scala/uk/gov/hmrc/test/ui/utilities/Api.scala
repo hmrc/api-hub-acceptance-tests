@@ -16,20 +16,13 @@
 
 package uk.gov.hmrc.test.ui.utilities
 
-import io.cucumber.guice.ScenarioScoped
+import faker.Faker
+import uk.gov.hmrc.test.ui.utilities.Api.randomTitle
 
-/**
- * State that is shared between step definition classes.
- *
- * Step definition classes wanting to access shared state should inject this
- * class in their constructor.
- */
+class Api {
+  val title: String = randomTitle
+}
 
-@ScenarioScoped
-class SharedState {
-
-  val application = new Application()
-  val team = new Team()
-  val api = new Api()
-
+object Api {
+  def randomTitle = String.format("%s%s", Faker.ar.loremWord(), Faker.en_GB.loremWord().reverse)
 }

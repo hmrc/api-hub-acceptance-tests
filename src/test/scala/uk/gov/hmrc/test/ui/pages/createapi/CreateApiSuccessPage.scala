@@ -17,19 +17,19 @@
 package uk.gov.hmrc.test.ui.pages.createapi
 
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
-import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode}
+import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode, SharedState}
 
-class CreateApiSuccessPage(mode: Mode) extends BasePage[CreateApiSuccessPage](CreateApiSuccessPage.pageReadyTest(mode)) {
+class CreateApiSuccessPage(sharedState: SharedState, mode: Mode) extends BasePage[CreateApiSuccessPage](CreateApiSuccessPage.pageReadyTest(sharedState, mode)) {
 }
 
 object CreateApiSuccessPage {
 
-  def pageReadyTest(mode: Mode): PageReadyTest = {
-    PageReadyTests.journeyQuestionPage.url("my-apis/produce/success", mode)
+  def pageReadyTest(sharedState: SharedState, mode: Mode): PageReadyTest = {
+    PageReadyTests.journeyQuestionPage.url(s"my-apis/produce/success?apiName=${sharedState.api.title}&publisherReference=apim-${sharedState.api.title}", mode)
   }
 
-  def apply(mode: Mode = NormalMode): CreateApiSuccessPage = {
-    new CreateApiSuccessPage(mode)
+  def apply(sharedState: SharedState, mode: Mode = NormalMode): CreateApiSuccessPage = {
+    new CreateApiSuccessPage(sharedState, mode)
   }
 
 }

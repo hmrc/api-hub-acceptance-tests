@@ -19,16 +19,16 @@ package uk.gov.hmrc.test.ui.pages.createapi
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.createapi.SelectDomainsPage.elements.{continueButton, domain1, subDomain1}
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
-import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode}
+import uk.gov.hmrc.test.ui.utilities.{Mode, NormalMode, SharedState}
 
-class SelectDomainsPage(mode: Mode) extends BasePage[SelectDomainsPage](SelectDomainsPage.pageReadyTest(mode)) {
+class SelectDomainsPage(sharedState: SharedState, mode: Mode) extends BasePage[SelectDomainsPage](SelectDomainsPage.pageReadyTest(mode)) {
 
 
   def selectDomains(): SetApiStatusPage = {
     click(domain1)
     click(subDomain1)
     click(continueButton)
-    SetApiStatusPage()
+    SetApiStatusPage(sharedState)
 
   }
 
@@ -46,8 +46,8 @@ object SelectDomainsPage {
     val continueButton: By = By.cssSelector("button[type = submit]")
   }
 
-  def apply(mode: Mode = NormalMode): SelectDomainsPage = {
-    new SelectDomainsPage(mode)
+  def apply(sharedState: SharedState, mode: Mode = NormalMode): SelectDomainsPage = {
+    new SelectDomainsPage(sharedState, mode)
   }
 
 }

@@ -19,9 +19,9 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.LdapSignInPage._
 import uk.gov.hmrc.test.ui.pages.LdapSignInPage.elements._
-import uk.gov.hmrc.test.ui.utilities.{Role, User, UserRole}
+import uk.gov.hmrc.test.ui.utilities.{Role, SharedState, User, UserRole}
 
-class LdapSignInPage extends BasePage[LdapSignInPage](pageReadyTest) {
+class LdapSignInPage(sharedState: SharedState) extends BasePage[LdapSignInPage](pageReadyTest) {
 
   def signIn(): DashboardPage = {
     signIn(UserRole)
@@ -41,7 +41,7 @@ class LdapSignInPage extends BasePage[LdapSignInPage](pageReadyTest) {
     )
 
     click(signInButton)
-    DashboardPage()
+    DashboardPage(sharedState)
   }
 
 }
@@ -62,8 +62,8 @@ object LdapSignInPage {
     val signInButton: By = By.name("fake-sign-in-btn")
   }
 
-  def apply(): LdapSignInPage = {
-    new LdapSignInPage()
+  def apply(sharedState: SharedState): LdapSignInPage = {
+    new LdapSignInPage(sharedState)
   }
 
 }

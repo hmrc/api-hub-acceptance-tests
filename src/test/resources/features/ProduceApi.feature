@@ -7,7 +7,7 @@ Feature: Produce API (V2 Journey)
     And the user acknowledges they have no egresses available
     And the user selects to use visual editor
     And the user clicks in the editor window
-    And the user sets the oas title to be something starting with "acceptance_test"
+    And the user sets the oas title
     And the user sets the oas version to be "6.6.6"
     And the user selects continue on the oas editor page
     And the user enters a short description
