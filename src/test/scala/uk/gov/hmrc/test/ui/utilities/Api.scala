@@ -17,7 +17,7 @@
 package uk.gov.hmrc.test.ui.utilities
 
 import faker.Faker
-import uk.gov.hmrc.test.ui.utilities.Api.randomTitle
+import uk.gov.hmrc.test.ui.utilities.Api.{randomTitle, randomVersion}
 
 class Api {
   val title: String = randomTitle
@@ -25,8 +25,10 @@ class Api {
   var hod: String = _
   var domain: String = _
   var subDomain: String = _
+  var version: String = randomVersion
 }
 
 object Api {
   def randomTitle = String.format("%s%s", Faker.ar.loremWord(), Faker.en_GB.loremWord().reverse)
+  def randomVersion = Faker.en_GB.appVersion()
 }

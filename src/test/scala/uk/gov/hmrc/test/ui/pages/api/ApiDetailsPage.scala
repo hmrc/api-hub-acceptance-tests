@@ -43,7 +43,8 @@ class ApiDetailsPage(id: String) extends BasePage[ApiDetailsPage](pageReadyTest(
     PageReadyTests.allOf(
       PageReadyTests.element.locator(By.cssSelector(s".hip-tag[text()=${sharedState.api.hod}]")),
       PageReadyTests.element.locator(By.cssSelector(s".hip-tag[text()=${sharedState.api.domain}]")),
-      PageReadyTests.element.locator(By.cssSelector(s".hip-tag[text()=${sharedState.api.subDomain}]"))
+      PageReadyTests.element.locator(By.cssSelector(s".hip-tag[text()=${sharedState.api.subDomain}]")),
+      PageReadyTests.element.locator(By.cssSelector(s".hip-tag[text()=${sharedState.api.version}]"))
     )
   }
 }

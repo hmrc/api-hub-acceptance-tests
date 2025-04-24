@@ -8,7 +8,7 @@ Feature: Produce API (V2 Journey)
     And the user selects to use visual editor
     And the user clicks in the editor window
     And the user sets the oas title
-    And the user sets the oas version to be "6.6.6"
+    And the user sets the oas version
     And the user selects continue on the oas editor page
     And the user enters a short description
     And the user confirms api name

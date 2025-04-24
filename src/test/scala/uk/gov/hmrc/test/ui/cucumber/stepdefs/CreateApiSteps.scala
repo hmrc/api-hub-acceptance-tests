@@ -64,8 +64,8 @@ class CreateApiSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
     EnterOasPage(sharedState).continue()
   }
 
-  When("the user sets the oas version to be {string}") { (version: String) =>
-    EnterOasPage(sharedState).setOasVersion(version)
+  When("the user sets the oas version") { () =>
+    EnterOasPage(sharedState).setOasVersion(sharedState.api.version)
   }
 
   When("the user enters a short description") { () =>
