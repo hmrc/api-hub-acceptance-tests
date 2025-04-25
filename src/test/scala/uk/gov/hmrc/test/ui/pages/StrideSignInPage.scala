@@ -19,9 +19,9 @@ package uk.gov.hmrc.test.ui.pages
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.StrideSignInPage._
 import uk.gov.hmrc.test.ui.pages.StrideSignInPage.elements._
-import uk.gov.hmrc.test.ui.utilities.{Role, User, UserRole}
+import uk.gov.hmrc.test.ui.utilities.{Role, SharedState, User, UserRole}
 
-class StrideSignInPage extends BasePage[StrideSignInPage](pageReadyTest) {
+class StrideSignInPage(sharedState: SharedState) extends BasePage[StrideSignInPage](pageReadyTest) {
 
   def signIn(): DashboardPage = {
     signIn(UserRole)
@@ -29,7 +29,7 @@ class StrideSignInPage extends BasePage[StrideSignInPage](pageReadyTest) {
 
   def signIn(role: Role): DashboardPage = {
     submitForm(Some(role))
-    DashboardPage()
+    DashboardPage(sharedState)
   }
 
   def signInWithoutRole(): UnauthorisedPage = {
@@ -68,8 +68,8 @@ object StrideSignInPage {
     val submitButton: By = By.id("continue-button")
   }
 
-  def apply(): StrideSignInPage = {
-    new StrideSignInPage()
+  def apply(sharedState: SharedState): StrideSignInPage = {
+    new StrideSignInPage(sharedState)
   }
 
 }

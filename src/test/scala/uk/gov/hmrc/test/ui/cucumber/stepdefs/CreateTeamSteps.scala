@@ -29,8 +29,8 @@ class CreateTeamSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
 
   Given("the new user starts the create team journey") { () =>
     Journeys
-      .openStartPage()
-      .dashboard()
+      .openStartPage(sharedState)
+      .dashboard(sharedState)
       .createTeam()
   }
 

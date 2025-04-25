@@ -26,13 +26,13 @@ import uk.gov.hmrc.test.ui.utilities.SharedState
 class DeleteApplicatioSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
 
   When("""deletes the application""") { () =>
-    ApplicationDeleteConfirmationPage(sharedState.application.id)
+    ApplicationDeleteConfirmationPage(sharedState)
       .acceptAndContinue()
   }
 
 
   Then("""the previously registered application should no longer be listed in all applications""") { () =>
-    ApplicationDeleteSuccessPage(sharedState.application.id)
+    ApplicationDeleteSuccessPage(sharedState)
       .returnToDashboard()
 
     Journeys

@@ -30,9 +30,9 @@ import uk.gov.hmrc.test.ui.utilities.{Role, SharedState, UserRole}
  */
 object Journeys extends Robot {
 
-  def openStartPage(): ServiceStartPage = {
+  def openStartPage(sharedState: SharedState): ServiceStartPage = {
     navigateToRelativeUrl("")
-    ServiceStartPage()
+    ServiceStartPage(sharedState)
   }
 
   // This page is difficult to access directly as the dashboard link is only
@@ -49,33 +49,33 @@ object Journeys extends Robot {
     ManageMyTeamsPage()
   }
 
-  def signIn(): DashboardPage = {
-    signInViaStride()
+  def signIn(sharedState: SharedState): DashboardPage = {
+    signInViaStride(sharedState)
   }
 
-  def signIn(role: Role): DashboardPage = {
-    signInViaStride(role)
+  def signIn(role: Role, sharedState: SharedState): DashboardPage = {
+    signInViaStride(role, sharedState)
   }
 
-  def signInViaLdap(): DashboardPage = {
-    signInViaLdap(UserRole)
+  def signInViaLdap(sharedState: SharedState): DashboardPage = {
+    signInViaLdap(UserRole, sharedState)
   }
 
-  def signInViaLdap(role: Role): DashboardPage = {
+  def signInViaLdap(role: Role, sharedState: SharedState): DashboardPage = {
     Journeys
-      .openStartPage()
+      .openStartPage(sharedState)
       .startNow()
       .signInViaLdap()
       .signIn(role)
   }
 
-  def signInViaStride(): DashboardPage = {
-    signInViaStride(UserRole)
+  def signInViaStride(sharedState: SharedState): DashboardPage = {
+    signInViaStride(UserRole, sharedState)
   }
 
-  def signInViaStride(role: Role): DashboardPage = {
+  def signInViaStride(role: Role, sharedState: SharedState): DashboardPage = {
     Journeys
-      .openStartPage()
+      .openStartPage(sharedState)
       .startNow()
       .signInViaStride()
       .signIn(role)
@@ -83,8 +83,8 @@ object Journeys extends Robot {
 
   def registerAnApplication(sharedState: SharedState): ApplicationDetailsPage = {
     Journeys
-      .openStartPage()
-      .dashboard()
+      .openStartPage(sharedState)
+      .dashboard(sharedState)
       .registerAnApplication()
       .setApplicationNameNormalMode(sharedState.application.name)
       .setTeamNormalMode(sharedState.team)
@@ -97,21 +97,28 @@ object Journeys extends Robot {
   }
 
   def signInAndRegisterAnApplication(sharedState: SharedState): ApplicationDetailsPage = {
-    signIn()
+    signIn(sharedState)
     checkUserHasATeam(sharedState)
     registerAnApplication(sharedState)
   }
 
   def signInWithRoleAndRegisterAnApplication(sharedState: SharedState, role: Role): ApplicationDetailsPage = {
-    signIn(role)
+    signIn(role, sharedState)
     checkUserHasATeam(sharedState)
     registerAnApplication(sharedState)
   }
 
+  def signInAndEnsureTeam(sharedState: SharedState): DashboardPage = {
+    signIn(sharedState)
+    checkUserHasATeam(sharedState)
+    navigateToRelativeUrl("dashboard")
+    DashboardPage(sharedState)
+  }
+
   def createTeam(sharedState: SharedState): ManageTeamPage = {
     Journeys
-      .openStartPage()
-      .dashboard()
+      .openStartPage(sharedState)
+      .dashboard(sharedState)
       .createTeam()
       .setTeamNameNormalMode(sharedState.team.name)
       .setProducer()
@@ -154,12 +161,12 @@ object Journeys extends Robot {
       .viewApplication()
   }
 
-  def swapRole(role: Role): Unit = {
+  def swapRole(role: Role, sharedState: SharedState): Unit = {
     val url = getCurrentUrl
 
     navigateToRelativeUrl("sign-in")
 
-    SignInPage()
+    SignInPage(sharedState)
       .signInViaStride()
       .signIn(role)
 

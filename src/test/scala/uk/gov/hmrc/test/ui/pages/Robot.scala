@@ -17,6 +17,7 @@
 package uk.gov.hmrc.test.ui.pages
 
 import com.typesafe.scalalogging.LazyLogging
+import org.openqa.selenium.devtools.v85.indexeddb.model.Key
 import org.openqa.selenium.support.ui.{ExpectedCondition, FluentWait}
 import org.openqa.selenium.{By, WebDriver, WebElement}
 import uk.gov.hmrc.selenium.webdriver.Driver
@@ -164,13 +165,16 @@ trait Robot extends LazyLogging {
 
   /**
    * Use this method to simulate typing into an element, which may set its
-   * value. This method first clears any existing value.
+   * value. This method will clear any existing value by default
+   * unless explicitly told not to.
    *
    * @param by  the locating mechanism to use
    * @param value  character sequence to send to the element
    */
-  def sendKeys(by: By, value: String): Unit = {
-    clear(by)
+  def sendKeys(by: By, value: String, clearFirst: Boolean = true): Unit = {
+    if (clearFirst) {
+      clear(by)
+    }
     findElement(by).sendKeys(value)
   }
 
@@ -259,6 +263,16 @@ trait Robot extends LazyLogging {
    */
   def exists(by: By): Boolean = {
     findElements(by).nonEmpty
+  }
+
+  /**
+   * Switches to an indexed window
+   *
+   * @param i  the zero based index of the window
+   */
+  def switchToWindow(i: Int): Unit = {
+    val handles = Driver.instance.getWindowHandles.asScala
+    Driver.instance.switchTo().window(handles.toSeq(i))
   }
 
 }

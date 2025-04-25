@@ -28,8 +28,8 @@ class RegisterApplicationSteps @Inject()(sharedState: SharedState) extends BaseS
 
   Given("the new user starts the register application journey") { () =>
     Journeys
-      .openStartPage()
-      .dashboard()
+      .openStartPage(sharedState)
+      .dashboard(sharedState)
       .registerAnApplication()
   }
 

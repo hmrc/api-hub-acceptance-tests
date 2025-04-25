@@ -17,10 +17,12 @@
 package uk.gov.hmrc.test.ui.pages.api
 
 import org.openqa.selenium.By
+import uk.gov.hmrc.test.ui.pages.ErrorPage.elements.{errorHeading, errorMessage}
 import uk.gov.hmrc.test.ui.pages.addanapi.SelectApplicationPage
 import uk.gov.hmrc.test.ui.pages.api.ApiDetailsPage._
 import uk.gov.hmrc.test.ui.pages.api.ApiDetailsPage.elements._
 import uk.gov.hmrc.test.ui.pages.{BasePage, PageReadyTest, PageReadyTests}
+import uk.gov.hmrc.test.ui.utilities.SharedState
 
 class ApiDetailsPage(id: String) extends BasePage[ApiDetailsPage](pageReadyTest(id)) {
 
@@ -37,6 +39,14 @@ class ApiDetailsPage(id: String) extends BasePage[ApiDetailsPage](pageReadyTest(
     findElement(details).getAttribute(apiTitleAttribute)
   }
 
+  def apiDetailsMatch(sharedState: SharedState): Unit = {
+    PageReadyTests.allOf(
+      PageReadyTests.element.locator(By.cssSelector(s".hip-tag[text()=${sharedState.api.hod}]")),
+      PageReadyTests.element.locator(By.cssSelector(s".hip-tag[text()=${sharedState.api.domain}]")),
+      PageReadyTests.element.locator(By.cssSelector(s".hip-tag[text()=${sharedState.api.subDomain}]")),
+      PageReadyTests.element.locator(By.cssSelector(s".hip-tag[text()=${sharedState.api.version}]"))
+    )
+  }
 }
 
 object ApiDetailsPage {

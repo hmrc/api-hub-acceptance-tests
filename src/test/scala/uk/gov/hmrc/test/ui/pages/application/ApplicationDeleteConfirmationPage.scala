@@ -20,13 +20,14 @@ import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.application.ApplicationDeleteConfirmationPage._
 import uk.gov.hmrc.test.ui.pages.application.ApplicationDeleteConfirmationPage.elements._
 import uk.gov.hmrc.test.ui.pages._
+import uk.gov.hmrc.test.ui.utilities.SharedState
 
-class ApplicationDeleteConfirmationPage(id: String) extends BasePage[ApplicationDeleteConfirmationPage](pageReadyTest(id)) with ErrorSummary {
+class ApplicationDeleteConfirmationPage(sharedState: SharedState) extends BasePage[ApplicationDeleteConfirmationPage](pageReadyTest(sharedState.application.id)) with ErrorSummary {
 
   def acceptAndContinue(): ApplicationDeleteSuccessPage = {
     click(confirmCheckbox)
     click(acceptAndContinueButton)
-    ApplicationDeleteSuccessPage(id)
+    ApplicationDeleteSuccessPage(sharedState)
   }
 
 
@@ -48,8 +49,8 @@ object ApplicationDeleteConfirmationPage {
     val acceptAndContinueButton: By = By.id("acceptAndContinueButton")
   }
 
-  def apply(id: String): ApplicationDeleteConfirmationPage = {
-    new ApplicationDeleteConfirmationPage(id)
+  def apply(sharedState: SharedState): ApplicationDeleteConfirmationPage = {
+    new ApplicationDeleteConfirmationPage(sharedState)
   }
 
 }

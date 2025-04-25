@@ -16,14 +16,16 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
+import com.google.inject.Inject
 import uk.gov.hmrc.test.ui.pages.Journeys
 import uk.gov.hmrc.test.ui.pages.api.ExploreApisPage
+import uk.gov.hmrc.test.ui.utilities.SharedState
 
-class ExploreAPIsPageSteps extends BaseStepDef {
+class ExploreAPIsPageSteps @Inject() (sharedState: SharedState) extends BaseStepDef {
 
   Given("""the user navigate to get explore apis page""") { () =>
     Journeys
-      .openStartPage()
+      .openStartPage(sharedState)
       .exploreApis()
   }
 

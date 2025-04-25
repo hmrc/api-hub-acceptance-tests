@@ -16,27 +16,29 @@
 
 package uk.gov.hmrc.test.ui.cucumber.stepdefs
 
+import com.google.inject.Inject
 import uk.gov.hmrc.test.ui.pages.{DashboardPage, Journeys, SignInPage, StrideSignInPage, UnauthorisedPage}
+import uk.gov.hmrc.test.ui.utilities.SharedState
 
-class StrideLoginSteps extends BaseStepDef {
+class StrideLoginSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
   Given("""a user navigates to the sign in page""") { () =>
     Journeys
-      .openStartPage()
+      .openStartPage(sharedState)
       .startNow()
   }
 
   Given("""chooses to login via stride""") { () =>
-    SignInPage()
+    SignInPage(sharedState)
       .signInViaStride()
   }
 
   When("""the user submits valid sign in credentials""") { () =>
-    StrideSignInPage()
+    StrideSignInPage(sharedState)
       .signIn()
   }
 
   Then("""the user should be successfully signed in via stride""") { () =>
-    DashboardPage()
+    DashboardPage(sharedState)
       .foreach(
         dashboardPage =>
           dashboardPage.isSignedInWithStride shouldBe true
@@ -44,7 +46,7 @@ class StrideLoginSteps extends BaseStepDef {
   }
 
   When("""the user fills in all fields except role""") { () =>
-    StrideSignInPage()
+    StrideSignInPage(sharedState)
       .signInWithoutRole()
   }
 

@@ -18,12 +18,17 @@ package uk.gov.hmrc.test.ui.pages
 
 import org.openqa.selenium.By
 import uk.gov.hmrc.test.ui.pages.DashboardPage._
-import uk.gov.hmrc.test.ui.pages.DashboardPage.elements.{registerAnApplicationButton, registerTeamButton}
+import uk.gov.hmrc.test.ui.pages.DashboardPage.elements.{newApiButton, newApiDetailsLink, registerAnApplicationButton, registerTeamButton}
+import uk.gov.hmrc.test.ui.pages.api.ApiDetailsPage
+import uk.gov.hmrc.test.ui.pages.createapi.{CreateApiPage, ProducerApiDetailsPage}
 import uk.gov.hmrc.test.ui.pages.createteam.CreateTeamNamePage
 import uk.gov.hmrc.test.ui.pages.registerapplication.RegisterApplicationNamePage
-import uk.gov.hmrc.test.ui.utilities.NormalMode
+import uk.gov.hmrc.test.ui.utilities.{NormalMode, SharedState}
 
-class DashboardPage extends BasePage[DashboardPage](pageReadyTest) with ApiHubMenu {
+import java.util.regex.{Matcher, Pattern}
+import scala.util.matching.Regex
+
+class DashboardPage(sharedState: SharedState) extends BasePage[DashboardPage](pageReadyTest) with ApiHubMenu {
 
   def registerAnApplication(): RegisterApplicationNamePage = {
     click(registerAnApplicationButton)
@@ -36,6 +41,22 @@ class DashboardPage extends BasePage[DashboardPage](pageReadyTest) with ApiHubMe
     CreateTeamNamePage(NormalMode)
   }
 
+  def createApi(): CreateApiPage = {
+    click(newApiButton)
+    CreateApiPage(sharedState, NormalMode)
+  }
+
+  def selectNewApi() : ProducerApiDetailsPage = {
+    val href = findElement(newApiDetailsLink(sharedState)).getAttribute("href")
+    val numberPattern: Regex = "[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}".r
+    numberPattern.findFirstMatchIn(href) match {
+      case Some(id) => sharedState.api.id = id.toString()
+      case _ =>
+    }
+
+    click(newApiDetailsLink(sharedState))
+    ProducerApiDetailsPage(sharedState)
+  }
 }
 
 object DashboardPage {
@@ -45,10 +66,12 @@ object DashboardPage {
   object elements {
     val registerAnApplicationButton: By = By.id("registerAnApplicationButton")
     val registerTeamButton: By = By.id("registerTeamButton")
+    val newApiButton: By = By.id("createAnApiButton")
+    def newApiDetailsLink(sharedState: SharedState): By = By.xpath(s"//a[text()='${sharedState.api.title}']")
   }
 
-  def apply(): DashboardPage = {
-    new DashboardPage()
+  def apply(sharedState: SharedState): DashboardPage = {
+    new DashboardPage(sharedState)
   }
 
 }
