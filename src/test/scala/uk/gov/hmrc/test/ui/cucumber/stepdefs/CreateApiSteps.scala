@@ -92,15 +92,7 @@ class CreateApiSteps @Inject()(sharedState: SharedState) extends BaseStepDef {
     SetApiStatusPage(sharedState).setAlphaStatus()
   }
 
-  When("the user checks their answers the first time") { () =>
-    CreateApiCheckYourAnswersPage(sharedState).confirmAnswers()
-  }
-
-  When("the user selects no test egress") { () =>
-    SelectTestEgressPage(sharedState).selectNoTestEgress()
-  }
-
-  When("the user checks their answers the second time") { () =>
+  When("the user checks answers") { () =>
     CreateApiCheckYourAnswersPage(sharedState).completeJourney()
   }
 
