@@ -16,9 +16,7 @@ Feature: Produce API (V2 Journey)
     And the user selects a hod
     And the user selects domains
     And the user sets the api status
-    And the user checks their answers the first time
-    And the user selects no test egress
-    And the user checks their answers the second time
+    And the user checks answers
     And the create api journey is completed
     And the dashboard link is clicked
     And the new api link is selected on the dashboard
